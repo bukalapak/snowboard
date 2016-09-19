@@ -1,0 +1,3 @@
+[submodule "ext/drafter"]
+	path = ext/drafter
+	url = https://github.com/apiaryio/drafter.git
