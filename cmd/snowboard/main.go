@@ -12,6 +12,7 @@ import (
 var (
 	version = flag.Bool("v", false, "Display version information")
 	input   = flag.String("i", "API.apib", "API Blueprint file")
+	output  = flag.String("o", "index.html", "HTML output file")
 )
 
 func main() {
@@ -32,18 +33,18 @@ func main() {
 	}
 
 	f, err := openFile(*input)
-	if err != nil {
-		displayError(err)
-	}
-
+	checkErr(err)
 	defer f.Close()
 
 	el, err := snowboard.Parse(f)
-	if err != nil {
-		displayError(err)
-	}
+	checkErr(err)
 
-	fmt.Printf("%v\n", el)
+	of, err := os.Create(*output)
+	checkErr(err)
+	defer of.Close()
+
+	err = snowboard.HTML(of, el.Path("content").Index(0))
+	checkErr(err)
 }
 
 func openFile(fn string) (*os.File, error) {
@@ -59,7 +60,9 @@ func openFile(fn string) (*os.File, error) {
 	return os.Open(fn)
 }
 
-func displayError(err error) {
-	fmt.Fprintf(os.Stderr, "Error: %s\n", err)
-	os.Exit(1)
+func checkErr(err error) {
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error: %s\n", err)
+		os.Exit(1)
+	}
 }
