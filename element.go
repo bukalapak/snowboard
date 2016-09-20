@@ -14,10 +14,6 @@ func (b *Element) Value() reflect.Value {
 	return reflect.ValueOf(b.object)
 }
 
-func (b *Element) String() string {
-	return b.Value().String()
-}
-
 func (b *Element) Path(key string) *Element {
 	return b.search(b.hierarchy(key)...)
 }
