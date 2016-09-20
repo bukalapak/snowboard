@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"net/http"
 	"os"
 
 	"github.com/fsnotify/fsnotify"
@@ -18,6 +19,7 @@ var (
 	input   = flag.String("i", "API.apib", "API Blueprint file")
 	output  = flag.String("o", "index.html", "HTML output file")
 	watch   = flag.Bool("w", false, "Watch input file for changes")
+	serve   = flag.Bool("s", false, "Serve HTML via 0.0.0.0:8088")
 )
 
 func main() {
@@ -60,9 +62,12 @@ func main() {
 		checkErr(err)
 
 		renderHTML()
+		serveHTML()
+
 		<-done
 	} else {
 		renderHTML()
+		serveHTML()
 	}
 }
 
@@ -110,4 +115,17 @@ func logErr(err error) {
 	if err != nil {
 		log.Fatalln("Error: ", err)
 	}
+}
+
+func serveHTML() {
+	if !*serve {
+		return
+	}
+
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, *output)
+	})
+
+	err := http.ListenAndServe(":8088", nil)
+	logErr(err)
 }
