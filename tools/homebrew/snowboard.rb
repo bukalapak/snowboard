@@ -9,7 +9,12 @@ class Snowboard < Formula
   def install
     ENV['GOPATH'] = buildpath
 
-    system 'make', 'build'
-    bin.install 'snowboard'
+    pkgpath = buildpath/"src/github.com/subosito/snowboard"
+    pkgpath.install Dir["*"]
+
+    cd pkgpath do
+      system 'make', 'build'
+      bin.install 'snowboard'
+    end
   end
 end
