@@ -4,12 +4,10 @@ import (
 	"html/template"
 	"io"
 	"reflect"
-
-	bf "github.com/russross/blackfriday"
 )
 
 func markdownize(v reflect.Value) template.HTML {
-	b := bf.MarkdownCommon([]byte(v.String()))
+	b := markdown([]byte(v.String()))
 	return template.HTML(string(b))
 }
 
