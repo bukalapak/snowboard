@@ -9,6 +9,12 @@
 			"revisionTime": "2015-11-05T21:09:06Z"
 		},
 		{
+			"checksumSHA1": "xgjI2W3RGiQwNlxsOW2V9fJ9kaM=",
+			"path": "github.com/fsnotify/fsnotify",
+			"revision": "f12c6236fe7b5cf6bcf30e5935d08cb079d78334",
+			"revisionTime": "2016-08-16T05:15:41Z"
+		},
+		{
 			"checksumSHA1": "zKKp5SZ3d3ycKe4EKMNT0BqAWBw=",
 			"path": "github.com/pmezard/go-difflib/difflib",
 			"revision": "d8ed2627bdf02c080bf22230dbb337003b7aba2d",
@@ -31,6 +37,12 @@
 			"path": "github.com/stretchr/testify/assert",
 			"revision": "a1f97990ddc16022ec7610326dd9bce31332c116",
 			"revisionTime": "2015-12-02T18:41:52Z"
+		},
+		{
+			"checksumSHA1": "vu7njn8O4vhFtmgGWntwjA2NAbk=",
+			"path": "golang.org/x/sys/unix",
+			"revision": "8f0908ab3b2457e2e15403d3697c9ef5cb4b57a9",
+			"revisionTime": "2016-09-14T20:33:16Z"
 		}
 	],
 	"rootPath": "github.com/subosito/snowboard"
