@@ -10,6 +10,7 @@ package snowboard
 */
 import "C"
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -26,6 +27,15 @@ func Version() map[string]string {
 		"Snowboard": version,
 		"Drafter":   C.GoString(v),
 	}
+}
+
+func Parse(r io.Reader) (*Element, error) {
+	b, err := ParseBlueprint(r)
+	if err != nil {
+		return nil, err
+	}
+
+	return ParseJSON(bytes.NewReader(b))
 }
 
 func ParseBlueprint(r io.Reader) ([]byte, error) {
