@@ -1,11 +1,15 @@
 package main
 
 import (
+	"bytes"
 	"errors"
 	"flag"
 	"fmt"
+	"io/ioutil"
+	"log"
 	"os"
 
+	"github.com/fsnotify/fsnotify"
 	"github.com/subosito/snowboard"
 )
 
@@ -13,6 +17,7 @@ var (
 	version = flag.Bool("v", false, "Display version information")
 	input   = flag.String("i", "API.apib", "API Blueprint file")
 	output  = flag.String("o", "index.html", "HTML output file")
+	watch   = flag.Bool("w", false, "Watch input file for changes")
 )
 
 func main() {
@@ -32,22 +37,36 @@ func main() {
 		os.Exit(0)
 	}
 
-	f, err := openFile(*input)
-	checkErr(err)
-	defer f.Close()
+	if *watch {
+		watcher, err := fsnotify.NewWatcher()
+		checkErr(err)
+		defer watcher.Close()
 
-	el, err := snowboard.Parse(f)
-	checkErr(err)
+		done := make(chan bool)
+		go func() {
+			for {
+				select {
+				case event := <-watcher.Events:
+					if event.Op&fsnotify.Write == fsnotify.Write {
+						renderHTML()
+					}
+				case err := <-watcher.Errors:
+					log.Println("Error:", err)
+				}
+			}
+		}()
 
-	of, err := os.Create(*output)
-	checkErr(err)
-	defer of.Close()
+		err = watcher.Add(*input)
+		checkErr(err)
 
-	err = snowboard.HTML(of, el.Path("content").Index(0))
-	checkErr(err)
+		renderHTML()
+		<-done
+	} else {
+		renderHTML()
+	}
 }
 
-func openFile(fn string) (*os.File, error) {
+func readFile(fn string) ([]byte, error) {
 	info, err := os.Stat(fn)
 	if err != nil {
 		return nil, errors.New("File is not exist")
@@ -57,12 +76,38 @@ func openFile(fn string) (*os.File, error) {
 		return nil, errors.New("File is not valid blueprint document")
 	}
 
-	return os.Open(fn)
+	return ioutil.ReadFile(fn)
 }
 
 func checkErr(err error) {
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error: %s\n", err)
 		os.Exit(1)
+	}
+}
+
+func renderHTML() {
+	b, err := readFile(*input)
+	logErr(err)
+
+	log.Println("Generate HTML... START")
+
+	bf := bytes.NewReader(b)
+	el, err := snowboard.Parse(bf)
+	logErr(err)
+
+	of, err := os.Create(*output)
+	logErr(err)
+	defer of.Close()
+
+	err = snowboard.HTML(of, el.Path("content").Index(0))
+	logErr(err)
+
+	log.Println("Generate HTML... DONE")
+}
+
+func logErr(err error) {
+	if err != nil {
+		log.Fatalln("Error: ", err)
 	}
 }
