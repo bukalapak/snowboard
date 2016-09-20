@@ -14,12 +14,30 @@ func (b *Element) Value() reflect.Value {
 	return reflect.ValueOf(b.object)
 }
 
+func (b *Element) String() string {
+	return b.Value().String()
+}
+
 func (b *Element) Path(key string) *Element {
 	return b.search(b.hierarchy(key)...)
 }
 
 func (b *Element) Exists(key string) bool {
 	return b.Path(key).Value().IsNil()
+}
+
+func (b *Element) Index(i int) *Element {
+	val := b.Value()
+
+	if val.Kind() == reflect.Slice {
+		if i >= val.Len() {
+			return &Element{nil}
+		}
+
+		return &Element{val.Index(i).Interface()}
+	}
+
+	return &Element{nil}
 }
 
 func (b *Element) Children() ([]*Element, error) {
