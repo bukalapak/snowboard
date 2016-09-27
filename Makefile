@@ -10,5 +10,8 @@ go-build:
 	go build -o snowboard ./cmd/snowboard/...
 go-install:
 	go install ./...
+go-test:
+	go test -v
 build: drafter go-gen go-build
 install: drafter go-gen go-install
+test: drafter go-gen go-test
