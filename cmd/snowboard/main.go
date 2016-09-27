@@ -20,6 +20,7 @@ var (
 	output  = flag.String("o", "index.html", "HTML output file")
 	watch   = flag.Bool("w", false, "Watch input file for changes")
 	serve   = flag.Bool("s", false, "Serve HTML via 0.0.0.0:8088")
+	tplFile = flag.String("t", "template.html", "Custom template for documentation")
 )
 
 func main() {
@@ -59,6 +60,9 @@ func main() {
 		}()
 
 		err = watcher.Add(*input)
+		checkErr(err)
+
+		err = watcher.Add(*tplFile)
 		checkErr(err)
 
 		renderHTML()
@@ -105,7 +109,10 @@ func renderHTML() {
 	logErr(err)
 	defer of.Close()
 
-	err = snowboard.HTML(of, el.Path("content").Index(0))
+	tf, err := readFile(*tplFile)
+	logErr(err)
+
+	err = snowboard.Render(string(tf), of, el.Path("content").Index(0))
 	logErr(err)
 
 	log.Println("Generate HTML... DONE")
