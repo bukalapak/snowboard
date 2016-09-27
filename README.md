@@ -1,6 +1,7 @@
 # snowboard
 
 [![CircleCI](https://img.shields.io/circleci/project/subosito/snowboard.svg?maxAge=2592000)](https://circleci.com/gh/subosito/snowboard)
+[![GoDoc](https://godoc.org/github.com/subosito/snowboard?status.svg)](https://godoc.org/github.com/subosito/snowboard)
 
 API blueprint parser and formatter.
 
