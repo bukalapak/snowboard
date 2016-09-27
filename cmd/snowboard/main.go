@@ -104,7 +104,7 @@ func renderHTML() {
 	log.Println("Generate HTML... START")
 
 	bf := bytes.NewReader(b)
-	el, err := snowboard.Parse(bf)
+	bp, err := snowboard.Parse(bf)
 	logErr(err)
 
 	of, err := os.Create(*output)
@@ -114,7 +114,7 @@ func renderHTML() {
 	tf, err := readFile(*tplFile)
 	logErr(err)
 
-	err = snowboard.Render(string(tf), of, el.Path("content").Index(0))
+	err = snowboard.Render(string(tf), of, bp)
 	logErr(err)
 
 	log.Println("Generate HTML... DONE")

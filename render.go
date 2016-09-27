@@ -3,28 +3,14 @@ package snowboard
 import (
 	"html/template"
 	"io"
-	"reflect"
 )
 
-func markdownize(v reflect.Value) template.HTML {
-	b := markdown([]byte(v.String()))
-	return template.HTML(string(b))
+func markdownize(s string) template.HTML {
+	return template.HTML(string(markdown([]byte(s))))
 }
 
-func dig(s string, el *Element) reflect.Value {
-	switch s {
-	case "title":
-		return el.Path("meta.title").Value()
-	case "description":
-		return el.Path("content").Index(0).Path("content").Value()
-	}
-
-	return reflect.Value{}
-}
-
-func Render(s string, w io.Writer, el *Element) error {
+func Render(s string, w io.Writer, b *API) error {
 	funcMap := template.FuncMap{
-		"dig":         dig,
 		"markdownize": markdownize,
 	}
 
@@ -33,7 +19,7 @@ func Render(s string, w io.Writer, el *Element) error {
 		return err
 	}
 
-	err = tmpl.Execute(w, el)
+	err = tmpl.Execute(w, b)
 	if err != nil {
 		return err
 	}

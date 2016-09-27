@@ -29,16 +29,21 @@ func Version() map[string]string {
 	}
 }
 
-func Parse(r io.Reader) (*Element, error) {
-	b, err := ParseBlueprint(r)
+func Parse(r io.Reader) (*API, error) {
+	b, err := parseBlueprint(r)
 	if err != nil {
 		return nil, err
 	}
 
-	return ParseJSON(bytes.NewReader(b))
+	l, err := parseJSON(bytes.NewReader(b))
+	if err != nil {
+		return nil, err
+	}
+
+	return parseElement(l), nil
 }
 
-func ParseBlueprint(r io.Reader) ([]byte, error) {
+func parseBlueprint(r io.Reader) ([]byte, error) {
 	b, err := ioutil.ReadAll(r)
 	if err != nil {
 		return nil, err
@@ -61,7 +66,7 @@ func ParseBlueprint(r io.Reader) ([]byte, error) {
 	return []byte(result), nil
 }
 
-func ParseJSON(r io.Reader) (*Element, error) {
+func parseJSON(r io.Reader) (*Element, error) {
 	var el Element
 
 	err := json.NewDecoder(r).Decode(&el.object)
@@ -70,4 +75,15 @@ func ParseJSON(r io.Reader) (*Element, error) {
 	}
 
 	return &el, nil
+}
+
+func parseElement(el *Element) *API {
+	l := el.Path("content").Index(0)
+
+	return &API{
+		Title:          digTitle(l),
+		Description:    digDescription(l),
+		Metadata:       digMetadata(l),
+		ResourceGroups: digResourceGroups(l),
+	}
 }
