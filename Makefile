@@ -7,7 +7,7 @@ go-gen:
 	@go get github.com/mjibson/esc
 	go generate ./cmd/snowboard/main.go
 go-build:
-	go build -o snowboard ./cmd/snowboard/main.go
+	go build -o snowboard ./cmd/snowboard/...
 go-install:
 	go install ./...
 build: drafter go-gen go-build
