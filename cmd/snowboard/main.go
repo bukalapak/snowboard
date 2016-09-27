@@ -22,7 +22,7 @@ var (
 	output  = flag.String("o", "index.html", "HTML output file")
 	watch   = flag.Bool("w", false, "Watch input file for changes")
 	serve   = flag.Bool("s", false, "Serve HTML via 0.0.0.0:8088")
-	tplFile = flag.String("t", "template.html", "Custom template for documentation")
+	tplFile = flag.String("t", "alpha", "Custom template for documentation")
 )
 
 func main() {
@@ -64,8 +64,11 @@ func main() {
 		err = watcher.Add(*input)
 		checkErr(err)
 
-		err = watcher.Add(*tplFile)
-		checkErr(err)
+		_, err = os.Stat(*tplFile)
+		if err == nil {
+			err = watcher.Add(*tplFile)
+			checkErr(err)
+		}
 
 		renderHTML()
 		serveHTML()
@@ -84,10 +87,26 @@ func readFile(fn string) ([]byte, error) {
 	}
 
 	if info.IsDir() {
-		return nil, errors.New("File is not valid blueprint document")
+		return nil, errors.New("File is a directory")
 	}
 
 	return ioutil.ReadFile(fn)
+}
+
+func readTemplate(fn string) ([]byte, error) {
+	tf, err := readFile(fn)
+	if err == nil {
+		return tf, nil
+	}
+
+	fs := FS(false)
+	ff, err := fs.Open("/templates/" + fn + ".html")
+	if err != nil {
+		return nil, err
+	}
+
+	defer ff.Close()
+	return ioutil.ReadAll(ff)
 }
 
 func checkErr(err error) {
@@ -111,7 +130,7 @@ func renderHTML() {
 	logErr(err)
 	defer of.Close()
 
-	tf, err := readFile(*tplFile)
+	tf, err := readTemplate(*tplFile)
 	logErr(err)
 
 	err = snowboard.Render(string(tf), of, bp)
