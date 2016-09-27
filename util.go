@@ -157,7 +157,9 @@ func extractHeaders(child *Element) (h http.Header) {
 }
 
 func extractHrefs(child *Element) (h Href) {
-	h.Path = digString("href", child)
+	if child.Path("href").Value().IsValid() {
+		h.Path = digString("href", child)
+	}
 
 	contents, err := child.Path("attributes.hrefVariables.content").Children()
 	if err != nil {
