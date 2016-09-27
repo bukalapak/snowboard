@@ -1,8 +1,14 @@
+.PHONY: all
 all: install
-build-drafter:
+drafter:
 	git submodule update --init --recursive
 	cd ext/drafter && ./configure && make drafter
-build: build-drafter
+go-gen:
+	@go get github.com/mjibson/esc
+	go generate ./cmd/snowboard/main.go
+go-build:
 	go build -o snowboard ./cmd/snowboard/main.go
-install: build-drafter
+go-install:
 	go install ./...
+build: drafter go-gen go-build
+install: drafter go-gen go-install

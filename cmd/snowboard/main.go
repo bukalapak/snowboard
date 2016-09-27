@@ -1,5 +1,7 @@
 package main
 
+//go:generate esc -o templates.go templates
+
 import (
 	"bytes"
 	"errors"
