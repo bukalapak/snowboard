@@ -22,10 +22,6 @@ func dig(s string, el *Element) reflect.Value {
 	return reflect.Value{}
 }
 
-func HTML(w io.Writer, el *Element) error {
-	return Render(DefaultTemplate, w, el)
-}
-
 func Render(s string, w io.Writer, el *Element) error {
 	funcMap := template.FuncMap{
 		"dig":         dig,
