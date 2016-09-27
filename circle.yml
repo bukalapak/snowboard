@@ -1,0 +1,14 @@
+machine:
+  environment:
+    PROJECT_GOPATH: "${HOME}/.go_project"
+    PROJECT_PARENT_PATH: "${PROJECT_GOPATH}/src/github.com/${CIRCLE_PROJECT_USERNAME}"
+    PROJECT_PATH: "${PROJECT_PARENT_PATH}/${CIRCLE_PROJECT_REPONAME}"
+    GOPATH: "${HOME}/.go_workspace:/usr/local/go_workspace:${PROJECT_GOPATH}"
+dependencies:
+  override:
+    - mkdir -p "${PROJECT_PARENT_PATH}"
+    - rsync -av "${HOME}/${CIRCLE_PROJECT_REPONAME}/" "${PROJECT_PATH}"
+    - cd "${PROJECT_PATH}" && make build
+test:
+  override:
+    - cd "${PROJECT_PATH}" && make go-test

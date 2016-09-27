@@ -1,5 +1,7 @@
 # snowboard
 
+[![CircleCI](https://img.shields.io/circleci/project/subosito/snowboard.svg?maxAge=2592000)]()
+
 API blueprint parser and formatter.
 
 ## Installation
