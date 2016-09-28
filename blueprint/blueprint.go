@@ -32,6 +32,7 @@ type Resource struct {
 
 type Transition struct {
 	Title        string
+	Description  string
 	Transactions []Transaction
 }
 

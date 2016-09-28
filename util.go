@@ -2,13 +2,20 @@ package snowboard
 
 import (
 	"net/http"
+	"reflect"
 	"strconv"
 
 	"github.com/subosito/snowboard/blueprint"
 )
 
 func digString(key string, el *Element) string {
-	return el.Path(key).Value().String()
+	v := el.Path(key).Value()
+
+	if v.IsValid() && v.Kind() == reflect.String {
+		return v.String()
+	}
+
+	return ""
 }
 
 func digTitle(el *Element) string {
@@ -16,7 +23,18 @@ func digTitle(el *Element) string {
 }
 
 func digDescription(el *Element) string {
-	return el.Path("content").Index(0).Path("content").Value().String()
+	children, err := el.Path("content").Children()
+	if err != nil {
+		return ""
+	}
+
+	for _, child := range children {
+		if digString("element", child) == "copy" {
+			return digString("content", child)
+		}
+	}
+
+	return ""
 }
 
 func digMetadata(el *Element) []blueprint.Metadata {
@@ -46,7 +64,7 @@ func digResourceGroups(el *Element) (gs []blueprint.ResourceGroup) {
 	}
 
 	for _, child := range children {
-		if digString("element", child) == "category" {
+		if hasClass("resourceGroup", child) {
 			g := &blueprint.ResourceGroup{
 				Title:     digString("meta.title", child),
 				Resources: digResources(child),
@@ -90,6 +108,7 @@ func digTransitions(el *Element) (ts []blueprint.Transition) {
 		if digString("element", child) == "transition" {
 			t := &blueprint.Transition{
 				Title:        digString("meta.title", child),
+				Description:  digDescription(child),
 				Transactions: digTransactions(child),
 			}
 
@@ -136,17 +155,48 @@ func extractTransaction(children []*Element) (x blueprint.Transaction) {
 }
 
 func extractRequest(child *Element) (r blueprint.Request) {
-	return blueprint.Request{
-		Method: digString("attributes.method", child),
+	r = blueprint.Request{
+		Method:  digString("attributes.method", child),
+		Headers: extractHeaders(child.Path("attributes.headers")),
+	}
+
+	cx, err := child.Path("content").Children()
+	if err != nil {
+		return
+	}
+
+	for _, c := range cx {
+		if hasClass("messageBody", c) {
+			r.Body = extractAsset(c)
+		}
+
+		if hasClass("messageBodySchema", c) {
+			r.Schema = extractAsset(c)
+		}
 	}
 
 	return
 }
 
 func extractResponse(child *Element) (r blueprint.Response) {
-	return blueprint.Response{
+	r = blueprint.Response{
 		StatusCode: extractStatusCode(child),
 		Headers:    extractHeaders(child.Path("attributes.headers")),
+	}
+
+	cx, err := child.Path("content").Children()
+	if err != nil {
+		return
+	}
+
+	for _, c := range cx {
+		if hasClass("messageBody", c) {
+			r.Body = extractAsset(c)
+		}
+
+		if hasClass("messageBodySchema", c) {
+			r.Schema = extractAsset(c)
+		}
 	}
 
 	return
@@ -207,4 +257,39 @@ func extractStatusCode(child *Element) int {
 	}
 
 	return n
+}
+
+func extractAsset(child *Element) (a blueprint.Asset) {
+	if digString("element", child) == "asset" {
+		return blueprint.Asset{
+			ContentType: digString("attributes.contentType", child),
+			Body:        digString("content", child),
+		}
+	}
+
+	return
+}
+
+func extractBody(child *Element) (a blueprint.Asset) {
+	return
+}
+
+func hasClass(s string, child *Element) bool {
+	return isContains("meta.classes", s, child)
+}
+
+func isContains(key, s string, child *Element) bool {
+	v := child.Path(key).Value()
+
+	if !v.IsValid() {
+		return false
+	}
+
+	for i := 0; i < v.Len(); i++ {
+		if s == v.Index(i).Interface().(string) {
+			return true
+		}
+	}
+
+	return false
 }
