@@ -55,8 +55,9 @@ func digResourceGroups(el *Element) (gs []blueprint.ResourceGroup) {
 
 	for _, child := range children {
 		g := &blueprint.ResourceGroup{
-			Title:     child.Path("meta.title").String(),
-			Resources: digResources(child),
+			Title:       child.Path("meta.title").String(),
+			Description: digDescription(child),
+			Resources:   digResources(child),
 		}
 
 		gs = append(gs, *g)
@@ -74,6 +75,7 @@ func digResources(el *Element) (rs []blueprint.Resource) {
 		go func(c *Element) {
 			cr <- blueprint.Resource{
 				Title:          c.Path("meta.title").String(),
+				Description:    digDescription(c),
 				Transitions:    digTransitions(c),
 				Href:           extractHrefs(c),
 				DataStructures: digDataStructures(c),

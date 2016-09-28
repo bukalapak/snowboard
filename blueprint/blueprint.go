@@ -29,12 +29,14 @@ type Metadata struct {
 }
 
 type ResourceGroup struct {
-	Title     string
-	Resources []Resource
+	Title       string
+	Description string
+	Resources   []Resource
 }
 
 type Resource struct {
 	Title          string
+	Description    string
 	Transitions    []Transition
 	DataStructures []DataStructure
 	Href           Href
