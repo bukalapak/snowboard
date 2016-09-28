@@ -1,3 +1,4 @@
+// Package snowboard parses API Blueprint and renders it as HTML document
 package snowboard
 
 /*
@@ -16,10 +17,16 @@ import (
 	"io"
 	"io/ioutil"
 	"unsafe"
+
+	"github.com/subosito/snowboard/blueprint"
 )
 
 const version = "v0.1.0"
 
+// API is alias for blueprint.API
+type API blueprint.API
+
+// Version returns current version of Snowboard and Drafter
 func Version() map[string]string {
 	v := C.drafter_version_string()
 
@@ -29,18 +36,24 @@ func Version() map[string]string {
 	}
 }
 
+// Parse formats API Blueprint as blueprint.API struct
 func Parse(r io.Reader) (*API, error) {
+	el, err := ParseElement(r)
+	if err != nil {
+		return nil, err
+	}
+
+	return element2API(el), nil
+}
+
+// ParseElement formats API Blueprint as Element for easier traversal
+func ParseElement(r io.Reader) (*Element, error) {
 	b, err := parseBlueprint(r)
 	if err != nil {
 		return nil, err
 	}
 
-	l, err := parseJSON(bytes.NewReader(b))
-	if err != nil {
-		return nil, err
-	}
-
-	return parseElement(l), nil
+	return parseJSON(bytes.NewReader(b))
 }
 
 func parseBlueprint(r io.Reader) ([]byte, error) {
@@ -77,7 +90,7 @@ func parseJSON(r io.Reader) (*Element, error) {
 	return &el, nil
 }
 
-func parseElement(el *Element) *API {
+func element2API(el *Element) *API {
 	l := el.Path("content").Index(0)
 
 	return &API{

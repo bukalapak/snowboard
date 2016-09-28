@@ -1,4 +1,4 @@
-package snowboard
+package blueprint
 
 import "net/http"
 

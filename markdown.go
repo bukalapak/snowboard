@@ -6,19 +6,19 @@ import (
 	bf "github.com/russross/blackfriday"
 )
 
-type markdownHtml struct {
+type markdownHTML struct {
 	bf.Renderer
 }
 
 func markdownRenderer() bf.Renderer {
-	var commonHtmlFlags = 0 |
+	var commonHTMLFlags = 0 |
 		bf.HTML_USE_XHTML |
 		bf.HTML_USE_SMARTYPANTS |
 		bf.HTML_SMARTYPANTS_FRACTIONS |
 		bf.HTML_SMARTYPANTS_DASHES |
 		bf.HTML_SMARTYPANTS_LATEX_DASHES
 
-	return newMarkdownRenderer(commonHtmlFlags, "", "")
+	return newMarkdownRenderer(commonHTMLFlags, "", "")
 }
 
 func markdown(input []byte) []byte {
@@ -39,7 +39,7 @@ func markdown(input []byte) []byte {
 
 func newMarkdownRenderer(flags int, title string, css string) bf.Renderer {
 	renderer := bf.HtmlRenderer(flags, title, css)
-	return &markdownHtml{renderer}
+	return &markdownHTML{renderer}
 }
 
 /** overriding blackfriday default rendering **/
@@ -50,7 +50,7 @@ func doubleSpace(out *bytes.Buffer) {
 	}
 }
 
-func (options *markdownHtml) Table(out *bytes.Buffer, header []byte, body []byte, columnData []int) {
+func (options *markdownHTML) Table(out *bytes.Buffer, header []byte, body []byte, columnData []int) {
 	doubleSpace(out)
 	out.WriteString("<table class=\"table\">\n<thead>\n")
 	out.Write(header)

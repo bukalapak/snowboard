@@ -133,7 +133,7 @@ func renderHTML() {
 	tf, err := readTemplate(*tplFile)
 	logErr(err)
 
-	err = snowboard.Render(string(tf), of, bp)
+	err = snowboard.HTML(string(tf), of, bp)
 	logErr(err)
 
 	log.Println("Generate HTML... DONE")

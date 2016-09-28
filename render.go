@@ -9,12 +9,13 @@ func markdownize(s string) template.HTML {
 	return template.HTML(string(markdown([]byte(s))))
 }
 
-func Render(s string, w io.Writer, b *API) error {
+// HTML renders blueprint.API struct as HTML document
+func HTML(tpl string, w io.Writer, b *API) error {
 	funcMap := template.FuncMap{
 		"markdownize": markdownize,
 	}
 
-	tmpl, err := template.New("api").Funcs(funcMap).Parse(s)
+	tmpl, err := template.New("api").Funcs(funcMap).Parse(tpl)
 	if err != nil {
 		return err
 	}
