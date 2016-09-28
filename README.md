@@ -13,3 +13,12 @@ Homebrew for macOS:
 $ brew install --HEAD https://raw.github.com/subosito/snowboard/master/tools/homebrew/snowboard.rb
 ```
 
+Manual installation:
+
+```sh
+$ git clone https://github.com/subosito/snowboard.git
+$ cd snowboard
+$ make install
+```
+
+Note: ensure you have configured your `GOPATH` and `PATH`.
