@@ -2,24 +2,13 @@ package snowboard
 
 import (
 	"net/http"
-	"reflect"
 	"strconv"
 
 	"github.com/subosito/snowboard/blueprint"
 )
 
-func digString(key string, el *Element) string {
-	v := el.Path(key).Value()
-
-	if v.IsValid() && v.Kind() == reflect.String {
-		return v.String()
-	}
-
-	return ""
-}
-
 func digTitle(el *Element) string {
-	return digString("meta.title", el)
+	return el.Path("meta.title").String()
 }
 
 func digDescription(el *Element) string {
@@ -29,8 +18,8 @@ func digDescription(el *Element) string {
 	}
 
 	for _, child := range children {
-		if digString("element", child) == "copy" {
-			return digString("content", child)
+		if child.Path("element").String() == "copy" {
+			return child.Path("content").String()
 		}
 	}
 
@@ -47,8 +36,8 @@ func digMetadata(el *Element) []blueprint.Metadata {
 
 	for _, v := range children {
 		md := blueprint.Metadata{
-			Name:  digString("content.key.content", v),
-			Value: digString("content.value.content", v),
+			Name:  v.Path("content.key.content").String(),
+			Value: v.Path("content.value.content").String(),
 		}
 
 		mds = append(mds, md)
@@ -66,7 +55,7 @@ func digResourceGroups(el *Element) (gs []blueprint.ResourceGroup) {
 	for _, child := range children {
 		if hasClass("resourceGroup", child) {
 			g := &blueprint.ResourceGroup{
-				Title:     digString("meta.title", child),
+				Title:     child.Path("meta.title").String(),
 				Resources: digResources(child),
 			}
 
@@ -84,9 +73,9 @@ func digResources(el *Element) (rs []blueprint.Resource) {
 	}
 
 	for _, child := range children {
-		if digString("element", child) == "resource" {
+		if child.Path("element").String() == "resource" {
 			r := &blueprint.Resource{
-				Title:       digString("meta.title", child),
+				Title:       child.Path("meta.title").String(),
 				Transitions: digTransitions(child),
 				Href:        extractHrefs(child),
 			}
@@ -105,9 +94,9 @@ func digTransitions(el *Element) (ts []blueprint.Transition) {
 	}
 
 	for _, child := range children {
-		if digString("element", child) == "transition" {
+		if child.Path("element").String() == "transition" {
 			t := &blueprint.Transition{
-				Title:        digString("meta.title", child),
+				Title:        child.Path("meta.title").String(),
 				Description:  digDescription(child),
 				Transactions: digTransactions(child),
 			}
@@ -126,7 +115,7 @@ func digTransactions(el *Element) (xs []blueprint.Transaction) {
 	}
 
 	for _, child := range children {
-		if digString("element", child) == "httpTransaction" {
+		if child.Path("element").String() == "httpTransaction" {
 			cx, err := child.Path("content").Children()
 			if err != nil {
 				continue
@@ -142,11 +131,11 @@ func digTransactions(el *Element) (xs []blueprint.Transaction) {
 
 func extractTransaction(children []*Element) (x blueprint.Transaction) {
 	for _, child := range children {
-		if digString("element", child) == "httpRequest" {
+		if child.Path("element").String() == "httpRequest" {
 			x.Request = extractRequest(child)
 		}
 
-		if digString("element", child) == "httpResponse" {
+		if child.Path("element").String() == "httpResponse" {
 			x.Response = extractResponse(child)
 		}
 	}
@@ -156,7 +145,7 @@ func extractTransaction(children []*Element) (x blueprint.Transaction) {
 
 func extractRequest(child *Element) (r blueprint.Request) {
 	r = blueprint.Request{
-		Method:  digString("attributes.method", child),
+		Method:  child.Path("attributes.method").String(),
 		Headers: extractHeaders(child.Path("attributes.headers")),
 	}
 
@@ -205,15 +194,15 @@ func extractResponse(child *Element) (r blueprint.Response) {
 func extractHeaders(child *Element) (h http.Header) {
 	h = http.Header{}
 
-	if digString("element", child) == "httpHeaders" {
+	if child.Path("element").String() == "httpHeaders" {
 		contents, err := child.Path("content").Children()
 		if err != nil {
 			return
 		}
 
 		for _, content := range contents {
-			key := digString("content.key.content", content)
-			val := digString("content.value.content", content)
+			key := content.Path("content.key.content").String()
+			val := content.Path("content.value.content").String()
 
 			h.Set(key, val)
 		}
@@ -226,7 +215,7 @@ func extractHeaders(child *Element) (h http.Header) {
 
 func extractHrefs(child *Element) (h blueprint.Href) {
 	if child.Path("href").Value().IsValid() {
-		h.Path = digString("href", child)
+		h.Path = child.Path("href").String()
 	}
 
 	contents, err := child.Path("attributes.hrefVariables.content").Children()
@@ -236,9 +225,9 @@ func extractHrefs(child *Element) (h blueprint.Href) {
 
 	for _, content := range contents {
 		v := &blueprint.HVariable{
-			Name:        digString("content.key.content", content),
-			Value:       digString("content.value.content", content),
-			Description: digString("meta.description", content),
+			Name:        content.Path("content.key.content").String(),
+			Value:       content.Path("content.value.content").String(),
+			Description: content.Path("meta.description").String(),
 		}
 
 		h.Variables = append(h.Variables, *v)
@@ -250,7 +239,7 @@ func extractHrefs(child *Element) (h blueprint.Href) {
 func extractStatusCode(child *Element) int {
 	var err error
 
-	s := digString("attributes.statusCode", child)
+	s := child.Path("attributes.statusCode").String()
 	n, err := strconv.Atoi(s)
 	if err != nil {
 		return 0
@@ -260,17 +249,13 @@ func extractStatusCode(child *Element) int {
 }
 
 func extractAsset(child *Element) (a blueprint.Asset) {
-	if digString("element", child) == "asset" {
+	if child.Path("element").String() == "asset" {
 		return blueprint.Asset{
-			ContentType: digString("attributes.contentType", child),
-			Body:        digString("content", child),
+			ContentType: child.Path("attributes.contentType").String(),
+			Body:        child.Path("content").String(),
 		}
 	}
 
-	return
-}
-
-func extractBody(child *Element) (a blueprint.Asset) {
 	return
 }
 
