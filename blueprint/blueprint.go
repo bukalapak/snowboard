@@ -11,6 +11,12 @@ type API struct {
 }
 
 type DataStructure struct {
+	Name       string
+	ID         string
+	Structures []Structure
+}
+
+type Structure struct {
 	Required bool
 	Key      string
 	Value    string
@@ -28,10 +34,10 @@ type ResourceGroup struct {
 }
 
 type Resource struct {
-	Title         string
-	Transitions   []Transition
-	DataStructure DataStructure
-	Href          Href
+	Title          string
+	Transitions    []Transition
+	DataStructures []DataStructure
+	Href           Href
 }
 
 type Transition struct {
@@ -54,11 +60,11 @@ type Request struct {
 }
 
 type Response struct {
-	StatusCode    int
-	Headers       http.Header
-	Body          Asset
-	Schema        Asset
-	DataStructure DataStructure
+	StatusCode     int
+	Headers        http.Header
+	Body           Asset
+	Schema         Asset
+	DataStructures []DataStructure
 }
 
 type Transaction struct {

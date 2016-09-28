@@ -70,12 +70,49 @@ func digResources(el *Element) (rs []blueprint.Resource) {
 
 	for _, child := range children {
 		r := &blueprint.Resource{
-			Title:       child.Path("meta.title").String(),
-			Transitions: digTransitions(child),
-			Href:        extractHrefs(child),
+			Title:          child.Path("meta.title").String(),
+			Transitions:    digTransitions(child),
+			Href:           extractHrefs(child),
+			DataStructures: digDataStructures(child),
 		}
 
 		rs = append(rs, *r)
+	}
+
+	return
+}
+
+func digDataStructures(el *Element) (ds []blueprint.DataStructure) {
+	children := filterContentByElement("dataStructure", el)
+
+	for _, child := range children {
+		cx, err := child.Path("content").Children()
+		if err != nil {
+			continue
+		}
+
+		for _, c := range cx {
+			d := blueprint.DataStructure{
+				Name: c.Path("element").String(),
+				ID:   c.Path("meta.id").String(),
+			}
+
+			cz, err := c.Path("content").Children()
+			if err == nil {
+				for _, z := range cz {
+					s := blueprint.Structure{
+						Required: isContains("attributes.typeAttributes", "required", z),
+						Key:      z.Path("content.key.content").String(),
+						Value:    z.Path("content.value.content").String(),
+						Kind:     z.Path("content.value.element").String(),
+					}
+
+					d.Structures = append(d.Structures, s)
+				}
+			}
+
+			ds = append(ds, d)
+		}
 	}
 
 	return
@@ -152,8 +189,9 @@ func extractRequest(child *Element) (r blueprint.Request) {
 
 func extractResponse(child *Element) (r blueprint.Response) {
 	r = blueprint.Response{
-		StatusCode: extractStatusCode(child),
-		Headers:    extractHeaders(child.Path("attributes.headers")),
+		StatusCode:     extractStatusCode(child),
+		Headers:        extractHeaders(child.Path("attributes.headers")),
+		DataStructures: digDataStructures(child),
 	}
 
 	cx, err := child.Path("content").Children()
