@@ -2,6 +2,7 @@ package snowboard
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/subosito/snowboard/blueprint"
 )
@@ -107,12 +108,27 @@ func digTransactions(el *Element) (xs []blueprint.Transaction) {
 
 	for _, child := range children {
 		if digString("element", child) == "httpTransaction" {
-			x := &blueprint.Transaction{
-				Request:  extractRequest(child),
-				Response: extractResponse(child),
+			cx, err := child.Path("content").Children()
+			if err != nil {
+				continue
 			}
 
-			xs = append(xs, *x)
+			x := extractTransaction(cx)
+			xs = append(xs, x)
+		}
+	}
+
+	return
+}
+
+func extractTransaction(children []*Element) (x blueprint.Transaction) {
+	for _, child := range children {
+		if digString("element", child) == "httpRequest" {
+			x.Request = extractRequest(child)
+		}
+
+		if digString("element", child) == "httpResponse" {
+			x.Response = extractResponse(child)
 		}
 	}
 
@@ -120,27 +136,25 @@ func digTransactions(el *Element) (xs []blueprint.Transaction) {
 }
 
 func extractRequest(child *Element) (r blueprint.Request) {
-	if digString("element", child) == "httpRequest" {
-		return blueprint.Request{
-			Method: digString("attributes.method", child),
-		}
+	return blueprint.Request{
+		Method: digString("attributes.method", child),
 	}
 
 	return
 }
 
 func extractResponse(child *Element) (r blueprint.Response) {
-	if digString("element", child) == "httpResponse" {
-		return blueprint.Response{
-			StatusCode: int(child.Path("attributes.statusCode").Value().Int()),
-			Headers:    extractHeaders(child),
-		}
+	return blueprint.Response{
+		StatusCode: extractStatusCode(child),
+		Headers:    extractHeaders(child.Path("attributes.headers")),
 	}
 
 	return
 }
 
 func extractHeaders(child *Element) (h http.Header) {
+	h = http.Header{}
+
 	if digString("element", child) == "httpHeaders" {
 		contents, err := child.Path("content").Children()
 		if err != nil {
@@ -181,4 +195,16 @@ func extractHrefs(child *Element) (h blueprint.Href) {
 	}
 
 	return
+}
+
+func extractStatusCode(child *Element) int {
+	var err error
+
+	s := digString("attributes.statusCode", child)
+	n, err := strconv.Atoi(s)
+	if err != nil {
+		return 0
+	}
+
+	return n
 }
