@@ -52,9 +52,16 @@ func doubleSpace(out *bytes.Buffer) {
 
 func (options *markdownHTML) Table(out *bytes.Buffer, header []byte, body []byte, columnData []int) {
 	doubleSpace(out)
-	out.WriteString("<table class=\"table\">\n<thead>\n")
+	out.WriteString("<table class=\"ui small table\">\n<thead>\n")
 	out.Write(header)
 	out.WriteString("</thead>\n\n<tbody>\n")
 	out.Write(body)
 	out.WriteString("</tbody>\n</table>\n")
+}
+
+func (options *markdownHTML) BlockCode(out *bytes.Buffer, text []byte, lang string) {
+	doubleSpace(out)
+	out.WriteString("<div class=\"ui piled segment\">\n")
+	options.Renderer.BlockCode(out, text, lang)
+	out.WriteString("</div>\n")
 }

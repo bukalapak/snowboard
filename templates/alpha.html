@@ -2,24 +2,74 @@
 <html lang="en">
   <head>
     <title>{{.Title}}</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css" integrity="2hfp1SzUoho7/TsGGGDaFdsuuDL0LX2hnUp6VkX3CUQ2K4K+xjboZdsXyp4oUHZj" crossorigin="anonymous">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.css">
+    <style>
+      .wrapper {
+        margin-top: 40px;
+        margin-bottom: 40px;
+      }
+    </style>
   </head>
   <body>
-    <div class="page-header">
-      <div class="container">
-        <h1>{{.Title}}</h1>
-        <hr>
-        <div class="col-sm-12">
-          {{.Description | markdownize}}
+    <div class="ui wrapper container">
+      <div class="row">
+        <div class="ui two column grid">
+          <div class="four wide column">
+          {{range .ResourceGroups}}
+            <div class="ui fluid secondary vertical pointing menu">
+              <div class="item purple active">
+                <div class="header">
+                  <a href="#group-{{.Title | parameterize}}">{{.Title}}</a>
+                </div>
+              </div>
+              {{range .Resources}}
+                <a class="item">{{.Title}}</a>
+                {{range .Transitions}}
+                  <div class="menu">
+                    <a class="item">
+                      <i class="ui {{. | colorize}} empty circular label"></i>
+                      {{.Title}}
+                    </a>
+                  </div>
+                {{end}}
+              {{end}}
+            </div>
+            <div class="ui horizontal divider">+</div>
+          {{end}}
+          </div>
+          <div class="twelve wide column">
+            <div class="ui text container">
+              <h1 class="ui huge header">{{.Title}}</h1>
+              {{.Description | markdownize}}
+            </div>
+            <div class="contents">
+              {{range .ResourceGroups}}
+                <div class="ui horizontal divider" id="group-{{.Title | parameterize}}">
+                  {{.Title}}
+                </div>
+
+                <div class="description">{{.Description}}</div>
+
+                {{range .Resources}}
+                  <h2 class="ui dividing header">{{.Title}}</h2>
+                  <div class="description">{{.Description}}</div>
+
+                  {{range .Transitions}}
+                    <h3 class="ui dividing header">{{.Title}}</h3>
+                    <div class="description">{{.Description | markdownize}}</div>
+                  {{end}}
+                {{end}}
+              {{end}}
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js" integrity="sha384-THPy051/pYDQGanwU6poAc/hOdQxjnOEXzbT+OuUAFqNqFjL+4IGLBgCJC3ZOShY" crossorigin="anonymous"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js" integrity="sha384-Plbmg8JY28KFelvJVai01l8WyZzrYWG825m+cZ0eDDS1f7d/js6ikvy1+X+guPIB" crossorigin="anonymous"></script>
-  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/js/bootstrap.min.js" integrity="VjEeINv9OSwtWFLAtmc4JCtEJXXBub00gtSnszmspDLCtC0I4z4nqz7rEFbIZLLU" crossorigin="anonymous"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.js"></script>
 </body>
 </html>
