@@ -8,7 +8,11 @@ import (
 )
 
 func digTitle(el *Element) string {
-	return el.Path("meta.title").String()
+	if hasClass("api", el) {
+		return el.Path("meta.title").String()
+	}
+
+	return ""
 }
 
 func digDescription(el *Element) string {
@@ -36,7 +40,7 @@ func digMetadata(el *Element) []blueprint.Metadata {
 
 	for _, v := range children {
 		md := blueprint.Metadata{
-			Name:  v.Path("content.key.content").String(),
+			Key:   v.Path("content.key.content").String(),
 			Value: v.Path("content.value.content").String(),
 		}
 
@@ -47,83 +51,62 @@ func digMetadata(el *Element) []blueprint.Metadata {
 }
 
 func digResourceGroups(el *Element) (gs []blueprint.ResourceGroup) {
-	children, err := el.Path("content").Children()
-	if err != nil {
-		return
-	}
+	children := filterContentByClass("resourceGroup", el)
 
 	for _, child := range children {
-		if hasClass("resourceGroup", child) {
-			g := &blueprint.ResourceGroup{
-				Title:     child.Path("meta.title").String(),
-				Resources: digResources(child),
-			}
-
-			gs = append(gs, *g)
+		g := &blueprint.ResourceGroup{
+			Title:     child.Path("meta.title").String(),
+			Resources: digResources(child),
 		}
+
+		gs = append(gs, *g)
 	}
 
 	return
 }
 
 func digResources(el *Element) (rs []blueprint.Resource) {
-	children, err := el.Path("content").Children()
-	if err != nil {
-		return
-	}
+	children := filterContentByElement("resource", el)
 
 	for _, child := range children {
-		if child.Path("element").String() == "resource" {
-			r := &blueprint.Resource{
-				Title:       child.Path("meta.title").String(),
-				Transitions: digTransitions(child),
-				Href:        extractHrefs(child),
-			}
-
-			rs = append(rs, *r)
+		r := &blueprint.Resource{
+			Title:       child.Path("meta.title").String(),
+			Transitions: digTransitions(child),
+			Href:        extractHrefs(child),
 		}
+
+		rs = append(rs, *r)
 	}
 
 	return
 }
 
 func digTransitions(el *Element) (ts []blueprint.Transition) {
-	children, err := el.Path("content").Children()
-	if err != nil {
-		return
-	}
+	children := filterContentByElement("transition", el)
 
 	for _, child := range children {
-		if child.Path("element").String() == "transition" {
-			t := &blueprint.Transition{
-				Title:        child.Path("meta.title").String(),
-				Description:  digDescription(child),
-				Transactions: digTransactions(child),
-			}
-
-			ts = append(ts, *t)
+		t := &blueprint.Transition{
+			Title:        child.Path("meta.title").String(),
+			Description:  digDescription(child),
+			Transactions: digTransactions(child),
 		}
+
+		ts = append(ts, *t)
 	}
 
 	return
 }
 
 func digTransactions(el *Element) (xs []blueprint.Transaction) {
-	children, err := el.Path("content").Children()
-	if err != nil {
-		return
-	}
+	children := filterContentByElement("httpTransaction", el)
 
 	for _, child := range children {
-		if child.Path("element").String() == "httpTransaction" {
-			cx, err := child.Path("content").Children()
-			if err != nil {
-				continue
-			}
-
-			x := extractTransaction(cx)
-			xs = append(xs, x)
+		cx, err := child.Path("content").Children()
+		if err != nil {
+			continue
 		}
+
+		xs = append(xs, extractTransaction(cx))
 	}
 
 	return
@@ -225,7 +208,7 @@ func extractHrefs(child *Element) (h blueprint.Href) {
 
 	for _, content := range contents {
 		v := &blueprint.HVariable{
-			Name:        content.Path("content.key.content").String(),
+			Key:         content.Path("content.key.content").String(),
 			Value:       content.Path("content.value.content").String(),
 			Description: content.Path("meta.description").String(),
 		}
@@ -277,4 +260,34 @@ func isContains(key, s string, child *Element) bool {
 	}
 
 	return false
+}
+
+func filterContentByElement(s string, el *Element) (xs []*Element) {
+	children, err := el.Path("content").Children()
+	if err != nil {
+		return
+	}
+
+	for _, child := range children {
+		if child.Path("element").String() == s {
+			xs = append(xs, child)
+		}
+	}
+
+	return
+}
+
+func filterContentByClass(s string, el *Element) (xs []*Element) {
+	children, err := el.Path("content").Children()
+	if err != nil {
+		return
+	}
+
+	for _, child := range children {
+		if hasClass(s, child) {
+			xs = append(xs, child)
+		}
+	}
+
+	return
 }

@@ -11,10 +11,14 @@ type API struct {
 }
 
 type DataStructure struct {
+	Required bool
+	Key      string
+	Value    string
+	Kind     string
 }
 
 type Metadata struct {
-	Name  string
+	Key   string
 	Value string
 }
 
@@ -69,6 +73,6 @@ type Href struct {
 
 type HVariable struct {
 	Description string
-	Name        string
+	Key         string
 	Value       string
 }
