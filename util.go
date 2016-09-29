@@ -1,7 +1,6 @@
 package snowboard
 
 import (
-	"net/http"
 	"strconv"
 
 	"github.com/subosito/snowboard/blueprint"
@@ -93,6 +92,22 @@ func digResources(el *Element) (rs []blueprint.Resource) {
 func digDataStructures(el *Element) (ds []blueprint.DataStructure) {
 	children := filterContentByElement("dataStructure", el)
 
+	if len(children) != 0 {
+		return extractDataStructures(children)
+	}
+
+	contents := filterContentByClass("dataStructures", el)
+
+	for _, c := range contents {
+		children = filterContentByElement("dataStructure", c)
+		cs := extractDataStructures(children)
+		ds = append(ds, cs...)
+	}
+
+	return
+}
+
+func extractDataStructures(children []*Element) (ds []blueprint.DataStructure) {
 	for _, child := range children {
 		cx, err := child.Path("content").Children()
 		if err != nil {
@@ -109,10 +124,11 @@ func digDataStructures(el *Element) (ds []blueprint.DataStructure) {
 			if err == nil {
 				for _, z := range cz {
 					s := blueprint.Structure{
-						Required: isContains("attributes.typeAttributes", "required", z),
-						Key:      z.Path("content.key.content").String(),
-						Value:    z.Path("content.value.content").String(),
-						Kind:     z.Path("content.value.element").String(),
+						Required:    isContains("attributes.typeAttributes", "required", z),
+						Description: z.Path("meta.description").String(),
+						Key:         z.Path("content.key.content").String(),
+						Value:       z.Path("content.value.content").String(),
+						Kind:        z.Path("content.value.element").String(),
 					}
 
 					d.Structures = append(d.Structures, s)
@@ -134,6 +150,7 @@ func digTransitions(el *Element) (ts []blueprint.Transition) {
 			Title:        child.Path("meta.title").String(),
 			Description:  digDescription(child),
 			Transactions: digTransactions(child),
+			Href:         extractHrefs(child),
 		}
 
 		ts = append(ts, *t)
@@ -220,9 +237,7 @@ func extractResponse(child *Element) (r blueprint.Response) {
 	return
 }
 
-func extractHeaders(child *Element) (h http.Header) {
-	h = http.Header{}
-
+func extractHeaders(child *Element) (hs []blueprint.Header) {
 	if child.Path("element").String() == "httpHeaders" {
 		contents, err := child.Path("content").Children()
 		if err != nil {
@@ -230,10 +245,12 @@ func extractHeaders(child *Element) (h http.Header) {
 		}
 
 		for _, content := range contents {
-			key := content.Path("content.key.content").String()
-			val := content.Path("content.value.content").String()
+			h := blueprint.Header{
+				Key:   content.Path("content.key.content").String(),
+				Value: content.Path("content.value.content").String(),
+			}
 
-			h.Set(key, val)
+			hs = append(hs, h)
 		}
 
 		return
@@ -243,8 +260,10 @@ func extractHeaders(child *Element) (h http.Header) {
 }
 
 func extractHrefs(child *Element) (h blueprint.Href) {
-	if child.Path("href").Value().IsValid() {
-		h.Path = child.Path("href").String()
+	href := child.Path("attributes.href")
+
+	if href.Value().IsValid() {
+		h.Path = href.String()
 	}
 
 	contents, err := child.Path("attributes.hrefVariables.content").Children()
@@ -254,8 +273,10 @@ func extractHrefs(child *Element) (h blueprint.Href) {
 
 	for _, content := range contents {
 		v := &blueprint.HVariable{
+			Required:    isContains("attributes.typeAttributes", "required", content),
 			Key:         content.Path("content.key.content").String(),
 			Value:       content.Path("content.value.content").String(),
+			Kind:        content.Path("content.value.element").String(),
 			Description: content.Path("meta.description").String(),
 		}
 

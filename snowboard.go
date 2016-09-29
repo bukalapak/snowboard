@@ -98,5 +98,6 @@ func element2API(el *Element) *API {
 		Description:    digDescription(l),
 		Metadata:       digMetadata(l),
 		ResourceGroups: digResourceGroups(l),
+		DataStructures: digDataStructures(l),
 	}
 }

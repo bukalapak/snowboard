@@ -1,7 +1,5 @@
 package blueprint
 
-import "net/http"
-
 type API struct {
 	Title          string
 	Description    string
@@ -17,10 +15,11 @@ type DataStructure struct {
 }
 
 type Structure struct {
-	Required bool
-	Key      string
-	Value    string
-	Kind     string
+	Required    bool
+	Description string
+	Key         string
+	Value       string
+	Kind        string
 }
 
 type Metadata struct {
@@ -45,6 +44,7 @@ type Resource struct {
 type Transition struct {
 	Title        string
 	Description  string
+	Href         Href
 	Transactions []Transaction
 }
 
@@ -53,17 +53,22 @@ type Asset struct {
 	Body        string
 }
 
+type Header struct {
+	Key   string
+	Value string
+}
+
 type Request struct {
 	Method      string
 	Body        Asset
 	Schema      Asset
-	Headers     http.Header
+	Headers     []Header
 	ContentType string
 }
 
 type Response struct {
 	StatusCode     int
-	Headers        http.Header
+	Headers        []Header
 	Body           Asset
 	Schema         Asset
 	DataStructures []DataStructure
@@ -80,7 +85,9 @@ type Href struct {
 }
 
 type HVariable struct {
+	Required    bool
 	Description string
 	Key         string
 	Value       string
+	Kind        string
 }

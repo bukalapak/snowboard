@@ -3,6 +3,7 @@ package snowboard
 import (
 	"html/template"
 	"io"
+	"path"
 	"strings"
 
 	"github.com/subosito/snowboard/blueprint"
@@ -16,20 +17,61 @@ func parameterize(s string) string {
 	return strings.Replace(strings.ToLower(s), " ", "-", -1)
 }
 
-func colorize(t blueprint.Transition) string {
+func multiParameterize(ss ...string) (s string) {
+	xs := []string{}
+
+	for i := range ss {
+		xs = append(xs, parameterize(ss[i]))
+	}
+
+	return strings.Join(xs, "-")
+}
+
+func transitionColorize(t blueprint.Transition) string {
 	for _, m := range t.Transactions {
-		switch m.Request.Method {
-		case "GET":
-			return "green"
-		case "POST":
-			return "blue"
-		case "PUT":
-			return "teal"
-		case "PATCH":
-			return "violet"
-		case "DELETE":
-			return "red"
+		return colorize(m.Request.Method)
+	}
+
+	return ""
+}
+
+func apiUrl(b *API, s string) string {
+	var h string
+
+	for _, m := range b.Metadata {
+		if m.Key == "HOST" {
+			h = m.Value
 		}
+	}
+
+	return path.Join(h, s)
+}
+
+func iColorize(i int) string {
+	switch i {
+	case 200, 201, 202, 204:
+		return "blue"
+	case 401, 403, 404:
+		return "orange"
+	case 500:
+		return "red"
+	}
+
+	return ""
+}
+
+func colorize(s string) string {
+	switch s {
+	case "GET":
+		return "green"
+	case "POST":
+		return "blue"
+	case "PUT":
+		return "teal"
+	case "PATCH":
+		return "violet"
+	case "DELETE":
+		return "red"
 	}
 
 	return ""
@@ -38,9 +80,13 @@ func colorize(t blueprint.Transition) string {
 // HTML renders blueprint.API struct as HTML document
 func HTML(tpl string, w io.Writer, b *API) error {
 	funcMap := template.FuncMap{
-		"markdownize":  markdownize,
-		"parameterize": parameterize,
-		"colorize":     colorize,
+		"markdownize":        markdownize,
+		"parameterize":       parameterize,
+		"mParameterize":      multiParameterize,
+		"colorize":           colorize,
+		"iColorize":          iColorize,
+		"transitionColorize": transitionColorize,
+		"apiUrl":             apiUrl,
 	}
 
 	tmpl, err := template.New("api").Funcs(funcMap).Parse(tpl)

@@ -3,6 +3,7 @@ package snowboard
 import (
 	"errors"
 	"reflect"
+	"strconv"
 	"strings"
 )
 
@@ -17,8 +18,13 @@ func (b *Element) Value() reflect.Value {
 func (b *Element) String() string {
 	v := b.Value()
 
-	if v.IsValid() && v.Kind() == reflect.String {
-		return v.String()
+	if v.IsValid() {
+		switch v.Kind() {
+		case reflect.String:
+			return v.String()
+		case reflect.Float64:
+			return strconv.Itoa(int(v.Float()))
+		}
 	}
 
 	return ""
