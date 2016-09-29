@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>JSON Schema</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.css">
+    <style>
+      blockquote {
+        border-left: solid 4px #eee;
+        padding-left: 8px;
+        font-style: italic;
+        margin-left: 0;
+        padding: 8px;
+      }
+
+      .ui.micro.label {
+        font-size: .25rem;
+      }
+
+      .ui.transaction.accordion .title {
+        text-align: center;
+      }
+
+      .ui.transaction.accordion .content {
+        border-top: solid 1px #ddd !important;
+        border-bottom: solid 1px #ddd !important;
+        background-color: rgba(0,0,0,.03);
+        padding: 0.5em 1em !important;
+      }
+
+      .ui.transaction.accordion .content.active {
+        margin-top: 0.5em;
+      }
+
+      .ui.basic.label {
+        text-align: left;
+        overflow: auto;
+      }
+
+      .resource .ui.sub.header {
+        text-transform: none;
+      }
+
+      .sidebar {
+        position: fixed !important;
+        overflow: scroll;
+        height: 100%;
+        padding-bottom: 20px !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="ui two column grid container">
+      <div class="four wide sidebar column">
+        <div class="ui container">
+          
+<div class="ui horizontal divider">
+  <a href="#introduction">Introduction</a>
+</div>
+<div class="ui fluid secondary vertical menu">
+  <a class="item">JSON Schema</a>
+</div>
+
+
+<div class="ui accordion fluid">
+  
+    
+    <div class="title active">
+      <i class="dropdown icon"></i>
+      
+        <strong>Notes</strong>
+      
+    </div>
+    <div class="content active">
+      <div class="ui fluid secondary vertical menu">
+      
+        <a class="item" href="#notes-get-a-note">
+          
+            <i class="ui green empty circular label"></i> Get a note
+          
+        </a>
+      
+        <a class="item" href="#notes-update-a-note">
+          
+            <i class="ui violet empty circular label"></i> Update a note
+          
+        </a>
+      
+      </div>
+    </div>
+    
+  
+</div>
+
+
+        </div>
+      </div>
+      <div class="twelve wide right floated column">
+        <div class="ui text container">
+          
+<div class="ui hidden divider header"></div>
+<h1 class="ui huge header">JSON Schema</h1>
+<hr class="ui divider">
+<div class="description">
+  <p>Every request and response can have a schema. Below you will find examples
+using <a href="http://json-schema.org/">JSON Schema</a> to describe the format of request
+and response body content.</p>
+
+<h2>API Blueprint</h2>
+
+<ul>
+<li><p><a href="13.%20Named%20Endpoints.md">Previous: Named Endpoints</a></p></li>
+
+<li><p><a href="https://raw.github.com/apiaryio/api-blueprint/master/examples/14.%20JSON%20Schema.md">This: Raw API Blueprint</a></p></li>
+
+<li><p><a href="15.%20Advanced%20JSON%20Schema.md">Next: Advanced JSON Schema</a></p></li>
+</ul>
+
+</div>
+
+          <div class="ui hidden divider"></div>
+          
+
+
+  <div class="ui horizontal divider" id="group-">
+    
+  </div>
+  <div class="ui header center aligned">
+    <div class="ui sub header">
+      
+    </div>
+  </div>
+  
+    
+      <div class="ui stacked segments">
+        <div class="ui basic segment resource">
+          <div class="ui purple huge ribbon label">
+            Notes
+          </div>
+          <div class="ui header">
+            <div class="ui sub header">
+              
+            </div>
+          </div>
+        </div>
+
+        
+          
+<div class="ui grey horizontal small divider header">
+  <i class="ui grey micro circular label"></i>
+  <i class="ui pink micro circular label"></i>
+  <i class="ui grey micro circular label"></i>
+</div>
+
+          <div class="ui basic segment">
+            <h3 class="ui block center aligned header" id="notes-get-a-note">
+              Get a note
+            </h3>
+            <div class="description"><p>Gets a single note by its unique identifier.</p>
+</div>
+
+            
+              <h4 class="ui horizontal divider">
+                REQUEST
+              </h4>
+              <div class="fluid ui large labeled button">
+                <div class="ui green large button">
+                  <h3>GET</h3>
+                </div>
+                <a class="ui basic fluid green label">
+                  <code>/notes/{id}</code>
+                </a>
+              </div>
+              
+              
+              
+
+              <h4 class="ui horizontal divider">RESPONSE</h4>
+              
+<table class="ui celled definition table">
+  <thead>
+    <tr>
+      <th colspan="2">Headers</th>
+    </tr>
+  <thead>
+  <tbody>
+  
+    <tr>
+      <td class="four wide">Content-Type</td>
+      <td><code>application/json</code></td>
+    </tr>
+  
+  </tbody>
+</table>
+
+              <div class="ui stacked blue segment">
+                <div class="ui fluid transaction accordion">
+                  <div class="title center aligned">
+                    <a class="ui blue circular label">
+                      200
+                    </a>
+                    <code>application/json</code>
+                  </div>
+                  <div class="content">
+                    <pre>{
+    &#34;id&#34;: &#34;abc123&#34;,
+    &#34;title&#34;: &#34;This is a note&#34;,
+    &#34;content&#34;: &#34;This is the note content.&#34;
+    &#34;tags&#34;: [
+        &#34;todo&#34;,
+        &#34;home&#34;
+    ]
+}
+</pre>
+                    
+                    
+                  </div>
+                </div>
+              </div>
+            
+          </div>
+        
+          
+<div class="ui grey horizontal small divider header">
+  <i class="ui grey micro circular label"></i>
+  <i class="ui pink micro circular label"></i>
+  <i class="ui grey micro circular label"></i>
+</div>
+
+          <div class="ui basic segment">
+            <h3 class="ui block center aligned header" id="notes-update-a-note">
+              Update a note
+            </h3>
+            <div class="description"><p>Modify a note&rsquo;s data using its unique identifier. You can edit the <code>title</code>,
+<code>content</code>, and <code>tags</code>.</p>
+</div>
+
+            
+              <h4 class="ui horizontal divider">
+                REQUEST
+              </h4>
+              <div class="fluid ui large labeled button">
+                <div class="ui violet large button">
+                  <h3>PATCH</h3>
+                </div>
+                <a class="ui basic fluid violet label">
+                  <code>/notes/{id}</code>
+                </a>
+              </div>
+              
+              
+                
+<table class="ui celled definition table">
+  <thead>
+    <tr>
+      <th colspan="2">Headers</th>
+    </tr>
+  <thead>
+  <tbody>
+  
+    <tr>
+      <td class="four wide">Content-Type</td>
+      <td><code>application/json</code></td>
+    </tr>
+  
+  </tbody>
+</table>
+
+              
+              
+                <div class="ui stacked segment">
+                  <div class="ui fluid transaction accordion">
+                    <div class="title">
+                      <code>application/json</code>
+                    </div>
+                    <div class="content">
+                      <pre>{
+    &#34;title&#34;: &#34;This is another note&#34;,
+    &#34;tags&#34;: [
+        &#34;todo&#34;,
+        &#34;work&#34;
+    ]
+}
+</pre>
+                    </div>
+                  </div>
+                </div>
+              
+
+              <h4 class="ui horizontal divider">RESPONSE</h4>
+              
+<table class="ui celled definition table">
+  <thead>
+    <tr>
+      <th colspan="2">Headers</th>
+    </tr>
+  <thead>
+  <tbody>
+  
+  </tbody>
+</table>
+
+              <div class="ui stacked blue segment">
+                <div class="ui fluid transaction accordion">
+                  <div class="title center aligned">
+                    <a class="ui blue circular label">
+                      204
+                    </a>
+                    <code></code>
+                  </div>
+                  <div class="content">
+                    <pre></pre>
+                    
+                    
+                  </div>
+                </div>
+              </div>
+            
+          </div>
+        
+        </div>
+      <div class="ui hidden divider"></div>
+    
+  
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/components/accordion.min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      $('.ui.accordion').accordion({ animateChildren: false, duration: 0 });
+    });
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

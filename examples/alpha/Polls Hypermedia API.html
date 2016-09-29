@@ -1,0 +1,1599 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Polls</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.css">
+    <style>
+      blockquote {
+        border-left: solid 4px #eee;
+        padding-left: 8px;
+        font-style: italic;
+        margin-left: 0;
+        padding: 8px;
+      }
+
+      .ui.micro.label {
+        font-size: .25rem;
+      }
+
+      .ui.transaction.accordion .title {
+        text-align: center;
+      }
+
+      .ui.transaction.accordion .content {
+        border-top: solid 1px #ddd !important;
+        border-bottom: solid 1px #ddd !important;
+        background-color: rgba(0,0,0,.03);
+        padding: 0.5em 1em !important;
+      }
+
+      .ui.transaction.accordion .content.active {
+        margin-top: 0.5em;
+      }
+
+      .ui.basic.label {
+        text-align: left;
+        overflow: auto;
+      }
+
+      .resource .ui.sub.header {
+        text-transform: none;
+      }
+
+      .sidebar {
+        position: fixed !important;
+        overflow: scroll;
+        height: 100%;
+        padding-bottom: 20px !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="ui two column grid container">
+      <div class="four wide sidebar column">
+        <div class="ui container">
+          
+<div class="ui horizontal divider">
+  <a href="#introduction">Introduction</a>
+</div>
+<div class="ui fluid secondary vertical menu">
+  <a class="item">Polls</a>
+</div>
+
+
+<div class="ui accordion fluid">
+  
+    
+    <div class="title active">
+      <i class="dropdown icon"></i>
+      
+        <strong>Polls API Root</strong>
+      
+    </div>
+    <div class="content active">
+      <div class="ui fluid secondary vertical menu">
+      
+        <a class="item" href="#polls-api-root-retrieve-the-entry-point">
+          
+            <i class="ui green empty circular label"></i> Retrieve the Entry Point
+          
+        </a>
+      
+      </div>
+    </div>
+    
+  
+    
+    <div class="title ">
+      <i class="dropdown icon"></i>
+      
+        <strong>Questions Collection</strong>
+      
+    </div>
+    <div class="content ">
+      <div class="ui fluid secondary vertical menu">
+      
+        <a class="item" href="#questions-collection-list-all-questions">
+          
+            <i class="ui green empty circular label"></i> List All Questions
+          
+        </a>
+      
+        <a class="item" href="#questions-collection-create-a-new-question">
+          
+            <i class="ui blue empty circular label"></i> Create a New Question
+          
+        </a>
+      
+      </div>
+    </div>
+    
+  
+</div>
+
+
+<div class="ui horizontal divider">
+  <a href="#group-question">Question</a>
+</div>
+
+<div class="ui accordion fluid">
+  
+    
+    <div class="title active">
+      <i class="dropdown icon"></i>
+      
+        <strong>Question</strong>
+      
+    </div>
+    <div class="content active">
+      <div class="ui fluid secondary vertical menu">
+      
+        <a class="item" href="#question-question-view-a-questions-detail">
+          
+            <i class="ui green empty circular label"></i> View a Questions Detail
+          
+        </a>
+      
+      </div>
+    </div>
+    
+  
+    
+    <div class="title ">
+      <i class="dropdown icon"></i>
+      
+        <strong>Choice</strong>
+      
+    </div>
+    <div class="content ">
+      <div class="ui fluid secondary vertical menu">
+      
+        <a class="item" href="#question-choice-view-a-choice-detail">
+          
+            <i class="ui green empty circular label"></i> View a Choice Detail
+          
+        </a>
+      
+        <a class="item" href="#question-choice-vote-on-a-choice">
+          
+            <i class="ui blue empty circular label"></i> Vote on a Choice
+          
+        </a>
+      
+      </div>
+    </div>
+    
+  
+</div>
+
+
+        </div>
+      </div>
+      <div class="twelve wide right floated column">
+        <div class="ui text container">
+          
+<div class="ui hidden divider header"></div>
+<h1 class="ui huge header">Polls</h1>
+<hr class="ui divider">
+<div class="description">
+  <p>Polls is a simple API allowing consumers to view polls and vote in them. You can view this documentation over at <a href="http://docs.pollshypermedia.apiary.io/">Apiary</a>.</p>
+
+</div>
+
+          <div class="ui hidden divider"></div>
+          
+
+
+  <div class="ui horizontal divider" id="group-">
+    
+  </div>
+  <div class="ui header center aligned">
+    <div class="ui sub header">
+      
+    </div>
+  </div>
+  
+    
+      <div class="ui stacked segments">
+        <div class="ui basic segment resource">
+          <div class="ui purple huge ribbon label">
+            Polls API Root
+          </div>
+          <div class="ui header">
+            <div class="ui sub header">
+              <p>This resource does not have any attributes. Instead it offers the initial API affordances.</p>
+
+            </div>
+          </div>
+        </div>
+
+        
+          
+<div class="ui grey horizontal small divider header">
+  <i class="ui grey micro circular label"></i>
+  <i class="ui pink micro circular label"></i>
+  <i class="ui grey micro circular label"></i>
+</div>
+
+          <div class="ui basic segment">
+            <h3 class="ui block center aligned header" id="polls-api-root-retrieve-the-entry-point">
+              Retrieve the Entry Point
+            </h3>
+            <div class="description"></div>
+
+            
+              <h4 class="ui horizontal divider">
+                REQUEST
+              </h4>
+              <div class="fluid ui large labeled button">
+                <div class="ui green large button">
+                  <h3>GET</h3>
+                </div>
+                <a class="ui basic fluid green label">
+                  <code>http:/polls.apiblueprint.org</code>
+                </a>
+              </div>
+              
+              
+              
+
+              <h4 class="ui horizontal divider">RESPONSE</h4>
+              
+<table class="ui celled definition table">
+  <thead>
+    <tr>
+      <th colspan="2">Headers</th>
+    </tr>
+  <thead>
+  <tbody>
+  
+    <tr>
+      <td class="four wide">Content-Type</td>
+      <td><code>application/vnd.siren&#43;json</code></td>
+    </tr>
+  
+  </tbody>
+</table>
+
+              <div class="ui stacked blue segment">
+                <div class="ui fluid transaction accordion">
+                  <div class="title center aligned">
+                    <a class="ui blue circular label">
+                      200
+                    </a>
+                    <code>application/vnd.siren&#43;json</code>
+                  </div>
+                  <div class="content">
+                    <pre>{
+    &#34;links&#34;: [
+        {
+            &#34;rel&#34;: [ &#34;questions&#34; ],
+            &#34;href&#34;: &#34;/questions&#34;
+        }
+    ]
+}
+</pre>
+                    
+                    
+                  </div>
+                </div>
+              </div>
+            
+              <h4 class="ui horizontal divider">
+                REQUEST
+              </h4>
+              <div class="fluid ui large labeled button">
+                <div class="ui green large button">
+                  <h3>GET</h3>
+                </div>
+                <a class="ui basic fluid green label">
+                  <code>http:/polls.apiblueprint.org</code>
+                </a>
+              </div>
+              
+              
+              
+
+              <h4 class="ui horizontal divider">RESPONSE</h4>
+              
+<table class="ui celled definition table">
+  <thead>
+    <tr>
+      <th colspan="2">Headers</th>
+    </tr>
+  <thead>
+  <tbody>
+  
+    <tr>
+      <td class="four wide">Content-Type</td>
+      <td><code>application/hal&#43;json</code></td>
+    </tr>
+  
+  </tbody>
+</table>
+
+              <div class="ui stacked blue segment">
+                <div class="ui fluid transaction accordion">
+                  <div class="title center aligned">
+                    <a class="ui blue circular label">
+                      200
+                    </a>
+                    <code>application/hal&#43;json</code>
+                  </div>
+                  <div class="content">
+                    <pre>{
+    &#34;_links&#34;: {
+        &#34;questions&#34;: { &#34;href&#34;: &#34;/questions&#34; }
+    }
+}
+</pre>
+                    
+                    
+                  </div>
+                </div>
+              </div>
+            
+          </div>
+        
+        </div>
+      <div class="ui hidden divider"></div>
+    
+  
+    
+      <div class="ui stacked segments">
+        <div class="ui basic segment resource">
+          <div class="ui purple huge ribbon label">
+            Questions Collection
+          </div>
+          <div class="ui header">
+            <div class="ui sub header">
+              
+            </div>
+          </div>
+        </div>
+
+        
+          
+<div class="ui grey horizontal small divider header">
+  <i class="ui grey micro circular label"></i>
+  <i class="ui pink micro circular label"></i>
+  <i class="ui grey micro circular label"></i>
+</div>
+
+          <div class="ui basic segment">
+            <h3 class="ui block center aligned header" id="questions-collection-list-all-questions">
+              List All Questions
+            </h3>
+            <div class="description"></div>
+
+            
+              <h4 class="ui horizontal divider">
+                REQUEST
+              </h4>
+              <div class="fluid ui large labeled button">
+                <div class="ui green large button">
+                  <h3>GET</h3>
+                </div>
+                <a class="ui basic fluid green label">
+                  <code>http:/polls.apiblueprint.org/questions{?page}</code>
+                </a>
+              </div>
+              
+              
+              
+
+              <h4 class="ui horizontal divider">RESPONSE</h4>
+              
+<table class="ui celled definition table">
+  <thead>
+    <tr>
+      <th colspan="2">Headers</th>
+    </tr>
+  <thead>
+  <tbody>
+  
+    <tr>
+      <td class="four wide">Content-Type</td>
+      <td><code>application/vnd.siren&#43;json</code></td>
+    </tr>
+  
+  </tbody>
+</table>
+
+              <div class="ui stacked blue segment">
+                <div class="ui fluid transaction accordion">
+                  <div class="title center aligned">
+                    <a class="ui blue circular label">
+                      200
+                    </a>
+                    <code>application/vnd.siren&#43;json</code>
+                  </div>
+                  <div class="content">
+                    <pre>{
+    &#34;actions&#34;: [
+        {
+            &#34;name&#34;: &#34;add&#34;,
+            &#34;href&#34;: &#34;/questions&#34;,
+            &#34;method&#34;: &#34;POST&#34;,
+            &#34;type&#34;: &#34;application/json&#34;,
+            &#34;fields&#34;: [
+                {
+                    &#34;name&#34;: &#34;question&#34;
+                }, {
+                    &#34;name&#34;: &#34;choices&#34;
+                }
+            ]
+        }
+    ],
+    &#34;links&#34;: [
+        {
+          &#34;rel&#34;: [ &#34;next&#34; ],
+          &#34;href&#34;: &#34;/questions?page=2&#34;
+        },
+        {
+          &#34;rel&#34;: [ &#34;self&#34; ],
+          &#34;href&#34;: &#34;/questions&#34;
+        }
+    ],
+    &#34;entities&#34;: [
+        {
+            &#34;actions&#34;: [
+                {
+                    &#34;name&#34;: &#34;delete&#34;,
+                    &#34;href&#34;: &#34;/questions/1&#34;,
+                    &#34;method&#34;: &#34;DELETE&#34;
+                }
+            ],
+            &#34;rel&#34;: [ &#34;question&#34; ],
+            &#34;properties&#34;: {
+                &#34;published_at&#34;: &#34;2014-11-11T08:40:51.620Z&#34;,
+                &#34;question&#34;: &#34;Favourite programming language?&#34;
+            },
+            &#34;links&#34;: [
+                {
+                    &#34;rel&#34;: [ &#34;self&#34; ],
+                    &#34;href&#34;: &#34;/questions/1&#34;
+                }
+            ],
+            &#34;entities&#34;: [
+                {
+                    &#34;actions&#34;: [
+                        {
+                            &#34;name&#34;: &#34;vote&#34;,
+                            &#34;href&#34;: &#34;/questions/1/choices/1&#34;,
+                            &#34;method&#34;: &#34;POST&#34;
+                        }
+                    ],
+                    &#34;rel&#34;: [ &#34;choice&#34; ],
+                    &#34;properties&#34;: {
+                        &#34;choice&#34;: &#34;Swift&#34;,
+                        &#34;votes&#34;: 2048
+                    },
+                    &#34;links&#34;: [
+                        {
+                            &#34;rel&#34;: [ &#34;self&#34; ],
+                            &#34;href&#34;: &#34;/questions/1/choices/1&#34;
+                        }
+                    ]
+                }, {
+                    &#34;actions&#34;: [
+                        {
+                            &#34;name&#34;: &#34;vote&#34;,
+                            &#34;href&#34;: &#34;/questions/1/choices/2&#34;,
+                            &#34;method&#34;: &#34;POST&#34;
+                        }
+                    ],
+                    &#34;rel&#34;: [ &#34;choice&#34; ],
+                    &#34;properties&#34;: {
+                        &#34;choice&#34;: &#34;Python&#34;,
+                        &#34;votes&#34;: 1024
+                    },
+                    &#34;links&#34;: [
+                        {
+                            &#34;rel&#34;: [ &#34;self&#34; ],
+                            &#34;href&#34;: &#34;/questions/1/choices/2&#34;
+                        }
+                    ]
+                }, {
+                    &#34;actions&#34;: [
+                        {
+                            &#34;name&#34;: &#34;vote&#34;,
+                            &#34;href&#34;: &#34;/questions/1/choices/3&#34;,
+                            &#34;method&#34;: &#34;POST&#34;
+                        }
+                    ],
+                    &#34;rel&#34;: [ &#34;choice&#34; ],
+                    &#34;properties&#34;: {
+                        &#34;choice&#34;: &#34;Objective-C&#34;,
+                        &#34;votes&#34;: 512
+                    },
+                    &#34;links&#34;: [
+                        {
+                            &#34;rel&#34;: [ &#34;self&#34; ],
+                            &#34;href&#34;: &#34;/questions/1/choices/3&#34;
+                        }
+                    ]
+                }, {
+                    &#34;actions&#34;: [
+                        {
+                            &#34;name&#34;: &#34;vote&#34;,
+                            &#34;href&#34;: &#34;/questions/1/choices/4&#34;,
+                            &#34;method&#34;: &#34;POST&#34;
+                        }
+                    ],
+                    &#34;rel&#34;: [ &#34;choice&#34; ],
+                    &#34;properties&#34;: {
+                        &#34;choice&#34;: &#34;Ruby&#34;,
+                        &#34;votes&#34;: 256
+                    },
+                    &#34;links&#34;: [
+                        {
+                            &#34;rel&#34;: [ &#34;self&#34; ],
+                            &#34;href&#34;: &#34;/questions/1/choices/4&#34;
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+</pre>
+                    
+                    
+                  </div>
+                </div>
+              </div>
+            
+              <h4 class="ui horizontal divider">
+                REQUEST
+              </h4>
+              <div class="fluid ui large labeled button">
+                <div class="ui green large button">
+                  <h3>GET</h3>
+                </div>
+                <a class="ui basic fluid green label">
+                  <code>http:/polls.apiblueprint.org/questions{?page}</code>
+                </a>
+              </div>
+              
+              
+              
+
+              <h4 class="ui horizontal divider">RESPONSE</h4>
+              
+<table class="ui celled definition table">
+  <thead>
+    <tr>
+      <th colspan="2">Headers</th>
+    </tr>
+  <thead>
+  <tbody>
+  
+    <tr>
+      <td class="four wide">Content-Type</td>
+      <td><code>application/hal&#43;json</code></td>
+    </tr>
+  
+  </tbody>
+</table>
+
+              <div class="ui stacked blue segment">
+                <div class="ui fluid transaction accordion">
+                  <div class="title center aligned">
+                    <a class="ui blue circular label">
+                      200
+                    </a>
+                    <code>application/hal&#43;json</code>
+                  </div>
+                  <div class="content">
+                    <pre>{
+    &#34;_links&#34;: {
+        &#34;self&#34;: { &#34;href&#34;: &#34;/questions&#34; },
+        &#34;next&#34;: { &#34;href&#34;: &#34;/questions?page=2&#34; }
+    },
+    &#34;_embedded&#34;: {
+        &#34;question&#34;: [
+            {
+                &#34;_links&#34;: {
+                    &#34;self&#34;: { &#34;self&#34;: &#34;/questions/1&#34; }
+                },
+                &#34;_embedded&#34;: {
+                    &#34;choice&#34;: [
+                        {
+                            &#34;_links&#34;: {
+                                &#34;self&#34;: { &#34;self&#34;: &#34;/questions/1/choices/1&#34; }
+                            },
+                            &#34;choice&#34;: &#34;Swift&#34;,
+                            &#34;votes&#34;: 2048
+                        }, {
+                            &#34;_links&#34;: {
+                                &#34;self&#34;: { &#34;self&#34;: &#34;/questions/1/choices/2&#34; }
+                            },
+                            &#34;choice&#34;: &#34;Python&#34;,
+                            &#34;votes&#34;: 1024
+                        }, {
+                            &#34;_links&#34;: {
+                                &#34;self&#34;: { &#34;self&#34;: &#34;/questions/1/choices/3&#34; }
+                            },
+                            &#34;choice&#34;: &#34;Objective-C&#34;,
+                            &#34;votes&#34;: 512
+                        }, {
+                            &#34;_links&#34;: {
+                                &#34;self&#34;: { &#34;self&#34;: &#34;/questions/1/choices/4&#34; }
+                            },
+                            &#34;choice&#34;: &#34;Ruby&#34;,
+                            &#34;votes&#34;: 256
+                        }
+                    ]
+                },
+                &#34;question&#34;: &#34;Favourite programming language?&#34;,
+                &#34;published_at&#34;: &#34;2014-11-11T08:40:51.620Z&#34;
+            }
+        ]
+    }
+}
+</pre>
+                    
+                    
+                  </div>
+                </div>
+              </div>
+            
+          </div>
+        
+          
+<div class="ui grey horizontal small divider header">
+  <i class="ui grey micro circular label"></i>
+  <i class="ui pink micro circular label"></i>
+  <i class="ui grey micro circular label"></i>
+</div>
+
+          <div class="ui basic segment">
+            <h3 class="ui block center aligned header" id="questions-collection-create-a-new-question">
+              Create a New Question
+            </h3>
+            <div class="description"><p>You may create your own question using this action. It takes a JSON object containing a question and a collection of answers in the form of choices.</p>
+
+<ul>
+<li><p>question (string) - The question</p></li>
+
+<li><p>choices (array[string]) - A collection of choices.</p></li>
+</ul>
+</div>
+
+            
+              <h4 class="ui horizontal divider">
+                REQUEST
+              </h4>
+              <div class="fluid ui large labeled button">
+                <div class="ui blue large button">
+                  <h3>POST</h3>
+                </div>
+                <a class="ui basic fluid blue label">
+                  <code>http:/polls.apiblueprint.org/questions{?page}</code>
+                </a>
+              </div>
+              
+              
+                
+<table class="ui celled definition table">
+  <thead>
+    <tr>
+      <th colspan="2">Headers</th>
+    </tr>
+  <thead>
+  <tbody>
+  
+    <tr>
+      <td class="four wide">Content-Type</td>
+      <td><code>application/json</code></td>
+    </tr>
+  
+  </tbody>
+</table>
+
+              
+              
+                <div class="ui stacked segment">
+                  <div class="ui fluid transaction accordion">
+                    <div class="title">
+                      <code>application/json</code>
+                    </div>
+                    <div class="content">
+                      <pre>{
+    &#34;question&#34;: &#34;Favourite programming language?&#34;,
+    &#34;choices&#34;: [
+        &#34;Swift&#34;,
+        &#34;Python&#34;,
+        &#34;Objective-C&#34;,
+        &#34;Ruby&#34;
+    ]
+}
+</pre>
+                    </div>
+                  </div>
+                </div>
+              
+
+              <h4 class="ui horizontal divider">RESPONSE</h4>
+              
+<table class="ui celled definition table">
+  <thead>
+    <tr>
+      <th colspan="2">Headers</th>
+    </tr>
+  <thead>
+  <tbody>
+  
+    <tr>
+      <td class="four wide">Content-Type</td>
+      <td><code>application/vnd.siren&#43;json</code></td>
+    </tr>
+  
+  </tbody>
+</table>
+
+              <div class="ui stacked blue segment">
+                <div class="ui fluid transaction accordion">
+                  <div class="title center aligned">
+                    <a class="ui blue circular label">
+                      201
+                    </a>
+                    <code>application/vnd.siren&#43;json</code>
+                  </div>
+                  <div class="content">
+                    <pre>{
+    &#34;actions&#34;: [
+        {
+            &#34;name&#34;: &#34;delete&#34;,
+            &#34;href&#34;: &#34;/questions/1&#34;,
+            &#34;method&#34;: &#34;DELETE&#34;
+        }
+    ],
+    &#34;properties&#34;: {
+        &#34;published_at&#34;: &#34;2014-11-11T08:40:51.620Z&#34;,
+        &#34;question&#34;: &#34;Favourite programming language?&#34;
+    },
+    &#34;links&#34;: [
+        {
+            &#34;rel&#34;: [ &#34;self&#34; ],
+            &#34;href&#34;: &#34;/questions/1&#34;
+        }
+    ],
+    &#34;entities&#34;: [
+        {
+            &#34;actions&#34;: [
+                {
+                    &#34;name&#34;: &#34;vote&#34;,
+                    &#34;href&#34;: &#34;/questions/1/choices/1&#34;,
+                    &#34;method&#34;: &#34;POST&#34;
+                }
+            ],
+            &#34;rel&#34;: [ &#34;choices&#34; ],
+            &#34;properties&#34;: {
+                &#34;choice&#34;: &#34;Swift&#34;,
+                &#34;votes&#34;: 2048
+            },
+            &#34;links&#34;: [
+                {
+                    &#34;rel&#34;: [ &#34;self&#34; ],
+                    &#34;href&#34;: &#34;/questions/1/choices/1&#34;
+                }
+            ]
+        }, {
+            &#34;actions&#34;: [
+                {
+                    &#34;name&#34;: &#34;vote&#34;,
+                    &#34;href&#34;: &#34;/questions/1/choices/2&#34;,
+                    &#34;method&#34;: &#34;POST&#34;
+                }
+            ],
+            &#34;rel&#34;: [ &#34;choices&#34; ],
+            &#34;properties&#34;: {
+                &#34;choice&#34;: &#34;Python&#34;,
+                &#34;votes&#34;: 1024
+            },
+            &#34;links&#34;: [
+                {
+                    &#34;rel&#34;: [ &#34;self&#34; ],
+                    &#34;href&#34;: &#34;/questions/1/choices/2&#34;
+                }
+            ]
+        }, {
+            &#34;actions&#34;: [
+                {
+                    &#34;name&#34;: &#34;vote&#34;,
+                    &#34;href&#34;: &#34;/questions/1/choices/3&#34;,
+                    &#34;method&#34;: &#34;POST&#34;
+                }
+            ],
+            &#34;rel&#34;: [ &#34;choices&#34; ],
+            &#34;properties&#34;: {
+                &#34;choice&#34;: &#34;Objective-C&#34;,
+                &#34;votes&#34;: 512
+            },
+            &#34;links&#34;: [
+                {
+                    &#34;rel&#34;: [ &#34;self&#34; ],
+                    &#34;href&#34;: &#34;/questions/1/choices/3&#34;
+                }
+            ]
+        }, {
+            &#34;actions&#34;: [
+                {
+                    &#34;name&#34;: &#34;vote&#34;,
+                    &#34;href&#34;: &#34;/questions/1/choices/4&#34;,
+                    &#34;method&#34;: &#34;POST&#34;
+                }
+            ],
+            &#34;rel&#34;: [ &#34;choices&#34; ],
+            &#34;properties&#34;: {
+                &#34;choice&#34;: &#34;Ruby&#34;,
+                &#34;votes&#34;: 256
+            },
+            &#34;links&#34;: [
+                {
+                    &#34;rel&#34;: [ &#34;self&#34; ],
+                    &#34;href&#34;: &#34;/questions/1/choices/4&#34;
+                }
+            ]
+        }
+    ]
+}
+</pre>
+                    
+                    
+                  </div>
+                </div>
+              </div>
+            
+              <h4 class="ui horizontal divider">
+                REQUEST
+              </h4>
+              <div class="fluid ui large labeled button">
+                <div class="ui blue large button">
+                  <h3>POST</h3>
+                </div>
+                <a class="ui basic fluid blue label">
+                  <code>http:/polls.apiblueprint.org/questions{?page}</code>
+                </a>
+              </div>
+              
+              
+                
+<table class="ui celled definition table">
+  <thead>
+    <tr>
+      <th colspan="2">Headers</th>
+    </tr>
+  <thead>
+  <tbody>
+  
+    <tr>
+      <td class="four wide">Content-Type</td>
+      <td><code>application/json</code></td>
+    </tr>
+  
+  </tbody>
+</table>
+
+              
+              
+                <div class="ui stacked segment">
+                  <div class="ui fluid transaction accordion">
+                    <div class="title">
+                      <code>application/json</code>
+                    </div>
+                    <div class="content">
+                      <pre>{
+    &#34;question&#34;: &#34;Favourite programming language?&#34;,
+    &#34;choices&#34;: [
+        &#34;Swift&#34;,
+        &#34;Python&#34;,
+        &#34;Objective-C&#34;,
+        &#34;Ruby&#34;
+    ]
+}
+</pre>
+                    </div>
+                  </div>
+                </div>
+              
+
+              <h4 class="ui horizontal divider">RESPONSE</h4>
+              
+<table class="ui celled definition table">
+  <thead>
+    <tr>
+      <th colspan="2">Headers</th>
+    </tr>
+  <thead>
+  <tbody>
+  
+    <tr>
+      <td class="four wide">Content-Type</td>
+      <td><code>application/hal&#43;json</code></td>
+    </tr>
+  
+  </tbody>
+</table>
+
+              <div class="ui stacked blue segment">
+                <div class="ui fluid transaction accordion">
+                  <div class="title center aligned">
+                    <a class="ui blue circular label">
+                      201
+                    </a>
+                    <code>application/hal&#43;json</code>
+                  </div>
+                  <div class="content">
+                    <pre>{
+    &#34;_links&#34;: {
+        &#34;self&#34;: { &#34;href&#34;: &#34;/questions/1&#34; }
+    },
+    &#34;_embedded&#34;: {
+        &#34;choices&#34;: [
+            {
+                &#34;_links&#34;: {
+                    &#34;self&#34;: { &#34;self&#34;: &#34;/questions/1/choices/1&#34; }
+                },
+                &#34;choice&#34;: &#34;Swift&#34;,
+                &#34;votes&#34;: 2048
+            }, {
+                &#34;_links&#34;: {
+                    &#34;self&#34;: { &#34;self&#34;: &#34;/questions/1/choices/2&#34; }
+                },
+                &#34;choice&#34;: &#34;Python&#34;,
+                &#34;votes&#34;: 1024
+            }, {
+                &#34;_links&#34;: {
+                    &#34;self&#34;: { &#34;self&#34;: &#34;/questions/1/choices/3&#34; }
+                },
+                &#34;choice&#34;: &#34;Objective-C&#34;,
+                &#34;votes&#34;: 512
+            }, {
+                &#34;_links&#34;: {
+                    &#34;self&#34;: { &#34;self&#34;: &#34;/questions/1/choices/4&#34; }
+                },
+                &#34;choice&#34;: &#34;Ruby&#34;,
+                &#34;votes&#34;: 256
+            }
+        ]
+    },
+    &#34;published_at&#34;: &#34;2014-11-11T08:40:51.620Z&#34;,
+    &#34;question&#34;: &#34;Favourite programming language?&#34;
+}
+</pre>
+                    
+                    
+                  </div>
+                </div>
+              </div>
+            
+          </div>
+        
+        </div>
+      <div class="ui hidden divider"></div>
+    
+  
+
+  <div class="ui horizontal divider" id="group-question">
+    Question
+  </div>
+  <div class="ui header center aligned">
+    <div class="ui sub header">
+      <p>Resources related to questions in the API.</p>
+
+    </div>
+  </div>
+  
+    
+      <div class="ui stacked segments">
+        <div class="ui basic segment resource">
+          <div class="ui purple huge ribbon label">
+            Question
+          </div>
+          <div class="ui header">
+            <div class="ui sub header">
+              <p>A Question object has the following attributes:</p>
+
+<ul>
+<li><p>question</p></li>
+
+<li><p>published_at - An ISO8601 date when the question was published.</p></li>
+
+<li><p>url</p></li>
+
+<li><p>choices - An array of Choice objects.</p></li>
+</ul>
+
+            </div>
+          </div>
+        </div>
+
+        
+          
+<div class="ui grey horizontal small divider header">
+  <i class="ui grey micro circular label"></i>
+  <i class="ui pink micro circular label"></i>
+  <i class="ui grey micro circular label"></i>
+</div>
+
+          <div class="ui basic segment">
+            <h3 class="ui block center aligned header" id="question-question-view-a-questions-detail">
+              View a Questions Detail
+            </h3>
+            <div class="description"></div>
+
+            
+              <h4 class="ui horizontal divider">
+                REQUEST
+              </h4>
+              <div class="fluid ui large labeled button">
+                <div class="ui green large button">
+                  <h3>GET</h3>
+                </div>
+                <a class="ui basic fluid green label">
+                  <code>http:/polls.apiblueprint.org/questions/{question_id}</code>
+                </a>
+              </div>
+              
+              
+              
+
+              <h4 class="ui horizontal divider">RESPONSE</h4>
+              
+<table class="ui celled definition table">
+  <thead>
+    <tr>
+      <th colspan="2">Headers</th>
+    </tr>
+  <thead>
+  <tbody>
+  
+    <tr>
+      <td class="four wide">Content-Type</td>
+      <td><code>application/vnd.siren&#43;json</code></td>
+    </tr>
+  
+  </tbody>
+</table>
+
+              <div class="ui stacked blue segment">
+                <div class="ui fluid transaction accordion">
+                  <div class="title center aligned">
+                    <a class="ui blue circular label">
+                      200
+                    </a>
+                    <code>application/vnd.siren&#43;json</code>
+                  </div>
+                  <div class="content">
+                    <pre>{
+    &#34;actions&#34;: [
+        {
+            &#34;name&#34;: &#34;delete&#34;,
+            &#34;href&#34;: &#34;/questions/1&#34;,
+            &#34;method&#34;: &#34;DELETE&#34;
+        }
+    ],
+    &#34;properties&#34;: {
+        &#34;published_at&#34;: &#34;2014-11-11T08:40:51.620Z&#34;,
+        &#34;question&#34;: &#34;Favourite programming language?&#34;
+    },
+    &#34;links&#34;: [
+        {
+            &#34;rel&#34;: [ &#34;self&#34; ],
+            &#34;href&#34;: &#34;/questions/1&#34;
+        }
+    ],
+    &#34;entities&#34;: [
+        {
+            &#34;actions&#34;: [
+                {
+                    &#34;name&#34;: &#34;vote&#34;,
+                    &#34;href&#34;: &#34;/questions/1/choices/1&#34;,
+                    &#34;method&#34;: &#34;POST&#34;
+                }
+            ],
+            &#34;rel&#34;: [ &#34;choices&#34; ],
+            &#34;properties&#34;: {
+                &#34;choice&#34;: &#34;Swift&#34;,
+                &#34;votes&#34;: 2048
+            },
+            &#34;links&#34;: [
+                {
+                    &#34;rel&#34;: [ &#34;self&#34; ],
+                    &#34;href&#34;: &#34;/questions/1/choices/1&#34;
+                }
+            ]
+        }, {
+            &#34;actions&#34;: [
+                {
+                    &#34;name&#34;: &#34;vote&#34;,
+                    &#34;href&#34;: &#34;/questions/1/choices/2&#34;,
+                    &#34;method&#34;: &#34;POST&#34;
+                }
+            ],
+            &#34;rel&#34;: [ &#34;choices&#34; ],
+            &#34;properties&#34;: {
+                &#34;choice&#34;: &#34;Python&#34;,
+                &#34;votes&#34;: 1024
+            },
+            &#34;links&#34;: [
+                {
+                    &#34;rel&#34;: [ &#34;self&#34; ],
+                    &#34;href&#34;: &#34;/questions/1/choices/2&#34;
+                }
+            ]
+        }, {
+            &#34;actions&#34;: [
+                {
+                    &#34;name&#34;: &#34;vote&#34;,
+                    &#34;href&#34;: &#34;/questions/1/choices/3&#34;,
+                    &#34;method&#34;: &#34;POST&#34;
+                }
+            ],
+            &#34;rel&#34;: [ &#34;choices&#34; ],
+            &#34;properties&#34;: {
+                &#34;choice&#34;: &#34;Objective-C&#34;,
+                &#34;votes&#34;: 512
+            },
+            &#34;links&#34;: [
+                {
+                    &#34;rel&#34;: [ &#34;self&#34; ],
+                    &#34;href&#34;: &#34;/questions/1/choices/3&#34;
+                }
+            ]
+        }, {
+            &#34;actions&#34;: [
+                {
+                    &#34;name&#34;: &#34;vote&#34;,
+                    &#34;href&#34;: &#34;/questions/1/choices/4&#34;,
+                    &#34;method&#34;: &#34;POST&#34;
+                }
+            ],
+            &#34;rel&#34;: [ &#34;choices&#34; ],
+            &#34;properties&#34;: {
+                &#34;choice&#34;: &#34;Ruby&#34;,
+                &#34;votes&#34;: 256
+            },
+            &#34;links&#34;: [
+                {
+                    &#34;rel&#34;: [ &#34;self&#34; ],
+                    &#34;href&#34;: &#34;/questions/1/choices/4&#34;
+                }
+            ]
+        }
+    ]
+}
+</pre>
+                    
+                    
+                  </div>
+                </div>
+              </div>
+            
+              <h4 class="ui horizontal divider">
+                REQUEST
+              </h4>
+              <div class="fluid ui large labeled button">
+                <div class="ui green large button">
+                  <h3>GET</h3>
+                </div>
+                <a class="ui basic fluid green label">
+                  <code>http:/polls.apiblueprint.org/questions/{question_id}</code>
+                </a>
+              </div>
+              
+              
+              
+
+              <h4 class="ui horizontal divider">RESPONSE</h4>
+              
+<table class="ui celled definition table">
+  <thead>
+    <tr>
+      <th colspan="2">Headers</th>
+    </tr>
+  <thead>
+  <tbody>
+  
+    <tr>
+      <td class="four wide">Content-Type</td>
+      <td><code>application/hal&#43;json</code></td>
+    </tr>
+  
+  </tbody>
+</table>
+
+              <div class="ui stacked blue segment">
+                <div class="ui fluid transaction accordion">
+                  <div class="title center aligned">
+                    <a class="ui blue circular label">
+                      200
+                    </a>
+                    <code>application/hal&#43;json</code>
+                  </div>
+                  <div class="content">
+                    <pre>{
+    &#34;_links&#34;: {
+        &#34;self&#34;: { &#34;href&#34;: &#34;/questions/1&#34; }
+    },
+    &#34;_embedded&#34;: {
+        &#34;choices&#34;: [
+            {
+                &#34;_links&#34;: {
+                    &#34;self&#34;: { &#34;self&#34;: &#34;/questions/1/choices/1&#34; }
+                },
+                &#34;choice&#34;: &#34;Swift&#34;,
+                &#34;votes&#34;: 2048
+            }, {
+                &#34;_links&#34;: {
+                    &#34;self&#34;: { &#34;self&#34;: &#34;/questions/1/choices/2&#34; }
+                },
+                &#34;choice&#34;: &#34;Python&#34;,
+                &#34;votes&#34;: 1024
+            }, {
+                &#34;_links&#34;: {
+                    &#34;self&#34;: { &#34;self&#34;: &#34;/questions/1/choices/3&#34; }
+                },
+                &#34;choice&#34;: &#34;Objective-C&#34;,
+                &#34;votes&#34;: 512
+            }, {
+                &#34;_links&#34;: {
+                    &#34;self&#34;: { &#34;self&#34;: &#34;/questions/1/choices/4&#34; }
+                },
+                &#34;choice&#34;: &#34;Ruby&#34;,
+                &#34;votes&#34;: 256
+            }
+        ]
+    },
+    &#34;published_at&#34;: &#34;2014-11-11T08:40:51.620Z&#34;,
+    &#34;question&#34;: &#34;Favourite programming language?&#34;
+}
+</pre>
+                    
+                    
+                  </div>
+                </div>
+              </div>
+            
+          </div>
+        
+        </div>
+      <div class="ui hidden divider"></div>
+    
+  
+    
+      <div class="ui stacked segments">
+        <div class="ui basic segment resource">
+          <div class="ui purple huge ribbon label">
+            Choice
+          </div>
+          <div class="ui header">
+            <div class="ui sub header">
+              
+            </div>
+          </div>
+        </div>
+
+        
+          
+<div class="ui grey horizontal small divider header">
+  <i class="ui grey micro circular label"></i>
+  <i class="ui pink micro circular label"></i>
+  <i class="ui grey micro circular label"></i>
+</div>
+
+          <div class="ui basic segment">
+            <h3 class="ui block center aligned header" id="question-choice-view-a-choice-detail">
+              View a Choice Detail
+            </h3>
+            <div class="description"></div>
+
+            
+              <h4 class="ui horizontal divider">
+                REQUEST
+              </h4>
+              <div class="fluid ui large labeled button">
+                <div class="ui green large button">
+                  <h3>GET</h3>
+                </div>
+                <a class="ui basic fluid green label">
+                  <code>http:/polls.apiblueprint.org/questions/{question_id}/choices/{choice_id}</code>
+                </a>
+              </div>
+              
+              
+              
+
+              <h4 class="ui horizontal divider">RESPONSE</h4>
+              
+<table class="ui celled definition table">
+  <thead>
+    <tr>
+      <th colspan="2">Headers</th>
+    </tr>
+  <thead>
+  <tbody>
+  
+    <tr>
+      <td class="four wide">Content-Type</td>
+      <td><code>application/vnd.siren&#43;json</code></td>
+    </tr>
+  
+  </tbody>
+</table>
+
+              <div class="ui stacked blue segment">
+                <div class="ui fluid transaction accordion">
+                  <div class="title center aligned">
+                    <a class="ui blue circular label">
+                      200
+                    </a>
+                    <code>application/vnd.siren&#43;json</code>
+                  </div>
+                  <div class="content">
+                    <pre>{
+    &#34;actions&#34;: [
+        {
+            &#34;name&#34;: &#34;vote&#34;,
+            &#34;href&#34;: &#34;/questions/1/choices/1&#34;,
+            &#34;method&#34;: &#34;POST&#34;
+        }
+    ],
+    &#34;rel&#34;: [ &#34;choice&#34; ],
+    &#34;properties&#34;: {
+        &#34;choice&#34;: &#34;Swift&#34;,
+        &#34;votes&#34;: 2048
+    },
+    &#34;links&#34;: [
+        {
+            &#34;rel&#34;: [ &#34;self&#34; ],
+            &#34;href&#34;: &#34;/questions/1/choices/1&#34;
+        }
+    ]
+}
+</pre>
+                    
+                    
+                  </div>
+                </div>
+              </div>
+            
+              <h4 class="ui horizontal divider">
+                REQUEST
+              </h4>
+              <div class="fluid ui large labeled button">
+                <div class="ui green large button">
+                  <h3>GET</h3>
+                </div>
+                <a class="ui basic fluid green label">
+                  <code>http:/polls.apiblueprint.org/questions/{question_id}/choices/{choice_id}</code>
+                </a>
+              </div>
+              
+              
+              
+
+              <h4 class="ui horizontal divider">RESPONSE</h4>
+              
+<table class="ui celled definition table">
+  <thead>
+    <tr>
+      <th colspan="2">Headers</th>
+    </tr>
+  <thead>
+  <tbody>
+  
+    <tr>
+      <td class="four wide">Content-Type</td>
+      <td><code>application/hal&#43;json</code></td>
+    </tr>
+  
+  </tbody>
+</table>
+
+              <div class="ui stacked blue segment">
+                <div class="ui fluid transaction accordion">
+                  <div class="title center aligned">
+                    <a class="ui blue circular label">
+                      200
+                    </a>
+                    <code>application/hal&#43;json</code>
+                  </div>
+                  <div class="content">
+                    <pre>{
+    &#34;_links&#34;: {
+        &#34;self&#34;: { &#34;href&#34;: &#34;/questions/1/choices/1&#34; }
+    },
+    &#34;choice&#34;: &#34;Swift&#34;,
+    &#34;votes&#34;: 2048
+}
+</pre>
+                    
+                    
+                  </div>
+                </div>
+              </div>
+            
+          </div>
+        
+          
+<div class="ui grey horizontal small divider header">
+  <i class="ui grey micro circular label"></i>
+  <i class="ui pink micro circular label"></i>
+  <i class="ui grey micro circular label"></i>
+</div>
+
+          <div class="ui basic segment">
+            <h3 class="ui block center aligned header" id="question-choice-vote-on-a-choice">
+              Vote on a Choice
+            </h3>
+            <div class="description"><p>This action allows you to vote on a question&rsquo;s choice.</p>
+</div>
+
+            
+              <h4 class="ui horizontal divider">
+                REQUEST
+              </h4>
+              <div class="fluid ui large labeled button">
+                <div class="ui blue large button">
+                  <h3>POST</h3>
+                </div>
+                <a class="ui basic fluid blue label">
+                  <code>http:/polls.apiblueprint.org/questions/{question_id}/choices/{choice_id}</code>
+                </a>
+              </div>
+              
+              
+              
+
+              <h4 class="ui horizontal divider">RESPONSE</h4>
+              
+<table class="ui celled definition table">
+  <thead>
+    <tr>
+      <th colspan="2">Headers</th>
+    </tr>
+  <thead>
+  <tbody>
+  
+    <tr>
+      <td class="four wide">Content-Type</td>
+      <td><code>application/vnd.siren&#43;json</code></td>
+    </tr>
+  
+  </tbody>
+</table>
+
+              <div class="ui stacked blue segment">
+                <div class="ui fluid transaction accordion">
+                  <div class="title center aligned">
+                    <a class="ui blue circular label">
+                      201
+                    </a>
+                    <code>application/vnd.siren&#43;json</code>
+                  </div>
+                  <div class="content">
+                    <pre>{
+    &#34;actions&#34;: [
+        {
+            &#34;name&#34;: &#34;vote&#34;,
+            &#34;href&#34;: &#34;/questions/1/choices/1&#34;,
+            &#34;method&#34;: &#34;POST&#34;
+        }
+    ],
+    &#34;rel&#34;: [ &#34;choice&#34; ],
+    &#34;properties&#34;: {
+        &#34;choice&#34;: &#34;Swift&#34;,
+        &#34;votes&#34;: 2049
+    },
+    &#34;links&#34;: [
+        {
+            &#34;rel&#34;: [ &#34;self&#34; ],
+            &#34;href&#34;: &#34;/questions/1/choices/1&#34;
+        }
+    ]
+}
+</pre>
+                    
+                    
+                  </div>
+                </div>
+              </div>
+            
+              <h4 class="ui horizontal divider">
+                REQUEST
+              </h4>
+              <div class="fluid ui large labeled button">
+                <div class="ui blue large button">
+                  <h3>POST</h3>
+                </div>
+                <a class="ui basic fluid blue label">
+                  <code>http:/polls.apiblueprint.org/questions/{question_id}/choices/{choice_id}</code>
+                </a>
+              </div>
+              
+              
+              
+
+              <h4 class="ui horizontal divider">RESPONSE</h4>
+              
+<table class="ui celled definition table">
+  <thead>
+    <tr>
+      <th colspan="2">Headers</th>
+    </tr>
+  <thead>
+  <tbody>
+  
+    <tr>
+      <td class="four wide">Content-Type</td>
+      <td><code>application/hal&#43;json</code></td>
+    </tr>
+  
+  </tbody>
+</table>
+
+              <div class="ui stacked blue segment">
+                <div class="ui fluid transaction accordion">
+                  <div class="title center aligned">
+                    <a class="ui blue circular label">
+                      201
+                    </a>
+                    <code>application/hal&#43;json</code>
+                  </div>
+                  <div class="content">
+                    <pre>{
+    &#34;_links&#34;: {
+        &#34;self&#34;: &#34;/questions/1/choices/1&#34;
+    },
+    &#34;choice&#34;: &#34;Swift&#34;,
+    &#34;votes&#34;: 2049
+}
+</pre>
+                    
+                    
+                  </div>
+                </div>
+              </div>
+            
+          </div>
+        
+        </div>
+      <div class="ui hidden divider"></div>
+    
+  
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/components/accordion.min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      $('.ui.accordion').accordion({ animateChildren: false, duration: 0 });
+    });
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

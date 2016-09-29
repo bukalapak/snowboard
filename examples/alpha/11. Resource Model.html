@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Resource Model API</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.css">
+    <style>
+      blockquote {
+        border-left: solid 4px #eee;
+        padding-left: 8px;
+        font-style: italic;
+        margin-left: 0;
+        padding: 8px;
+      }
+
+      .ui.micro.label {
+        font-size: .25rem;
+      }
+
+      .ui.transaction.accordion .title {
+        text-align: center;
+      }
+
+      .ui.transaction.accordion .content {
+        border-top: solid 1px #ddd !important;
+        border-bottom: solid 1px #ddd !important;
+        background-color: rgba(0,0,0,.03);
+        padding: 0.5em 1em !important;
+      }
+
+      .ui.transaction.accordion .content.active {
+        margin-top: 0.5em;
+      }
+
+      .ui.basic.label {
+        text-align: left;
+        overflow: auto;
+      }
+
+      .resource .ui.sub.header {
+        text-transform: none;
+      }
+
+      .sidebar {
+        position: fixed !important;
+        overflow: scroll;
+        height: 100%;
+        padding-bottom: 20px !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="ui two column grid container">
+      <div class="four wide sidebar column">
+        <div class="ui container">
+          
+<div class="ui horizontal divider">
+  <a href="#introduction">Introduction</a>
+</div>
+<div class="ui fluid secondary vertical menu">
+  <a class="item">Resource Model API</a>
+</div>
+
+
+<div class="ui horizontal divider">
+  <a href="#group-messages">Messages</a>
+</div>
+
+<div class="ui accordion fluid">
+  
+    
+    <div class="title active">
+      <i class="dropdown icon"></i>
+      
+        <strong>My Message</strong>
+      
+    </div>
+    <div class="content active">
+      <div class="ui fluid secondary vertical menu">
+      
+        <a class="item" href="#messages-my-message-retrieve-a-message">
+          
+            <i class="ui green empty circular label"></i> Retrieve a Message
+          
+        </a>
+      
+        <a class="item" href="#messages-my-message-update-a-message">
+          
+            <i class="ui teal empty circular label"></i> Update a Message
+          
+        </a>
+      
+      </div>
+    </div>
+    
+  
+</div>
+
+
+        </div>
+      </div>
+      <div class="twelve wide right floated column">
+        <div class="ui text container">
+          
+<div class="ui hidden divider header"></div>
+<h1 class="ui huge header">Resource Model API</h1>
+<hr class="ui divider">
+<div class="description">
+  <p>Resource model is a <a href="http://www.w3.org/TR/di-gloss/#def-resource-manifestation">resource manifestation</a>.
+One particular representation of your resource.</p>
+
+<p>Furthermore, in API Blueprint, any <code>resource model</code> you have defined can be
+referenced in a request or response section, saving you lots of time
+maintaining your API blueprint. You simply define a resource model as any
+payload (e.g. <a href="https://github.com/apiaryio/api-blueprint/blob/master/examples/06.%20Requests.md">request</a>
+or <a href="https://github.com/apiaryio/api-blueprint/blob/master/examples/5.%20Responses.md">response</a>)
+and then reference it later where you would normally write a <code>request</code> or
+<code>response</code>.</p>
+
+<h2>API Blueprint</h2>
+
+<ul>
+<li><p><a href="10.%20Data%20Structures.md">Previous: Data Structures</a></p></li>
+
+<li><p><a href="https://raw.github.com/apiaryio/api-blueprint/master/examples/11.%20Resource%20Model.md">This: Raw API Blueprint</a></p></li>
+
+<li><p><a href="12.%20Advanced%20Action.md">Next: Advanced Action</a></p></li>
+</ul>
+
+</div>
+
+          <div class="ui hidden divider"></div>
+          
+
+
+  <div class="ui horizontal divider" id="group-messages">
+    Messages
+  </div>
+  <div class="ui header center aligned">
+    <div class="ui sub header">
+      <p>Group of all messages-related resources.</p>
+
+    </div>
+  </div>
+  
+    
+      <div class="ui stacked segments">
+        <div class="ui basic segment resource">
+          <div class="ui purple huge ribbon label">
+            My Message
+          </div>
+          <div class="ui header">
+            <div class="ui sub header">
+              
+            </div>
+          </div>
+        </div>
+
+        
+          
+<div class="ui grey horizontal small divider header">
+  <i class="ui grey micro circular label"></i>
+  <i class="ui pink micro circular label"></i>
+  <i class="ui grey micro circular label"></i>
+</div>
+
+          <div class="ui basic segment">
+            <h3 class="ui block center aligned header" id="messages-my-message-retrieve-a-message">
+              Retrieve a Message
+            </h3>
+            <div class="description"><p>At this point we will utilize our <code>Message</code> resource model and reference it in
+<code>Response 200</code>.</p>
+</div>
+
+            
+              <h4 class="ui horizontal divider">
+                REQUEST
+              </h4>
+              <div class="fluid ui large labeled button">
+                <div class="ui green large button">
+                  <h3>GET</h3>
+                </div>
+                <a class="ui basic fluid green label">
+                  <code>/message</code>
+                </a>
+              </div>
+              
+              
+              
+
+              <h4 class="ui horizontal divider">RESPONSE</h4>
+              
+<table class="ui celled definition table">
+  <thead>
+    <tr>
+      <th colspan="2">Headers</th>
+    </tr>
+  <thead>
+  <tbody>
+  
+    <tr>
+      <td class="four wide">Content-Type</td>
+      <td><code>application/vnd.siren&#43;json</code></td>
+    </tr>
+  
+    <tr>
+      <td class="four wide">Location</td>
+      <td><code>http://api.acme.com/message</code></td>
+    </tr>
+  
+  </tbody>
+</table>
+
+              <div class="ui stacked blue segment">
+                <div class="ui fluid transaction accordion">
+                  <div class="title center aligned">
+                    <a class="ui blue circular label">
+                      200
+                    </a>
+                    <code>application/vnd.siren&#43;json</code>
+                  </div>
+                  <div class="content">
+                    <pre>{
+  &#34;class&#34;: [ &#34;message&#34; ],
+  &#34;properties&#34;: {
+        &#34;message&#34;: &#34;Hello World!&#34;
+  },
+  &#34;links&#34;: [
+        { &#34;rel&#34;: &#34;self&#34; , &#34;href&#34;: &#34;/message&#34; }
+  ]
+}
+</pre>
+                    
+                    
+                  </div>
+                </div>
+              </div>
+            
+          </div>
+        
+          
+<div class="ui grey horizontal small divider header">
+  <i class="ui grey micro circular label"></i>
+  <i class="ui pink micro circular label"></i>
+  <i class="ui grey micro circular label"></i>
+</div>
+
+          <div class="ui basic segment">
+            <h3 class="ui block center aligned header" id="messages-my-message-update-a-message">
+              Update a Message
+            </h3>
+            <div class="description"></div>
+
+            
+              <h4 class="ui horizontal divider">
+                REQUEST Update Plain Text Message
+              </h4>
+              <div class="fluid ui large labeled button">
+                <div class="ui teal large button">
+                  <h3>PUT</h3>
+                </div>
+                <a class="ui basic fluid teal label">
+                  <code>/message</code>
+                </a>
+              </div>
+              
+              
+                
+<table class="ui celled definition table">
+  <thead>
+    <tr>
+      <th colspan="2">Headers</th>
+    </tr>
+  <thead>
+  <tbody>
+  
+    <tr>
+      <td class="four wide">Content-Type</td>
+      <td><code>text/plain</code></td>
+    </tr>
+  
+  </tbody>
+</table>
+
+              
+              
+                <div class="ui stacked segment">
+                  <div class="ui fluid transaction accordion">
+                    <div class="title">
+                      <code>text/plain</code>
+                    </div>
+                    <div class="content">
+                      <pre>All your base are belong to us.
+</pre>
+                    </div>
+                  </div>
+                </div>
+              
+
+              <h4 class="ui horizontal divider">RESPONSE</h4>
+              
+<table class="ui celled definition table">
+  <thead>
+    <tr>
+      <th colspan="2">Headers</th>
+    </tr>
+  <thead>
+  <tbody>
+  
+  </tbody>
+</table>
+
+              <div class="ui stacked blue segment">
+                <div class="ui fluid transaction accordion">
+                  <div class="title center aligned">
+                    <a class="ui blue circular label">
+                      204
+                    </a>
+                    <code></code>
+                  </div>
+                  <div class="content">
+                    <pre></pre>
+                    
+                    
+                  </div>
+                </div>
+              </div>
+            
+              <h4 class="ui horizontal divider">
+                REQUEST Update JSON Message
+              </h4>
+              <div class="fluid ui large labeled button">
+                <div class="ui teal large button">
+                  <h3>PUT</h3>
+                </div>
+                <a class="ui basic fluid teal label">
+                  <code>/message</code>
+                </a>
+              </div>
+              
+              
+                
+<table class="ui celled definition table">
+  <thead>
+    <tr>
+      <th colspan="2">Headers</th>
+    </tr>
+  <thead>
+  <tbody>
+  
+    <tr>
+      <td class="four wide">Content-Type</td>
+      <td><code>application/json</code></td>
+    </tr>
+  
+  </tbody>
+</table>
+
+              
+              
+                <div class="ui stacked segment">
+                  <div class="ui fluid transaction accordion">
+                    <div class="title">
+                      <code>application/json</code>
+                    </div>
+                    <div class="content">
+                      <pre>{ &#34;message&#34;: &#34;All your base are belong to us.&#34; }
+</pre>
+                    </div>
+                  </div>
+                </div>
+              
+
+              <h4 class="ui horizontal divider">RESPONSE</h4>
+              
+<table class="ui celled definition table">
+  <thead>
+    <tr>
+      <th colspan="2">Headers</th>
+    </tr>
+  <thead>
+  <tbody>
+  
+  </tbody>
+</table>
+
+              <div class="ui stacked blue segment">
+                <div class="ui fluid transaction accordion">
+                  <div class="title center aligned">
+                    <a class="ui blue circular label">
+                      204
+                    </a>
+                    <code></code>
+                  </div>
+                  <div class="content">
+                    <pre></pre>
+                    
+                    
+                  </div>
+                </div>
+              </div>
+            
+          </div>
+        
+        </div>
+      <div class="ui hidden divider"></div>
+    
+  
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/components/accordion.min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      $('.ui.accordion').accordion({ animateChildren: false, duration: 0 });
+    });
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

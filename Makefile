@@ -15,3 +15,5 @@ go-test:
 build: drafter go-gen go-build
 install: drafter go-gen go-install
 test: drafter go-gen go-test
+examples: build
+	./examples/generate.sh ./snowboard ./fixtures/api-blueprint/examples ./examples

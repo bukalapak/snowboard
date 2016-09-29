@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Advanced Attributes API</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.css">
+    <style>
+      blockquote {
+        border-left: solid 4px #eee;
+        padding-left: 8px;
+        font-style: italic;
+        margin-left: 0;
+        padding: 8px;
+      }
+
+      .ui.micro.label {
+        font-size: .25rem;
+      }
+
+      .ui.transaction.accordion .title {
+        text-align: center;
+      }
+
+      .ui.transaction.accordion .content {
+        border-top: solid 1px #ddd !important;
+        border-bottom: solid 1px #ddd !important;
+        background-color: rgba(0,0,0,.03);
+        padding: 0.5em 1em !important;
+      }
+
+      .ui.transaction.accordion .content.active {
+        margin-top: 0.5em;
+      }
+
+      .ui.basic.label {
+        text-align: left;
+        overflow: auto;
+      }
+
+      .resource .ui.sub.header {
+        text-transform: none;
+      }
+
+      .sidebar {
+        position: fixed !important;
+        overflow: scroll;
+        height: 100%;
+        padding-bottom: 20px !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="ui two column grid container">
+      <div class="four wide sidebar column">
+        <div class="ui container">
+          
+<div class="ui horizontal divider">
+  <a href="#introduction">Introduction</a>
+</div>
+<div class="ui fluid secondary vertical menu">
+  <a class="item">Advanced Attributes API</a>
+</div>
+
+
+<div class="ui horizontal divider">
+  <a href="#group-coupons">Coupons</a>
+</div>
+
+<div class="ui accordion fluid">
+  
+    
+    <div class="title active">
+      <i class="dropdown icon"></i>
+      
+        <strong>Coupon</strong>
+      
+    </div>
+    <div class="content active">
+      <div class="ui fluid secondary vertical menu">
+      
+        <a class="item" href="#coupons-coupon-retrieve-a-coupon">
+          
+            <i class="ui green empty circular label"></i> Retrieve a Coupon
+          
+        </a>
+      
+      </div>
+    </div>
+    
+  
+    
+    <div class="title ">
+      <i class="dropdown icon"></i>
+      
+        <strong>Coupons</strong>
+      
+    </div>
+    <div class="content ">
+      <div class="ui fluid secondary vertical menu">
+      
+        <a class="item" href="#coupons-coupons-list-all-coupons">
+          
+            <i class="ui green empty circular label"></i> List all Coupons
+          
+        </a>
+      
+        <a class="item" href="#coupons-coupons-create-a-coupon">
+          
+            <i class="ui blue empty circular label"></i> Create a Coupon
+          
+        </a>
+      
+      </div>
+    </div>
+    
+  
+</div>
+
+
+        </div>
+      </div>
+      <div class="twelve wide right floated column">
+        <div class="ui text container">
+          
+<div class="ui hidden divider header"></div>
+<h1 class="ui huge header">Advanced Attributes API</h1>
+<hr class="ui divider">
+<div class="description">
+  <p>Improving the previous <a href="08.%20Attributes.md">Attributes</a> description example,
+this API example describes the <code>Coupon</code> resource attributes (data structure)
+regardless of the serialization format. These attributes can be later
+referenced using the resource name.</p>
+
+<p>These attributes are then reused in the <code>Retrieve a Coupon</code> action. Since they
+describe the complete message, no explicit JSON body example is needed.</p>
+
+<p>Moving forward, the <code>Coupon</code> resource data structure is then reused when
+defining the attributes of the coupons collection resource – <code>Coupons</code>.</p>
+
+<p>The <code>Create a Coupon</code> action also demonstrate the description of request
+attributes – once defined, these attributes are implied on every <code>Create a
+Coupon</code> request unless the request specifies otherwise. Apparently, the
+description of action attributes is somewhat duplicate to the definition of
+<code>Coupon</code> resource attributes. We will address this in the next
+<a href="10.%20Data%20Structures.md">Data Structures</a> example.</p>
+
+<h2>API Blueprint</h2>
+
+<ul>
+<li><p><a href="08.%20Attributes.md">Previous: Attributes</a></p></li>
+
+<li><p><a href="https://raw.github.com/apiaryio/api-blueprint/master/examples/09.%20Advanced%20Attributes.md">This: Raw API Blueprint</a></p></li>
+
+<li><p><a href="10.%20Data%20Structures.md">Next: Data Structures</a></p></li>
+</ul>
+
+</div>
+
+          <div class="ui hidden divider"></div>
+          
+
+
+  <div class="ui horizontal divider" id="group-coupons">
+    Coupons
+  </div>
+  <div class="ui header center aligned">
+    <div class="ui sub header">
+      
+    </div>
+  </div>
+  
+    
+      <div class="ui stacked segments">
+        <div class="ui basic segment resource">
+          <div class="ui purple huge ribbon label">
+            Coupon
+          </div>
+          <div class="ui header">
+            <div class="ui sub header">
+              <p>A coupon contains information about a percent-off or amount-off discount you
+might want to apply to a customer.</p>
+
+            </div>
+          </div>
+        </div>
+
+        
+          
+<div class="ui grey horizontal small divider header">
+  <i class="ui grey micro circular label"></i>
+  <i class="ui pink micro circular label"></i>
+  <i class="ui grey micro circular label"></i>
+</div>
+
+          <div class="ui basic segment">
+            <h3 class="ui block center aligned header" id="coupons-coupon-retrieve-a-coupon">
+              Retrieve a Coupon
+            </h3>
+            <div class="description"><p>Retrieves the coupon with the given ID.</p>
+</div>
+
+            
+              <h4 class="ui horizontal divider">
+                REQUEST
+              </h4>
+              <div class="fluid ui large labeled button">
+                <div class="ui green large button">
+                  <h3>GET</h3>
+                </div>
+                <a class="ui basic fluid green label">
+                  <code>/coupons/{id}</code>
+                </a>
+              </div>
+              
+              
+              
+
+              <h4 class="ui horizontal divider">RESPONSE</h4>
+              
+<table class="ui celled definition table">
+  <thead>
+    <tr>
+      <th colspan="2">Headers</th>
+    </tr>
+  <thead>
+  <tbody>
+  
+    <tr>
+      <td class="four wide">Content-Type</td>
+      <td><code>application/json</code></td>
+    </tr>
+  
+  </tbody>
+</table>
+
+              <div class="ui stacked blue segment">
+                <div class="ui fluid transaction accordion">
+                  <div class="title center aligned">
+                    <a class="ui blue circular label">
+                      200
+                    </a>
+                    <code>application/json</code>
+                  </div>
+                  <div class="content">
+                    <pre>{
+  &#34;id&#34;: &#34;250FF&#34;,
+  &#34;created&#34;: 1415203908,
+  &#34;percent_off&#34;: 25,
+  &#34;redeem_by&#34;: 0
+}</pre>
+                    
+                    
+                    <div class="ui section divider"></div>
+                    <table class="ui celled blue table">
+                      <thead>
+                        <tr>
+                          <th colspan="4">Attributes</th>
+                        </tr>
+                      <thead>
+                      <tbody>
+                        
+                          
+                            
+<tr>
+  <td class="center aligned one wide">
+    <i class="ui empty circular label black"></i>
+  </td>
+  <td><code>id</code></td>
+  <td class="center aligned">
+    <code>string<code>
+    <code class="ui label">250FF</code>
+  </td>
+  <td class="eight wide">-</td>
+</tr>
+
+                          
+                            
+<tr>
+  <td class="center aligned one wide">
+    <i class="ui empty circular label grey"></i>
+  </td>
+  <td><code>created</code></td>
+  <td class="center aligned">
+    <code>number<code>
+    <code class="ui label">1415203908</code>
+  </td>
+  <td class="eight wide"><p>Time stamp</p>
+</td>
+</tr>
+
+                          
+                            
+<tr>
+  <td class="center aligned one wide">
+    <i class="ui empty circular label grey"></i>
+  </td>
+  <td><code>percent_off</code></td>
+  <td class="center aligned">
+    <code>number<code>
+    <code class="ui label">25</code>
+  </td>
+  <td class="eight wide"><p>A positive integer between 1 and 100 that represents the discount the coupon will apply.</p>
+</td>
+</tr>
+
+                          
+                            
+<tr>
+  <td class="center aligned one wide">
+    <i class="ui empty circular label grey"></i>
+  </td>
+  <td><code>redeem_by</code></td>
+  <td class="center aligned">
+    <code>number<code>
+    
+  </td>
+  <td class="eight wide"><p>Date after which the coupon can no longer be redeemed</p>
+</td>
+</tr>
+
+                          
+                        
+                      </tbody>
+                    </table>
+                    
+                  </div>
+                </div>
+              </div>
+            
+          </div>
+        
+        </div>
+      <div class="ui hidden divider"></div>
+    
+  
+    
+      <div class="ui stacked segments">
+        <div class="ui basic segment resource">
+          <div class="ui purple huge ribbon label">
+            Coupons
+          </div>
+          <div class="ui header">
+            <div class="ui sub header">
+              
+            </div>
+          </div>
+        </div>
+
+        
+          
+<div class="ui grey horizontal small divider header">
+  <i class="ui grey micro circular label"></i>
+  <i class="ui pink micro circular label"></i>
+  <i class="ui grey micro circular label"></i>
+</div>
+
+          <div class="ui basic segment">
+            <h3 class="ui block center aligned header" id="coupons-coupons-list-all-coupons">
+              List all Coupons
+            </h3>
+            <div class="description"><p>Returns a list of your coupons.</p>
+</div>
+
+            
+              <h4 class="ui horizontal divider">
+                REQUEST
+              </h4>
+              <div class="fluid ui large labeled button">
+                <div class="ui green large button">
+                  <h3>GET</h3>
+                </div>
+                <a class="ui basic fluid green label">
+                  <code>/coupons{?limit}</code>
+                </a>
+              </div>
+              
+                
+<table class="ui celled definition table">
+  <thead>
+    <tr>
+      <th colspan="4">Parameters</th>
+    </tr>
+  <thead>
+  <tbody>
+  
+    <tr>
+      <td class="center aligned one wide">
+        <i class="ui empty circular label grey"></i>
+      </td>
+      <td><code>limit</code></td>
+      <td class="center aligned">
+        <code>number<code>
+        
+      </td>
+      <td class="eight wide"><p>A limit on the number of objects to be returned. Limit can range
+between 1 and 100 items.</p>
+</td>
+    </tr>
+  
+  </tbody>
+</table>
+
+              
+              
+              
+
+              <h4 class="ui horizontal divider">RESPONSE</h4>
+              
+<table class="ui celled definition table">
+  <thead>
+    <tr>
+      <th colspan="2">Headers</th>
+    </tr>
+  <thead>
+  <tbody>
+  
+    <tr>
+      <td class="four wide">Content-Type</td>
+      <td><code>application/json</code></td>
+    </tr>
+  
+  </tbody>
+</table>
+
+              <div class="ui stacked blue segment">
+                <div class="ui fluid transaction accordion">
+                  <div class="title center aligned">
+                    <a class="ui blue circular label">
+                      200
+                    </a>
+                    <code>application/json</code>
+                  </div>
+                  <div class="content">
+                    <pre>[
+  {
+    &#34;id&#34;: &#34;250FF&#34;,
+    &#34;created&#34;: 1415203908,
+    &#34;percent_off&#34;: 25,
+    &#34;redeem_by&#34;: 0
+  }
+]</pre>
+                    
+                    
+                  </div>
+                </div>
+              </div>
+            
+          </div>
+        
+          
+<div class="ui grey horizontal small divider header">
+  <i class="ui grey micro circular label"></i>
+  <i class="ui pink micro circular label"></i>
+  <i class="ui grey micro circular label"></i>
+</div>
+
+          <div class="ui basic segment">
+            <h3 class="ui block center aligned header" id="coupons-coupons-create-a-coupon">
+              Create a Coupon
+            </h3>
+            <div class="description"><p>Creates a new Coupon.</p>
+</div>
+
+            
+              <h4 class="ui horizontal divider">
+                REQUEST
+              </h4>
+              <div class="fluid ui large labeled button">
+                <div class="ui blue large button">
+                  <h3>POST</h3>
+                </div>
+                <a class="ui basic fluid blue label">
+                  <code>/coupons{?limit}</code>
+                </a>
+              </div>
+              
+              
+                
+<table class="ui celled definition table">
+  <thead>
+    <tr>
+      <th colspan="2">Headers</th>
+    </tr>
+  <thead>
+  <tbody>
+  
+    <tr>
+      <td class="four wide">Content-Type</td>
+      <td><code>application/json</code></td>
+    </tr>
+  
+  </tbody>
+</table>
+
+              
+              
+                <div class="ui stacked segment">
+                  <div class="ui fluid transaction accordion">
+                    <div class="title">
+                      <code>application/json</code>
+                    </div>
+                    <div class="content">
+                      <pre>{
+  &#34;percent_off&#34;: 25,
+  &#34;redeem_by&#34;: 0
+}</pre>
+                    </div>
+                  </div>
+                </div>
+              
+
+              <h4 class="ui horizontal divider">RESPONSE</h4>
+              
+<table class="ui celled definition table">
+  <thead>
+    <tr>
+      <th colspan="2">Headers</th>
+    </tr>
+  <thead>
+  <tbody>
+  
+    <tr>
+      <td class="four wide">Content-Type</td>
+      <td><code>application/json</code></td>
+    </tr>
+  
+  </tbody>
+</table>
+
+              <div class="ui stacked blue segment">
+                <div class="ui fluid transaction accordion">
+                  <div class="title center aligned">
+                    <a class="ui blue circular label">
+                      200
+                    </a>
+                    <code>application/json</code>
+                  </div>
+                  <div class="content">
+                    <pre>{
+  &#34;id&#34;: &#34;250FF&#34;,
+  &#34;created&#34;: 1415203908,
+  &#34;percent_off&#34;: 25,
+  &#34;redeem_by&#34;: 0
+}</pre>
+                    
+                    
+                  </div>
+                </div>
+              </div>
+            
+          </div>
+        
+        </div>
+      <div class="ui hidden divider"></div>
+    
+  
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/components/accordion.min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      $('.ui.accordion').accordion({ animateChildren: false, duration: 0 });
+    });
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
