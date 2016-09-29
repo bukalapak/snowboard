@@ -85,21 +85,31 @@
   <a class="item">{{.Title}}</a>
 </div>
 {{range $groupN, $group := .ResourceGroups}}
+{{if $group.Title}}
 <div class="ui horizontal divider">
   <a href="#group-{{$group.Title | parameterize}}">{{$group.Title}}</a>
 </div>
+{{end}}
 <div class="ui accordion fluid">
   {{range $resourceN, $resource := $group.Resources}}
     {{if $resource.Transitions}}
     <div class="title {{if eq $resourceN 0}}active{{end}}">
       <i class="dropdown icon"></i>
-      <strong>{{$resource.Title}}</strong>
+      {{if $resource.Title}}
+        <strong>{{$resource.Title}}</strong>
+      {{else}}
+        <strong>{{$resource.Href.Path}}</strong>
+      {{end}}
     </div>
     <div class="content {{if eq $resourceN 0}}active{{end}}">
       <div class="ui fluid secondary vertical menu">
       {{range $transitionN, $transition := $resource.Transitions}}
-        <a class="item" href="#{{mParameterize $group.Title $resource.Title $transition.Title}}">
-          <i class="ui {{$transition | transitionColorize}} empty circular label"></i> {{$transition.Title}}
+        <a class="item" href="#{{mParameterize $group $resource $transition}}">
+          {{if $transition.Title}}
+            <i class="ui {{$transition | transitionColorize}} empty circular label"></i> {{$transition.Title}}
+          {{else}}
+            <i class="ui {{$transition | transitionColorize}} empty circular label"></i> {{requestMethod $transition}}
+          {{end}}
         </a>
       {{end}}
       </div>
@@ -134,7 +144,9 @@
     {{if $resource.Transitions}}
       <div class="ui stacked segments">
         <div class="ui basic segment resource">
-          <div class="ui purple huge ribbon label">{{$resource.Title}}</div>
+          <div class="ui purple huge ribbon label">
+            {{if $resource.Title}}{{$resource.Title}}{{else}}{{$resource.Href.Path}}{{end}}
+          </div>
           <div class="ui header">
             <div class="ui sub header">
               {{$resource.Description | markdownize}}
@@ -143,14 +155,10 @@
         </div>
 
         {{range $transitionN, $transition := $resource.Transitions}}
-          <div class="ui grey horizontal small divider header">
-            <i class="ui grey micro circular label"></i>
-            <i class="ui pink micro circular label"></i>
-            <i class="ui grey micro circular label"></i>
-          </div>
+          {{template "Divider"}}
           <div class="ui basic segment">
-            <h3 class="ui block center aligned header" id="{{mParameterize $group.Title $resource.Title $transition.Title}}">
-              {{$transition.Title}}
+            <h3 class="ui block center aligned header" id="{{mParameterize $group $resource $transition}}">
+              {{if $transition.Title}}{{$transition.Title}}{{else}}{{requestMethod $transition}}{{end}}
             </h3>
             <div class="description">{{$transition.Description | markdownize}}</div>
 
@@ -200,7 +208,7 @@
                     {{$structures := buildDataStructures $transaction $transition $resource $api}}
                     {{if $structures}}
                     <div class="ui section divider"></div>
-                    <table class="ui celled inverted {{$transaction.Response.StatusCode | iColorize}} table">
+                    <table class="ui celled {{$transaction.Response.StatusCode | iColorize}} table">
                       <thead>
                         <tr>
                           <th colspan="4">Attributes</th>
@@ -239,7 +247,7 @@
   {{range $index, $header := .}}
     <tr>
       <td class="four wide">{{.Key}}</td>
-      <td>{{.Value}}</td>
+      <td><code>{{.Value}}</code></td>
     </tr>
   {{end}}
   </tbody>
@@ -279,8 +287,16 @@
   <td><code>{{.Key}}</code></td>
   <td class="center aligned">
     <code>{{.Kind}}<code>
-    {{if .Value}}<code class="ui label">{.Value}}</code>{{end}}
+    {{if .Value}}<code class="ui label">{{.Value}}</code>{{end}}
   </td>
   <td class="eight wide">{{if .Description}}{{.Description | markdownize}}{{else}}-{{end}}</td>
 </tr>
+{{end}}
+
+{{define "Divider"}}
+<div class="ui grey horizontal small divider header">
+  <i class="ui grey micro circular label"></i>
+  <i class="ui pink micro circular label"></i>
+  <i class="ui grey micro circular label"></i>
+</div>
 {{end}}

@@ -17,22 +17,38 @@ func parameterize(s string) string {
 	return strings.Replace(strings.ToLower(s), " ", "-", -1)
 }
 
-func multiParameterize(ss ...string) (s string) {
+func multiParameterize(g blueprint.ResourceGroup, r blueprint.Resource, t blueprint.Transition) (s string) {
 	xs := []string{}
 
-	for i := range ss {
-		xs = append(xs, parameterize(ss[i]))
+	if g.Title != "" {
+		xs = append(xs, parameterize(g.Title))
+	}
+
+	if r.Title != "" {
+		xs = append(xs, parameterize(r.Title))
+	} else {
+		xs = append(xs, parameterize(r.Href.Path))
+	}
+
+	if t.Title != "" {
+		xs = append(xs, parameterize(t.Title))
+	} else {
+		xs = append(xs, parameterize(requestMethod(t)))
 	}
 
 	return strings.Join(xs, "-")
 }
 
-func transitionColorize(t blueprint.Transition) string {
+func requestMethod(t blueprint.Transition) string {
 	for _, m := range t.Transactions {
-		return colorize(m.Request.Method)
+		return m.Request.Method
 	}
 
 	return ""
+}
+
+func transitionColorize(t blueprint.Transition) string {
+	return colorize(requestMethod(t))
 }
 
 func apiUrl(b *API, s string, sr string) string {
@@ -116,6 +132,7 @@ func HTML(tpl string, w io.Writer, b *API) error {
 		"transitionColorize":  transitionColorize,
 		"apiUrl":              apiUrl,
 		"buildDataStructures": buildDataStructures,
+		"requestMethod":       requestMethod,
 	}
 
 	tmpl, err := template.New("api").Funcs(funcMap).Parse(tpl)
