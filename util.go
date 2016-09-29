@@ -200,6 +200,7 @@ func extractTransaction(children []*Element) (x blueprint.Transaction) {
 
 func extractRequest(child *Element) (r blueprint.Request) {
 	r = blueprint.Request{
+		Title:   child.Path("meta.title").String(),
 		Method:  child.Path("attributes.method").String(),
 		Headers: extractHeaders(child.Path("attributes.headers")),
 	}

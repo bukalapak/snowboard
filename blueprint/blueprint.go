@@ -59,6 +59,7 @@ type Header struct {
 }
 
 type Request struct {
+	Title       string
 	Method      string
 	Body        Asset
 	Schema      Asset
