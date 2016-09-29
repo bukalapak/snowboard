@@ -7,11 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.css">
     <style>
-      body {
-        padding-top: 40px;
-        padding-bottom: 40px;
-      }
-
       blockquote {
         border-left: solid 4px #eee;
         padding-left: 8px;
@@ -54,7 +49,6 @@
         height: 100%;
         padding-bottom: 20px !important;
       }
-
     </style>
   </head>
   <body>
@@ -117,6 +111,7 @@
 {{end}}
 
 {{define "Introduction"}}
+<div class="ui hidden divider header"></div>
 <h1 class="ui huge header">{{.Title}}</h1>
 <hr class="ui divider">
 <div class="description">
