@@ -202,6 +202,24 @@
                   </div>
                   <div class="content">
                     <pre>{{$transaction.Response.Body.Body}}</pre>
+                    {{$structures := buildDataStructures $transaction $transition $resource $api}}
+                    {{if $structures}}
+                    <div class="ui section divider"></div>
+                    <table class="ui celled inverted {{$transaction.Response.StatusCode | iColorize}} table">
+                      <thead>
+                        <tr>
+                          <th colspan="4">Attributes</th>
+                        </tr>
+                      <thead>
+                      <tbody>
+                        {{range $structures}}
+                          {{range $sItemN, $sItem := .Structures}}
+                            {{template "Structures" $sItem}}
+                          {{end}}
+                        {{end}}
+                      </tbody>
+                    </table>
+                    {{end}}
                   </div>
                 </div>
               </div>
@@ -256,4 +274,18 @@
   {{end}}
   </tbody>
 </table>
+{{end}}
+
+{{define "Structures"}}
+<tr>
+  <td class="center aligned one wide">
+    <i class="ui empty circular label {{if eq .Required true}}black{{else}}grey{{end}}"></i>
+  </td>
+  <td><code>{{.Key}}</code></td>
+  <td class="center aligned">
+    <code>{{.Kind}}<code>
+    {{if .Value}}<code class="ui label">{.Value}}</code>{{end}}
+  </td>
+  <td class="eight wide">{{if .Description}}{{.Description | markdownize}}{{else}}-{{end}}</td>
+</tr>
 {{end}}

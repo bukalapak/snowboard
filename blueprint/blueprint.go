@@ -11,6 +11,7 @@ type API struct {
 type DataStructure struct {
 	Name       string
 	ID         string
+	Items      []string
 	Structures []Structure
 }
 
@@ -42,10 +43,11 @@ type Resource struct {
 }
 
 type Transition struct {
-	Title        string
-	Description  string
-	Href         Href
-	Transactions []Transaction
+	Title          string
+	Description    string
+	Href           Href
+	Transactions   []Transaction
+	DataStructures []DataStructure
 }
 
 type Asset struct {

@@ -133,15 +133,19 @@ func extractDataStructures(children []*Element) (ds []blueprint.DataStructure) {
 			cz, err := c.Path("content").Children()
 			if err == nil {
 				for _, z := range cz {
-					s := blueprint.Structure{
-						Required:    isContains("attributes.typeAttributes", "required", z),
-						Description: z.Path("meta.description").String(),
-						Key:         z.Path("content.key.content").String(),
-						Value:       z.Path("content.value.content").String(),
-						Kind:        z.Path("content.value.element").String(),
-					}
+					if z.Path("content").Value().IsValid() {
+						s := blueprint.Structure{
+							Required:    isContains("attributes.typeAttributes", "required", z),
+							Description: z.Path("meta.description").String(),
+							Key:         z.Path("content.key.content").String(),
+							Value:       z.Path("content.value.content").String(),
+							Kind:        z.Path("content.value.element").String(),
+						}
 
-					d.Structures = append(d.Structures, s)
+						d.Structures = append(d.Structures, s)
+					} else {
+						d.Items = append(d.Items, z.Path("element").String())
+					}
 				}
 			}
 
@@ -161,6 +165,13 @@ func digTransitions(el *Element) (ts []blueprint.Transition) {
 			Description:  digDescription(child),
 			Transactions: digTransactions(child),
 			Href:         extractHrefs(child),
+		}
+
+		c := child.Path("attributes.data")
+		if c.Value().IsValid() {
+			if c.Path("element").String() == "dataStructure" {
+				t.DataStructures = extractDataStructures([]*Element{c})
+			}
 		}
 
 		ts = append(ts, *t)

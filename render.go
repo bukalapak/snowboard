@@ -81,16 +81,41 @@ func colorize(s string) string {
 	return ""
 }
 
+func buildDataStructures(t blueprint.Transaction, s blueprint.Transition, r blueprint.Resource, a API) (ds []blueprint.DataStructure) {
+	for _, ts := range t.Response.DataStructures {
+		for _, rs := range r.DataStructures {
+			if ts.Name == rs.ID && rs.Name != "array" {
+				ds = append(ds, rs)
+			}
+
+			for _, as := range a.DataStructures {
+				if rs.Name == as.ID {
+					ds = append(ds, as)
+				}
+
+				for _, ss := range s.DataStructures {
+					if ss.Name == as.ID {
+						ds = append(ds, as)
+					}
+				}
+			}
+		}
+	}
+
+	return
+}
+
 // HTML renders blueprint.API struct as HTML document
 func HTML(tpl string, w io.Writer, b *API) error {
 	funcMap := template.FuncMap{
-		"markdownize":        markdownize,
-		"parameterize":       parameterize,
-		"mParameterize":      multiParameterize,
-		"colorize":           colorize,
-		"iColorize":          iColorize,
-		"transitionColorize": transitionColorize,
-		"apiUrl":             apiUrl,
+		"markdownize":         markdownize,
+		"parameterize":        parameterize,
+		"mParameterize":       multiParameterize,
+		"colorize":            colorize,
+		"iColorize":           iColorize,
+		"transitionColorize":  transitionColorize,
+		"apiUrl":              apiUrl,
+		"buildDataStructures": buildDataStructures,
 	}
 
 	tmpl, err := template.New("api").Funcs(funcMap).Parse(tpl)
