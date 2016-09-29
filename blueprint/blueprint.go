@@ -80,11 +80,11 @@ type Transaction struct {
 }
 
 type Href struct {
-	Path      string
-	Variables []HVariable
+	Path       string
+	Parameters []Parameter
 }
 
-type HVariable struct {
+type Parameter struct {
 	Required    bool
 	Description string
 	Key         string

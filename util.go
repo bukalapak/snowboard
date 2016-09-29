@@ -282,7 +282,7 @@ func extractHrefs(child *Element) (h blueprint.Href) {
 	}
 
 	for _, content := range contents {
-		v := &blueprint.HVariable{
+		v := &blueprint.Parameter{
 			Required:    isContains("attributes.typeAttributes", "required", content),
 			Key:         content.Path("content.key.content").String(),
 			Value:       content.Path("content.value.content").String(),
@@ -290,7 +290,7 @@ func extractHrefs(child *Element) (h blueprint.Href) {
 			Description: content.Path("meta.description").String(),
 		}
 
-		h.Variables = append(h.Variables, *v)
+		h.Parameters = append(h.Parameters, *v)
 	}
 
 	return

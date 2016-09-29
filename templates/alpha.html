@@ -126,8 +126,8 @@
                 <a class="ui {{$transaction.Request.Method | colorize}} label">{{$transaction.Request.Method}}</a>
                 <code>{{apiUrl $api $transition.Href.Path $resource.Href.Path}}</code>
               </div>
-              {{if $transition.Href.Variables}}
-                {{template "Parameters" $transition.Href.Variables}}
+              {{if $transition.Href.Parameters}}
+                {{template "Parameters" $transition.Href.Parameters}}
               {{end}}
               {{if $transaction.Request.Headers}}
                 {{template "Headers" $transaction.Request.Headers}}
