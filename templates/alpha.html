@@ -32,6 +32,7 @@
       <div class="twelve wide column">
         <div class="ui text container">
           {{template "Introduction" .}}
+          <div class="ui hidden divider"></div>
           {{template "ResourceGroups" .}}
         </div>
       </div>
@@ -120,7 +121,7 @@
             <h4 class="ui horizontal divider">REQUEST</h4>
             <div class="ui segment">
               <a class="ui {{$transaction.Request.Method | colorize}} label">{{$transaction.Request.Method}}</a>
-              <code>{{apiUrl $api $transition.Href.Path}}</code>
+              <code>{{apiUrl $api $transition.Href.Path $resource.Href.Path}}</code>
             </div>
             {{if $transition.Href.Variables}}
               {{template "Parameters" $transition.Href.Variables}}
@@ -191,7 +192,7 @@
       <td class="center aligned one wide">
         <i class="ui empty circular label {{if eq .Required true}}black{{else}}grey{{end}}"></i>
       </td>
-      <td><code>{{.Key}}<code></td>
+      <td><code>{{.Key}}</code></td>
       <td class="center aligned">
         <code>{{.Kind}}<code>
         {{if .Value}}<code class="ui basic label">{{.Value}}</code>{{end}}

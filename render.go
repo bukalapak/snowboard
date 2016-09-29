@@ -35,7 +35,7 @@ func transitionColorize(t blueprint.Transition) string {
 	return ""
 }
 
-func apiUrl(b *API, s string) string {
+func apiUrl(b *API, s string, sr string) string {
 	var h string
 
 	for _, m := range b.Metadata {
@@ -44,7 +44,11 @@ func apiUrl(b *API, s string) string {
 		}
 	}
 
-	return path.Join(h, s)
+	if s != "" {
+		return path.Join(h, s)
+	}
+
+	return path.Join(h, sr)
 }
 
 func iColorize(i int) string {
