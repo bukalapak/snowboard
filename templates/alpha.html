@@ -62,19 +62,21 @@
 </div>
 <div class="ui accordion fluid">
   {{range $resourceN, $resource := $group.Resources}}
-  <div class="title {{if eq $resourceN 0}}active{{end}}">
-    <i class="dropdown icon"></i>
-    <strong>{{$resource.Title}}</strong>
-  </div>
-  <div class="content {{if eq $resourceN 0}}active{{end}}">
-    <div class="ui fluid secondary vertical menu">
-    {{range $transitionN, $transition := $resource.Transitions}}
-      <a class="item" href="#{{mParameterize $group.Title $resource.Title $transition.Title}}">
-        <i class="ui {{$transition | transitionColorize}} empty circular label"></i> {{$transition.Title}}
-      </a>
-    {{end}}
+    {{if $resource.Transitions}}
+    <div class="title {{if eq $resourceN 0}}active{{end}}">
+      <i class="dropdown icon"></i>
+      <strong>{{$resource.Title}}</strong>
     </div>
-  </div>
+    <div class="content {{if eq $resourceN 0}}active{{end}}">
+      <div class="ui fluid secondary vertical menu">
+      {{range $transitionN, $transition := $resource.Transitions}}
+        <a class="item" href="#{{mParameterize $group.Title $resource.Title $transition.Title}}">
+          <i class="ui {{$transition | transitionColorize}} empty circular label"></i> {{$transition.Title}}
+        </a>
+      {{end}}
+      </div>
+    </div>
+    {{end}}
   {{end}}
 </div>
 {{end}}
@@ -98,63 +100,65 @@
     {{$group.Description | markdownize}}
   </div>
   {{range $resourceN, $resource := $group.Resources}}
-    <div class="ui stacked segments">
-      <div class="ui basic segment">
-        <div class="ui purple large ribbon label">{{$resource.Title}}</div>
-        <div class="ui hidden divider"></div>
-        <div class="description">
-          {{$resource.Description | markdownize}}
-        </div>
-      </div>
-
-      {{range $transitionN, $transition := $resource.Transitions}}
-        <div class="ui grey horizontal divider header">
-          <i class="ellipsis horizontal icon"></i>
-        </div>
+    {{if $resource.Transitions}}
+      <div class="ui stacked segments">
         <div class="ui basic segment">
-          <h3 class="ui block center aligned header" id="{{mParameterize $group.Title $resource.Title $transition.Title}}">
-            {{$transition.Title}}
-          </h3>
-          <div class="description">{{$transition.Description | markdownize}}</div>
+          <div class="ui purple large ribbon label">{{$resource.Title}}</div>
+          <div class="ui hidden divider"></div>
+          <div class="description">
+            {{$resource.Description | markdownize}}
+          </div>
+        </div>
 
-          {{range $transactionN, $transaction := $transition.Transactions}}
-            <h4 class="ui horizontal divider">REQUEST</h4>
-            <div class="ui segment">
-              <a class="ui {{$transaction.Request.Method | colorize}} label">{{$transaction.Request.Method}}</a>
-              <code>{{apiUrl $api $transition.Href.Path $resource.Href.Path}}</code>
-            </div>
-            {{if $transition.Href.Variables}}
-              {{template "Parameters" $transition.Href.Variables}}
-            {{end}}
-            {{if $transaction.Request.Headers}}
-              {{template "Headers" $transaction.Request.Headers}}
-            {{end}}
-            {{if ne $transaction.Request.Body.Body ""}}
+        {{range $transitionN, $transition := $resource.Transitions}}
+          <div class="ui grey horizontal divider header">
+            <i class="ellipsis horizontal icon"></i>
+          </div>
+          <div class="ui basic segment">
+            <h3 class="ui block center aligned header" id="{{mParameterize $group.Title $resource.Title $transition.Title}}">
+              {{$transition.Title}}
+            </h3>
+            <div class="description">{{$transition.Description | markdownize}}</div>
+
+            {{range $transactionN, $transaction := $transition.Transactions}}
+              <h4 class="ui horizontal divider">REQUEST</h4>
+              <div class="ui segment">
+                <a class="ui {{$transaction.Request.Method | colorize}} label">{{$transaction.Request.Method}}</a>
+                <code>{{apiUrl $api $transition.Href.Path $resource.Href.Path}}</code>
+              </div>
+              {{if $transition.Href.Variables}}
+                {{template "Parameters" $transition.Href.Variables}}
+              {{end}}
+              {{if $transaction.Request.Headers}}
+                {{template "Headers" $transaction.Request.Headers}}
+              {{end}}
+              {{if ne $transaction.Request.Body.Body ""}}
+                <div class="ui raised segments">
+                  <div class="ui segment">
+                    <code>{{$transaction.Request.Body.ContentType}}</code>
+                  </div>
+                  <div class="ui segment">
+                    <pre>{{$transaction.Request.Body.Body}}</pre>
+                  </div>
+                </div>
+              {{end}}
+
+              <h4 class="ui horizontal divider">RESPONSE</h4>
+              {{template "Headers" $transaction.Response.Headers}}
               <div class="ui raised segments">
                 <div class="ui segment">
-                  <code>{{$transaction.Request.Body.ContentType}}</code>
+                  <a class="ui {{$transaction.Response.StatusCode | iColorize}} circular label">
+                    {{$transaction.Response.StatusCode}}
+                  </a>
+                  <code>{{$transaction.Response.Body.ContentType}}</code>
                 </div>
                 <div class="ui segment">
-                  <pre>{{$transaction.Request.Body.Body}}</pre>
+                  <pre>{{$transaction.Response.Body.Body}}</pre>
                 </div>
               </div>
             {{end}}
-
-            <h4 class="ui horizontal divider">RESPONSE</h4>
-            {{template "Headers" $transaction.Response.Headers}}
-            <div class="ui raised segments">
-              <div class="ui segment">
-                <a class="ui {{$transaction.Response.StatusCode | iColorize}} circular label">
-                  {{$transaction.Response.StatusCode}}
-                </a>
-                <code>{{$transaction.Response.Body.ContentType}}</code>
-              </div>
-              <div class="ui segment">
-                <pre>{{$transaction.Response.Body.Body}}</pre>
-              </div>
-            </div>
-          {{end}}
-        </div>
+          </div>
+        {{end}}
       {{end}}
     </div>
   {{end}}
