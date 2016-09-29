@@ -55,7 +55,7 @@ func iColorize(i int) string {
 	switch i {
 	case 200, 201, 202, 204:
 		return "blue"
-	case 401, 403, 404:
+	case 401, 403, 404, 422:
 		return "orange"
 	case 500:
 		return "red"
