@@ -22,3 +22,81 @@ $ make install
 ```
 
 Note: ensure you have configured your `GOPATH` and `PATH`.
+
+## CLI Usage
+
+Let's say we have API Blueprint document called `API.apib`, like:
+
+```
+$ cat API.apib
+# My API
+## GET /message
++ Response 200 (text/plain)
+
+        Hello World!
+EOF
+```
+
+**Generate HTML Documentation**
+
+To generate HTML documentation we can do:
+
+```
+$ snowboard -i API.apib -o output.html
+```
+
+Above command will generate `ouput.html` using default template (currently, it's called `alpha`).
+
+**Custom Template**
+
+If you want to use custom template, you can use flag `-t` for that:
+
+```
+$ snowboard -i API.apib -o output.html -t awesome-template.html
+```
+
+To see how the template looks like, you can see `snowboard` default template located in `templates/alpha.html`.
+
+**Auto-Regenerate HTML Documentation**
+
+When you want to perform auto-regenerate HTML documentation, you can pass `-w` flag:
+
+```
+$ snowboard -i API.apib -o output.html -t awesome-template.html -w
+```
+
+With this flag, any updates on both input and template will trigger auto-regeneration.
+
+**Help**
+
+You can also see all supported flags by passing `-h`, like:
+
+```
+$ snowboard -h
+Usage:
+  snowboard [OPTIONS]
+
+Options:
+  -i string  API Blueprint file (default "API.apib")
+  -o string  HTML output file (default "index.html")
+  -s         Serve HTML via 0.0.0.0:8088
+  -t string  Custom template for documentation (default "alpha")
+  -v         Display version information
+  -w         Watch input (and template, if any) file for changes
+```
+
+## Examples
+
+You can see examples of default template, called `alpha`, in `examples/alpha` directory. They looks like:
+
+- [Named Resource and Actions](https://htmlpreview.github.io/?https://github.com/subosito/snowboard/blob/master/examples/alpha/03.%20Named%20Resource%20and%20Actions.html)
+- [Real World API](https://htmlpreview.github.io/?https://github.com/subosito/snowboard/blob/master/examples/alpha/Real%20World%20API.html)
+- And many more...
+
+All of the examples are generated from official [API Blueprint examples](https://github.com/apiaryio/api-blueprint/tree/master/examples)
+
+
+## Status
+
+Most features have been implemented. There are some missing part, like handling complex Data Structure, etc are on the way. Please be patient :)
+

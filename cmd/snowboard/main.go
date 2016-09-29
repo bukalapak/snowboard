@@ -20,7 +20,7 @@ var (
 	version = flag.Bool("v", false, "Display version information")
 	input   = flag.String("i", "API.apib", "API Blueprint file")
 	output  = flag.String("o", "index.html", "HTML output file")
-	watch   = flag.Bool("w", false, "Watch input file for changes")
+	watch   = flag.Bool("w", false, "Watch input (and template, if any) file for changes")
 	serve   = flag.Bool("s", false, "Serve HTML via 0.0.0.0:8088")
 	tplFile = flag.String("t", "alpha", "Custom template for documentation")
 )
