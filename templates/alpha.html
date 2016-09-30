@@ -102,12 +102,12 @@
   <a href="#introduction">Introduction</a>
 </div>
 <div class="ui fluid secondary vertical menu">
-  <a class="item">{{.Title}}</a>
+  <a class="item" href="#introduction">{{.Title}}</a>
 </div>
 {{range $groupN, $group := .ResourceGroups}}
 {{if $group.Title}}
 <div class="ui horizontal divider">
-  <a href="#group-{{$group.Title | parameterize}}">{{$group.Title}}</a>
+  <a href="#{{$group.Title | parameterize}}">{{$group.Title}}</a>
 </div>
 {{end}}
 <div class="ui accordion fluid">
@@ -142,7 +142,7 @@
 
 {{define "Introduction"}}
 <div class="ui hidden divider header"></div>
-<h1 class="ui huge header">{{.Title}}</h1>
+<h1 class="ui huge header" id="introduction">{{.Title}}</h1>
 <hr class="ui divider">
 <div class="description">
   {{.Description | markdownize}}
@@ -152,7 +152,7 @@
 {{define "ResourceGroups"}}
 {{$api := .}}
 {{range $groupN, $group := .ResourceGroups}}
-  <div class="ui horizontal divider" id="group-{{$group.Title | parameterize}}">
+  <div class="ui horizontal divider" id="{{$group.Title | parameterize}}">
     {{$group.Title}}
   </div>
   <div class="ui header center aligned">
