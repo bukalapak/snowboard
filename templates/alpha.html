@@ -44,27 +44,44 @@
         text-transform: none;
       }
 
-      .sidebar {
-        position: fixed !important;
-        overflow: scroll;
-        height: 100%;
-        padding-bottom: 20px !important;
+      @media only screen and (min-width: 768px) {
+        .sidenav {
+          position: fixed !important;
+          top: 0;
+          transition: none;
+          height: 100% !important;
+          max-height: 100%;
+          border-radius: 0 !important;
+          margin: 0!important;
+          overflow-y: auto !important;
+          z-index: 102;
+        }
+      }
+
+      @media only screen and (min-width: 768px) and (max-width: 991px) {
+        .sidenav {
+          max-width: 28.7% !important;
+        }
+      }
+
+      @media only screen and (min-width: 992px) {
+        .sidenav {
+          max-width: 21.7% !important;
+        }
       }
     </style>
   </head>
   <body>
-    <div class="ui two column grid container">
-      <div class="four wide sidebar column">
-        <div class="ui container">
+    <div class="ui grid container">
+      <div class="four wide computer six wide tablet sixteen wide mobile column">
+        <div class="ui sidenav basic segment">
           {{template "Navigation" .}}
         </div>
       </div>
-      <div class="twelve wide right floated column">
-        <div class="ui text container">
-          {{template "Introduction" .}}
-          <div class="ui hidden divider"></div>
-          {{template "ResourceGroups" .}}
-        </div>
+      <div class="twelve wide computer ten wide tablet sixteen wide mobile column">
+        {{template "Introduction" .}}
+        <div class="ui hidden divider"></div>
+        {{template "ResourceGroups" .}}
       </div>
     </div>
   </div>
