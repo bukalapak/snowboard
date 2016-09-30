@@ -7,13 +7,13 @@ API blueprint parser and formatter.
 
 ## Installation
 
-Homebrew for macOS:
+**Homebrew** for macOS:
 
 ```sh
 $ brew install --HEAD https://raw.github.com/subosito/snowboard/master/tools/homebrew/snowboard.rb
 ```
 
-Manual installation:
+**Manual** installation:
 
 ```sh
 $ git clone https://github.com/subosito/snowboard.git
@@ -22,6 +22,15 @@ $ make install
 ```
 
 Note: ensure you have configured your `GOPATH` and `PATH`.
+
+**Docker**
+
+You can also use automated build docker image on `subosito/snowboard`:
+
+```
+$ docker pull subosito/snowboard
+$ docker run subosito/snowboard -h
+```
 
 ## CLI Usage
 
