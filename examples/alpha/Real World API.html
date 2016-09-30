@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/themes/prism-okaidia.min.css" />
     <style>
       blockquote {
         border-left: solid 4px #eee;
@@ -255,7 +256,8 @@ their feed. Posts are closely tied to the follow graph&hellip;</p>
                     <code>application/json</code>
                   </div>
                   <div class="content">
-                    <pre>{
+                    <pre style="white-space: inherit">
+                      <code class="language-json">{
     &#34;data&#34;: {
         &#34;id&#34;: &#34;1&#34;, // note this is a string
         &#34;user&#34;: {
@@ -301,7 +303,8 @@ their feed. Posts are closely tied to the follow graph&hellip;</p>
         &#34;code&#34;: 200,
     }
 }
-</pre>
+</code>
+                    </pre>
                     
                     
                   </div>
@@ -363,7 +366,9 @@ returns the deleted Post on success.</p>
                     <code></code>
                   </div>
                   <div class="content">
-                    <pre></pre>
+                    <pre style="white-space: inherit">
+                      <code class="language-"></code>
+                    </pre>
                     
                     
                   </div>
@@ -445,7 +450,8 @@ text, as will bare URLs&hellip;</p>
                       <code>application/json</code>
                     </div>
                     <div class="content">
-                      <pre>{
+                      <pre style="white-space: inherit">
+                        <code class="language-json">{
     &#34;data&#34;: {
         &#34;id&#34;: &#34;1&#34;, // note this is a string
         &#34;user&#34;: {
@@ -491,7 +497,8 @@ text, as will bare URLs&hellip;</p>
         &#34;code&#34;: 200,
     }
 }
-</pre>
+</code>
+                      </pre>
                     </div>
                   </div>
                 </div>
@@ -524,7 +531,8 @@ text, as will bare URLs&hellip;</p>
                     <code>application/json</code>
                   </div>
                   <div class="content">
-                    <pre>{
+                    <pre style="white-space: inherit">
+                      <code class="language-json">{
     &#34;data&#34;: {
         &#34;id&#34;: &#34;1&#34;, // note this is a string
         &#34;user&#34;: {
@@ -570,7 +578,8 @@ text, as will bare URLs&hellip;</p>
         &#34;code&#34;: 200,
     }
 }
-</pre>
+</code>
+                    </pre>
                     
                     
                   </div>
@@ -636,7 +645,8 @@ text, as will bare URLs&hellip;</p>
                     <code>application/json</code>
                   </div>
                   <div class="content">
-                    <pre>{
+                    <pre style="white-space: inherit">
+                      <code class="language-json">{
     &#34;data&#34;: [
         {
             &#34;id&#34;: &#34;1&#34;, // note this is a string
@@ -655,7 +665,8 @@ text, as will bare URLs&hellip;</p>
         &#34;code&#34;: 200,
     }
 }
-</pre>
+</code>
+                    </pre>
                     
                     
                   </div>
@@ -744,7 +755,8 @@ not a sharing action.</p>
                     <code>application/json</code>
                   </div>
                   <div class="content">
-                    <pre>{
+                    <pre style="white-space: inherit">
+                      <code class="language-json">{
     &#34;data&#34;: {
         &#34;id&#34;: &#34;1&#34;, // note this is a string
         &#34;user&#34;: {
@@ -790,7 +802,8 @@ not a sharing action.</p>
         &#34;code&#34;: 200,
     }
 }
-</pre>
+</code>
+                    </pre>
                     
                     
                   </div>
@@ -856,7 +869,8 @@ not a sharing action.</p>
                     <code>application/json</code>
                   </div>
                   <div class="content">
-                    <pre>{
+                    <pre style="white-space: inherit">
+                      <code class="language-json">{
     &#34;data&#34;: {
         &#34;id&#34;: &#34;1&#34;, // note this is a string
         &#34;user&#34;: {
@@ -902,7 +916,8 @@ not a sharing action.</p>
         &#34;code&#34;: 200,
     }
 }
-</pre>
+</code>
+                    </pre>
                     
                     
                   </div>
@@ -923,6 +938,8 @@ not a sharing action.</p>
   </div>
   <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/components/accordion.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/prism.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/components/prism-json.min.js"></script>
   <script type="text/javascript">
     $(function() {
       $('.ui.accordion').accordion({ animateChildren: false, duration: 0 });
