@@ -1,11 +1,13 @@
 FROM golang:1.7
 MAINTAINER Alif Rachmawadi <code@subosito.com>
 
-ENV SNOWBOARD_PATH=/go/src/github.com/subosito/snowboard
+COPY . /go/src/github.com/subosito/snowboard
+RUN cd /go/src/github.com/subosito/snowboard \
+ && make build \
+ && cp snowboard /usr/local/bin \
+ && cd /go \
+ && rm -Rf src bin pkg\
+ && mkdir src bin pkg
 
-COPY . $SNOWBOARD_PATH
-RUN cd $SNOWBOARD_PATH \
- && make install
-
-ENTRYPOINT /go/bin/snowboard
+ENTRYPOINT /usr/local/bin/snowboard
 EXPOSE 8088
