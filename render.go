@@ -97,6 +97,15 @@ func colorize(s string) string {
 	return ""
 }
 
+func alias(s string) string {
+	switch s {
+	case "application/json":
+		return "json"
+	}
+
+	return ""
+}
+
 func buildDataStructures(t blueprint.Transaction, s blueprint.Transition, r blueprint.Resource, a API) (ds []blueprint.DataStructure) {
 	for _, ts := range t.Response.DataStructures {
 		for _, rs := range r.DataStructures {
@@ -133,6 +142,7 @@ func HTML(tpl string, w io.Writer, b *API) error {
 		"apiUrl":              apiUrl,
 		"buildDataStructures": buildDataStructures,
 		"requestMethod":       requestMethod,
+		"alias":               alias,
 	}
 
 	tmpl, err := template.New("api").Funcs(funcMap).Parse(tpl)
