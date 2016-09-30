@@ -77,7 +77,7 @@ Usage:
   snowboard [OPTIONS]
 
 Options:
-  -i string  API Blueprint file (default "API.apib")
+  -i string  API Blueprint file
   -o string  HTML output file (default "index.html")
   -s         Serve HTML via 0.0.0.0:8088
   -t string  Custom template for documentation (default "alpha")
