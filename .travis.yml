@@ -14,6 +14,5 @@ deploy:
     secure: sVl6vPGO+XCJfftM/bzNin83BWK0CYoV6ERqt1gO+ORDLL/pkm1KOQu4AqJQlqGSNImINfe6sv4g1EgzaIzik0Ib3//MJqB/onRS4MKdXU6FgFf9Kb+ovH9xp2yc6hXAayrjv6BlTDiW1vX1Dm3o/DUi5neXuacat5HveNZpdPyb8llV16A/LrmqOLDFtxv1vdDzkEQa3gaVTwNBxsy7TvUBBCG69f3hJcdfouCxQPNukHkislbFtog0UVa1JGVG4UL3gS1fy9rROCvp2HA9qghQ6cBZSNL+knS3SMpFhGqz7Nt8IK4KiCczFnesAwg5WX8Cz1z8tOzMU9GHk0V3SqRWwI88LyF0noI5kIJFj/+UNhu3vbqz2pxgyQt49HS+iGW+sIYZJPiW3X/iT7NK2IZgGo+MYaEgdJJIY9gqCiBuRmTZCgXoEmQDdZCeFFulugJJUxHplgi22NM+YpP7f7F2PJlnE5FaFuIARAAg/qXlSINPwDlnL+y53Os22CZqRm3eXMJh6avFysmW5/3RBRpHPLzA3VTj2EBuF3tDQ9zSMkqyvJbjy5kdlHGEDxeFkmlNn8OiEhBB+2KEvTCNarvubMdIW5GUMeMryC6rWbu5DWn5g3cquodZRunAEp0Cu8vgTRCyeLLULLevLVWcX8xZ93LPgTpcCWnNTrlaY2g=
   file: snowboard-$TRAVIS_TAG.${TRAVIS_OS_NAME/osx/darwin}-amd64.tar.gz
   skip_cleanup: true
-  overwrite: true
   on:
     tags: true
