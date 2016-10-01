@@ -35,6 +35,8 @@ $ docker pull subosito/snowboard
 $ docker run subosito/snowboard -h
 ```
 
+> Note: Besides image on docker hub, you can also use image on `quay.io/subosito/snowboard`.
+
 ### Manual
 
 ```sh
@@ -43,7 +45,7 @@ $ cd snowboard
 $ make install
 ```
 
-Note: ensure you have installed [Go](https://golang.org/doc/install#tarball) and configured your `GOPATH` and `PATH`.
+> Note: ensure you have installed [Go](https://golang.org/doc/install#tarball) and configured your `GOPATH` and `PATH`.
 
 ## Usage
 
