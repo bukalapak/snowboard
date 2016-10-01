@@ -152,7 +152,7 @@
 {{define "ResourceGroups"}}
 {{$api := .}}
 {{range $groupN, $group := .ResourceGroups}}
-  <div class="ui horizontal divider" id="{{$group.Title | parameterize}}">
+  <div class="ui horizontal divider" {{if $group.Title}}id="{{$group.Title | parameterize}}"{{end}}>
     {{$group.Title}}
   </div>
   <div class="ui header center aligned">
