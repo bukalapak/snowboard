@@ -45,36 +45,26 @@
       }
 
       @media only screen and (min-width: 768px) {
+        .sidewrap {
+          margin-right: 2rem;
+        }
+
         .sidenav {
-          position: fixed !important;
+          left: 0;
           top: 0;
-          transition: none;
+          width: inherit;
+          position: fixed !important;
           height: 100% !important;
-          max-height: 100%;
-          border-radius: 0 !important;
-          margin: 0!important;
           overflow-y: auto !important;
-          z-index: 102;
-        }
-      }
-
-      @media only screen and (min-width: 768px) and (max-width: 991px) {
-        .sidenav {
-          max-width: 28.7% !important;
-        }
-      }
-
-      @media only screen and (min-width: 992px) {
-        .sidenav {
-          max-width: 21.7% !important;
+          padding-left: 0.5rem;
         }
       }
     </style>
   </head>
   <body>
-    <div class="ui grid container">
-      <div class="four wide computer six wide tablet sixteen wide mobile column">
-        <div class="ui sidenav basic segment">
+    <div class="ui padded grid">
+      <div class="sidewrap four wide computer five wide tablet sixteen wide mobile column">
+        <div class="sidenav">
           
 <div class="ui horizontal divider">
   <a href="#introduction">Introduction</a>
@@ -210,7 +200,7 @@
 
         </div>
       </div>
-      <div class="twelve wide computer ten wide tablet sixteen wide mobile column">
+      <div class="eleven wide computer ten wide tablet sixteen wide mobile column">
         
 <div class="ui hidden divider header"></div>
 <h1 class="ui huge header" id="introduction">Gist Fox API</h1>
