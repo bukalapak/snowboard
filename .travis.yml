@@ -4,8 +4,10 @@ sudo: required
 os:
 - linux
 - osx
+before_script:
+- make drafter
+- export PATH=$TRAVIS_BUILD_DIR/engines/drafter/ext/drafter/bin:$PATH
 script:
-- make drafter-install
 - make go-gen
 - make go-test
 before_deploy:
