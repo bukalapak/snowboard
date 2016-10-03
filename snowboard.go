@@ -17,17 +17,7 @@ type Parser interface {
 // API is alias for blueprint.API
 type API blueprint.API
 
-// // Version returns current version of Snowboard and Drafter
-// func Version() map[string]string {
-// 	v := C.drafter_version_string()
-
-// 	return map[string]string{
-// 		"Snowboard": version,
-// 		"Drafter":   C.GoString(v),
-// 	}
-// }
-
-// Parse formats API Blueprint as blueprint.API struct
+// Parse formats API Blueprint as blueprint.API struct using selected Parser
 func Parse(r io.Reader, engine Parser) (*API, error) {
 	el, err := ParseElement(r, engine)
 	if err != nil {
