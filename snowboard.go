@@ -36,6 +36,10 @@ func Parse(r io.Reader, engine Parser) (*API, error) {
 // Validate validates API Blueprint using selected Parser
 func Validate(r io.Reader, engine Checker) (*API, error) {
 	el, err := validateElement(r, engine)
+	if err == nil && el.object == nil {
+		return nil, nil
+	}
+
 	if err != nil {
 		return nil, err
 	}
