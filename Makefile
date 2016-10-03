@@ -2,7 +2,7 @@
 all: install
 drafter:
 	git submodule update --init --recursive
-	cd ext/drafter && ./configure && make drafter
+	cd engines/drafter/ext/drafter && ./configure && make drafter
 go-gen:
 	@go get github.com/mjibson/esc
 	go generate ./cmd/snowboard/main.go

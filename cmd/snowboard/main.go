@@ -14,7 +14,10 @@ import (
 
 	"github.com/fsnotify/fsnotify"
 	"github.com/subosito/snowboard"
+	"github.com/subosito/snowboard/engines/drafter"
 )
+
+const versionStr = "v0.1.0"
 
 var (
 	version = flag.Bool("v", false, "Display version information")
@@ -35,10 +38,16 @@ func main() {
 	flag.Parse()
 
 	if *version {
-		vs := snowboard.Version()
-		for name, version := range vs {
-			fmt.Printf("%s version: %s\n", name, version)
+		fmt.Printf("Snowboard version: %s\n", versionStr)
+		fmt.Println("Engine:")
+
+		engine := drafter.Engine{}
+		vs := engine.Version()
+
+		for name, v := range vs {
+			fmt.Printf("  %s version: %s\n", name, v)
 		}
+
 		os.Exit(0)
 	}
 
@@ -126,8 +135,9 @@ func renderHTML() {
 
 	log.Println("Generate HTML... START")
 
+	engine := drafter.Engine{}
 	bf := bytes.NewReader(b)
-	bp, err := snowboard.Parse(bf)
+	bp, err := snowboard.Parse(bf, engine)
 	logErr(err)
 
 	of, err := os.Create(*output)

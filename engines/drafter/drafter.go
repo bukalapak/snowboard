@@ -1,9 +1,9 @@
 package drafter
 
 /*
-#cgo CFLAGS: -I./ext/drafter/src/ -I./ext/drafter/ext/snowcrash/src/
-#cgo darwin LDFLAGS: -L"./ext/drafter/build/out/Release/" -ldrafter -lsos -lsnowcrash -lmarkdownparser -lsundown -lc++
-#cgo linux LDFLAGS: -L"./ext/drafter/build/out/Release/" -ldrafter -lsos -lsnowcrash -lmarkdownparser -lsundown -lstdc++
+#cgo CFLAGS: -I"${SRCDIR}/ext/drafter/src/" -I"${SRCDIR}/ext/drafter/ext/snowcrash/src/"
+#cgo darwin LDFLAGS: -L"${SRCDIR}/ext/drafter/build/out/Release/" -ldrafter -lsos -lsnowcrash -lmarkdownparser -lsundown -lc++
+#cgo linux LDFLAGS: -L"${SRCDIR}/ext/drafter/build/out/Release/" -ldrafter -lsos -lsnowcrash -lmarkdownparser -lsundown -lstdc++
 #include <stdlib.h>
 #include <stdio.h>
 #include "drafter.h"
@@ -16,7 +16,9 @@ import (
 	"unsafe"
 )
 
-func Parse(r io.Reader) ([]byte, error) {
+type Engine struct{}
+
+func (e Engine) Parse(r io.Reader) ([]byte, error) {
 	b, err := ioutil.ReadAll(r)
 	if err != nil {
 		return nil, err
@@ -37,4 +39,10 @@ func Parse(r io.Reader) ([]byte, error) {
 	C.free(unsafe.Pointer(cResult))
 
 	return []byte(result), nil
+}
+
+func (e Engine) Version() map[string]string {
+	return map[string]string{
+		"drafter": C.GoString(C.drafter_version_string()),
+	}
 }
