@@ -41,8 +41,32 @@ func (e Engine) Parse(r io.Reader) ([]byte, error) {
 	return []byte(result), nil
 }
 
+func (e Engine) Validate(r io.Reader) ([]byte, error) {
+	b, err := ioutil.ReadAll(r)
+	if err != nil {
+		return nil, err
+	}
+
+	cSource := C.CString(string(b))
+	cResval := C.drafter_check_blueprint(cSource)
+
+	C.free(unsafe.Pointer(cSource))
+
+	return e.serialize(cResval), nil
+}
+
 func (e Engine) Version() map[string]string {
 	return map[string]string{
 		"drafter": C.GoString(C.drafter_version_string()),
 	}
+}
+
+func (e Engine) serialize(r *C.drafter_result) []byte {
+	options := C.drafter_options{sourcemap: false, format: C.DRAFTER_SERIALIZE_JSON}
+	cResult := C.drafter_serialize(r, options)
+	results := C.GoString(cResult)
+
+	C.free(unsafe.Pointer(cResult))
+
+	return []byte(results)
 }

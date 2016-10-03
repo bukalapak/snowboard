@@ -17,26 +17,11 @@ const minimumVersion = "2.0.1"
 type Engine struct{}
 
 func (c Engine) Parse(r io.Reader) ([]byte, error) {
-	path, err := command()
-	if err != nil {
-		return nil, err
-	}
+	return c.exec(r, "--format", "json", "--type", "refract")
+}
 
-	err = c.checkVersion()
-	if err != nil {
-		return nil, err
-	}
-
-	b, err := ioutil.ReadAll(r)
-	if err != nil {
-		return nil, err
-	}
-
-	buf := bytes.NewReader(b)
-	cmd := exec.Command(path, "--format", "json", "--type", "refract")
-	cmd.Stdin = buf
-
-	return cmd.Output()
+func (c Engine) Validate(r io.Reader) ([]byte, error) {
+	return c.exec(r, "--validate")
 }
 
 func (c Engine) Version() (m map[string]string) {
@@ -54,6 +39,29 @@ func (c Engine) Version() (m map[string]string) {
 	return map[string]string{
 		"drafter command line": strings.TrimSpace(string(b)),
 	}
+}
+
+func (c Engine) exec(r io.Reader, args ...string) ([]byte, error) {
+	path, err := command()
+	if err != nil {
+		return nil, err
+	}
+
+	err = c.checkVersion()
+	if err != nil {
+		return nil, err
+	}
+
+	b, err := ioutil.ReadAll(r)
+	if err != nil {
+		return nil, err
+	}
+
+	buf := bytes.NewReader(b)
+	cmd := exec.Command(path, args...)
+	cmd.Stdin = buf
+
+	return cmd.Output()
 }
 
 func (c Engine) checkVersion() error {

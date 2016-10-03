@@ -11,6 +11,7 @@ import (
 
 type Parser interface {
 	Parse(r io.Reader) ([]byte, error)
+	Validate(r io.Reader) ([]byte, error)
 	Version() map[string]string
 }
 
