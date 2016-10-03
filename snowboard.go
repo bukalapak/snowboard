@@ -58,6 +58,10 @@ func validateElement(r io.Reader, engine Checker) (*Element, error) {
 		return nil, err
 	}
 
+	if len(b) == 0 {
+		return &Element{}, nil
+	}
+
 	return parseJSON(bytes.NewReader(b))
 }
 

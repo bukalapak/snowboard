@@ -68,6 +68,11 @@ func main() {
 		bf := bytes.NewReader(b)
 
 		out, err := snowboard.Validate(bf, cEngine)
+		if err == nil && out == nil {
+			fmt.Fprintf(os.Stdout, "OK\n")
+			os.Exit(0)
+		}
+
 		if err != nil {
 			checkErr(err)
 		}
@@ -84,7 +89,7 @@ func main() {
 		}
 
 		w.Flush()
-		os.Exit(0)
+		os.Exit(1)
 	}
 
 	if *watch {
@@ -213,10 +218,5 @@ func parserEngine() snowboard.Parser {
 }
 
 func checkerEngine() snowboard.Checker {
-	switch *engineF {
-	case "cli":
-		return drafterc.Engine{}
-	}
-
 	return drafter.Engine{}
 }
