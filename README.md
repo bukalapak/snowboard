@@ -118,6 +118,7 @@ Options:
         Use different engine. Supported engines: cgo, cli (default "cgo")
   -i string
         API Blueprint file
+  -l    Validate input only
   -o string
         HTML output file (default "index.html")
   -s    Serve HTML via 0.0.0.0:8088

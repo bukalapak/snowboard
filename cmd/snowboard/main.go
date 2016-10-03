@@ -11,6 +11,8 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
+	"text/tabwriter"
 
 	"github.com/fsnotify/fsnotify"
 	"github.com/subosito/snowboard"
@@ -21,13 +23,14 @@ import (
 const versionStr = "v0.1.1"
 
 var (
-	version = flag.Bool("v", false, "Display version information")
-	input   = flag.String("i", "", "API Blueprint file")
-	output  = flag.String("o", "index.html", "HTML output file")
-	watch   = flag.Bool("w", false, "Watch input (and template, if any) file for changes")
-	serve   = flag.Bool("s", false, "Serve HTML via 0.0.0.0:8088")
-	tplFile = flag.String("t", "alpha", "Custom template for documentation")
-	engineF = flag.String("e", "cgo", "Use different engine. Supported engines: cgo, cli")
+	version  = flag.Bool("v", false, "Display version information")
+	input    = flag.String("i", "", "API Blueprint file")
+	output   = flag.String("o", "index.html", "HTML output file")
+	watch    = flag.Bool("w", false, "Watch input (and template, if any) file for changes")
+	serve    = flag.Bool("s", false, "Serve HTML via 0.0.0.0:8088")
+	tplFile  = flag.String("t", "alpha", "Custom template for documentation")
+	engineF  = flag.String("e", "cgo", "Use different engine. Supported engines: cgo, cli")
+	validate = flag.Bool("l", false, "Validate input only")
 )
 
 func main() {
@@ -39,11 +42,13 @@ func main() {
 
 	flag.Parse()
 
+	engine := parserEngine()
+
 	if *version {
 		fmt.Printf("Snowboard version: %s\n", versionStr)
 		fmt.Println("Engine:")
 
-		for name, v := range engine().Version() {
+		for name, v := range engine.Version() {
 			fmt.Printf("  %s version: %s\n", name, v)
 		}
 
@@ -52,6 +57,34 @@ func main() {
 
 	if *input == "" {
 		flag.Usage()
+	}
+
+	if *validate {
+		cEngine := checkerEngine()
+
+		b, err := readFile(*input)
+		checkErr(err)
+
+		bf := bytes.NewReader(b)
+
+		out, err := snowboard.Validate(bf, cEngine)
+		if err != nil {
+			checkErr(err)
+		}
+
+		s := "--------"
+		w := tabwriter.NewWriter(os.Stdout, 8, 0, 0, ' ', tabwriter.Debug)
+		fmt.Fprintln(w, "Row\tCol\tDescription")
+		fmt.Fprintf(w, "%s\t%s\t%s\n", s, s, strings.Repeat(s, 15))
+
+		for _, n := range out.Annotations {
+			for _, m := range n.SourceMaps {
+				fmt.Fprintf(w, "%d\t%d\t%s\n", m.Row, m.Col, n.Description)
+			}
+		}
+
+		w.Flush()
+		os.Exit(0)
 	}
 
 	if *watch {
@@ -65,7 +98,7 @@ func main() {
 				select {
 				case event := <-watcher.Events:
 					if event.Op&fsnotify.Write == fsnotify.Write {
-						renderHTML()
+						renderHTML(engine)
 					}
 				case err := <-watcher.Errors:
 					log.Println("Error:", err)
@@ -82,12 +115,12 @@ func main() {
 			checkErr(err)
 		}
 
-		renderHTML()
+		renderHTML(engine)
 		serveHTML()
 
 		<-done
 	} else {
-		renderHTML()
+		renderHTML(engine)
 		serveHTML()
 	}
 }
@@ -128,14 +161,14 @@ func checkErr(err error) {
 	}
 }
 
-func renderHTML() {
+func renderHTML(engine snowboard.Parser) {
 	b, err := readFile(*input)
 	logErr(err)
 
 	log.Println("Generate HTML... START")
 
 	bf := bytes.NewReader(b)
-	bp, err := snowboard.Parse(bf, engine())
+	bp, err := snowboard.Parse(bf, engine)
 	logErr(err)
 
 	of, err := os.Create(*output)
@@ -170,7 +203,16 @@ func serveHTML() {
 	logErr(err)
 }
 
-func engine() snowboard.Parser {
+func parserEngine() snowboard.Parser {
+	switch *engineF {
+	case "cli":
+		return drafterc.Engine{}
+	}
+
+	return drafter.Engine{}
+}
+
+func checkerEngine() snowboard.Checker {
 	switch *engineF {
 	case "cli":
 		return drafterc.Engine{}
