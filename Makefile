@@ -1,7 +1,10 @@
 .PHONY: all
 all: install
-drafter:
+submodules:
 	git submodule update --init --recursive
+drafter-install: submodules
+	cd engines/drafter/ext/drafter && ./configure && make install
+drafter: submodules
 	cd engines/drafter/ext/drafter && ./configure && make drafter
 go-gen:
 	@go get github.com/mjibson/esc

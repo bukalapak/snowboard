@@ -5,7 +5,9 @@ os:
 - linux
 - osx
 script:
-- make test
+- make drafter-install
+- make go-gen
+- make go-test
 before_deploy:
 - ./tools/travis/prepare-release.sh
 deploy:
