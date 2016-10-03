@@ -15,6 +15,7 @@ import (
 	"github.com/fsnotify/fsnotify"
 	"github.com/subosito/snowboard"
 	"github.com/subosito/snowboard/engines/drafter"
+	"github.com/subosito/snowboard/engines/drafterc"
 )
 
 const versionStr = "v0.1.0"
@@ -26,6 +27,7 @@ var (
 	watch   = flag.Bool("w", false, "Watch input (and template, if any) file for changes")
 	serve   = flag.Bool("s", false, "Serve HTML via 0.0.0.0:8088")
 	tplFile = flag.String("t", "alpha", "Custom template for documentation")
+	engineF = flag.String("e", "cgo", "Use different engine. Supported engines: cgo, cli")
 )
 
 func main() {
@@ -41,10 +43,7 @@ func main() {
 		fmt.Printf("Snowboard version: %s\n", versionStr)
 		fmt.Println("Engine:")
 
-		engine := drafter.Engine{}
-		vs := engine.Version()
-
-		for name, v := range vs {
+		for name, v := range engine().Version() {
 			fmt.Printf("  %s version: %s\n", name, v)
 		}
 
@@ -135,9 +134,8 @@ func renderHTML() {
 
 	log.Println("Generate HTML... START")
 
-	engine := drafter.Engine{}
 	bf := bytes.NewReader(b)
-	bp, err := snowboard.Parse(bf, engine)
+	bp, err := snowboard.Parse(bf, engine())
 	logErr(err)
 
 	of, err := os.Create(*output)
@@ -170,4 +168,13 @@ func serveHTML() {
 
 	err := http.ListenAndServe(":8088", nil)
 	logErr(err)
+}
+
+func engine() snowboard.Parser {
+	switch *engineF {
+	case "cli":
+		return drafterc.Engine{}
+	}
+
+	return drafter.Engine{}
 }
