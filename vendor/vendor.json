@@ -15,6 +15,12 @@
 			"revisionTime": "2016-08-16T05:15:41Z"
 		},
 		{
+			"checksumSHA1": "L7vCR+T24+agfG7QQ2848/vMUOE=",
+			"path": "github.com/hashicorp/go-version",
+			"revision": "deeb027c13a95d56c7585df3fe29207208c6706e",
+			"revisionTime": "2016-07-25T21:20:58Z"
+		},
+		{
 			"checksumSHA1": "zKKp5SZ3d3ycKe4EKMNT0BqAWBw=",
 			"path": "github.com/pmezard/go-difflib/difflib",
 			"revision": "d8ed2627bdf02c080bf22230dbb337003b7aba2d",
