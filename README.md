@@ -93,6 +93,17 @@ $ snowboard -i API.apib -o output.html -t awesome-template.html -w
 
 With this flag, any updates on both input and template file will trigger auto-regeneration.
 
+
+### Use Drafter CLI
+
+If you have `drafter` command line installed, you can use that for parsing API blueprint within `snowboard`, just pass `-e` flag:
+
+```
+$ snowboard -i API.apib -o output.html -e cli
+```
+
+> Note: Ensure `drafter` is already on your `PATH` directories.
+
 ### Help
 
 As usual, you can also see all supported flags by passing `-h`:
@@ -103,12 +114,17 @@ Usage:
   snowboard [OPTIONS]
 
 Options:
-  -i string  API Blueprint file
-  -o string  HTML output file (default "index.html")
-  -s         Serve HTML via 0.0.0.0:8088
-  -t string  Custom template for documentation (default "alpha")
-  -v         Display version information
-  -w         Watch input (and template, if any) file for changes
+  -e string
+        Use different engine. Supported engines: cgo, cli (default "cgo")
+  -i string
+        API Blueprint file
+  -o string
+        HTML output file (default "index.html")
+  -s    Serve HTML via 0.0.0.0:8088
+  -t string
+        Custom template for documentation (default "alpha")
+  -v    Display version information
+  -w    Watch input (and template, if any) file for changes
 ```
 
 ## Examples
