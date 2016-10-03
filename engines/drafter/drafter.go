@@ -24,21 +24,17 @@ func (e Engine) Parse(r io.Reader) ([]byte, error) {
 		return nil, err
 	}
 
-	var s string
-
 	cSource := C.CString(string(b))
-	cResult := C.CString(s)
-	options := C.drafter_options{sourcemap: false, format: C.DRAFTER_SERIALIZE_JSON}
+	cResult := &C.drafter_result{}
 
-	code := int(C.drafter_parse_blueprint_to(cSource, &cResult, options))
+	code := int(C.drafter_parse_blueprint(cSource, &cResult))
 	if code != 0 {
 		return nil, fmt.Errorf("ParseBlueprint failed with code: %d", code)
 	}
 
-	result := C.GoString(cResult)
-	C.free(unsafe.Pointer(cResult))
+	C.free(unsafe.Pointer(cSource))
 
-	return []byte(result), nil
+	return e.serialize(cResult), nil
 }
 
 func (e Engine) Validate(r io.Reader) ([]byte, error) {
@@ -48,11 +44,11 @@ func (e Engine) Validate(r io.Reader) ([]byte, error) {
 	}
 
 	cSource := C.CString(string(b))
-	cResval := C.drafter_check_blueprint(cSource)
+	cResult := C.drafter_check_blueprint(cSource)
 
 	C.free(unsafe.Pointer(cSource))
 
-	return e.serialize(cResval), nil
+	return e.serialize(cResult), nil
 }
 
 func (e Engine) Version() map[string]string {
