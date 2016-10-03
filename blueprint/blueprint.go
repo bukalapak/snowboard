@@ -6,6 +6,7 @@ type API struct {
 	Metadata       []Metadata
 	DataStructures []DataStructure
 	ResourceGroups []ResourceGroup
+	Annotations    []Annotation
 }
 
 type DataStructure struct {
@@ -93,4 +94,16 @@ type Parameter struct {
 	Key         string
 	Value       string
 	Kind        string
+}
+
+type Annotation struct {
+	Description string
+	Classes     []string
+	Code        int
+	SourceMaps  []SourceMap
+}
+
+type SourceMap struct {
+	Row int
+	Col int
 }

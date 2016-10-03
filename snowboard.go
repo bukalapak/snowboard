@@ -4,6 +4,7 @@ package snowboard
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"io"
 
 	"github.com/subosito/snowboard/blueprint"
@@ -11,6 +12,10 @@ import (
 
 type Parser interface {
 	Parse(r io.Reader) ([]byte, error)
+	Version() map[string]string
+}
+
+type Checker interface {
 	Validate(r io.Reader) ([]byte, error)
 	Version() map[string]string
 }
@@ -20,17 +25,35 @@ type API blueprint.API
 
 // Parse formats API Blueprint as blueprint.API struct using selected Parser
 func Parse(r io.Reader, engine Parser) (*API, error) {
-	el, err := ParseElement(r, engine)
+	el, err := parseElement(r, engine)
 	if err != nil {
 		return nil, err
 	}
 
-	return element2API(el), nil
+	return convertElement(el)
 }
 
-// ParseElement formats API Blueprint as Element for easier traversal
-func ParseElement(r io.Reader, engine Parser) (*Element, error) {
+// Validate validates API Blueprint using selected Parser
+func Validate(r io.Reader, engine Checker) (*API, error) {
+	el, err := validateElement(r, engine)
+	if err != nil {
+		return nil, err
+	}
+
+	return convertElement(el)
+}
+
+func parseElement(r io.Reader, engine Parser) (*Element, error) {
 	b, err := engine.Parse(r)
+	if err != nil {
+		return nil, err
+	}
+
+	return parseJSON(bytes.NewReader(b))
+}
+
+func validateElement(r io.Reader, engine Checker) (*Element, error) {
+	b, err := engine.Validate(r)
 	if err != nil {
 		return nil, err
 	}
@@ -49,14 +72,32 @@ func parseJSON(r io.Reader) (*Element, error) {
 	return &el, nil
 }
 
-func element2API(el *Element) *API {
-	l := el.Path("content").Index(0)
-
-	return &API{
-		Title:          digTitle(l),
-		Description:    digDescription(l),
-		Metadata:       digMetadata(l),
-		ResourceGroups: digResourceGroups(l),
-		DataStructures: digDataStructures(l),
+func convertElement(el *Element) (*API, error) {
+	if el.Path("element").String() != "parseResult" {
+		return nil, errors.New("Unsupported element")
 	}
+
+	children, err := el.Path("content").Children()
+	if err != nil {
+		return nil, err
+	}
+
+	api := &API{}
+
+	for _, child := range children {
+		switch child.Path("element").String() {
+		case "category":
+			if hasClass("api", child) {
+				api.Title = digTitle(child)
+				api.Description = digDescription(child)
+				api.Metadata = digMetadata(child)
+				api.ResourceGroups = digResourceGroups(child)
+				api.DataStructures = digDataStructures(child)
+			}
+		case "annotation":
+			api.Annotations = append(api.Annotations, extractAnnotation(child))
+		}
+	}
+
+	return api, nil
 }

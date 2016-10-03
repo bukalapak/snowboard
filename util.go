@@ -1,6 +1,7 @@
 package snowboard
 
 import (
+	"reflect"
 	"strconv"
 
 	"github.com/subosito/snowboard/blueprint"
@@ -236,7 +237,7 @@ func extractRequest(child *Element) (r blueprint.Request) {
 
 func extractResponse(child *Element) (r blueprint.Response) {
 	r = blueprint.Response{
-		StatusCode:     extractStatusCode(child),
+		StatusCode:     extractInt("attributes.statusCode", child),
 		Headers:        extractHeaders(child.Path("attributes.headers")),
 		DataStructures: digDataStructures(child),
 	}
@@ -308,10 +309,51 @@ func extractHrefs(child *Element) (h blueprint.Href) {
 	return
 }
 
-func extractStatusCode(child *Element) int {
+func extractAnnotation(child *Element) (a blueprint.Annotation) {
+	if child.Path("element").String() == "annotation" {
+		return blueprint.Annotation{
+			Description: child.Path("content").String(),
+			Classes:     extractSliceString("meta.classes", child),
+			Code:        extractInt("attributes.code", child),
+			SourceMaps:  digSourceMaps(child.Path("attributes.sourceMap")),
+		}
+	}
+
+	return
+}
+
+func digSourceMaps(el *Element) (ms []blueprint.SourceMap) {
+	children, err := el.Children()
+	if err != nil {
+		return
+
+	}
+
+	for _, child := range children {
+		cx := child.Path("content").Value()
+
+		if cx.IsValid() && cx.Kind() == reflect.Slice {
+			for i := 0; i < cx.Len(); i++ {
+				ns := [2]int{}
+
+				for j, n := range cx.Index(i).Interface().([]interface{}) {
+					ns[j] = int(n.(float64))
+				}
+
+				m := blueprint.SourceMap{Row: ns[0], Col: ns[1]}
+				ms = append(ms, m)
+			}
+
+		}
+	}
+
+	return
+}
+
+func extractInt(key string, child *Element) int {
 	var err error
 
-	s := child.Path("attributes.statusCode").String()
+	s := child.Path(key).String()
 	n, err := strconv.Atoi(s)
 	if err != nil {
 		return 0
@@ -329,6 +371,21 @@ func extractAsset(child *Element) (a blueprint.Asset) {
 	}
 
 	return
+}
+
+func extractSliceString(key string, child *Element) []string {
+	x := []string{}
+	v := child.Path(key).Value()
+
+	if !v.IsValid() {
+		return x
+	}
+
+	for i := 0; i < v.Len(); i++ {
+		x = append(x, v.Index(i).Interface().(string))
+	}
+
+	return x
 }
 
 func hasClass(s string, child *Element) bool {
