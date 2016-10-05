@@ -77,11 +77,15 @@
   </div>
   <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/components/accordion.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/components/tab.min.js"></script>
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/prism.min.js"></script>
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/components/prism-json.min.js"></script>
   <script type="text/javascript">
     $(function() {
       $('.ui.accordion').accordion({ animateChildren: false, duration: 0 });
+      $('.content.tabbed').each(function(index) {
+        $('.ui.tabular .item', $(this)).tab({ context: $(this) });
+      });
     });
   </script>
 </body>
@@ -196,10 +200,21 @@
                     <div class="title">
                       <code>{{$transaction.Request.Body.ContentType}}</code>
                     </div>
-                    <div class="content">
-                      <pre style="white-space: inherit">
-                        <code class="language-{{alias $transaction.Request.Body.ContentType}}">{{$transaction.Request.Body.Body}}</code>
-                      </pre>
+                    <div class="content tabbed">
+                      <div class="ui top attached tabular pointing secondary menu">
+                        <a data-tab="body" class="active item">BODY</a>
+                        <a data-tab="schema" class="item">JSON SCHEMA</a>
+                      </div>
+                      <div class="ui bottom attached active tab segment" data-tab="body">
+                        <pre style="white-space: inherit">
+                          <code class="language-{{alias $transaction.Request.Body.ContentType}}">{{$transaction.Request.Body.Body}}</code>
+                        </pre>
+                      </div>
+                      <div class="ui bottom attached tab segment" data-tab="schema">
+                        <pre style="white-space: inherit">
+                          <code class="language-json">{{$transaction.Request.Schema.Body}}</code>
+                        </pre>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -215,10 +230,22 @@
                     </a>
                     <code>{{$transaction.Response.Body.ContentType}}</code>
                   </div>
-                  <div class="content">
-                    <pre style="white-space: inherit">
-                      <code class="language-{{alias $transaction.Response.Body.ContentType}}">{{$transaction.Response.Body.Body}}</code>
-                    </pre>
+                  <div class="content tabbed">
+                    <div class="ui top attached tabular pointing secondary menu">
+                      <a data-tab="body" class="active item">BODY</a>
+                      <a data-tab="schema" class="item">JSON SCHEMA</a>
+                    </div>
+                    <div class="ui bottom attached active tab segment" data-tab="body">
+                      <pre style="white-space: inherit">
+                        <code class="language-{{alias $transaction.Response.Body.ContentType}}">{{$transaction.Response.Body.Body}}</code>
+                      </pre>
+                    </div>
+                    <div class="ui bottom attached tab segment" data-tab="schema">
+                      <pre style="white-space: inherit">
+                        <code class="language-json">{{$transaction.Response.Schema.Body}}</code>
+                      </pre>
+                    </div>
+
                     {{$structures := buildDataStructures $transaction $transition $resource $api}}
                     {{if $structures}}
                     <div class="ui section divider"></div>
