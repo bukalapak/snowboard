@@ -20,6 +20,10 @@ type Checker interface {
 	Version() map[string]string
 }
 
+type Markdowner interface {
+	Markdown([]byte) []byte
+}
+
 // API is alias for blueprint.API
 type API blueprint.API
 

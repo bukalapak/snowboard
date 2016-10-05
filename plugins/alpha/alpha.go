@@ -1,4 +1,4 @@
-package snowboard
+package alpha
 
 import (
 	"bytes"
@@ -10,18 +10,7 @@ type markdownHTML struct {
 	bf.Renderer
 }
 
-func markdownRenderer() bf.Renderer {
-	var commonHTMLFlags = 0 |
-		bf.HTML_USE_XHTML |
-		bf.HTML_USE_SMARTYPANTS |
-		bf.HTML_SMARTYPANTS_FRACTIONS |
-		bf.HTML_SMARTYPANTS_DASHES |
-		bf.HTML_SMARTYPANTS_LATEX_DASHES
-
-	return newMarkdownRenderer(commonHTMLFlags, "", "")
-}
-
-func markdown(input []byte) []byte {
+func Markdown(input []byte) []byte {
 	var commonExtensions = 0 |
 		bf.EXTENSION_NO_INTRA_EMPHASIS |
 		bf.EXTENSION_TABLES |
@@ -35,6 +24,17 @@ func markdown(input []byte) []byte {
 
 	renderer := markdownRenderer()
 	return bf.MarkdownOptions(input, renderer, bf.Options{Extensions: commonExtensions})
+}
+
+func markdownRenderer() bf.Renderer {
+	var commonHTMLFlags = 0 |
+		bf.HTML_USE_XHTML |
+		bf.HTML_USE_SMARTYPANTS |
+		bf.HTML_SMARTYPANTS_FRACTIONS |
+		bf.HTML_SMARTYPANTS_DASHES |
+		bf.HTML_SMARTYPANTS_LATEX_DASHES
+
+	return newMarkdownRenderer(commonHTMLFlags, "", "")
 }
 
 func newMarkdownRenderer(flags int, title string, css string) bf.Renderer {
