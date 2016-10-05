@@ -3,6 +3,7 @@ package snowboard
 import (
 	"reflect"
 	"strconv"
+	"strings"
 
 	"github.com/subosito/snowboard/blueprint"
 )
@@ -366,7 +367,7 @@ func extractAsset(child *Element) (a blueprint.Asset) {
 	if child.Path("element").String() == "asset" {
 		return blueprint.Asset{
 			ContentType: child.Path("attributes.contentType").String(),
-			Body:        child.Path("content").String(),
+			Body:        strUnescapse(child.Path("content").String()),
 		}
 	}
 
@@ -436,4 +437,18 @@ func filterContentByClass(s string, el *Element) (xs []*Element) {
 	}
 
 	return
+}
+
+func strUnescapse(s string) string {
+	ms := map[string]string{
+		`\\n`: `\n`,
+		`\\r`: `\r`,
+		`\\"`: `\"`,
+	}
+
+	for key, val := range ms {
+		s = strings.Replace(s, key, val, -1)
+	}
+
+	return s
 }
