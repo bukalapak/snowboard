@@ -61,7 +61,7 @@ func (a *API) digAnnotation(el *Element) {
 			Code:        extractInt("attributes.code", el),
 		}
 
-		n.digSourceMaps(el)
+		n.digSourceMaps(el.Path("attributes.sourceMap"))
 		a.Annotations = append(a.Annotations, *n)
 	}
 }

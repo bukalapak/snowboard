@@ -80,7 +80,7 @@ func main() {
 		s := "--------"
 		w := tabwriter.NewWriter(os.Stdout, 8, 0, 0, ' ', tabwriter.Debug)
 		fmt.Fprintln(w, "Row\tCol\tDescription")
-		fmt.Fprintf(w, "%s\t%s\t%s\n", s, s, strings.Repeat(s, 15))
+		fmt.Fprintf(w, "%s\t%s\t%s\n", s, s, strings.Repeat(s, 12))
 
 		for _, n := range out.Annotations {
 			for _, m := range n.SourceMaps {

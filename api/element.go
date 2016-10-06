@@ -11,6 +11,10 @@ type Element struct {
 	object interface{}
 }
 
+func (b *Element) Object() interface{} {
+	return b.object
+}
+
 func (b *Element) Value() reflect.Value {
 	return reflect.ValueOf(b.object)
 }
