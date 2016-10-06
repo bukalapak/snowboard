@@ -263,9 +263,14 @@ their feed. Posts are closely tied to the follow graph&hellip;</p>
                     </a>
                     <code>application/json</code>
                   </div>
-                  <div class="content">
-                    <pre style="white-space: inherit">
-                      <code class="language-json">{
+                  <div class="content tabbed">
+                    <div class="ui top attached tabular menu">
+                      <a data-tab="body" class="active item">BODY</a>
+                      <a data-tab="schema" class="item">SCHEMA</a>
+                    </div>
+                    <div class="ui bottom attached active tab segment" data-tab="body">
+                      <pre style="white-space: inherit">
+                        <code class="language-json">{
     &#34;data&#34;: {
         &#34;id&#34;: &#34;1&#34;, // note this is a string
         &#34;user&#34;: {
@@ -312,7 +317,14 @@ their feed. Posts are closely tied to the follow graph&hellip;</p>
     }
 }
 </code>
-                    </pre>
+                      </pre>
+                    </div>
+                    <div class="ui bottom attached tab segment" data-tab="schema">
+                      <pre style="white-space: inherit">
+                        <code class="language-json"></code>
+                      </pre>
+                    </div>
+
                     
                     
                   </div>
@@ -373,10 +385,22 @@ returns the deleted Post on success.</p>
                     </a>
                     <code></code>
                   </div>
-                  <div class="content">
-                    <pre style="white-space: inherit">
-                      <code class="language-"></code>
-                    </pre>
+                  <div class="content tabbed">
+                    <div class="ui top attached tabular menu">
+                      <a data-tab="body" class="active item">BODY</a>
+                      <a data-tab="schema" class="item">SCHEMA</a>
+                    </div>
+                    <div class="ui bottom attached active tab segment" data-tab="body">
+                      <pre style="white-space: inherit">
+                        <code class="language-"></code>
+                      </pre>
+                    </div>
+                    <div class="ui bottom attached tab segment" data-tab="schema">
+                      <pre style="white-space: inherit">
+                        <code class="language-json"></code>
+                      </pre>
+                    </div>
+
                     
                     
                   </div>
@@ -457,7 +481,104 @@ text, as will bare URLs&hellip;</p>
                     <div class="title">
                       <code>application/json</code>
                     </div>
-                    <div class="content">
+                    <div class="content tabbed">
+                      <div class="ui top attached tabular menu">
+                        <a data-tab="body" class="active item">BODY</a>
+                        <a data-tab="schema" class="item">SCHEMA</a>
+                      </div>
+                      <div class="ui bottom attached active tab segment" data-tab="body">
+                        <pre style="white-space: inherit">
+                          <code class="language-json">{
+    &#34;data&#34;: {
+        &#34;id&#34;: &#34;1&#34;, // note this is a string
+        &#34;user&#34;: {
+            ...
+        },
+        &#34;created_at&#34;: &#34;2012-07-16T17:25:47Z&#34;,
+        &#34;text&#34;: &#34;@berg FIRST post on this new site #newsocialnetwork&#34;,
+        &#34;html&#34;: &#34;&lt;span itemprop=\&#34;mention\&#34; data-mention-name=\&#34;berg\&#34; data-mention-id=\&#34;2\&#34;&gt;@berg&lt;/span&gt; FIRST post on &lt;a href=\&#34;https://join.app.net\&#34; rel=\&#34;nofollow\&#34;&gt;this new site&lt;/a&gt; &lt;span itemprop=\&#34;hashtag\&#34; data-hashtag-name=\&#34;newsocialnetwork\&#34;&gt;#newsocialnetwork&lt;/span&gt;.&#34;,
+        &#34;source&#34;: {
+            &#34;client_id&#34;: &#34;udxGzAVBdXwGtkHmvswR5MbMEeVnq6n4&#34;,
+            &#34;name&#34;: &#34;Clientastic for iOS&#34;,
+            &#34;link&#34;: &#34;http://app.net&#34;
+        },
+        &#34;machine_only&#34;: false,
+        &#34;reply_to&#34;: null,
+        &#34;thread_id&#34;: &#34;1&#34;,
+        &#34;num_replies&#34;: 3,
+        &#34;num_reposts&#34;: 0,
+        &#34;num_stars&#34;: 0,
+        &#34;entities&#34;: {
+            &#34;mentions&#34;: [{
+                &#34;name&#34;: &#34;berg&#34;,
+                &#34;id&#34;: &#34;2&#34;,
+                &#34;pos&#34;: 0,
+                &#34;len&#34;: 5
+            }],
+            &#34;hashtags&#34;: [{
+                &#34;name&#34;: &#34;newsocialnetwork&#34;,
+                &#34;pos&#34;: 34,
+                &#34;len&#34;: 17
+            }],
+            &#34;links&#34;: [{
+                &#34;text&#34;: &#34;this new site&#34;,
+                &#34;url&#34;: &#34;https://join.app.net&#34;
+                &#34;pos&#34;: 20,
+                &#34;len&#34;: 13
+            }]
+        },
+        &#34;you_reposted&#34;: false,
+        &#34;you_starred&#34;: false
+    },
+    &#34;meta&#34;: {
+        &#34;code&#34;: 200,
+    }
+}
+</code>
+                        </pre>
+                      </div>
+                      <div class="ui bottom attached tab segment" data-tab="schema">
+                        <pre style="white-space: inherit">
+                          <code class="language-json"></code>
+                        </pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              
+
+              <h4 class="ui horizontal divider">RESPONSE</h4>
+              
+<table class="ui celled definition table">
+  <thead>
+    <tr>
+      <th colspan="2">Headers</th>
+    </tr>
+  <thead>
+  <tbody>
+  
+    <tr>
+      <td class="four wide">Content-Type</td>
+      <td><code>application/json</code></td>
+    </tr>
+  
+  </tbody>
+</table>
+
+              <div class="ui stacked blue segment">
+                <div class="ui fluid transaction accordion">
+                  <div class="title center aligned">
+                    <a class="ui blue circular label">
+                      201
+                    </a>
+                    <code>application/json</code>
+                  </div>
+                  <div class="content tabbed">
+                    <div class="ui top attached tabular menu">
+                      <a data-tab="body" class="active item">BODY</a>
+                      <a data-tab="schema" class="item">SCHEMA</a>
+                    </div>
+                    <div class="ui bottom attached active tab segment" data-tab="body">
                       <pre style="white-space: inherit">
                         <code class="language-json">{
     &#34;data&#34;: {
@@ -508,86 +629,12 @@ text, as will bare URLs&hellip;</p>
 </code>
                       </pre>
                     </div>
-                  </div>
-                </div>
-              
+                    <div class="ui bottom attached tab segment" data-tab="schema">
+                      <pre style="white-space: inherit">
+                        <code class="language-json"></code>
+                      </pre>
+                    </div>
 
-              <h4 class="ui horizontal divider">RESPONSE</h4>
-              
-<table class="ui celled definition table">
-  <thead>
-    <tr>
-      <th colspan="2">Headers</th>
-    </tr>
-  <thead>
-  <tbody>
-  
-    <tr>
-      <td class="four wide">Content-Type</td>
-      <td><code>application/json</code></td>
-    </tr>
-  
-  </tbody>
-</table>
-
-              <div class="ui stacked blue segment">
-                <div class="ui fluid transaction accordion">
-                  <div class="title center aligned">
-                    <a class="ui blue circular label">
-                      201
-                    </a>
-                    <code>application/json</code>
-                  </div>
-                  <div class="content">
-                    <pre style="white-space: inherit">
-                      <code class="language-json">{
-    &#34;data&#34;: {
-        &#34;id&#34;: &#34;1&#34;, // note this is a string
-        &#34;user&#34;: {
-            ...
-        },
-        &#34;created_at&#34;: &#34;2012-07-16T17:25:47Z&#34;,
-        &#34;text&#34;: &#34;@berg FIRST post on this new site #newsocialnetwork&#34;,
-        &#34;html&#34;: &#34;&lt;span itemprop=\&#34;mention\&#34; data-mention-name=\&#34;berg\&#34; data-mention-id=\&#34;2\&#34;&gt;@berg&lt;/span&gt; FIRST post on &lt;a href=\&#34;https://join.app.net\&#34; rel=\&#34;nofollow\&#34;&gt;this new site&lt;/a&gt; &lt;span itemprop=\&#34;hashtag\&#34; data-hashtag-name=\&#34;newsocialnetwork\&#34;&gt;#newsocialnetwork&lt;/span&gt;.&#34;,
-        &#34;source&#34;: {
-            &#34;client_id&#34;: &#34;udxGzAVBdXwGtkHmvswR5MbMEeVnq6n4&#34;,
-            &#34;name&#34;: &#34;Clientastic for iOS&#34;,
-            &#34;link&#34;: &#34;http://app.net&#34;
-        },
-        &#34;machine_only&#34;: false,
-        &#34;reply_to&#34;: null,
-        &#34;thread_id&#34;: &#34;1&#34;,
-        &#34;num_replies&#34;: 3,
-        &#34;num_reposts&#34;: 0,
-        &#34;num_stars&#34;: 0,
-        &#34;entities&#34;: {
-            &#34;mentions&#34;: [{
-                &#34;name&#34;: &#34;berg&#34;,
-                &#34;id&#34;: &#34;2&#34;,
-                &#34;pos&#34;: 0,
-                &#34;len&#34;: 5
-            }],
-            &#34;hashtags&#34;: [{
-                &#34;name&#34;: &#34;newsocialnetwork&#34;,
-                &#34;pos&#34;: 34,
-                &#34;len&#34;: 17
-            }],
-            &#34;links&#34;: [{
-                &#34;text&#34;: &#34;this new site&#34;,
-                &#34;url&#34;: &#34;https://join.app.net&#34;
-                &#34;pos&#34;: 20,
-                &#34;len&#34;: 13
-            }]
-        },
-        &#34;you_reposted&#34;: false,
-        &#34;you_starred&#34;: false
-    },
-    &#34;meta&#34;: {
-        &#34;code&#34;: 200,
-    }
-}
-</code>
-                    </pre>
                     
                     
                   </div>
@@ -652,9 +699,14 @@ text, as will bare URLs&hellip;</p>
                     </a>
                     <code>application/json</code>
                   </div>
-                  <div class="content">
-                    <pre style="white-space: inherit">
-                      <code class="language-json">{
+                  <div class="content tabbed">
+                    <div class="ui top attached tabular menu">
+                      <a data-tab="body" class="active item">BODY</a>
+                      <a data-tab="schema" class="item">SCHEMA</a>
+                    </div>
+                    <div class="ui bottom attached active tab segment" data-tab="body">
+                      <pre style="white-space: inherit">
+                        <code class="language-json">{
     &#34;data&#34;: [
         {
             &#34;id&#34;: &#34;1&#34;, // note this is a string
@@ -674,7 +726,14 @@ text, as will bare URLs&hellip;</p>
     }
 }
 </code>
-                    </pre>
+                      </pre>
+                    </div>
+                    <div class="ui bottom attached tab segment" data-tab="schema">
+                      <pre style="white-space: inherit">
+                        <code class="language-json"></code>
+                      </pre>
+                    </div>
+
                     
                     
                   </div>
@@ -762,9 +821,14 @@ not a sharing action.</p>
                     </a>
                     <code>application/json</code>
                   </div>
-                  <div class="content">
-                    <pre style="white-space: inherit">
-                      <code class="language-json">{
+                  <div class="content tabbed">
+                    <div class="ui top attached tabular menu">
+                      <a data-tab="body" class="active item">BODY</a>
+                      <a data-tab="schema" class="item">SCHEMA</a>
+                    </div>
+                    <div class="ui bottom attached active tab segment" data-tab="body">
+                      <pre style="white-space: inherit">
+                        <code class="language-json">{
     &#34;data&#34;: {
         &#34;id&#34;: &#34;1&#34;, // note this is a string
         &#34;user&#34;: {
@@ -811,7 +875,14 @@ not a sharing action.</p>
     }
 }
 </code>
-                    </pre>
+                      </pre>
+                    </div>
+                    <div class="ui bottom attached tab segment" data-tab="schema">
+                      <pre style="white-space: inherit">
+                        <code class="language-json"></code>
+                      </pre>
+                    </div>
+
                     
                     
                   </div>
@@ -876,9 +947,14 @@ not a sharing action.</p>
                     </a>
                     <code>application/json</code>
                   </div>
-                  <div class="content">
-                    <pre style="white-space: inherit">
-                      <code class="language-json">{
+                  <div class="content tabbed">
+                    <div class="ui top attached tabular menu">
+                      <a data-tab="body" class="active item">BODY</a>
+                      <a data-tab="schema" class="item">SCHEMA</a>
+                    </div>
+                    <div class="ui bottom attached active tab segment" data-tab="body">
+                      <pre style="white-space: inherit">
+                        <code class="language-json">{
     &#34;data&#34;: {
         &#34;id&#34;: &#34;1&#34;, // note this is a string
         &#34;user&#34;: {
@@ -925,7 +1001,14 @@ not a sharing action.</p>
     }
 }
 </code>
-                    </pre>
+                      </pre>
+                    </div>
+                    <div class="ui bottom attached tab segment" data-tab="schema">
+                      <pre style="white-space: inherit">
+                        <code class="language-json"></code>
+                      </pre>
+                    </div>
+
                     
                     
                   </div>
@@ -945,11 +1028,15 @@ not a sharing action.</p>
   </div>
   <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/components/accordion.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/components/tab.min.js"></script>
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/prism.min.js"></script>
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/components/prism-json.min.js"></script>
   <script type="text/javascript">
     $(function() {
       $('.ui.accordion').accordion({ animateChildren: false, duration: 0 });
+      $('.content.tabbed').each(function(index) {
+        $('.ui.tabular .item', $(this)).tab({ context: $(this) });
+      });
     });
   </script>
 </body>

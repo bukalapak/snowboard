@@ -214,11 +214,23 @@ API Blueprint</strong> and as such you can <strong>parse</strong> it with the
                     </a>
                     <code>text/plain</code>
                   </div>
-                  <div class="content">
-                    <pre style="white-space: inherit">
-                      <code class="language-">Hello World!
+                  <div class="content tabbed">
+                    <div class="ui top attached tabular menu">
+                      <a data-tab="body" class="active item">BODY</a>
+                      <a data-tab="schema" class="item">SCHEMA</a>
+                    </div>
+                    <div class="ui bottom attached active tab segment" data-tab="body">
+                      <pre style="white-space: inherit">
+                        <code class="language-">Hello World!
 </code>
-                    </pre>
+                      </pre>
+                    </div>
+                    <div class="ui bottom attached tab segment" data-tab="schema">
+                      <pre style="white-space: inherit">
+                        <code class="language-json"></code>
+                      </pre>
+                    </div>
+
                     
                     
                   </div>
@@ -238,11 +250,15 @@ API Blueprint</strong> and as such you can <strong>parse</strong> it with the
   </div>
   <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/components/accordion.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/components/tab.min.js"></script>
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/prism.min.js"></script>
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/components/prism-json.min.js"></script>
   <script type="text/javascript">
     $(function() {
       $('.ui.accordion').accordion({ animateChildren: false, duration: 0 });
+      $('.content.tabbed').each(function(index) {
+        $('.ui.tabular .item', $(this)).tab({ context: $(this) });
+      });
     });
   </script>
 </body>

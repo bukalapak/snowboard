@@ -216,16 +216,51 @@ might want to apply to a customer.</p>
                     </a>
                     <code>application/json</code>
                   </div>
-                  <div class="content">
-                    <pre style="white-space: inherit">
-                      <code class="language-json">{
+                  <div class="content tabbed">
+                    <div class="ui top attached tabular menu">
+                      <a data-tab="body" class="active item">BODY</a>
+                      <a data-tab="schema" class="item">SCHEMA</a>
+                    </div>
+                    <div class="ui bottom attached active tab segment" data-tab="body">
+                      <pre style="white-space: inherit">
+                        <code class="language-json">{
     &#34;id&#34;: &#34;250FF&#34;,
     &#34;created&#34;: 1415203908,
     &#34;percent_off&#34;: 25,
     &#34;redeem_by&#34;: null
 }
 </code>
-                    </pre>
+                      </pre>
+                    </div>
+                    <div class="ui bottom attached tab segment" data-tab="schema">
+                      <pre style="white-space: inherit">
+                        <code class="language-json">{
+  &#34;$schema&#34;: &#34;http://json-schema.org/draft-04/schema#&#34;,
+  &#34;type&#34;: &#34;object&#34;,
+  &#34;properties&#34;: {
+    &#34;id&#34;: {
+      &#34;type&#34;: &#34;string&#34;
+    },
+    &#34;created&#34;: {
+      &#34;type&#34;: &#34;number&#34;,
+      &#34;description&#34;: &#34;Time stamp&#34;
+    },
+    &#34;percent_off&#34;: {
+      &#34;type&#34;: &#34;number&#34;,
+      &#34;description&#34;: &#34;A positive integer between 1 and 100 that represents the discount\nthe coupon will apply.\n&#34;
+    },
+    &#34;redeem_by&#34;: {
+      &#34;type&#34;: &#34;number&#34;,
+      &#34;description&#34;: &#34;Date after which the coupon can no longer be redeemed&#34;
+    }
+  },
+  &#34;required&#34;: [
+    &#34;id&#34;
+  ]
+}</code>
+                      </pre>
+                    </div>
+
                     
                     
                   </div>
@@ -245,11 +280,15 @@ might want to apply to a customer.</p>
   </div>
   <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/components/accordion.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/components/tab.min.js"></script>
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/prism.min.js"></script>
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/components/prism-json.min.js"></script>
   <script type="text/javascript">
     $(function() {
       $('.ui.accordion').accordion({ animateChildren: false, duration: 0 });
+      $('.content.tabbed').each(function(index) {
+        $('.ui.tabular .item', $(this)).tab({ context: $(this) });
+      });
     });
   </script>
 </body>
