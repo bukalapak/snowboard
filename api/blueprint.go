@@ -1,4 +1,4 @@
-package blueprint
+package api
 
 type API struct {
 	Title          string

@@ -1,0 +1,489 @@
+package api
+
+import (
+	"encoding/json"
+	"errors"
+	"io"
+	"reflect"
+	"strconv"
+	"strings"
+)
+
+func ParseJSON(r io.Reader) (*Element, error) {
+	var el Element
+
+	err := json.NewDecoder(r).Decode(&el.object)
+	if err != nil {
+		return nil, err
+	}
+
+	return &el, nil
+}
+
+func NewAPI(el *Element) (*API, error) {
+	if el.Path("element").String() != "parseResult" {
+		return nil, errors.New("Unsupported element")
+	}
+
+	children, err := el.Path("content").Children()
+	if err != nil {
+		return nil, err
+	}
+
+	a := &API{}
+
+	for _, child := range children {
+		a.digElements(child)
+	}
+
+	return a, nil
+}
+
+func (a *API) digElements(el *Element) {
+	switch el.Path("element").String() {
+	case "category":
+		if hasClass("api", el) {
+			a.digTitle(el)
+			a.digDescription(el)
+			a.digMetadata(el)
+			a.digResourceGroups(el)
+			a.digDataStructures(el)
+		}
+	case "annotation":
+		a.digAnnotation(el)
+	}
+}
+
+func (a *API) digAnnotation(el *Element) {
+	if el.Path("element").String() == "annotation" {
+		n := &Annotation{
+			Description: el.Path("content").String(),
+			Classes:     extractSliceString("meta.classes", el),
+			Code:        extractInt("attributes.code", el),
+		}
+
+		n.digSourceMaps(el)
+		a.Annotations = append(a.Annotations, *n)
+	}
+}
+
+func (a *API) digDataStructures(el *Element) {
+	a.DataStructures = digDataStructures(el)
+}
+
+func (n *Annotation) digSourceMaps(el *Element) {
+	children, err := el.Children()
+	if err != nil {
+		return
+	}
+
+	for _, child := range children {
+		cx := child.Path("content").Value()
+
+		if cx.IsValid() && cx.Kind() == reflect.Slice {
+			for i := 0; i < cx.Len(); i++ {
+				ns := [2]int{}
+
+				for j, n := range cx.Index(i).Interface().([]interface{}) {
+					ns[j] = int(n.(float64))
+				}
+
+				m := SourceMap{Row: ns[0], Col: ns[1]}
+				n.SourceMaps = append(n.SourceMaps, m)
+			}
+		}
+	}
+}
+
+func (a *API) digTitle(el *Element) {
+	if hasClass("api", el) {
+		a.Title = el.Path("meta.title").String()
+	}
+}
+
+func (a *API) digDescription(el *Element) {
+	a.Description = extractCopy(el)
+}
+
+func (a *API) digMetadata(el *Element) {
+	children, err := el.Path("attributes.meta").Children()
+	if err != nil {
+		return
+	}
+
+	for _, v := range children {
+		m := Metadata{
+			Key:   v.Path("content.key.content").String(),
+			Value: v.Path("content.value.content").String(),
+		}
+
+		a.Metadata = append(a.Metadata, m)
+	}
+}
+
+func (a *API) digResourceGroups(el *Element) {
+	children := filterContentByClass("resourceGroup", el)
+
+	for _, child := range children {
+		g := &ResourceGroup{
+			Title:       child.Path("meta.title").String(),
+			Description: extractCopy(child),
+		}
+
+		g.digResources(child)
+		a.ResourceGroups = append(a.ResourceGroups, *g)
+	}
+}
+
+func (g *ResourceGroup) digResources(el *Element) {
+	children := filterContentByElement("resource", el)
+
+	cr := make(chan Resource)
+	oc := make([]string, len(children))
+	rs := make([]Resource, len(children))
+
+	for i, child := range children {
+		oc[i] = child.Path("meta.title").String()
+
+		go func(c *Element) {
+			r := &Resource{
+				Title:          c.Path("meta.title").String(),
+				Description:    extractCopy(c),
+				Href:           extractHrefs(c),
+				DataStructures: digDataStructures(c),
+			}
+
+			r.digTransitions(c)
+
+			cr <- *r
+		}(child)
+	}
+
+	for i := 0; i < len(children); i++ {
+		r := <-cr
+
+		for n := range oc {
+			if oc[n] == r.Title {
+				rs[n] = r
+			}
+		}
+	}
+
+	g.Resources = rs
+}
+
+func (r *Resource) digTransitions(el *Element) {
+	children := filterContentByElement("transition", el)
+
+	for _, child := range children {
+		t := &Transition{
+			Title:       child.Path("meta.title").String(),
+			Description: extractCopy(child),
+			Href:        extractHrefs(child),
+		}
+
+		c := child.Path("attributes.data")
+		if c.Value().IsValid() {
+			if c.Path("element").String() == "dataStructure" {
+				t.DataStructures = extractDataStructures([]*Element{c})
+			}
+		}
+
+		t.digTransactions(child)
+		r.Transitions = append(r.Transitions, *t)
+	}
+}
+
+func (t *Transition) digTransactions(el *Element) {
+	children := filterContentByElement("httpTransaction", el)
+
+	for _, child := range children {
+		cx, err := child.Path("content").Children()
+		if err != nil {
+			continue
+		}
+
+		t.Transactions = append(t.Transactions, t.digTransaction(cx))
+	}
+}
+
+func (t *Transition) digTransaction(el []*Element) Transaction {
+	x := &Transaction{}
+
+	for _, child := range el {
+		if child.Path("element").String() == "httpRequest" {
+			x.digRequest(child)
+		}
+
+		if child.Path("element").String() == "httpResponse" {
+			x.digResponse(child)
+		}
+	}
+
+	return *x
+}
+
+func (x *Transaction) digRequest(child *Element) {
+	x.Request.Title = child.Path("meta.title").String()
+	x.Request.Method = child.Path("attributes.method").String()
+	x.Request.Headers = extractHeaders(child.Path("attributes.headers"))
+
+	cx, err := child.Path("content").Children()
+	if err != nil {
+		return
+	}
+
+	for _, c := range cx {
+		if hasClass("messageBody", c) {
+			x.Request.Body = extractAsset(c)
+		}
+
+		if hasClass("messageBodySchema", c) {
+			x.Request.Schema = extractAsset(c)
+		}
+	}
+}
+
+func (x *Transaction) digResponse(child *Element) {
+	x.Response.StatusCode = extractInt("attributes.statusCode", child)
+	x.Response.Headers = extractHeaders(child.Path("attributes.headers"))
+	x.Response.DataStructures = digDataStructures(child)
+
+	cx, err := child.Path("content").Children()
+	if err != nil {
+		return
+	}
+
+	for _, c := range cx {
+		if hasClass("messageBody", c) {
+			x.Response.Body = extractAsset(c)
+		}
+
+		if hasClass("messageBodySchema", c) {
+			x.Response.Schema = extractAsset(c)
+		}
+	}
+}
+
+func extractHeaders(child *Element) (hs []Header) {
+	if child.Path("element").String() == "httpHeaders" {
+		contents, err := child.Path("content").Children()
+		if err != nil {
+			return
+		}
+
+		for _, content := range contents {
+			h := Header{
+				Key:   content.Path("content.key.content").String(),
+				Value: content.Path("content.value.content").String(),
+			}
+
+			hs = append(hs, h)
+		}
+
+		return
+	}
+
+	return
+}
+
+func extractHrefs(child *Element) (h Href) {
+	href := child.Path("attributes.href")
+
+	if href.Value().IsValid() {
+		h.Path = href.String()
+	}
+
+	contents, err := child.Path("attributes.hrefVariables.content").Children()
+	if err != nil {
+		return
+	}
+
+	for _, content := range contents {
+		v := &Parameter{
+			Required:    isContains("attributes.typeAttributes", "required", content),
+			Key:         content.Path("content.key.content").String(),
+			Value:       content.Path("content.value.content").String(),
+			Kind:        content.Path("content.value.element").String(),
+			Description: content.Path("meta.description").String(),
+		}
+
+		h.Parameters = append(h.Parameters, *v)
+	}
+
+	return
+}
+
+func extractAsset(child *Element) (a Asset) {
+	if child.Path("element").String() == "asset" {
+		return Asset{
+			ContentType: child.Path("attributes.contentType").String(),
+			Body:        strUnescapse(child.Path("content").String()),
+		}
+	}
+
+	return
+}
+
+func digDataStructures(el *Element) (ds []DataStructure) {
+	children := filterContentByElement("dataStructure", el)
+
+	if len(children) != 0 {
+		return extractDataStructures(children)
+	}
+
+	contents := filterContentByClass("dataStructures", el)
+
+	for _, c := range contents {
+		children = filterContentByElement("dataStructure", c)
+		cs := extractDataStructures(children)
+		ds = append(ds, cs...)
+	}
+
+	return
+}
+
+func extractDataStructures(children []*Element) (ds []DataStructure) {
+	for _, child := range children {
+		cx, err := child.Path("content").Children()
+		if err != nil {
+			continue
+		}
+
+		for _, c := range cx {
+			d := DataStructure{
+				Name: c.Path("element").String(),
+				ID:   c.Path("meta.id").String(),
+			}
+
+			cz, err := c.Path("content").Children()
+			if err == nil {
+				for _, z := range cz {
+					if z.Path("content").Value().IsValid() {
+						s := Structure{
+							Required:    isContains("attributes.typeAttributes", "required", z),
+							Description: z.Path("meta.description").String(),
+							Key:         z.Path("content.key.content").String(),
+							Value:       z.Path("content.value.content").String(),
+							Kind:        z.Path("content.value.element").String(),
+						}
+
+						d.Structures = append(d.Structures, s)
+					} else {
+						d.Items = append(d.Items, z.Path("element").String())
+					}
+				}
+			}
+
+			ds = append(ds, d)
+		}
+	}
+
+	return
+}
+
+func hasClass(s string, child *Element) bool {
+	return isContains("meta.classes", s, child)
+}
+
+func isContains(key, s string, child *Element) bool {
+	v := child.Path(key).Value()
+
+	if !v.IsValid() {
+		return false
+	}
+
+	for i := 0; i < v.Len(); i++ {
+		if s == v.Index(i).Interface().(string) {
+			return true
+		}
+	}
+
+	return false
+}
+
+func extractCopy(el *Element) string {
+	children, err := el.Path("content").Children()
+	if err != nil {
+		return ""
+	}
+
+	for _, child := range children {
+		if child.Path("element").String() == "copy" {
+			return child.Path("content").String()
+		}
+	}
+
+	return ""
+}
+
+func extractSliceString(key string, child *Element) []string {
+	x := []string{}
+	v := child.Path(key).Value()
+
+	if !v.IsValid() {
+		return x
+	}
+
+	for i := 0; i < v.Len(); i++ {
+		x = append(x, v.Index(i).Interface().(string))
+	}
+
+	return x
+}
+
+func extractInt(key string, child *Element) int {
+	var err error
+
+	s := child.Path(key).String()
+	n, err := strconv.Atoi(s)
+	if err != nil {
+		return 0
+	}
+
+	return n
+}
+
+func filterContentByElement(s string, el *Element) (xs []*Element) {
+	children, err := el.Path("content").Children()
+	if err != nil {
+		return
+	}
+
+	for _, child := range children {
+		if child.Path("element").String() == s {
+			xs = append(xs, child)
+		}
+	}
+
+	return
+}
+
+func filterContentByClass(s string, el *Element) (xs []*Element) {
+	children, err := el.Path("content").Children()
+	if err != nil {
+		return
+	}
+
+	for _, child := range children {
+		if hasClass(s, child) {
+			xs = append(xs, child)
+		}
+	}
+
+	return
+}
+
+func strUnescapse(s string) string {
+	ms := map[string]string{
+		`\\n`: `\n`,
+		`\\r`: `\r`,
+		`\\"`: `\"`,
+	}
+
+	for key, val := range ms {
+		s = strings.Replace(s, key, val, -1)
+	}
+
+	return s
+}

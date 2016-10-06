@@ -6,7 +6,7 @@ import (
 	"path"
 	"strings"
 
-	"github.com/subosito/snowboard/blueprint"
+	"github.com/subosito/snowboard/api"
 	"github.com/subosito/snowboard/plugins/alpha"
 )
 
@@ -18,7 +18,7 @@ func parameterize(s string) string {
 	return strings.Replace(strings.ToLower(s), " ", "-", -1)
 }
 
-func multiParameterize(g blueprint.ResourceGroup, r blueprint.Resource, t blueprint.Transition) (s string) {
+func multiParameterize(g api.ResourceGroup, r api.Resource, t api.Transition) (s string) {
 	xs := []string{}
 
 	if g.Title != "" {
@@ -40,7 +40,7 @@ func multiParameterize(g blueprint.ResourceGroup, r blueprint.Resource, t bluepr
 	return strings.Join(xs, "-")
 }
 
-func requestMethod(t blueprint.Transition) string {
+func requestMethod(t api.Transition) string {
 	for _, m := range t.Transactions {
 		return m.Request.Method
 	}
@@ -48,11 +48,11 @@ func requestMethod(t blueprint.Transition) string {
 	return ""
 }
 
-func transitionColorize(t blueprint.Transition) string {
+func transitionColorize(t api.Transition) string {
 	return colorize(requestMethod(t))
 }
 
-func apiUrl(b *API, s string, sr string) string {
+func apiUrl(b *api.API, s string, sr string) string {
 	var h string
 
 	for _, m := range b.Metadata {
@@ -107,7 +107,7 @@ func alias(s string) string {
 	return ""
 }
 
-func buildDataStructures(t blueprint.Transaction, s blueprint.Transition, r blueprint.Resource, a API) (ds []blueprint.DataStructure) {
+func buildDataStructures(t api.Transaction, s api.Transition, r api.Resource, a api.API) (ds []api.DataStructure) {
 	for _, ts := range t.Response.DataStructures {
 		for _, rs := range r.DataStructures {
 			if ts.Name == rs.ID && rs.Name != "array" {
@@ -132,7 +132,7 @@ func buildDataStructures(t blueprint.Transaction, s blueprint.Transition, r blue
 }
 
 // HTML renders blueprint.API struct as HTML document
-func HTML(tpl string, w io.Writer, b *API) error {
+func HTML(tpl string, w io.Writer, b *api.API) error {
 	funcMap := template.FuncMap{
 		"markdownize":         markdownize,
 		"parameterize":        parameterize,
