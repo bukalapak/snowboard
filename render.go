@@ -107,43 +107,18 @@ func alias(s string) string {
 	return ""
 }
 
-func buildDataStructures(t api.Transaction, s api.Transition, r api.Resource, a api.API) (ds []api.DataStructure) {
-	for _, ts := range t.Response.DataStructures {
-		for _, rs := range r.DataStructures {
-			if ts.Name == rs.ID && rs.Name != "array" {
-				ds = append(ds, rs)
-			}
-
-			for _, as := range a.DataStructures {
-				if rs.Name == as.ID {
-					ds = append(ds, as)
-				}
-
-				for _, ss := range s.DataStructures {
-					if ss.Name == as.ID {
-						ds = append(ds, as)
-					}
-				}
-			}
-		}
-	}
-
-	return
-}
-
 // HTML renders blueprint.API struct as HTML document
 func HTML(tpl string, w io.Writer, b *api.API) error {
 	funcMap := template.FuncMap{
-		"markdownize":         markdownize,
-		"parameterize":        parameterize,
-		"mParameterize":       multiParameterize,
-		"colorize":            colorize,
-		"iColorize":           iColorize,
-		"transitionColorize":  transitionColorize,
-		"apiUrl":              apiUrl,
-		"buildDataStructures": buildDataStructures,
-		"requestMethod":       requestMethod,
-		"alias":               alias,
+		"markdownize":        markdownize,
+		"parameterize":       parameterize,
+		"mParameterize":      multiParameterize,
+		"colorize":           colorize,
+		"iColorize":          iColorize,
+		"transitionColorize": transitionColorize,
+		"apiUrl":             apiUrl,
+		"requestMethod":      requestMethod,
+		"alias":              alias,
 	}
 
 	tmpl, err := template.New("api").Funcs(funcMap).Parse(tpl)

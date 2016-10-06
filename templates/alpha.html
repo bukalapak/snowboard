@@ -245,25 +245,6 @@
                         <code class="language-json">{{$transaction.Response.Schema.Body}}</code>
                       </pre>
                     </div>
-
-                    {{$structures := buildDataStructures $transaction $transition $resource $api}}
-                    {{if $structures}}
-                    <div class="ui section divider"></div>
-                    <table class="ui celled {{$transaction.Response.StatusCode | iColorize}} table">
-                      <thead>
-                        <tr>
-                          <th colspan="4">Attributes</th>
-                        </tr>
-                      <thead>
-                      <tbody>
-                        {{range $structures}}
-                          {{range $sItemN, $sItem := .Structures}}
-                            {{template "Structures" $sItem}}
-                          {{end}}
-                        {{end}}
-                      </tbody>
-                    </table>
-                    {{end}}
                   </div>
                 </div>
               </div>

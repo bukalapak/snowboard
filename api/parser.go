@@ -47,7 +47,6 @@ func (a *API) digElements(el *Element) {
 			a.digDescription(el)
 			a.digMetadata(el)
 			a.digResourceGroups(el)
-			a.digDataStructures(el)
 		}
 	case "annotation":
 		a.digAnnotation(el)
@@ -65,10 +64,6 @@ func (a *API) digAnnotation(el *Element) {
 		n.digSourceMaps(el)
 		a.Annotations = append(a.Annotations, *n)
 	}
-}
-
-func (a *API) digDataStructures(el *Element) {
-	a.DataStructures = digDataStructures(el)
 }
 
 func (n *Annotation) digSourceMaps(el *Element) {
@@ -147,10 +142,9 @@ func (g *ResourceGroup) digResources(el *Element) {
 
 		go func(c *Element) {
 			r := &Resource{
-				Title:          c.Path("meta.title").String(),
-				Description:    extractCopy(c),
-				Href:           extractHrefs(c),
-				DataStructures: digDataStructures(c),
+				Title:       c.Path("meta.title").String(),
+				Description: extractCopy(c),
+				Href:        extractHrefs(c),
 			}
 
 			r.digTransitions(c)
@@ -180,13 +174,6 @@ func (r *Resource) digTransitions(el *Element) {
 			Title:       child.Path("meta.title").String(),
 			Description: extractCopy(child),
 			Href:        extractHrefs(child),
-		}
-
-		c := child.Path("attributes.data")
-		if c.Value().IsValid() {
-			if c.Path("element").String() == "dataStructure" {
-				t.DataStructures = extractDataStructures([]*Element{c})
-			}
 		}
 
 		t.digTransactions(child)
@@ -247,7 +234,6 @@ func (x *Transaction) digRequest(child *Element) {
 func (x *Transaction) digResponse(child *Element) {
 	x.Response.StatusCode = extractInt("attributes.statusCode", child)
 	x.Response.Headers = extractHeaders(child.Path("attributes.headers"))
-	x.Response.DataStructures = digDataStructures(child)
 
 	cx, err := child.Path("content").Children()
 	if err != nil {
@@ -319,63 +305,6 @@ func extractAsset(child *Element) (a Asset) {
 		return Asset{
 			ContentType: child.Path("attributes.contentType").String(),
 			Body:        strUnescapse(child.Path("content").String()),
-		}
-	}
-
-	return
-}
-
-func digDataStructures(el *Element) (ds []DataStructure) {
-	children := filterContentByElement("dataStructure", el)
-
-	if len(children) != 0 {
-		return extractDataStructures(children)
-	}
-
-	contents := filterContentByClass("dataStructures", el)
-
-	for _, c := range contents {
-		children = filterContentByElement("dataStructure", c)
-		cs := extractDataStructures(children)
-		ds = append(ds, cs...)
-	}
-
-	return
-}
-
-func extractDataStructures(children []*Element) (ds []DataStructure) {
-	for _, child := range children {
-		cx, err := child.Path("content").Children()
-		if err != nil {
-			continue
-		}
-
-		for _, c := range cx {
-			d := DataStructure{
-				Name: c.Path("element").String(),
-				ID:   c.Path("meta.id").String(),
-			}
-
-			cz, err := c.Path("content").Children()
-			if err == nil {
-				for _, z := range cz {
-					if z.Path("content").Value().IsValid() {
-						s := Structure{
-							Required:    isContains("attributes.typeAttributes", "required", z),
-							Description: z.Path("meta.description").String(),
-							Key:         z.Path("content.key.content").String(),
-							Value:       z.Path("content.value.content").String(),
-							Kind:        z.Path("content.value.element").String(),
-						}
-
-						d.Structures = append(d.Structures, s)
-					} else {
-						d.Items = append(d.Items, z.Path("element").String())
-					}
-				}
-			}
-
-			ds = append(ds, d)
 		}
 	}
 

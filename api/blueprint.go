@@ -4,24 +4,8 @@ type API struct {
 	Title          string
 	Description    string
 	Metadata       []Metadata
-	DataStructures []DataStructure
 	ResourceGroups []ResourceGroup
 	Annotations    []Annotation
-}
-
-type DataStructure struct {
-	Name       string
-	ID         string
-	Items      []string
-	Structures []Structure
-}
-
-type Structure struct {
-	Required    bool
-	Description string
-	Key         string
-	Value       string
-	Kind        string
 }
 
 type Metadata struct {
@@ -36,19 +20,17 @@ type ResourceGroup struct {
 }
 
 type Resource struct {
-	Title          string
-	Description    string
-	Transitions    []Transition
-	DataStructures []DataStructure
-	Href           Href
+	Title       string
+	Description string
+	Transitions []Transition
+	Href        Href
 }
 
 type Transition struct {
-	Title          string
-	Description    string
-	Href           Href
-	Transactions   []Transaction
-	DataStructures []DataStructure
+	Title        string
+	Description  string
+	Href         Href
+	Transactions []Transaction
 }
 
 type Asset struct {
@@ -71,11 +53,10 @@ type Request struct {
 }
 
 type Response struct {
-	StatusCode     int
-	Headers        []Header
-	Body           Asset
-	Schema         Asset
-	DataStructures []DataStructure
+	StatusCode int
+	Headers    []Header
+	Body       Asset
+	Schema     Asset
 }
 
 type Transaction struct {

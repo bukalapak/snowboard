@@ -137,9 +137,3 @@ You can see examples of `snowboard` default template outputs, in [examples/alpha
 - And many more...
 
 All of the examples are generated from official [API Blueprint examples](https://github.com/apiaryio/api-blueprint/tree/master/examples)
-
-
-## Status
-
-Most features have been implemented. There are some incomplete parts, like handling complex Data Structure, JSON Schema, etc, which are on the way.
-
