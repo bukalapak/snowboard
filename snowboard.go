@@ -10,16 +10,12 @@ import (
 
 type Parser interface {
 	Parse(r io.Reader) ([]byte, error)
-	Version() map[string]string
-}
-
-type Checker interface {
 	Validate(r io.Reader) ([]byte, error)
 	Version() map[string]string
 }
 
-type Markdowner interface {
-	Markdown([]byte) []byte
+type Renderer interface {
+	HTML([]byte) []byte
 }
 
 // Parse formats API Blueprint as blueprint.API struct using selected Parser
@@ -33,7 +29,7 @@ func Parse(r io.Reader, engine Parser) (*api.API, error) {
 }
 
 // Validate validates API Blueprint using selected Parser
-func Validate(r io.Reader, engine Checker) (*api.API, error) {
+func Validate(r io.Reader, engine Parser) (*api.API, error) {
 	el, err := validateElement(r, engine)
 	if err == nil && el.Object() == nil {
 		return nil, nil
@@ -55,7 +51,7 @@ func parseElement(r io.Reader, engine Parser) (*api.Element, error) {
 	return parseJSON(bytes.NewReader(b))
 }
 
-func validateElement(r io.Reader, engine Checker) (*api.Element, error) {
+func validateElement(r io.Reader, engine Parser) (*api.Element, error) {
 	b, err := engine.Validate(r)
 	if err != nil {
 		return nil, err

@@ -210,6 +210,6 @@ func parserEngine() snowboard.Parser {
 	return drafter.Engine{}
 }
 
-func checkerEngine() snowboard.Checker {
+func checkerEngine() snowboard.Parser {
 	return drafter.Engine{}
 }
