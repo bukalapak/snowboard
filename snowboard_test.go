@@ -25,3 +25,20 @@ func testParse(t *testing.T, parser snowboard.Parser) {
 	assert.Nil(t, err)
 	assert.Equal(t, "API", api.Title)
 }
+
+func TestLoad(t *testing.T) {
+	engine := drafter.Engine{}
+	api, err := snowboard.Load("fixtures/api-blueprint/examples/Real World API.md", engine)
+	assert.Nil(t, err)
+	assert.Equal(t, "Real World API", api.Title)
+	assert.Equal(t, "Posts", api.ResourceGroups[0].Title)
+}
+
+func TestLoad_partials(t *testing.T) {
+	engine := drafter.Engine{}
+	api, err := snowboard.Load("fixtures/partials/API.apib", engine)
+	assert.Nil(t, err)
+	assert.Equal(t, "API", api.Title)
+	assert.Equal(t, "Messages", api.ResourceGroups[0].Title)
+	assert.Equal(t, "Users", api.ResourceGroups[1].Title)
+}
