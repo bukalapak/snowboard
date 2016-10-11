@@ -3,6 +3,12 @@
 	"ignore": "test",
 	"package": [
 		{
+			"checksumSHA1": "hqDDDpue/5363luidNMBS8z8eJU=",
+			"path": "github.com/BurntSushi/toml",
+			"revision": "99064174e013895bbd9b025c31100bd1d9b590ca",
+			"revisionTime": "2016-07-17T15:07:09Z"
+		},
+		{
 			"checksumSHA1": "5rPfda8jFccr3A6heL+JAmi9K9g=",
 			"path": "github.com/davecgh/go-spew/spew",
 			"revision": "5215b55f46b2b919f50a1df0eaa5886afe4e3b3d",
@@ -21,22 +27,16 @@
 			"revisionTime": "2016-07-25T21:20:58Z"
 		},
 		{
+			"checksumSHA1": "qiI+L9+51sZYqZxrWB7lM6U/G6E=",
+			"path": "github.com/miekg/mmark",
+			"revision": "701c11f87566b812e91c452879ff327ef4bc0171",
+			"revisionTime": "2016-09-27T09:48:57Z"
+		},
+		{
 			"checksumSHA1": "zKKp5SZ3d3ycKe4EKMNT0BqAWBw=",
 			"path": "github.com/pmezard/go-difflib/difflib",
 			"revision": "d8ed2627bdf02c080bf22230dbb337003b7aba2d",
 			"revisionTime": "2015-10-28T09:42:44Z"
-		},
-		{
-			"checksumSHA1": "U7hbZmaxAH0NuZ7bOIjRaA1V544=",
-			"path": "github.com/russross/blackfriday",
-			"revision": "b43df972fb5fdf3af8d2e90f38a69d374fe26dd0",
-			"revisionTime": "2016-03-16T07:29:03Z"
-		},
-		{
-			"checksumSHA1": "XXTR/ftEYSqQn4+Y7wNfiJJmq9U=",
-			"path": "github.com/shurcooL/sanitized_anchor_name",
-			"revision": "10ef21a441db47d8b13ebcc5fd2310f636973c77",
-			"revisionTime": "2015-10-28T00:19:15Z"
 		},
 		{
 			"checksumSHA1": "5XAzjZrdlLh1mgd7xEvoK6LeLCA=",

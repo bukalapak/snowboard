@@ -1,27 +1,18 @@
-//
-// Blackfriday Markdown Processor
-// Available at http://github.com/russross/blackfriday
-//
-// Copyright © 2011 Russ Ross <russ@russross.com>.
-// Distributed under the Simplified BSD License.
-// See README.md for details.
-//
-
-//
 // Functions to parse inline elements.
-//
 
-package blackfriday
+package mmark
 
 import (
 	"bytes"
 	"regexp"
 	"strconv"
+	"unicode/utf8"
 )
 
 var (
-	urlRe    = `((https?|ftp):\/\/|\/)[-A-Za-z0-9+&@#\/%?=~_|!:,.;\(\)]+`
-	anchorRe = regexp.MustCompile(`^(<a\shref="` + urlRe + `"(\stitle="[^"<>]+")?\s?>` + urlRe + `<\/a>)`)
+	urlRe      = `((https?|ftp):\/\/|\/)[-A-Za-z0-9+&@#\/%?=~_|!:,.;\(\)]+`
+	anchorRe   = regexp.MustCompile(`^(<a\shref="` + urlRe + `"(\stitle="[^"<>]+")?\s?>` + urlRe + `<\/a>)`)
+	htmlEntity = regexp.MustCompile(`&[a-z]{2,5};`)
 )
 
 // Functions to parse text within a block
@@ -43,7 +34,7 @@ func (p *parser) inline(out *bytes.Buffer, data []byte) {
 			end++
 		}
 
-		p.r.NormalText(out, data[i:end])
+		normalText(p, out, data[i:end])
 
 		if end >= len(data) {
 			break
@@ -53,7 +44,6 @@ func (p *parser) inline(out *bytes.Buffer, data []byte) {
 		// call the trigger
 		handler := p.inlineCallback[data[end]]
 		if consumed := handler(p, out, data, i); consumed == 0 {
-			// no action from the callback; buffer the byte for later
 			end = i + 1
 		} else {
 			// skip past whatever the callback used
@@ -67,6 +57,17 @@ func (p *parser) inline(out *bytes.Buffer, data []byte) {
 
 // single and double emphasis parsing
 func emphasis(p *parser, out *bytes.Buffer, data []byte, offset int) int {
+	// CommonMark opening char preceded by alphanumeric and followed
+	// by punctuation: not emphasis
+	if offset > 0 && offset+1 < len(data) {
+		if isalnum(data[offset-1]) && ispunct(data[offset+1]) {
+			// except when data[offset+1] is not '**, because it could be intraword double emphasis.
+			if data[offset+1] != '*' {
+				return 0
+			}
+		}
+	}
+
 	data = data[offset:]
 	c := data[0]
 	ret := 0
@@ -74,13 +75,23 @@ func emphasis(p *parser, out *bytes.Buffer, data []byte, offset int) int {
 	if len(data) > 2 && data[1] != c {
 		// whitespace cannot follow an opening emphasis;
 		// strikethrough only takes two characters '~~'
-		if c == '~' || isspace(data[1]) {
+		if c == '~' && isspace(data[1]) {
 			return 0
 		}
-		if ret = helperEmphasis(p, out, data[1:], c); ret == 0 {
+		// an emphasis character followed by a space is just that: a lone character
+		if isspace(data[1]) {
 			return 0
 		}
-
+		switch c {
+		case '~':
+			if ret = subscript(p, out, data[1:], 0); ret == 0 {
+				return 0
+			}
+		default:
+			if ret = helperEmphasis(p, out, data[1:], c); ret == 0 {
+				return 0
+			}
+		}
 		return ret + 1
 	}
 
@@ -136,12 +147,12 @@ func codeSpan(p *parser, out *bytes.Buffer, data []byte, offset int) int {
 
 	// trim outside whitespace
 	fBegin := nb
-	for fBegin < end && data[fBegin] == ' ' {
+	for fBegin < end && isspace(data[fBegin]) {
 		fBegin++
 	}
 
 	fEnd := end - nb
-	for fEnd > fBegin && data[fEnd-1] == ' ' {
+	for fEnd > fBegin && isspace(data[fEnd-1]) {
 		fEnd--
 	}
 
@@ -151,7 +162,42 @@ func codeSpan(p *parser, out *bytes.Buffer, data []byte, offset int) int {
 	}
 
 	return end
+}
 
+func normalText(p *parser, out *bytes.Buffer, data []byte) {
+	if len(p.abbreviations) == 0 {
+		p.r.NormalText(out, data)
+	} else {
+		end := len(data)
+		wordBeg := 0
+		inWord := false
+		for j := 0; j < end; j++ {
+			switch {
+			case !isspace(data[j]) && !inWord:
+				inWord = true
+				wordBeg = j
+			case isspace(data[j]) && inWord:
+				// first space after coming out of a word, output
+				if t, ok := p.abbreviations[string(data[wordBeg:j])]; ok {
+					p.r.Abbreviation(out, data[wordBeg:j], t.title)
+				} else {
+					p.r.NormalText(out, data[wordBeg:j])
+				}
+				p.r.NormalText(out, data[j:j+1])
+				inWord = false
+			case isspace(data[j]) && !inWord:
+				p.r.NormalText(out, data[j:j+1])
+			}
+		}
+		// if inWord == true, we haven't outputted the last word
+		if inWord {
+			if t, ok := p.abbreviations[string(data[wordBeg:end])]; ok {
+				p.r.Abbreviation(out, data[wordBeg:end], t.title)
+			} else {
+				p.r.NormalText(out, data[wordBeg:end])
+			}
+		}
+	}
 }
 
 // newline preceded by two spaces becomes <br>
@@ -166,6 +212,12 @@ func lineBreak(p *parser, out *bytes.Buffer, data []byte, offset int) int {
 	}
 	out.Truncate(eol)
 
+	if offset > 1 && data[offset-1] == '\\' {
+		out.Truncate(eol - 1)
+		p.r.LineBreak(out)
+		return 1
+	}
+
 	precededByTwoSpaces := offset >= 2 && data[offset-2] == ' ' && data[offset-1] == ' '
 	precededByBackslash := offset >= 1 && data[offset-1] == '\\' // see http://spec.commonmark.org/0.18/#example-527
 	precededByBackslash = precededByBackslash && p.flags&EXTENSION_BACKSLASH_LINE_BREAK != 0
@@ -174,10 +226,10 @@ func lineBreak(p *parser, out *bytes.Buffer, data []byte, offset int) int {
 	if p.flags&EXTENSION_HARD_LINE_BREAK == 0 && !precededByTwoSpaces && !precededByBackslash {
 		return 0
 	}
-
 	if precededByBackslash && eol > 0 {
 		out.Truncate(eol - 1)
 	}
+
 	p.r.LineBreak(out)
 	return 1
 }
@@ -189,14 +241,8 @@ const (
 	linkImg
 	linkDeferredFootnote
 	linkInlineFootnote
+	linkCitation
 )
-
-func isReferenceStyleLink(data []byte, pos int, t linkType) bool {
-	if t == linkDeferredFootnote {
-		return false
-	}
-	return pos < len(data)-1 && data[pos] == '[' && data[pos+1] != '^'
-}
 
 // '[': parse a link or an image or a footnote
 func link(p *parser, out *bytes.Buffer, data []byte, offset int) int {
@@ -205,42 +251,44 @@ func link(p *parser, out *bytes.Buffer, data []byte, offset int) int {
 		return 0
 	}
 
-	var t linkType
-	switch {
-	// special case: ![^text] == deferred footnote (that follows something with
-	// an exclamation point)
-	case p.flags&EXTENSION_FOOTNOTES != 0 && len(data)-1 > offset && data[offset+1] == '^':
-		t = linkDeferredFootnote
+	// [text] == regular link
 	// ![alt] == image
-	case offset > 0 && data[offset-1] == '!':
-		t = linkImg
 	// ^[text] == inline footnote
 	// [^refId] == deferred footnote
-	case p.flags&EXTENSION_FOOTNOTES != 0:
+	// [@text] == citation
+	// [-@text] == citation, add to reference, but suppress output
+	var t linkType
+	if offset > 0 && data[offset-1] == '!' {
+		t = linkImg
+		// if footnotes extension is ON and we've seen "![^", then it's not an
+		// image, it's a deferred footnote:
+		if p.flags&EXTENSION_FOOTNOTES != 0 && len(data)-1 > offset && data[offset+1] == '^' {
+			t = linkDeferredFootnote
+		}
+	} else if offset > 0 && data[offset-1] == '@' {
+		t = linkCitation
+	} else if offset > 0 && data[offset-1] == '-' {
+		t = linkCitation
+	} else if p.flags&EXTENSION_FOOTNOTES != 0 {
 		if offset > 0 && data[offset-1] == '^' {
 			t = linkInlineFootnote
 		} else if len(data)-1 > offset && data[offset+1] == '^' {
 			t = linkDeferredFootnote
 		}
-	// [text] == regular link
-	default:
-		t = linkNormal
 	}
 
 	data = data[offset:]
 
 	var (
-		i                       = 1
-		noteId                  int
-		title, link, altContent []byte
-		textHasNl               = false
+		i           = 1
+		noteId      int
+		title, link []byte
+		textHasNl   = false
 	)
 
 	if t == linkDeferredFootnote {
 		i++
 	}
-
-	brace := 0
 
 	// look for the matching closing bracket
 	for level := 1; level > 0 && i < len(data); i++ {
@@ -265,7 +313,6 @@ func link(p *parser, out *bytes.Buffer, data []byte, offset int) int {
 	if i >= len(data) {
 		return 0
 	}
-
 	txtE := i
 	i++
 
@@ -273,6 +320,85 @@ func link(p *parser, out *bytes.Buffer, data []byte, offset int) int {
 	// (this is much more lax than original markdown syntax)
 	for i < len(data) && isspace(data[i]) {
 		i++
+	}
+
+	// TODO(miek): parse p. 23 parts here (title)
+	// [@!RFC2534 p. 23], normative
+	// [@?RFC2535 p. 23], informative
+	// [@[!|?]draft#1 text]
+	// [-@RFC] : suppress output, but add to the citation list
+	if (t == linkCitation || data[1] == '@' || data[1] == '-') && p.flags&EXTENSION_CITATION != 0 {
+		var (
+			spaceB   int
+			id       []byte
+			typ      byte
+			suppress bool
+			seq      = -1
+		)
+		typ = 'i'
+		k := 1
+		if data[k] == '-' {
+			suppress = true
+			k++
+		}
+		k++
+		if data[k] == '!' {
+			typ = 'n'
+			k++
+		} else if data[k] == '?' {
+			typ = 'i'
+			k++
+		}
+
+		for j := k; j < txtE; j++ {
+			if isspace(data[j]) {
+				if spaceB == 0 {
+					spaceB = j
+					title = data[j+1 : txtE]
+					id = data[k:spaceB]
+				}
+			}
+		}
+		if spaceB == 0 {
+			id = data[k:txtE]
+		}
+
+		if id == nil {
+			id = data[k:txtE]
+		}
+		for j := 0; j < len(id); j++ {
+			if id[j] == '#' {
+				chunk := id[j:]
+				if len(chunk) > 1 {
+					num, err := strconv.Atoi(string(chunk[1:]))
+					if err == nil {
+						seq = num
+						id = id[:j]
+						break
+					}
+				}
+			}
+
+		}
+
+		if c, ok := p.citations[string(id)]; !ok {
+			p.citations[string(id)] = &citation{link: id, title: title, typ: typ, seq: seq}
+		} else {
+			switch c.typ {
+			case 0:
+				c.typ = typ
+			case 'i':
+				if typ == 'n' {
+					printf(p, "upgrading citation `%s' from informative to normative", string(id))
+					c.typ = typ
+				}
+			}
+		}
+
+		if !suppress {
+			p.r.Citation(out, id, title)
+		}
+		return txtE + 1
 	}
 
 	switch {
@@ -287,9 +413,11 @@ func link(p *parser, out *bytes.Buffer, data []byte, offset int) int {
 
 		linkB := i
 
-		// look for link end: ' " ), check for new opening braces and take this
-		// into account, this may lead for overshooting and probably will require
-		// some fine-tuning.
+		// look for link end: ' " ), check for new openning
+		// braces and take this into account, this may lead
+		// for overshooting and probably will require some
+		// finetuning.
+		brace := 0
 	findlinkend:
 		for i < len(data) {
 			switch {
@@ -315,7 +443,7 @@ func link(p *parser, out *bytes.Buffer, data []byte, offset int) int {
 			}
 		}
 
-		if i >= len(data) {
+		if i >= len(data) || brace > 0 {
 			return 0
 		}
 		linkE := i
@@ -382,9 +510,8 @@ func link(p *parser, out *bytes.Buffer, data []byte, offset int) int {
 		i++
 
 	// reference style link
-	case isReferenceStyleLink(data, i, t):
+	case i < len(data)-1 && data[i] == '[' && data[i+1] != '^':
 		var id []byte
-		altContentConsidered := false
 
 		// look for the id
 		i++
@@ -406,7 +533,7 @@ func link(p *parser, out *bytes.Buffer, data []byte, offset int) int {
 					switch {
 					case data[j] != '\n':
 						b.WriteByte(data[j])
-					case data[j-1] != ' ':
+					case !isspace(data[j-1]):
 						b.WriteByte(' ')
 					}
 				}
@@ -414,14 +541,14 @@ func link(p *parser, out *bytes.Buffer, data []byte, offset int) int {
 				id = b.Bytes()
 			} else {
 				id = data[1:txtE]
-				altContentConsidered = true
 			}
 		} else {
 			id = data[linkB:linkE]
 		}
 
-		// find the reference with matching id
-		lr, ok := p.getRef(string(id))
+		// find the reference with matching id (ids are case-insensitive)
+		key := string(bytes.ToLower(id))
+		lr, ok := p.refs[key]
 		if !ok {
 			return 0
 		}
@@ -429,9 +556,6 @@ func link(p *parser, out *bytes.Buffer, data []byte, offset int) int {
 		// keep link and title from reference
 		link = lr.link
 		title = lr.title
-		if altContentConsidered {
-			altContent = lr.text
-		}
 		i++
 
 	// shortcut reference style link or reference or inline footnote
@@ -446,7 +570,7 @@ func link(p *parser, out *bytes.Buffer, data []byte, offset int) int {
 				switch {
 				case data[j] != '\n':
 					b.WriteByte(data[j])
-				case data[j-1] != ' ':
+				case !isspace(data[j-1]):
 					b.WriteByte(' ')
 				}
 			}
@@ -460,7 +584,18 @@ func link(p *parser, out *bytes.Buffer, data []byte, offset int) int {
 			}
 		}
 
+		key := string(bytes.ToLower(id))
 		if t == linkInlineFootnote {
+			// is RFC7328 mode is enabled, check the footnote, to see if it adheres
+			// to the following format. If so, skip adding. Instead
+			// either log about this or generate a index.
+			if x := p.rfc7328Index(out, id); x > 0 {
+				return txtE + 1
+			}
+			if x := p.rfc7328Caption(out, id); x > 0 {
+				return txtE + 1
+			}
+
 			// create a new reference
 			noteId = len(p.notes) + 1
 
@@ -489,7 +624,7 @@ func link(p *parser, out *bytes.Buffer, data []byte, offset int) int {
 			title = ref.title
 		} else {
 			// find the reference with matching id
-			lr, ok := p.getRef(string(id))
+			lr, ok := p.refs[key]
 			if !ok {
 				return 0
 			}
@@ -533,7 +668,8 @@ func link(p *parser, out *bytes.Buffer, data []byte, offset int) int {
 		}
 
 		// links need something to click on and somewhere to go
-		if len(uLink) == 0 || (t == linkNormal && content.Len() == 0) {
+		//if len(uLink) == 0 || (t == linkNormal && content.Len() == 0) {
+		if len(uLink) == 0 {
 			return 0
 		}
 	}
@@ -541,11 +677,7 @@ func link(p *parser, out *bytes.Buffer, data []byte, offset int) int {
 	// call the relevant rendering function
 	switch t {
 	case linkNormal:
-		if len(altContent) > 0 {
-			p.r.Link(out, uLink, title, altContent)
-		} else {
-			p.r.Link(out, uLink, title, content.Bytes())
-		}
+		p.r.Link(out, uLink, title, content.Bytes())
 
 	case linkImg:
 		outSize := out.Len()
@@ -554,7 +686,12 @@ func link(p *parser, out *bytes.Buffer, data []byte, offset int) int {
 			out.Truncate(outSize - 1)
 		}
 
-		p.r.Image(out, uLink, title, content.Bytes())
+		var cooked bytes.Buffer
+		p.inline(&cooked, title)
+
+		p.r.SetAttr(p.ial)
+		p.ial = nil
+		p.r.Image(out, uLink, cooked.Bytes(), content.Bytes(), p.insideFigure)
 
 	case linkInlineFootnote:
 		outSize := out.Len()
@@ -562,7 +699,6 @@ func link(p *parser, out *bytes.Buffer, data []byte, offset int) int {
 		if outSize > 0 && outBytes[outSize-1] == '^' {
 			out.Truncate(outSize - 1)
 		}
-
 		p.r.FootnoteRef(out, link, noteId)
 
 	case linkDeferredFootnote:
@@ -596,14 +732,35 @@ func (p *parser) inlineHTMLComment(out *bytes.Buffer, data []byte) int {
 
 // '<' when tags or autolinks are allowed
 func leftAngle(p *parser, out *bytes.Buffer, data []byte, offset int) int {
+	if p.flags&EXTENSION_INCLUDE != 0 {
+		if j := p.codeInclude(out, data[offset:]); j > 0 {
+			return j
+		}
+	}
+
 	data = data[offset:]
-	altype := LINK_TYPE_NOT_AUTOLINK
+	altype := _LINK_TYPE_NOT_AUTOLINK
 	end := tagLength(data, &altype)
 	if size := p.inlineHTMLComment(out, data); size > 0 {
 		end = size
 	}
 	if end > 2 {
-		if altype != LINK_TYPE_NOT_AUTOLINK {
+		allnum := 0
+		for j := 1; j < end-1; j++ {
+			if isnum(data[j]) {
+				allnum++
+			}
+		}
+		if allnum+2 == end {
+			index := string(data[1 : end-1])
+			if _, ok := p.callouts[index]; ok {
+				p.r.CalloutText(out, index, p.callouts[index])
+				return end
+			}
+			return 0
+		}
+
+		if altype != _LINK_TYPE_NOT_AUTOLINK {
 			var uLink bytes.Buffer
 			unescapeText(&uLink, data[1:end+1-2])
 			if uLink.Len() > 0 {
@@ -617,8 +774,114 @@ func leftAngle(p *parser, out *bytes.Buffer, data []byte, offset int) int {
 	return end
 }
 
+// '<' for callouts in code.
+func callouts(p *parser, out *bytes.Buffer, data []byte, offset int, comment string) {
+	p.codeBlock++
+	p.callouts = make(map[string][]string)
+	i := offset
+	j := 0
+	// Defined comment types for callouts.
+	if comment != ";" && comment != "#" && comment != "//" && comment != "/*" && comment != "%" {
+		comment = ""
+	}
+
+	for i < len(data) {
+		if data[i] == '\\' && i < len(data)-1 && data[i+1] == '<' {
+			// skip \\
+			out.WriteByte(data[i])
+			i++
+			continue
+		}
+		switch comment {
+		case "#":
+			if data[i] == '#' {
+				if i+1 > len(data) {
+					out.WriteByte(data[i])
+					return
+				}
+				i++
+			}
+			if data[i] == '<' && i > 0 && data[i-1] != '\\' {
+				if x := leftAngleCode(data[i:]); x > 0 {
+					j++
+					index := string(data[i+1 : i+x])
+					p.callouts[index] = append(p.callouts[index], strconv.Itoa(j))
+				}
+			}
+		case ";":
+			if data[i] == ';' {
+				if i+1 > len(data) {
+					out.WriteByte(data[i])
+					return
+				}
+				i++
+			}
+			if data[i] == '<' && i > 0 && data[i-1] != '\\' {
+				if x := leftAngleCode(data[i:]); x > 0 {
+					j++
+					index := string(data[i+1 : i+x])
+					p.callouts[index] = append(p.callouts[index], strconv.Itoa(j))
+				}
+			}
+		case "//":
+			if data[i] == '/' && i < len(data) && data[i+1] == '/' {
+				if i+2 > len(data) {
+					out.WriteByte(data[i])
+					out.WriteByte(data[i+1])
+					return
+				}
+				i += 2
+			}
+			if data[i] == '<' && i > 0 && data[i-1] != '\\' {
+				if x := leftAngleCode(data[i:]); x > 0 {
+					j++
+					index := string(data[i+1 : i+x])
+					p.callouts[index] = append(p.callouts[index], strconv.Itoa(j))
+				}
+			}
+		case "":
+			if data[i] == '<' && i > 0 && data[i-1] != '\\' {
+				if x := leftAngleCode(data[i:]); x > 0 {
+					j++
+					index := string(data[i+1 : i+x])
+					p.callouts[index] = append(p.callouts[index], strconv.Itoa(j))
+				}
+			}
+		}
+
+		out.WriteByte(data[i])
+		i++
+	}
+	return
+}
+
+// return > 0 if <xxx> if found where xxx is a number > 0
+// should be called when on a '<'
+func leftAngleCode(data []byte) int {
+	i := 1
+	for i < len(data) {
+		if data[i] == '>' {
+			break
+		}
+		if !isnum(data[i]) {
+			return 0
+		}
+		i++
+	}
+	return i
+}
+
+// '{' IAL or *matter, {{ is handled in the first pass
+func leftBrace(p *parser, out *bytes.Buffer, data []byte, offset int) int {
+	data = data[offset:]
+	if j := p.isInlineAttr(data); j > 0 {
+		return j
+	}
+	return 0
+}
+
 // '\\' backslash escape
-var escapeChars = []byte("\\`*_{}[]()#+-.!:|&<>~")
+var escapeChars = []byte("\\`*_{}[]()#+-.!:|&<>~^")
 
 func escape(p *parser, out *bytes.Buffer, data []byte, offset int) int {
 	data = data[offset:]
@@ -672,18 +935,44 @@ func entity(p *parser, out *bytes.Buffer, data []byte, offset int) int {
 
 	if end < len(data) && data[end] == ';' {
 		end++ // real entity
-	} else {
-		return 0 // lone '&'
+		p.r.Entity(out, decodeEntity(data[:end]))
+		return end
 	}
 
-	p.r.Entity(out, data[:end])
+	return 0 // lone '&'
+}
 
-	return end
+// decode decimal entity to the UTF8 code point
+// we receive the whole entity: &#10232;
+func decodeEntity(entity []byte) []byte {
+	base := 10
+	i := 2
+	if entity[2] == 'x' || entity[2] == 'X' {
+		i++
+		base = 16
+	}
+	r, e := strconv.ParseInt(string(entity[i:len(entity)-1]), base, 32)
+	if e != nil {
+		return entity
+	}
+
+	l := utf8.RuneLen(rune(r))
+	if l == -1 {
+		return []byte("0xFFFD")
+	}
+	u := make([]byte, l)
+	l = utf8.EncodeRune(u, rune(r))
+	u = u[:l]
+
+	return u
 }
 
 func linkEndsWithEntity(data []byte, linkEnd int) bool {
 	entityRanges := htmlEntity.FindAllIndex(data[:linkEnd], -1)
-	return entityRanges != nil && entityRanges[len(entityRanges)-1][1] == linkEnd
+	if entityRanges != nil && entityRanges[len(entityRanges)-1][1] == linkEnd {
+		return true
+	}
+	return false
 }
 
 func autoLink(p *parser, out *bytes.Buffer, data []byte, offset int) int {
@@ -759,25 +1048,25 @@ func autoLink(p *parser, out *bytes.Buffer, data []byte, offset int) int {
 
 		openDelim := 1
 
-		/* Try to close the final punctuation sign in this same line;
-		 * if we managed to close it outside of the URL, that means that it's
-		 * not part of the URL. If it closes inside the URL, that means it
-		 * is part of the URL.
-		 *
-		 * Examples:
-		 *
-		 *      foo http://www.pokemon.com/Pikachu_(Electric) bar
-		 *              => http://www.pokemon.com/Pikachu_(Electric)
-		 *
-		 *      foo (http://www.pokemon.com/Pikachu_(Electric)) bar
-		 *              => http://www.pokemon.com/Pikachu_(Electric)
-		 *
-		 *      foo http://www.pokemon.com/Pikachu_(Electric)) bar
-		 *              => http://www.pokemon.com/Pikachu_(Electric))
-		 *
-		 *      (foo http://www.pokemon.com/Pikachu_(Electric)) bar
-		 *              => foo http://www.pokemon.com/Pikachu_(Electric)
-		 */
+		// Try to close the final punctuation sign in this same line;
+		// if we managed to close it outside of the URL, that means that it's
+		// not part of the URL. If it closes inside the URL, that means it
+		// is part of the URL.
+
+		//	 Examples:
+		//
+		//	      foo http://www.pokemon.com/Pikachu_(Electric) bar
+		//	              => http://www.pokemon.com/Pikachu_(Electric)
+		//
+		//	      foo (http://www.pokemon.com/Pikachu_(Electric)) bar
+		//	              => http://www.pokemon.com/Pikachu_(Electric)
+		//
+		//	      foo http://www.pokemon.com/Pikachu_(Electric)) bar
+		//	              => http://www.pokemon.com/Pikachu_(Electric))
+		//
+		//	      (foo http://www.pokemon.com/Pikachu_(Electric)) bar
+		//	              => foo http://www.pokemon.com/Pikachu_(Electric)
+		//
 
 		for bufEnd >= 0 && origData[bufEnd] != '\n' && openDelim != 0 {
 			if origData[bufEnd] == data[linkEnd-1] {
@@ -805,7 +1094,7 @@ func autoLink(p *parser, out *bytes.Buffer, data []byte, offset int) int {
 	unescapeText(&uLink, data[:linkEnd])
 
 	if uLink.Len() > 0 {
-		p.r.AutoLink(out, uLink.Bytes(), LINK_TYPE_NORMAL)
+		p.r.AutoLink(out, uLink.Bytes(), _LINK_TYPE_NORMAL)
 	}
 
 	return linkEnd - rewind
@@ -815,20 +1104,9 @@ func isEndOfLink(char byte) bool {
 	return isspace(char) || char == '<'
 }
 
-var validUris = [][]byte{[]byte("http://"), []byte("https://"), []byte("ftp://"), []byte("mailto://")}
-var validPaths = [][]byte{[]byte("/"), []byte("./"), []byte("../")}
+var validUris = [][]byte{[]byte("http://"), []byte("https://"), []byte("ftp://"), []byte("mailto://"), []byte("/")}
 
 func isSafeLink(link []byte) bool {
-	for _, path := range validPaths {
-		if len(link) >= len(path) && bytes.Equal(link[:len(path)], path) {
-			if len(link) == len(path) {
-				return true
-			} else if isalnum(link[len(path)]) {
-				return true
-			}
-		}
-	}
-
 	for _, prefix := range validUris {
 		// TODO: handle unicode here
 		// case-insensitive prefix test
@@ -864,7 +1142,7 @@ func tagLength(data []byte, autolink *int) int {
 	}
 
 	// scheme test
-	*autolink = LINK_TYPE_NOT_AUTOLINK
+	*autolink = _LINK_TYPE_NOT_AUTOLINK
 
 	// try to find the beginning of an URI
 	for i < len(data) && (isalnum(data[i]) || data[i] == '.' || data[i] == '+' || data[i] == '-') {
@@ -873,20 +1151,20 @@ func tagLength(data []byte, autolink *int) int {
 
 	if i > 1 && i < len(data) && data[i] == '@' {
 		if j = isMailtoAutoLink(data[i:]); j != 0 {
-			*autolink = LINK_TYPE_EMAIL
+			*autolink = _LINK_TYPE_EMAIL
 			return i + j
 		}
 	}
 
 	if i > 2 && i < len(data) && data[i] == ':' {
-		*autolink = LINK_TYPE_NORMAL
+		*autolink = _LINK_TYPE_NORMAL
 		i++
 	}
 
 	// complete autolink test: no whitespace or ' or "
 	switch {
 	case i >= len(data):
-		*autolink = LINK_TYPE_NOT_AUTOLINK
+		*autolink = _LINK_TYPE_NOT_AUTOLINK
 	case *autolink != 0:
 		j = i
 
@@ -909,7 +1187,7 @@ func tagLength(data []byte, autolink *int) int {
 		}
 
 		// one of the forbidden chars has been found
-		*autolink = LINK_TYPE_NOT_AUTOLINK
+		*autolink = _LINK_TYPE_NOT_AUTOLINK
 	}
 
 	// look for something looking like a tag end
@@ -938,20 +1216,102 @@ func isMailtoAutoLink(data []byte) int {
 			nb++
 
 		case '-', '.', '_':
-			break
+			// Do nothing.
 
 		case '>':
 			if nb == 1 {
 				return i + 1
-			} else {
-				return 0
 			}
+			return 0
 		default:
 			return 0
 		}
 	}
 
 	return 0
+}
+
+func index(p *parser, out *bytes.Buffer, data []byte, offset int) int {
+	data = data[offset:]
+	c := data[0]
+	ret := 0
+	if len(data) > 3 && data[1] != c && data[2] != c {
+		// might be example list reference
+		if data[1] == '@' {
+			ret = exampleReference(p, out, data, 0)
+			if ret > 0 {
+				return ret
+			}
+		}
+		if data[1] == '#' && p.flags&EXTENSION_SHORT_REF != 0 {
+			ret = crossReference(p, out, data, 0)
+			if ret > 0 {
+				return ret
+			}
+		}
+		// no three (((
+		return 0
+	}
+	// find closing delimeter, count commas while at it
+	// if more than 1 is found, it is a proper index.
+	i, end := 0, 0
+	comma := 0
+	for end = 3; end < len(data) && i < 3; end++ {
+		if data[end] == ')' {
+			i++
+		} else {
+			i = 0
+		}
+		if data[end] == ',' {
+			if comma != 0 {
+				// already seen comma
+				return 0
+			}
+			comma = end
+		}
+	}
+	if comma == 3 { // just (((,
+		return 0
+	}
+	if i < 3 && end >= len(data) {
+		return 0
+	}
+	ret = end
+	if comma == 0 {
+		comma = end
+	}
+
+	// may be surrounded by whitespace, strip it
+	primary := comma - 1
+	for i := comma - 1; i >= 0; i-- {
+		if !isspace(data[i]) {
+			break
+		}
+		primary = i
+	}
+
+	secondary := comma + 1
+	for i := comma + 1; i < end; i++ {
+		if !isspace(data[i]) {
+			secondary = i
+			break
+		}
+	}
+
+	i = 3
+	prim := false
+	if data[i] == '!' {
+		// mark is primary
+		prim = true
+		i++
+	}
+
+	if secondary > end-3 {
+		p.r.Index(out, data[i:primary-2], nil, prim)
+		return ret
+	}
+	p.r.Index(out, data[i:primary+1], data[secondary:end-3], prim)
+	return ret
 }
 
 // look for the next emph char, skipping other constructs
@@ -999,7 +1359,7 @@ func helperFindEmphChar(data []byte, c byte) int {
 				i++
 			}
 			i++
-			for i < len(data) && (data[i] == ' ' || data[i] == '\n') {
+			for i < len(data) && isspace(data[i]) {
 				i++
 			}
 			if i >= len(data) {
@@ -1008,9 +1368,8 @@ func helperFindEmphChar(data []byte, c byte) int {
 			if data[i] != '[' && data[i] != '(' { // not a link
 				if tmpI > 0 {
 					return tmpI
-				} else {
-					continue
 				}
+				continue
 			}
 			cc := data[i]
 			i++
@@ -1053,8 +1412,7 @@ func helperEmphasis(p *parser, out *bytes.Buffer, data []byte, c byte) int {
 		}
 
 		if data[i] == c && !isspace(data[i-1]) {
-
-			if p.flags&EXTENSION_NO_INTRA_EMPHASIS != 0 {
+			if c != '*' {
 				if !(i+1 == len(data) || isspace(data[i+1]) || ispunct(data[i+1])) {
 					continue
 				}
@@ -1131,18 +1489,175 @@ func helperTripleEmphasis(p *parser, out *bytes.Buffer, data []byte, offset int,
 			length = helperEmphasis(p, out, origData[offset-2:], c)
 			if length == 0 {
 				return 0
-			} else {
-				return length - 2
 			}
+			return length - 2
 		default:
 			// single symbol found, hand over to emph2
 			length = helperDoubleEmphasis(p, out, origData[offset-1:], c)
 			if length == 0 {
 				return 0
-			} else {
-				return length - 1
 			}
+			return length - 1
 		}
 	}
 	return 0
+}
+
+func subscript(p *parser, out *bytes.Buffer, data []byte, offset int) int {
+	ret := helperScript(p, out, data[offset:], '~')
+	return ret
+}
+
+func superscript(p *parser, out *bytes.Buffer, data []byte, offset int) int {
+	// superscript is called from the inline call, so we are positioned
+	// on the '^'
+	ret := helperScript(p, out, data[offset+1:], '^')
+	return ret
+}
+
+func helperScript(p *parser, out *bytes.Buffer, data []byte, c byte) int {
+	i := 0
+	// write too much
+	var raw bytes.Buffer
+	for i < len(data) {
+		if isspace(data[i]) {
+			if i > 0 && data[i-1] == '\\' {
+				// just written the '\', truncate to length-1 and write the space
+				raw.Truncate(raw.Len() - 1)
+				raw.WriteByte(data[i])
+				i++
+				continue
+			}
+			return 0
+		}
+		if data[i] == c {
+			var work bytes.Buffer
+			p.inline(&work, raw.Bytes())
+			switch c {
+			case '~':
+				p.r.Subscript(out, work.Bytes())
+				return i + 1 // differences in how subscript is called ...
+			case '^':
+				p.r.Superscript(out, work.Bytes())
+				return i + 2 // ... compared to superscript
+			}
+		}
+		raw.WriteByte(data[i])
+		i++
+	}
+	return 0
+}
+
+// (@r), ref is alfanumeric, underscores or hyphens
+func exampleReference(p *parser, out *bytes.Buffer, data []byte, offset int) int {
+	data = data[offset:]
+	i := 0
+	if len(data) < 4 {
+		return 0
+	}
+	i++
+	if data[i] != '@' {
+		return 0
+	}
+	i++
+	for i < len(data) && data[i] != ')' {
+		if isalnum(data[i]) {
+			i++
+			continue
+		}
+		if data[i] == '_' || data[i] == '-' {
+			i++
+			continue
+		}
+		return 0
+	}
+	if e, ok := p.examples[string(data[2:i])]; ok {
+		p.r.Example(out, e)
+		return i + 1
+	}
+	return 0
+}
+
+// (#r), ref is alfanumeric, underscores or hyphens
+func crossReference(p *parser, out *bytes.Buffer, data []byte, offset int) int {
+	data = data[offset:]
+	i := 0
+	if len(data) < 4 {
+		return 0
+	}
+	i++
+	if data[i] != '#' {
+		return 0
+	}
+	i++
+	for i < len(data) && data[i] != ')' {
+		if isalnum(data[i]) {
+			i++
+			continue
+		}
+		if data[i] == '_' || data[i] == '-' || data[i] == ':' {
+			i++
+			continue
+		}
+		return 0
+	}
+	p.r.Link(out, data[1:i], nil, nil)
+	return i + 1
+}
+
+// @r, ref is known reference anchor: alfanumeric, underscores or hyphens
+func citationReference(p *parser, out *bytes.Buffer, data []byte, offset int) int {
+	data = data[offset:]
+	i := 1
+	for i < len(data) && !isspace(data[i]) && !ispunct(data[i]) {
+		if isalnum(data[i]) {
+			i++
+			continue
+		}
+		if data[i] == '_' || data[i] == '-' {
+			i++
+			continue
+		}
+		return 0
+	}
+	if c, ok := p.citations[string(data[1:i])]; ok {
+		p.r.Citation(out, data[1:i], c.title)
+		return i
+	}
+	// If we just see a @ it will always be normal text.
+	if len(data[:i]) > 1 {
+		printf(nil, "handling `%s' as normal text", string(data[:i]))
+	}
+	return 0
+}
+
+func math(p *parser, out *bytes.Buffer, data []byte, offset int) int {
+	if len(data[offset:]) < 5 {
+		return 0
+	}
+	i := offset + 1
+	if data[i] != '$' {
+		return 0
+	}
+
+	// find end delimiter
+	end, j := i+1, 0
+	for ; end < len(data) && j < 2; end++ {
+		if data[end] == '$' {
+			j++
+		} else {
+			j = 0
+		}
+	}
+
+	// no matching delimiter?
+	if j < 2 && end >= len(data) {
+		return 0
+	}
+	if p.displayMath {
+		p.r.SetAttr(p.ial)
+		p.ial = nil
+	}
+	p.r.Math(out, data[i+1:end-2], p.displayMath)
+	return end - offset
 }
