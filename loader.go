@@ -3,6 +3,7 @@ package snowboard
 import (
 	"bufio"
 	"bytes"
+	"fmt"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -14,20 +15,26 @@ import (
 )
 
 type loader struct {
-	base string
+	name    string
+	baseDir string
 }
 
 func newLoader(name string) *loader {
-	abs, err := filepath.Abs(filepath.Dir(name))
-	if err != nil {
-		return &loader{}
-	}
+	d := &loader{name: name}
+	d.detectBaseDir()
 
-	return &loader{base: abs}
+	return d
 }
 
-func (l *loader) partial(name string) string {
-	fname := filepath.Join(l.base, name)
+func (d *loader) detectBaseDir() {
+	abs, err := filepath.Abs(filepath.Dir(d.name))
+	if err == nil {
+		d.baseDir = abs
+	}
+}
+
+func (d *loader) partial(name string) string {
+	fname := filepath.Join(d.baseDir, name)
 
 	b, err := ioutil.ReadFile(fname)
 	if err != nil {
@@ -37,42 +44,60 @@ func (l *loader) partial(name string) string {
 	return string(b)
 }
 
-func partialComment(s string) string {
-	re := regexp.MustCompile(`<!--\s?include\((.+)\)\s?-->`)
+func (d *loader) convert(s string) string {
+	var format string
+	var re *regexp.Regexp
+
+	switch {
+	case strings.Contains(s, "include"):
+		re = regexp.MustCompile(`<!-- include\((.+)\) -->`)
+		format = `{{partial "%s"}}`
+	default:
+		re = regexp.MustCompile(`<!-- (.+) -->`)
+		format = `{%s}`
+	}
+
 	rs := re.FindStringSubmatch(s)
 
 	if len(rs) != 2 {
 		return s
 	}
 
-	return `{{partial "` + rs[1] + `"}}`
+	return fmt.Sprintf(format, rs[1])
 }
 
-// Load reads API Blueprint from file as blueprint.API struct using selected Parser
-func Load(name string, engine Parser) (*api.API, error) {
-	f, err := os.Open(name)
+func (d *loader) read() (string, error) {
+	f, err := os.Open(d.name)
 	if err != nil {
-		return nil, err
+		return "", err
 	}
 	defer f.Close()
 
-	cs := []string{}
 	scanner := bufio.NewScanner(f)
+	cs := []string{}
 
 	for scanner.Scan() {
 		if strings.HasPrefix(scanner.Text(), "<!--") {
-			cs = append(cs, partialComment(scanner.Text()))
+			cs = append(cs, d.convert(scanner.Text()))
 		} else {
 			cs = append(cs, scanner.Text())
 		}
 	}
 
-	loader := newLoader(name)
-	funcMap := template.FuncMap{
-		"partial": loader.partial,
+	return strings.Join(cs, "\n"), nil
+}
+
+func Read(name string) ([]byte, error) {
+	d := newLoader(name)
+
+	s, err := d.read()
+	if err != nil {
+		return nil, err
 	}
 
-	s := strings.Join(cs, "\n")
+	funcMap := template.FuncMap{
+		"partial": d.partial,
+	}
 
 	tmpl, err := template.New("apib").Funcs(funcMap).Parse(s)
 	if err != nil {
@@ -86,5 +111,15 @@ func Load(name string, engine Parser) (*api.API, error) {
 		return nil, err
 	}
 
-	return Parse(z, engine)
+	return z.Bytes(), nil
+}
+
+// Load reads API Blueprint from file as blueprint.API struct using selected Parser
+func Load(name string, engine Parser) (*api.API, error) {
+	b, err := Read(name)
+	if err != nil {
+		return nil, err
+	}
+
+	return Parse(bytes.NewReader(b), engine)
 }

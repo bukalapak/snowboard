@@ -42,3 +42,10 @@ func TestLoad_partials(t *testing.T) {
 	assert.Equal(t, "Messages", api.ResourceGroups[0].Title)
 	assert.Equal(t, "Users", api.ResourceGroups[1].Title)
 }
+
+func TestRead(t *testing.T) {
+	b, err := snowboard.Read("fixtures/extensions/html-comment.apib")
+	assert.Nil(t, err)
+	assert.Contains(t, string(b), `{class="ui table"}`)
+	assert.Contains(t, string(b), `{id="awesome-table" class="ui small table"}`)
+}
