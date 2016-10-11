@@ -16,13 +16,13 @@ type Metadata struct {
 type ResourceGroup struct {
 	Title       string
 	Description string
-	Resources   []Resource
+	Resources   []*Resource
 }
 
 type Resource struct {
 	Title       string
 	Description string
-	Transitions []Transition
+	Transitions []*Transition
 	Href        Href
 }
 
@@ -31,6 +31,9 @@ type Transition struct {
 	Description  string
 	Href         Href
 	Transactions []Transaction
+
+	ID     string
+	Method string
 }
 
 type Asset struct {

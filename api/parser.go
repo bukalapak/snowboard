@@ -126,6 +126,7 @@ func (a *API) digResourceGroups(el *Element) {
 		}
 
 		g.digResources(child)
+		g.generateIds()
 		a.ResourceGroups = append(a.ResourceGroups, *g)
 	}
 }
@@ -133,9 +134,9 @@ func (a *API) digResourceGroups(el *Element) {
 func (g *ResourceGroup) digResources(el *Element) {
 	children := filterContentByElement("resource", el)
 
-	cr := make(chan Resource)
+	cr := make(chan *Resource)
 	oc := make([]string, len(children))
-	rs := make([]Resource, len(children))
+	rs := make([]*Resource, len(children))
 
 	for i, child := range children {
 		oc[i] = child.Path("meta.title").String()
@@ -149,7 +150,7 @@ func (g *ResourceGroup) digResources(el *Element) {
 
 			r.digTransitions(c)
 
-			cr <- *r
+			cr <- r
 		}(child)
 	}
 
@@ -166,6 +167,34 @@ func (g *ResourceGroup) digResources(el *Element) {
 	g.Resources = rs
 }
 
+func (g *ResourceGroup) generateIds() {
+	for _, r := range g.Resources {
+		for _, t := range r.Transitions {
+			mh := requestMethod(*t)
+			xs := []string{}
+
+			if g.Title != "" {
+				xs = append(xs, parameterize(g.Title))
+			}
+
+			if r.Title != "" {
+				xs = append(xs, parameterize(r.Title))
+			} else {
+				xs = append(xs, parameterize(r.Href.Path))
+			}
+
+			if t.Title != "" {
+				xs = append(xs, parameterize(t.Title))
+			} else {
+				xs = append(xs, parameterize(mh))
+			}
+
+			t.Method = mh
+			t.ID = strings.Join(xs, "-")
+		}
+	}
+}
+
 func (r *Resource) digTransitions(el *Element) {
 	children := filterContentByElement("transition", el)
 
@@ -177,7 +206,7 @@ func (r *Resource) digTransitions(el *Element) {
 		}
 
 		t.digTransactions(child)
-		r.Transitions = append(r.Transitions, *t)
+		r.Transitions = append(r.Transitions, t)
 	}
 }
 
@@ -415,4 +444,18 @@ func strUnescapse(s string) string {
 	}
 
 	return s
+}
+
+func parameterize(s string) string {
+	return strings.Replace(strings.ToLower(s), " ", "-", -1)
+}
+
+func requestMethod(t Transition) string {
+	for _, x := range t.Transactions {
+		if x.Request.Method != "" {
+			return x.Request.Method
+		}
+	}
+
+	return ""
 }
