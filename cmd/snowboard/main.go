@@ -167,13 +167,7 @@ func checkErr(err error) {
 }
 
 func renderHTML(engine snowboard.Parser) {
-	b, err := readFile(*input)
-	logErr(err)
-
-	log.Println("Generate HTML... START")
-
-	bf := bytes.NewReader(b)
-	bp, err := snowboard.Parse(bf, engine)
+	bp, err := snowboard.Load(*input, engine)
 	logErr(err)
 
 	of, err := os.Create(*output)
@@ -185,8 +179,7 @@ func renderHTML(engine snowboard.Parser) {
 
 	err = snowboard.HTML(string(tf), of, bp)
 	logErr(err)
-
-	log.Println("Generate HTML... DONE")
+	log.Println("HTML has been generated!")
 }
 
 func logErr(err error) {
