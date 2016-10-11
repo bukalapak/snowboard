@@ -128,6 +128,20 @@ Options:
   -w    Watch input (and template, if any) file for changes
 ```
 
+## External Files
+
+You can split your API blueprint document to several files and use `partial` helper to includes it to your main document.
+
+```
+{{partial "some-resource.apib"}}
+```
+
+Alternatively, you can also use HTML comment syntax to include those files:
+
+```
+<!-- include(some-resource.apib) -->
+```
+
 ## Examples
 
 You can see examples of `snowboard` default template outputs, in [examples/alpha](examples/alpha) directory. They looks like:
