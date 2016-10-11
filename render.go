@@ -7,11 +7,10 @@ import (
 	"strings"
 
 	"github.com/subosito/snowboard/api"
-	"github.com/subosito/snowboard/plugins/alpha"
 )
 
 func markdownize(s string) template.HTML {
-	return template.HTML(string(alpha.Markdown([]byte(s))))
+	return template.HTML(string(Markdown([]byte(s))))
 }
 
 func parameterize(s string) string {
