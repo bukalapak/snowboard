@@ -26,8 +26,7 @@ var (
 	version  = flag.Bool("v", false, "Display version information")
 	input    = flag.String("i", "", "API Blueprint file")
 	output   = flag.String("o", "index.html", "HTML output file")
-	watch    = flag.Bool("w", false, "Watch input (and template, if any) file for changes")
-	serve    = flag.Bool("s", false, "Serve HTML via 0.0.0.0:8088")
+	serve    = flag.String("s", "127.0.0.1:8088", "Serve HTML via HTTP server")
 	tplFile  = flag.String("t", "alpha", "Custom template for documentation")
 	engineF  = flag.String("e", "cgo", "Use different engine. Supported engines: cgo, cli")
 	validate = flag.Bool("l", false, "Validate input only")
@@ -92,7 +91,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	if *watch {
+	if *serve != "" {
 		watcher, err := fsnotify.NewWatcher()
 		checkErr(err)
 		defer watcher.Close()
@@ -189,15 +188,11 @@ func logErr(err error) {
 }
 
 func serveHTML() {
-	if !*serve {
-		return
-	}
-
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, *output)
 	})
 
-	err := http.ListenAndServe(":8088", nil)
+	err := http.ListenAndServe(*serve, nil)
 	logErr(err)
 }
 
