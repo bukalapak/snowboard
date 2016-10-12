@@ -117,6 +117,12 @@ You can split your API blueprint document to several files and use `partial` hel
 Alternatively, you can also use HTML comment syntax to include those files:
 
 ```
+<!-- partial(some-resource.apib) -->
+```
+
+or
+
+```
 <!-- include(some-resource.apib) -->
 ```
 
@@ -126,6 +132,32 @@ When you have documentation splitted across files, you can customize flags `-o` 
 
 ```
 $ snowboard -i project/api-splitted.apib -o API.apib -f apib
+```
+
+## Seed Files
+
+As your API blueprint document become large, you might move some value to separate file for easier organization and modification. Snowboard supports this as well.
+
+Just place your values into a json file, say, `seed.json`:
+
+```
+$ cat seed.json
+{
+    "official": {
+        "username": "olaf"
+    }
+}
+```
+
+Then on your API blueprint document you can use `seed` comment helper:
+
+```apib
+$ cat API.apib
+# API
+
+<!-- seed(seed.json) -->
+
+Our friendly username is {{.official.username}}.
 ```
 
 ## Help
