@@ -24,9 +24,10 @@ const versionStr = "v0.3.3"
 
 var (
 	version  = flag.Bool("v", false, "Display version information")
-	input    = flag.String("i", "", "API Blueprint file")
-	output   = flag.String("o", "index.html", "HTML output file")
-	serve    = flag.String("s", "127.0.0.1:8088", "Serve HTML via HTTP server")
+	input    = flag.String("i", "", "API blueprint file")
+	output   = flag.String("o", "index.html", "Output file")
+	serve    = flag.Bool("s", false, "Serve HTML via HTTP server")
+	bind     = flag.String("b", "127.0.0.1:8088", "Set HTTP server listen address and port")
 	tplFile  = flag.String("t", "alpha", "Custom template for documentation")
 	engineF  = flag.String("e", "cgo", "Use different engine. Supported engines: cgo, cli")
 	validate = flag.Bool("l", false, "Validate input only")
@@ -91,7 +92,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	if *serve != "" {
+	if *serve {
 		watcher, err := fsnotify.NewWatcher()
 		checkErr(err)
 		defer watcher.Close()
@@ -192,7 +193,7 @@ func serveHTML() {
 		http.ServeFile(w, r, *output)
 	})
 
-	err := http.ListenAndServe(*serve, nil)
+	err := http.ListenAndServe(*bind, nil)
 	logErr(err)
 }
 
