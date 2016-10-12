@@ -18,7 +18,7 @@ type Renderer interface {
 	HTML([]byte) []byte
 }
 
-// Parse formats API Blueprint as blueprint.API struct using selected Parser
+// Parse formats API blueprint as blueprint.API struct using selected Parser
 func Parse(r io.Reader, engine Parser) (*api.API, error) {
 	el, err := parseElement(r, engine)
 	if err != nil {
@@ -28,7 +28,7 @@ func Parse(r io.Reader, engine Parser) (*api.API, error) {
 	return api.NewAPI(el)
 }
 
-// Validate validates API Blueprint using selected Parser
+// Validate validates API blueprint using selected Parser
 func Validate(r io.Reader, engine Parser) (*api.API, error) {
 	el, err := validateElement(r, engine)
 	if err == nil && el.Object() == nil {
@@ -42,7 +42,7 @@ func Validate(r io.Reader, engine Parser) (*api.API, error) {
 	return api.NewAPI(el)
 }
 
-// Load reads API Blueprint from file as blueprint.API struct using selected Parser
+// Load reads API blueprint from file as blueprint.API struct using selected Parser
 func Load(name string, engine Parser) (*api.API, error) {
 	b, err := Read(name)
 	if err != nil {

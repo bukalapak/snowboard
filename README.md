@@ -4,7 +4,7 @@
 [![GoDoc](https://godoc.org/github.com/subosito/snowboard?status.svg)](https://godoc.org/github.com/subosito/snowboard)
 [![Docker Automated build](https://img.shields.io/docker/automated/subosito/snowboard.svg?maxAge=2592000)](https://hub.docker.com/r/subosito/snowboard/)
 
-API blueprint parser and formatter.
+API blueprint parser and renderer.
 
 ## Installation
 
@@ -83,15 +83,17 @@ $ snowboard -i API.apib -o output.html -t awesome-template.html
 
 To see how the template looks like, you can see `snowboard` default template located in [templates/alpha.html](templates/alpha.html).
 
-### Auto-Regenerate HTML Documentation
+### Serve HTML Documentation
 
-If you want toauto-regenerate HTML documentation, especially on local development, you can pass `-w` flag:
+If you want to access HTML documentation via HTTP, especially on local development, you can pass `-s` flag:
 
 ```
-$ snowboard -i API.apib -o output.html -t awesome-template.html -w
+$ snowboard -i API.apib -o output.html -t awesome-template.html -s
 ```
 
-With this flag, any updates on both input and template file will trigger auto-regeneration.
+With this flag, You can access HTML documentation on `localhost:8088` and any updates on both input and template file will trigger auto-regeneration.
+
+If you need to customize binding address, you can use flag `-b`.
 
 
 ### Use Drafter CLI
@@ -103,30 +105,6 @@ $ snowboard -i API.apib -o output.html -e cli
 ```
 
 > Note: Ensure `drafter` is already on your `PATH` directories.
-
-### Help
-
-As usual, you can also see all supported flags by passing `-h`:
-
-```
-$ snowboard -h
-Usage:
-  snowboard [OPTIONS]
-
-Options:
-  -e string
-        Use different engine. Supported engines: cgo, cli (default "cgo")
-  -i string
-        API Blueprint file
-  -l    Validate input only
-  -o string
-        HTML output file (default "index.html")
-  -s    Serve HTML via 0.0.0.0:8088
-  -t string
-        Custom template for documentation (default "alpha")
-  -v    Display version information
-  -w    Watch input (and template, if any) file for changes
-```
 
 ## External Files
 
@@ -140,6 +118,41 @@ Alternatively, you can also use HTML comment syntax to include those files:
 
 ```
 <!-- include(some-resource.apib) -->
+```
+
+### Generate formatted API blueprint
+
+When you have documentation splitted across files, you can customize flags `-o` and `-f` to allow `snowboard` to produce single formatted API blueprint.
+
+```
+$ snowboard -i project/api-splitted.apib -o API.apib -f apib
+```
+
+## Help
+
+As usual, you can also see all supported flags by passing `-h`:
+
+```
+$ snowboard -h
+Usage:
+  snowboard [OPTIONS]
+
+Options:
+  -b string
+    	Set HTTP server listen address and port (default "127.0.0.1:8088")
+  -e string
+    	Use different engine. Supported engines: cgo, cli (default "cgo")
+  -f string
+    	Format of output file. Supported formats: html, apib (default "html")
+  -i string
+    	API blueprint file
+  -l	Validate input only
+  -o string
+    	Output file (default "index.html")
+  -s	Serve HTML via HTTP server
+  -t string
+    	Custom template for documentation (default "alpha")
+  -v	Display version information
 ```
 
 ## Examples
