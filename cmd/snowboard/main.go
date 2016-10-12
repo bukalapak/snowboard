@@ -7,6 +7,7 @@ import (
 	"errors"
 	"flag"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -26,6 +27,7 @@ var (
 	version  = flag.Bool("v", false, "Display version information")
 	input    = flag.String("i", "", "API blueprint file")
 	output   = flag.String("o", "index.html", "Output file")
+	format   = flag.String("f", "html", "Format of output file. Supported formats: html, apib")
 	serve    = flag.Bool("s", false, "Serve HTML via HTTP server")
 	bind     = flag.String("b", "127.0.0.1:8088", "Set HTTP server listen address and port")
 	tplFile  = flag.String("t", "alpha", "Custom template for documentation")
@@ -55,10 +57,9 @@ func main() {
 	}
 
 	if *serve {
-		liveHTML()
+		watch()
 	} else {
-		renderHTML()
-		serveHTML()
+		render()
 	}
 }
 
@@ -114,13 +115,27 @@ func renderHTML() {
 	log.Println("HTML has been generated!")
 }
 
+func renderAPIB() {
+	b, err := snowboard.Read(*input)
+	logErr(err)
+
+	of, err := os.Create(*output)
+	logErr(err)
+	defer of.Close()
+
+	_, err = io.Copy(of, bytes.NewReader(b))
+	logErr(err)
+
+	log.Println("API blueprint has been generated!")
+}
+
 func logErr(err error) {
 	if err != nil {
 		log.Fatalln("Error: ", err)
 	}
 }
 
-func serveHTML() {
+func runServer() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, *output)
 	})
@@ -184,7 +199,7 @@ func performValidation() {
 	os.Exit(1)
 }
 
-func liveHTML() {
+func watch() {
 	watcher, err := fsnotify.NewWatcher()
 	checkErr(err)
 	defer watcher.Close()
@@ -195,7 +210,7 @@ func liveHTML() {
 			select {
 			case event := <-watcher.Events:
 				if event.Op&fsnotify.Write == fsnotify.Write {
-					renderHTML()
+					render()
 				}
 			case err := <-watcher.Errors:
 				log.Println("Error:", err)
@@ -212,8 +227,17 @@ func liveHTML() {
 		checkErr(err)
 	}
 
-	renderHTML()
-	serveHTML()
+	render()
+	runServer()
 
 	<-done
+}
+
+func render() {
+	switch *format {
+	case "html":
+		renderHTML()
+	case "apib":
+		renderAPIB()
+	}
 }
