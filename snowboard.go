@@ -1,4 +1,4 @@
-// Package snowboard parses API Blueprint and renders it as HTML document
+// Package snowboard API blueprint parser and renderer
 package snowboard
 
 import (
@@ -12,10 +12,6 @@ type Parser interface {
 	Parse(r io.Reader) ([]byte, error)
 	Validate(r io.Reader) ([]byte, error)
 	Version() map[string]string
-}
-
-type Renderer interface {
-	HTML([]byte) []byte
 }
 
 // Parse formats API blueprint as blueprint.API struct using selected Parser

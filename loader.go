@@ -150,9 +150,7 @@ func Read(name string) ([]byte, error) {
 		return nil, err
 	}
 
-	b, err := process(s, data, template.FuncMap{"partial": d.partial})
-	if err != nil {
-	}
+	b, _ := process(s, data, template.FuncMap{"partial": d.partial})
 
 	funcMap := template.FuncMap{
 		"upcase": strings.ToUpper,
