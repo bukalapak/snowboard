@@ -124,6 +124,18 @@ func (d *loader) parse() (string, error) {
 	return strings.Join(cs, "\n"), nil
 }
 
+func join(ss []interface{}, s string) string {
+	xs := []string{}
+
+	for _, s := range ss {
+		if z, ok := s.(string); ok {
+			xs = append(xs, z)
+		}
+	}
+
+	return strings.Join(xs, s)
+}
+
 // Read reads API blueprint from file as bytes
 func Read(name string) ([]byte, error) {
 	d := newLoader(name)
@@ -133,20 +145,21 @@ func Read(name string) ([]byte, error) {
 		return nil, err
 	}
 
-	funcMap := template.FuncMap{
-		"partial": d.partial,
-	}
-
 	data, err := d.loadSeed()
 	if err != nil {
 		return nil, err
 	}
 
-	b, err := process(s, data, funcMap)
+	b, err := process(s, data, template.FuncMap{"partial": d.partial})
 	if err != nil {
 	}
 
-	b, err = process(string(b), data, nil)
+	funcMap := template.FuncMap{
+		"upcase": strings.ToUpper,
+		"join":   join,
+	}
+
+	b, err = process(string(b), data, funcMap)
 	if err != nil {
 		return nil, err
 	}
