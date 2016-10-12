@@ -3,7 +3,6 @@ package snowboard
 import (
 	"html/template"
 	"io"
-	"path"
 	"strconv"
 	"strings"
 
@@ -17,22 +16,6 @@ func markdownize(s string) template.HTML {
 
 func parameterize(s string) string {
 	return strings.Replace(strings.ToLower(s), " ", "-", -1)
-}
-
-func apiUrl(b *api.API, s string, sr string) string {
-	var h string
-
-	for _, m := range b.Metadata {
-		if m.Key == "HOST" {
-			h = m.Value
-		}
-	}
-
-	if s != "" {
-		return path.Join(h, s)
-	}
-
-	return path.Join(h, sr)
 }
 
 func toString(v interface{}) string {
@@ -117,11 +100,10 @@ func HTML(tpl string, w io.Writer, b *api.API) error {
 		"markdownize":  markdownize,
 		"parameterize": parameterize,
 		"colorize":     colorize,
-		"apiUrl":       apiUrl,
 		"alias":        alias,
 	}
 
-	tmpl, err := template.New("api").Funcs(funcMap).Parse(tpl)
+	tmpl, err := template.New("html").Funcs(funcMap).Parse(tpl)
 	if err != nil {
 		return err
 	}

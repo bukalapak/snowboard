@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"io"
+	"path"
 	"reflect"
 	"strconv"
 	"strings"
@@ -47,6 +48,7 @@ func (a *API) digElements(el *Element) {
 			a.digDescription(el)
 			a.digMetadata(el)
 			a.digResourceGroups(el)
+			a.digHelperAttributes()
 		}
 	case "annotation":
 		a.digAnnotation(el)
@@ -126,8 +128,29 @@ func (a *API) digResourceGroups(el *Element) {
 		}
 
 		g.digResources(child)
-		g.generateIds()
 		a.ResourceGroups = append(a.ResourceGroups, *g)
+	}
+}
+
+func (a *API) host() string {
+	for _, m := range a.Metadata {
+		if m.Key == "HOST" {
+			return m.Value
+		}
+	}
+
+	return ""
+}
+
+func (a *API) digHelperAttributes() {
+	for _, g := range a.ResourceGroups {
+		for _, r := range g.Resources {
+			for _, t := range r.Transitions {
+				t.Method = requestMethod(*t)
+				t.Permalink = buildPermalink(g, r, t, t.Method)
+				t.URL = buildURL(a.host(), t, r)
+			}
+		}
 	}
 }
 
@@ -165,34 +188,6 @@ func (g *ResourceGroup) digResources(el *Element) {
 	}
 
 	g.Resources = rs
-}
-
-func (g *ResourceGroup) generateIds() {
-	for _, r := range g.Resources {
-		for _, t := range r.Transitions {
-			mh := requestMethod(*t)
-			xs := []string{}
-
-			if g.Title != "" {
-				xs = append(xs, parameterize(g.Title))
-			}
-
-			if r.Title != "" {
-				xs = append(xs, parameterize(r.Title))
-			} else {
-				xs = append(xs, parameterize(r.Href.Path))
-			}
-
-			if t.Title != "" {
-				xs = append(xs, parameterize(t.Title))
-			} else {
-				xs = append(xs, parameterize(mh))
-			}
-
-			t.Method = mh
-			t.ID = strings.Join(xs, "-")
-		}
-	}
 }
 
 func (r *Resource) digTransitions(el *Element) {
@@ -458,4 +453,35 @@ func requestMethod(t Transition) string {
 	}
 
 	return ""
+}
+
+func buildPermalink(g ResourceGroup, r *Resource, t *Transition, fallback string) string {
+	xs := []string{}
+
+	if g.Title != "" {
+		xs = append(xs, parameterize(g.Title))
+	}
+
+	if r.Title != "" {
+		xs = append(xs, parameterize(r.Title))
+	} else {
+		xs = append(xs, parameterize(r.Href.Path))
+	}
+
+	if t.Title != "" {
+		xs = append(xs, parameterize(t.Title))
+	} else {
+		xs = append(xs, parameterize(fallback))
+	}
+
+	return strings.Join(xs, "-")
+
+}
+
+func buildURL(host string, t *Transition, r *Resource) string {
+	if t.Href.Path != "" {
+		return path.Join(host, t.Href.Path)
+	}
+
+	return path.Join(host, r.Href.Path)
 }

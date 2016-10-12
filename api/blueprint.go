@@ -32,8 +32,9 @@ type Transition struct {
 	Href         Href
 	Transactions []Transaction
 
-	ID     string
-	Method string
+	Permalink string
+	Method    string
+	URL       string
 }
 
 type Asset struct {
