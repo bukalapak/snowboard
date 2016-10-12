@@ -118,11 +118,11 @@
     <div class="content {{if eq $resourceN 0}}active{{end}}">
       <div class="ui fluid secondary vertical menu">
       {{range $transitionN, $transition := $resource.Transitions}}
-        <a class="item" href="#{{mParameterize $group $resource $transition}}">
+        <a class="item" href="#{{$transition.Permalink}}">
           {{if $transition.Title}}
-            <i class="ui {{$transition | transitionColorize}} empty circular label"></i> {{$transition.Title}}
+            <i class="ui {{$transition.Method | colorize}} empty circular label"></i> {{$transition.Title}}
           {{else}}
-            <i class="ui {{$transition | transitionColorize}} empty circular label"></i> {{requestMethod $transition}}
+            <i class="ui {{$transition | colorize}} empty circular label"></i> {{$transition.Method}}
           {{end}}
         </a>
       {{end}}
@@ -171,8 +171,8 @@
         {{range $transitionN, $transition := $resource.Transitions}}
           {{template "Divider"}}
           <div class="ui basic segment">
-            <h3 class="ui block center aligned header" id="{{mParameterize $group $resource $transition}}">
-              {{if $transition.Title}}{{$transition.Title}}{{else}}{{requestMethod $transition}}{{end}}
+            <h3 class="ui block center aligned header" id="{{$transition.Permalink}}">
+              {{if $transition.Title}}{{$transition.Title}}{{else}}{{$transition.Method}}{{end}}
             </h3>
             <div class="description">{{$transition.Description | markdownize}}</div>
 
@@ -185,7 +185,7 @@
                   <h3>{{$transaction.Request.Method}}</h3>
                 </div>
                 <a class="ui basic fluid {{$transaction.Request.Method | colorize}} label">
-                  <code>{{apiUrl $api $transition.Href.Path $resource.Href.Path}}</code>
+                  <code>{{$transition.URL}}</code>
                 </a>
               </div>
               {{if $transition.Href.Parameters}}
@@ -222,10 +222,10 @@
 
               <h4 class="ui horizontal divider">RESPONSE</h4>
               {{template "Headers" $transaction.Response.Headers}}
-              <div class="ui stacked {{$transaction.Response.StatusCode | iColorize}} segment">
+              <div class="ui stacked {{$transaction.Response.StatusCode | colorize}} segment">
                 <div class="ui fluid transaction accordion">
                   <div class="title center aligned">
-                    <a class="ui {{$transaction.Response.StatusCode | iColorize}} circular label">
+                    <a class="ui {{$transaction.Response.StatusCode | colorize}} circular label">
                       {{$transaction.Response.StatusCode}}
                     </a>
                     <code>{{$transaction.Response.Body.ContentType}}</code>
