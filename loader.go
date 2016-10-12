@@ -10,8 +10,6 @@ import (
 	"regexp"
 	"strings"
 	"text/template"
-
-	"github.com/subosito/snowboard/api"
 )
 
 type loader struct {
@@ -87,6 +85,7 @@ func (d *loader) read() (string, error) {
 	return strings.Join(cs, "\n"), nil
 }
 
+// Read reads API blueprint from file as bytes
 func Read(name string) ([]byte, error) {
 	d := newLoader(name)
 
@@ -112,14 +111,4 @@ func Read(name string) ([]byte, error) {
 	}
 
 	return z.Bytes(), nil
-}
-
-// Load reads API Blueprint from file as blueprint.API struct using selected Parser
-func Load(name string, engine Parser) (*api.API, error) {
-	b, err := Read(name)
-	if err != nil {
-		return nil, err
-	}
-
-	return Parse(bytes.NewReader(b), engine)
 }
