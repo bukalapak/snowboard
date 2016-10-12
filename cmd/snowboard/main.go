@@ -42,17 +42,8 @@ func main() {
 
 	flag.Parse()
 
-	engine := parserEngine()
-
 	if *version {
-		fmt.Printf("Snowboard version: %s\n", versionStr)
-		fmt.Println("Engine:")
-
-		for name, v := range engine.Version() {
-			fmt.Printf("  %s version: %s\n", name, v)
-		}
-
-		os.Exit(0)
+		displayVersion()
 	}
 
 	if *input == "" {
@@ -60,72 +51,13 @@ func main() {
 	}
 
 	if *validate {
-		cEngine := checkerEngine()
-
-		b, err := readFile(*input)
-		checkErr(err)
-
-		bf := bytes.NewReader(b)
-
-		out, err := snowboard.Validate(bf, cEngine)
-		if err == nil && out == nil {
-			fmt.Fprintf(os.Stdout, "OK\n")
-			os.Exit(0)
-		}
-
-		if err != nil {
-			checkErr(err)
-		}
-
-		s := "--------"
-		w := tabwriter.NewWriter(os.Stdout, 8, 0, 0, ' ', tabwriter.Debug)
-		fmt.Fprintln(w, "Row\tCol\tDescription")
-		fmt.Fprintf(w, "%s\t%s\t%s\n", s, s, strings.Repeat(s, 12))
-
-		for _, n := range out.Annotations {
-			for _, m := range n.SourceMaps {
-				fmt.Fprintf(w, "%d\t%d\t%s\n", m.Row, m.Col, n.Description)
-			}
-		}
-
-		w.Flush()
-		os.Exit(1)
+		performValidation()
 	}
 
 	if *serve {
-		watcher, err := fsnotify.NewWatcher()
-		checkErr(err)
-		defer watcher.Close()
-
-		done := make(chan bool)
-		go func() {
-			for {
-				select {
-				case event := <-watcher.Events:
-					if event.Op&fsnotify.Write == fsnotify.Write {
-						renderHTML(engine)
-					}
-				case err := <-watcher.Errors:
-					log.Println("Error:", err)
-				}
-			}
-		}()
-
-		err = watcher.Add(*input)
-		checkErr(err)
-
-		_, err = os.Stat(*tplFile)
-		if err == nil {
-			err = watcher.Add(*tplFile)
-			checkErr(err)
-		}
-
-		renderHTML(engine)
-		serveHTML()
-
-		<-done
+		liveHTML()
 	} else {
-		renderHTML(engine)
+		renderHTML()
 		serveHTML()
 	}
 }
@@ -166,8 +98,8 @@ func checkErr(err error) {
 	}
 }
 
-func renderHTML(engine snowboard.Parser) {
-	bp, err := snowboard.Load(*input, engine)
+func renderHTML() {
+	bp, err := snowboard.Load(*input, engine())
 	logErr(err)
 
 	of, err := os.Create(*output)
@@ -197,15 +129,91 @@ func serveHTML() {
 	logErr(err)
 }
 
-func parserEngine() snowboard.Parser {
+func defaultEngine() snowboard.Parser {
+	return drafter.Engine{}
+}
+
+func engine() snowboard.Parser {
 	switch *engineF {
 	case "cli":
 		return drafterc.Engine{}
 	}
 
-	return drafter.Engine{}
+	return defaultEngine()
 }
 
-func checkerEngine() snowboard.Parser {
-	return drafter.Engine{}
+func displayVersion() {
+	fmt.Printf("Snowboard version: %s\n", versionStr)
+	fmt.Println("Engine:")
+
+	for name, v := range engine().Version() {
+		fmt.Printf("  %s version: %s\n", name, v)
+	}
+
+	os.Exit(0)
+}
+
+func performValidation() {
+	b, err := readFile(*input)
+	checkErr(err)
+
+	bf := bytes.NewReader(b)
+
+	out, err := snowboard.Validate(bf, defaultEngine())
+	if err == nil && out == nil {
+		fmt.Fprintf(os.Stdout, "OK\n")
+		os.Exit(0)
+	}
+
+	if err != nil {
+		checkErr(err)
+	}
+
+	s := "--------"
+	w := tabwriter.NewWriter(os.Stdout, 8, 0, 0, ' ', tabwriter.Debug)
+	fmt.Fprintln(w, "Row\tCol\tDescription")
+	fmt.Fprintf(w, "%s\t%s\t%s\n", s, s, strings.Repeat(s, 12))
+
+	for _, n := range out.Annotations {
+		for _, m := range n.SourceMaps {
+			fmt.Fprintf(w, "%d\t%d\t%s\n", m.Row, m.Col, n.Description)
+		}
+	}
+
+	w.Flush()
+	os.Exit(1)
+}
+
+func liveHTML() {
+	watcher, err := fsnotify.NewWatcher()
+	checkErr(err)
+	defer watcher.Close()
+
+	done := make(chan bool)
+	go func() {
+		for {
+			select {
+			case event := <-watcher.Events:
+				if event.Op&fsnotify.Write == fsnotify.Write {
+					renderHTML()
+				}
+			case err := <-watcher.Errors:
+				log.Println("Error:", err)
+			}
+		}
+	}()
+
+	err = watcher.Add(*input)
+	checkErr(err)
+
+	_, err = os.Stat(*tplFile)
+	if err == nil {
+		err = watcher.Add(*tplFile)
+		checkErr(err)
+	}
+
+	renderHTML()
+	serveHTML()
+
+	<-done
 }
