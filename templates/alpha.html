@@ -86,6 +86,10 @@
       $('.content.tabbed').each(function(index) {
         $('.ui.tabular .item', $(this)).tab({ context: $(this) });
       });
+      $('.ui.vertical.menu').on('click', '.item', function() {
+        $('.ui.vertical.menu .item').removeClass('active');
+        $(this).addClass('active');
+      });
     });
   </script>
 </body>
@@ -118,7 +122,7 @@
     <div class="content {{if eq $resourceN 0}}active{{end}}">
       <div class="ui fluid secondary vertical menu">
       {{range $transitionN, $transition := $resource.Transitions}}
-        <a class="item" href="#{{$transition.Permalink}}">
+        <a class="item {{$transition.Method | colorize}}" href="#{{$transition.Permalink}}">
           <i class="ui {{$transition.Method | colorize}} empty circular label"></i>
           {{if $transition.Title}}
             <span>{{$transition.Title}}</span>
