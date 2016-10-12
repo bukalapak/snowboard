@@ -86,15 +86,17 @@
     <div class="content active">
       <div class="ui fluid secondary vertical menu">
       
-        <a class="item" href="#notes-get-a-note">
+        <a class="item green" href="#notes-get-a-note">
+          <i class="ui green empty circular label"></i>
           
-            <i class="ui green empty circular label"></i> Get a note
+            <span>Get a note</span>
           
         </a>
       
-        <a class="item" href="#notes-update-a-note">
+        <a class="item violet" href="#notes-update-a-note">
+          <i class="ui violet empty circular label"></i>
           
-            <i class="ui violet empty circular label"></i> Update a note
+            <span>Update a note</span>
           
         </a>
       
@@ -117,7 +119,7 @@
 using <a href="http://json-schema.org/">JSON Schema</a> to describe the format of request
 and response body content.</p>
 
-<h2>API Blueprint</h2>
+<h2 id="api-blueprint">API Blueprint</h2>
 
 <ul>
 <li><p><a href="13.%20Named%20Endpoints.md">Previous: Named Endpoints</a></p></li>
@@ -131,7 +133,6 @@ and response body content.</p>
 
         <div class="ui hidden divider"></div>
         
-
 
   <div class="ui horizontal divider" >
     
@@ -421,6 +422,10 @@ and response body content.</p>
       $('.ui.accordion').accordion({ animateChildren: false, duration: 0 });
       $('.content.tabbed').each(function(index) {
         $('.ui.tabular .item', $(this)).tab({ context: $(this) });
+      });
+      $('.ui.vertical.menu').on('click', '.item', function() {
+        $('.ui.vertical.menu .item').removeClass('active');
+        $(this).addClass('active');
       });
     });
   </script>

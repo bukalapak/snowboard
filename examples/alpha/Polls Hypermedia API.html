@@ -86,9 +86,10 @@
     <div class="content active">
       <div class="ui fluid secondary vertical menu">
       
-        <a class="item" href="#polls-api-root-retrieve-the-entry-point">
+        <a class="item green" href="#polls-api-root-retrieve-the-entry-point">
+          <i class="ui green empty circular label"></i>
           
-            <i class="ui green empty circular label"></i> Retrieve the Entry Point
+            <span>Retrieve the Entry Point</span>
           
         </a>
       
@@ -106,15 +107,17 @@
     <div class="content ">
       <div class="ui fluid secondary vertical menu">
       
-        <a class="item" href="#questions-collection-list-all-questions">
+        <a class="item green" href="#questions-collection-list-all-questions">
+          <i class="ui green empty circular label"></i>
           
-            <i class="ui green empty circular label"></i> List All Questions
+            <span>List All Questions</span>
           
         </a>
       
-        <a class="item" href="#questions-collection-create-a-new-question">
+        <a class="item blue" href="#questions-collection-create-a-new-question">
+          <i class="ui blue empty circular label"></i>
           
-            <i class="ui blue empty circular label"></i> Create a New Question
+            <span>Create a New Question</span>
           
         </a>
       
@@ -141,9 +144,10 @@
     <div class="content active">
       <div class="ui fluid secondary vertical menu">
       
-        <a class="item" href="#question-question-view-a-questions-detail">
+        <a class="item green" href="#question-question-view-a-questions-detail">
+          <i class="ui green empty circular label"></i>
           
-            <i class="ui green empty circular label"></i> View a Questions Detail
+            <span>View a Questions Detail</span>
           
         </a>
       
@@ -161,15 +165,17 @@
     <div class="content ">
       <div class="ui fluid secondary vertical menu">
       
-        <a class="item" href="#question-choice-view-a-choice-detail">
+        <a class="item green" href="#question-choice-view-a-choice-detail">
+          <i class="ui green empty circular label"></i>
           
-            <i class="ui green empty circular label"></i> View a Choice Detail
+            <span>View a Choice Detail</span>
           
         </a>
       
-        <a class="item" href="#question-choice-vote-on-a-choice">
+        <a class="item blue" href="#question-choice-vote-on-a-choice">
+          <i class="ui blue empty circular label"></i>
           
-            <i class="ui blue empty circular label"></i> Vote on a Choice
+            <span>Vote on a Choice</span>
           
         </a>
       
@@ -194,7 +200,6 @@
 
         <div class="ui hidden divider"></div>
         
-
 
   <div class="ui horizontal divider" >
     
@@ -1750,6 +1755,10 @@
       $('.ui.accordion').accordion({ animateChildren: false, duration: 0 });
       $('.content.tabbed').each(function(index) {
         $('.ui.tabular .item', $(this)).tab({ context: $(this) });
+      });
+      $('.ui.vertical.menu').on('click', '.item', function() {
+        $('.ui.vertical.menu .item').removeClass('active');
+        $(this).addClass('active');
       });
     });
   </script>

@@ -86,9 +86,10 @@
     <div class="content active">
       <div class="ui fluid secondary vertical menu">
       
-        <a class="item" href="#gist-fox-api-root-retrieve-the-entry-point">
+        <a class="item green" href="#gist-fox-api-root-retrieve-the-entry-point">
+          <i class="ui green empty circular label"></i>
           
-            <i class="ui green empty circular label"></i> Retrieve the Entry Point
+            <span>Retrieve the Entry Point</span>
           
         </a>
       
@@ -115,21 +116,24 @@
     <div class="content active">
       <div class="ui fluid secondary vertical menu">
       
-        <a class="item" href="#gist-gist-retrieve-a-single-gist">
+        <a class="item green" href="#gist-gist-retrieve-a-single-gist">
+          <i class="ui green empty circular label"></i>
           
-            <i class="ui green empty circular label"></i> Retrieve a Single Gist
-          
-        </a>
-      
-        <a class="item" href="#gist-gist-edit-a-gist">
-          
-            <i class="ui violet empty circular label"></i> Edit a Gist
+            <span>Retrieve a Single Gist</span>
           
         </a>
       
-        <a class="item" href="#gist-gist-delete-a-gist">
+        <a class="item violet" href="#gist-gist-edit-a-gist">
+          <i class="ui violet empty circular label"></i>
           
-            <i class="ui red empty circular label"></i> Delete a Gist
+            <span>Edit a Gist</span>
+          
+        </a>
+      
+        <a class="item red" href="#gist-gist-delete-a-gist">
+          <i class="ui red empty circular label"></i>
+          
+            <span>Delete a Gist</span>
           
         </a>
       
@@ -147,15 +151,17 @@
     <div class="content ">
       <div class="ui fluid secondary vertical menu">
       
-        <a class="item" href="#gist-gists-collection-list-all-gists">
+        <a class="item green" href="#gist-gists-collection-list-all-gists">
+          <i class="ui green empty circular label"></i>
           
-            <i class="ui green empty circular label"></i> List All Gists
+            <span>List All Gists</span>
           
         </a>
       
-        <a class="item" href="#gist-gists-collection-create-a-gist">
+        <a class="item blue" href="#gist-gists-collection-create-a-gist">
+          <i class="ui blue empty circular label"></i>
           
-            <i class="ui blue empty circular label"></i> Create a Gist
+            <span>Create a Gist</span>
           
         </a>
       
@@ -173,21 +179,24 @@
     <div class="content ">
       <div class="ui fluid secondary vertical menu">
       
-        <a class="item" href="#gist-star-star-a-gist">
+        <a class="item teal" href="#gist-star-star-a-gist">
+          <i class="ui teal empty circular label"></i>
           
-            <i class="ui teal empty circular label"></i> Star a Gist
-          
-        </a>
-      
-        <a class="item" href="#gist-star-unstar-a-gist">
-          
-            <i class="ui red empty circular label"></i> Unstar a Gist
+            <span>Star a Gist</span>
           
         </a>
       
-        <a class="item" href="#gist-star-check-if-a-gist-is-starred">
+        <a class="item red" href="#gist-star-unstar-a-gist">
+          <i class="ui red empty circular label"></i>
           
-            <i class="ui green empty circular label"></i> Check if a Gist is Starred
+            <span>Unstar a Gist</span>
+          
+        </a>
+      
+        <a class="item green" href="#gist-star-check-if-a-gist-is-starred">
+          <i class="ui green empty circular label"></i>
+          
+            <span>Check if a Gist is Starred</span>
           
         </a>
       
@@ -208,17 +217,17 @@
 <div class="description">
   <p>Gist Fox API is a <strong>pastes service</strong> similar to <a href="http://gist.github.com">GitHub&rsquo;s Gist</a>.</p>
 
-<h2>Authentication</h2>
+<h2 id="authentication">Authentication</h2>
 
 <p>Currently the Gist Fox API does not provide authenticated access.</p>
 
-<h2>Media Types</h2>
+<h2 id="media-types">Media Types</h2>
 
 <p>Where applicable this API uses the <a href="https://github.com/mikekelly/hal_specification/blob/master/hal_specification.md">HAL+JSON</a> media-type to represent resources states and affordances.</p>
 
 <p>Requests with a message-body are using plain JSON to set or update resource states.</p>
 
-<h2>Error States</h2>
+<h2 id="error-states">Error States</h2>
 
 <p>The common <a href="https://github.com/for-GET/know-your-http-well/blob/master/status-codes.md">HTTP Response Status Codes</a> are used.</p>
 
@@ -226,7 +235,6 @@
 
         <div class="ui hidden divider"></div>
         
-
 
   <div class="ui horizontal divider" >
     
@@ -1248,6 +1256,10 @@ HAL links.</p>
       $('.ui.accordion').accordion({ animateChildren: false, duration: 0 });
       $('.content.tabbed').each(function(index) {
         $('.ui.tabular .item', $(this)).tab({ context: $(this) });
+      });
+      $('.ui.vertical.menu').on('click', '.item', function() {
+        $('.ui.vertical.menu .item').removeClass('active');
+        $(this).addClass('active');
       });
     });
   </script>

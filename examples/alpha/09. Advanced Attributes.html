@@ -90,9 +90,10 @@
     <div class="content active">
       <div class="ui fluid secondary vertical menu">
       
-        <a class="item" href="#coupons-coupon-retrieve-a-coupon">
+        <a class="item green" href="#coupons-coupon-retrieve-a-coupon">
+          <i class="ui green empty circular label"></i>
           
-            <i class="ui green empty circular label"></i> Retrieve a Coupon
+            <span>Retrieve a Coupon</span>
           
         </a>
       
@@ -110,15 +111,17 @@
     <div class="content ">
       <div class="ui fluid secondary vertical menu">
       
-        <a class="item" href="#coupons-coupons-list-all-coupons">
+        <a class="item green" href="#coupons-coupons-list-all-coupons">
+          <i class="ui green empty circular label"></i>
           
-            <i class="ui green empty circular label"></i> List all Coupons
+            <span>List all Coupons</span>
           
         </a>
       
-        <a class="item" href="#coupons-coupons-create-a-coupon">
+        <a class="item blue" href="#coupons-coupons-create-a-coupon">
+          <i class="ui blue empty circular label"></i>
           
-            <i class="ui blue empty circular label"></i> Create a Coupon
+            <span>Create a Coupon</span>
           
         </a>
       
@@ -155,7 +158,7 @@ description of action attributes is somewhat duplicate to the definition of
 <code>Coupon</code> resource attributes. We will address this in the next
 <a href="10.%20Data%20Structures.md">Data Structures</a> example.</p>
 
-<h2>API Blueprint</h2>
+<h2 id="api-blueprint">API Blueprint</h2>
 
 <ul>
 <li><p><a href="08.%20Attributes.md">Previous: Attributes</a></p></li>
@@ -169,7 +172,6 @@ description of action attributes is somewhat duplicate to the definition of
 
         <div class="ui hidden divider"></div>
         
-
 
   <div class="ui horizontal divider" id="coupons">
     Coupons
@@ -602,6 +604,10 @@ between 1 and 100 items.</p>
       $('.ui.accordion').accordion({ animateChildren: false, duration: 0 });
       $('.content.tabbed').each(function(index) {
         $('.ui.tabular .item', $(this)).tab({ context: $(this) });
+      });
+      $('.ui.vertical.menu').on('click', '.item', function() {
+        $('.ui.vertical.menu .item').removeClass('active');
+        $(this).addClass('active');
       });
     });
   </script>

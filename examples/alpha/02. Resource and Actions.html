@@ -86,15 +86,17 @@
     <div class="content active">
       <div class="ui fluid secondary vertical menu">
       
-        <a class="item" href="#%2fmessage-get">
+        <a class="item green" href="#%2fmessage-get">
+          <i class="ui green empty circular label"></i>
           
-            <i class="ui green empty circular label"></i> GET
+            <span>GET</span>
           
         </a>
       
-        <a class="item" href="#%2fmessage-put">
+        <a class="item teal" href="#%2fmessage-put">
+          <i class="ui teal empty circular label"></i>
           
-            <i class="ui teal empty circular label"></i> PUT
+            <span>PUT</span>
           
         </a>
       
@@ -115,7 +117,7 @@
 <div class="description">
   <p>This API example demonstrates how to define a resource with multiple actions.</p>
 
-<h2>API Blueprint</h2>
+<h2 id="api-blueprint">API Blueprint</h2>
 
 <ul>
 <li><p><a href="01.%20Simplest%20API.md">Previous: The Simplest API</a></p></li>
@@ -129,7 +131,6 @@
 
         <div class="ui hidden divider"></div>
         
-
 
   <div class="ui horizontal divider" >
     
@@ -382,6 +383,10 @@ Resource updated successfully, no content is returned</em>).</p>
       $('.ui.accordion').accordion({ animateChildren: false, duration: 0 });
       $('.content.tabbed').each(function(index) {
         $('.ui.tabular .item', $(this)).tab({ context: $(this) });
+      });
+      $('.ui.vertical.menu').on('click', '.item', function() {
+        $('.ui.vertical.menu .item').removeClass('active');
+        $(this).addClass('active');
       });
     });
   </script>

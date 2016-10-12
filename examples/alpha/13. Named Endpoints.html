@@ -90,9 +90,10 @@
     <div class="content active">
       <div class="ui fluid secondary vertical menu">
       
-        <a class="item" href="#quick-start-create-message-create-message">
+        <a class="item blue" href="#quick-start-create-message-create-message">
+          <i class="ui blue empty circular label"></i>
           
-            <i class="ui blue empty circular label"></i> Create message
+            <span>Create message</span>
           
         </a>
       
@@ -110,9 +111,10 @@
     <div class="content ">
       <div class="ui fluid secondary vertical menu">
       
-        <a class="item" href="#quick-start-create-a-new-task-create-a-new-task">
+        <a class="item blue" href="#quick-start-create-a-new-task-create-a-new-task">
+          <i class="ui blue empty circular label"></i>
           
-            <i class="ui blue empty circular label"></i> Create a new task
+            <span>Create a new task</span>
           
         </a>
       
@@ -133,7 +135,7 @@
 <div class="description">
   <p>This API example demonstrates how to define a standalone endpoint with an identifier.</p>
 
-<h2>API Blueprint</h2>
+<h2 id="api-blueprint">API Blueprint</h2>
 
 <ul>
 <li><p><a href="12.%20Advanced%20Action.md">Previous: Advanced Action</a></p></li>
@@ -147,7 +149,6 @@
 
         <div class="ui hidden divider"></div>
         
-
 
   <div class="ui horizontal divider" id="quick-start">
     Quick start
@@ -453,6 +454,10 @@
       $('.ui.accordion').accordion({ animateChildren: false, duration: 0 });
       $('.content.tabbed').each(function(index) {
         $('.ui.tabular .item', $(this)).tab({ context: $(this) });
+      });
+      $('.ui.vertical.menu').on('click', '.item', function() {
+        $('.ui.vertical.menu .item').removeClass('active');
+        $(this).addClass('active');
       });
     });
   </script>

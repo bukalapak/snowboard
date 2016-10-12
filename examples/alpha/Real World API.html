@@ -90,15 +90,17 @@
     <div class="content active">
       <div class="ui fluid secondary vertical menu">
       
-        <a class="item" href="#posts-post-retrieve-a-post">
+        <a class="item green" href="#posts-post-retrieve-a-post">
+          <i class="ui green empty circular label"></i>
           
-            <i class="ui green empty circular label"></i> Retrieve a Post
+            <span>Retrieve a Post</span>
           
         </a>
       
-        <a class="item" href="#posts-post-delete-a-post">
+        <a class="item red" href="#posts-post-delete-a-post">
+          <i class="ui red empty circular label"></i>
           
-            <i class="ui red empty circular label"></i> Delete a Post
+            <span>Delete a Post</span>
           
         </a>
       
@@ -116,15 +118,17 @@
     <div class="content ">
       <div class="ui fluid secondary vertical menu">
       
-        <a class="item" href="#posts-posts-collection-create-a-post">
+        <a class="item blue" href="#posts-posts-collection-create-a-post">
+          <i class="ui blue empty circular label"></i>
           
-            <i class="ui blue empty circular label"></i> Create a Post
+            <span>Create a Post</span>
           
         </a>
       
-        <a class="item" href="#posts-posts-collection-retrieve-all-posts">
+        <a class="item green" href="#posts-posts-collection-retrieve-all-posts">
+          <i class="ui green empty circular label"></i>
           
-            <i class="ui green empty circular label"></i> Retrieve all Posts
+            <span>Retrieve all Posts</span>
           
         </a>
       
@@ -142,15 +146,17 @@
     <div class="content ">
       <div class="ui fluid secondary vertical menu">
       
-        <a class="item" href="#posts-stars-star-a-post">
+        <a class="item blue" href="#posts-stars-star-a-post">
+          <i class="ui blue empty circular label"></i>
           
-            <i class="ui blue empty circular label"></i> Star a Post
+            <span>Star a Post</span>
           
         </a>
       
-        <a class="item" href="#posts-stars-unstar-a-post">
+        <a class="item red" href="#posts-stars-unstar-a-post">
+          <i class="ui red empty circular label"></i>
           
-            <i class="ui red empty circular label"></i> Unstar a Post
+            <span>Unstar a Post</span>
           
         </a>
       
@@ -178,7 +184,6 @@
 
         <div class="ui hidden divider"></div>
         
-
 
   <div class="ui horizontal divider" id="posts">
     Posts
@@ -1018,6 +1023,10 @@ not a sharing action.</p>
       $('.ui.accordion').accordion({ animateChildren: false, duration: 0 });
       $('.content.tabbed').each(function(index) {
         $('.ui.tabular .item', $(this)).tab({ context: $(this) });
+      });
+      $('.ui.vertical.menu').on('click', '.item', function() {
+        $('.ui.vertical.menu .item').removeClass('active');
+        $(this).addClass('active');
       });
     });
   </script>

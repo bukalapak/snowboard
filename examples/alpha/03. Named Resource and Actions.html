@@ -86,15 +86,17 @@
     <div class="content active">
       <div class="ui fluid secondary vertical menu">
       
-        <a class="item" href="#my-message-retrieve-a-message">
+        <a class="item green" href="#my-message-retrieve-a-message">
+          <i class="ui green empty circular label"></i>
           
-            <i class="ui green empty circular label"></i> Retrieve a Message
+            <span>Retrieve a Message</span>
           
         </a>
       
-        <a class="item" href="#my-message-update-a-message">
+        <a class="item teal" href="#my-message-update-a-message">
+          <i class="ui teal empty circular label"></i>
           
-            <i class="ui teal empty circular label"></i> Update a Message
+            <span>Update a Message</span>
           
         </a>
       
@@ -116,7 +118,7 @@
   <p>This API example demonstrates how to name a resource and its actions, to give
 the reader a better idea about what the resource is used for.</p>
 
-<h2>API Blueprint</h2>
+<h2 id="api-blueprint">API Blueprint</h2>
 
 <ul>
 <li><p><a href="02.%20Resource%20and%20Actions.md">Previous: Resource and Actions</a></p></li>
@@ -130,7 +132,6 @@ the reader a better idea about what the resource is used for.</p>
 
         <div class="ui hidden divider"></div>
         
-
 
   <div class="ui horizontal divider" >
     
@@ -370,6 +371,10 @@ retrieves the message.</p>
       $('.ui.accordion').accordion({ animateChildren: false, duration: 0 });
       $('.content.tabbed').each(function(index) {
         $('.ui.tabular .item', $(this)).tab({ context: $(this) });
+      });
+      $('.ui.vertical.menu').on('click', '.item', function() {
+        $('.ui.vertical.menu .item').removeClass('active');
+        $(this).addClass('active');
       });
     });
   </script>

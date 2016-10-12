@@ -90,9 +90,10 @@
     <div class="content active">
       <div class="ui fluid secondary vertical menu">
       
-        <a class="item" href="#coupons-coupon-retrieve-a-coupon">
+        <a class="item green" href="#coupons-coupon-retrieve-a-coupon">
+          <i class="ui green empty circular label"></i>
           
-            <i class="ui green empty circular label"></i> Retrieve a Coupon
+            <span>Retrieve a Coupon</span>
           
         </a>
       
@@ -119,7 +120,7 @@ JSON example in the body section. The
 <a href="09.%20Advanced%20Attributes.md">Advanced Attributes</a> API example will
 demonstrate how to avoid duplicates and how to reuse attribute descriptions.</p>
 
-<h2>API Blueprint</h2>
+<h2 id="api-blueprint">API Blueprint</h2>
 
 <ul>
 <li><p><a href="07.%20Parameters.md">Previous: Parameters</a></p></li>
@@ -133,7 +134,6 @@ demonstrate how to avoid duplicates and how to reuse attribute descriptions.</p>
 
         <div class="ui hidden divider"></div>
         
-
 
   <div class="ui horizontal divider" id="coupons">
     Coupons
@@ -285,6 +285,10 @@ might want to apply to a customer.</p>
       $('.ui.accordion').accordion({ animateChildren: false, duration: 0 });
       $('.content.tabbed').each(function(index) {
         $('.ui.tabular .item', $(this)).tab({ context: $(this) });
+      });
+      $('.ui.vertical.menu').on('click', '.item', function() {
+        $('.ui.vertical.menu .item').removeClass('active');
+        $(this).addClass('active');
       });
     });
   </script>

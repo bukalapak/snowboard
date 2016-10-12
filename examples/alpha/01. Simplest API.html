@@ -86,9 +86,10 @@
     <div class="content active">
       <div class="ui fluid secondary vertical menu">
       
-        <a class="item" href="#%2fmessage-get">
+        <a class="item green" href="#%2fmessage-get">
+          <i class="ui green empty circular label"></i>
           
-            <i class="ui green empty circular label"></i> GET
+            <span>GET</span>
           
         </a>
       
@@ -122,7 +123,7 @@ API Blueprint</strong> and as such you can <strong>parse</strong> it with the
 <a href="https://github.com/apiaryio/drafter">API Blueprint parser</a> or one of its
 <a href="https://github.com/apiaryio/drafter#bindings">bindings</a>.</p>
 
-<h2>API Blueprint</h2>
+<h2 id="api-blueprint">API Blueprint</h2>
 
 <ul>
 <li><p><a href="https://raw.github.com/apiaryio/api-blueprint/master/examples/01.%20Simplest%20API.md">This: Raw API Blueprint</a></p></li>
@@ -134,7 +135,6 @@ API Blueprint</strong> and as such you can <strong>parse</strong> it with the
 
         <div class="ui hidden divider"></div>
         
-
 
   <div class="ui horizontal divider" >
     
@@ -255,6 +255,10 @@ API Blueprint</strong> and as such you can <strong>parse</strong> it with the
       $('.ui.accordion').accordion({ animateChildren: false, duration: 0 });
       $('.content.tabbed').each(function(index) {
         $('.ui.tabular .item', $(this)).tab({ context: $(this) });
+      });
+      $('.ui.vertical.menu').on('click', '.item', function() {
+        $('.ui.vertical.menu .item').removeClass('active');
+        $(this).addClass('active');
       });
     });
   </script>

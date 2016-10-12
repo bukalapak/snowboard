@@ -86,21 +86,24 @@
     <div class="content active">
       <div class="ui fluid secondary vertical menu">
       
-        <a class="item" href="#tasks-list-all-tasks">
+        <a class="item green" href="#tasks-list-all-tasks">
+          <i class="ui green empty circular label"></i>
           
-            <i class="ui green empty circular label"></i> List All Tasks
-          
-        </a>
-      
-        <a class="item" href="#tasks-retrieve-task">
-          
-            <i class="ui green empty circular label"></i> Retrieve Task
+            <span>List All Tasks</span>
           
         </a>
       
-        <a class="item" href="#tasks-delete-task">
+        <a class="item green" href="#tasks-retrieve-task">
+          <i class="ui green empty circular label"></i>
           
-            <i class="ui red empty circular label"></i> Delete Task
+            <span>Retrieve Task</span>
+          
+        </a>
+      
+        <a class="item red" href="#tasks-delete-task">
+          <i class="ui red empty circular label"></i>
+          
+            <span>Delete Task</span>
           
         </a>
       
@@ -122,7 +125,7 @@
   <p>A resource action is – in fact – a state transition. This API example
 demonstrates an action - state transition - to another resource.</p>
 
-<h2>API Blueprint</h2>
+<h2 id="api-blueprint">API Blueprint</h2>
 
 <ul>
 <li><p><a href="11.%20Resource%20Model.md">Previous: Resource Model</a></p></li>
@@ -136,7 +139,6 @@ demonstrates an action - state transition - to another resource.</p>
 
         <div class="ui hidden divider"></div>
         
-
 
   <div class="ui horizontal divider" >
     
@@ -474,6 +476,10 @@ demonstrates an action - state transition - to another resource.</p>
       $('.ui.accordion').accordion({ animateChildren: false, duration: 0 });
       $('.content.tabbed').each(function(index) {
         $('.ui.tabular .item', $(this)).tab({ context: $(this) });
+      });
+      $('.ui.vertical.menu').on('click', '.item', function() {
+        $('.ui.vertical.menu .item').removeClass('active');
+        $(this).addClass('active');
       });
     });
   </script>
