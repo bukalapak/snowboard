@@ -25,7 +25,7 @@ func Parse(r io.Reader, engine Parser) (*api.API, error) {
 		return nil, err
 	}
 
-	return convertElement(el)
+	return api.NewAPI(el)
 }
 
 // Validate validates API Blueprint using selected Parser
@@ -39,7 +39,7 @@ func Validate(r io.Reader, engine Parser) (*api.API, error) {
 		return nil, err
 	}
 
-	return convertElement(el)
+	return api.NewAPI(el)
 }
 
 func parseElement(r io.Reader, engine Parser) (*api.Element, error) {
@@ -48,7 +48,7 @@ func parseElement(r io.Reader, engine Parser) (*api.Element, error) {
 		return nil, err
 	}
 
-	return parseJSON(bytes.NewReader(b))
+	return api.ParseJSON(bytes.NewReader(b))
 }
 
 func validateElement(r io.Reader, engine Parser) (*api.Element, error) {
@@ -61,13 +61,5 @@ func validateElement(r io.Reader, engine Parser) (*api.Element, error) {
 		return &api.Element{}, nil
 	}
 
-	return parseJSON(bytes.NewReader(b))
-}
-
-func parseJSON(r io.Reader) (*api.Element, error) {
-	return api.ParseJSON(r)
-}
-
-func convertElement(el *api.Element) (*api.API, error) {
-	return api.NewAPI(el)
+	return api.ParseJSON(bytes.NewReader(b))
 }
