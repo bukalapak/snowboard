@@ -72,6 +72,9 @@ func (d *loader) convert(s string) string {
 	case strings.Contains(s, "include"):
 		re = regexp.MustCompile(`<!-- include\((.+)\) -->`)
 		format = `{{partial "%s"}}`
+	case strings.Contains(s, "partial"):
+		re = regexp.MustCompile(`<!-- partial\((.+)\) -->`)
+		format = `{{partial "%s"}}`
 	default:
 		re = regexp.MustCompile(`<!-- (.+) -->`)
 		format = `{%s}`

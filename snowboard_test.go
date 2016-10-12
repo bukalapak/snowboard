@@ -41,6 +41,7 @@ func TestLoad_partials(t *testing.T) {
 	assert.Equal(t, "API", api.Title)
 	assert.Equal(t, "Messages", api.ResourceGroups[0].Title)
 	assert.Equal(t, "Users", api.ResourceGroups[1].Title)
+	assert.Equal(t, "Tasks", api.ResourceGroups[2].Title)
 }
 
 func TestRead(t *testing.T) {
