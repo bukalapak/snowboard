@@ -119,10 +119,11 @@
       <div class="ui fluid secondary vertical menu">
       {{range $transitionN, $transition := $resource.Transitions}}
         <a class="item" href="#{{$transition.Permalink}}">
+          <i class="ui {{$transition.Method | colorize}} empty circular label"></i>
           {{if $transition.Title}}
-            <i class="ui {{$transition.Method | colorize}} empty circular label"></i> {{$transition.Title}}
+            <span>{{$transition.Title}}</span>
           {{else}}
-            <i class="ui {{$transition | colorize}} empty circular label"></i> {{$transition.Method}}
+            <span>{{$transition.Method}}</span>
           {{end}}
         </a>
       {{end}}
