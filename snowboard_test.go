@@ -28,7 +28,7 @@ func testParse(t *testing.T, parser snowboard.Parser) {
 
 func TestLoad(t *testing.T) {
 	engine := drafter.Engine{}
-	api, err := snowboard.Load("fixtures/api-blueprint/examples/Real World API.md", engine)
+	api, err := snowboard.Load("fixtures/api-blueprint/examples/Real World API.md", "", engine)
 	assert.Nil(t, err)
 	assert.Equal(t, "Real World API", api.Title)
 	assert.Equal(t, "Posts", api.ResourceGroups[0].Title)
@@ -36,7 +36,7 @@ func TestLoad(t *testing.T) {
 
 func TestLoad_partials(t *testing.T) {
 	engine := drafter.Engine{}
-	api, err := snowboard.Load("fixtures/partials/API.apib", engine)
+	api, err := snowboard.Load("fixtures/partials/API.apib", "", engine)
 	assert.Nil(t, err)
 	assert.Equal(t, "API", api.Title)
 	assert.Equal(t, "Messages", api.ResourceGroups[0].Title)
@@ -44,8 +44,15 @@ func TestLoad_partials(t *testing.T) {
 }
 
 func TestRead(t *testing.T) {
-	b, err := snowboard.Read("fixtures/extensions/html-comment.apib")
+	b, err := snowboard.Read("fixtures/extensions/html-comment.apib", "")
 	assert.Nil(t, err)
 	assert.Contains(t, string(b), `{class="ui table"}`)
 	assert.Contains(t, string(b), `{id="awesome-table" class="ui small table"}`)
+}
+
+func TestRead_seed(t *testing.T) {
+	b, err := snowboard.Read("fixtures/seeds/API.apib", "seed.json")
+	assert.Nil(t, err)
+	assert.Contains(t, string(b), `200`)
+	assert.Contains(t, string(b), `seeds usage`)
 }

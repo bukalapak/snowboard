@@ -3,6 +3,7 @@ package snowboard
 import (
 	"bufio"
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -32,14 +33,35 @@ func (d *loader) detectBaseDir() {
 }
 
 func (d *loader) partial(name string) string {
-	fname := filepath.Join(d.baseDir, name)
-
-	b, err := ioutil.ReadFile(fname)
+	b, err := d.read(name)
 	if err != nil {
 		return ""
 	}
 
 	return string(b)
+}
+
+func (d *loader) read(name string) ([]byte, error) {
+	fname := filepath.Join(d.baseDir, name)
+	return ioutil.ReadFile(fname)
+}
+
+func (d *loader) unmarshal(name string) (data map[string]interface{}, err error) {
+	if name == "" {
+		return
+	}
+
+	b, err := d.read(name)
+	if err != nil {
+		return
+	}
+
+	err = json.Unmarshal(b, &data)
+	if err != nil {
+		return
+	}
+
+	return
 }
 
 func (d *loader) convert(s string) string {
@@ -64,7 +86,7 @@ func (d *loader) convert(s string) string {
 	return fmt.Sprintf(format, rs[1])
 }
 
-func (d *loader) read() (string, error) {
+func (d *loader) parse() (string, error) {
 	f, err := os.Open(d.name)
 	if err != nil {
 		return "", err
@@ -86,10 +108,10 @@ func (d *loader) read() (string, error) {
 }
 
 // Read reads API blueprint from file as bytes
-func Read(name string) ([]byte, error) {
+func Read(name, seed string) ([]byte, error) {
 	d := newLoader(name)
 
-	s, err := d.read()
+	s, err := d.parse()
 	if err != nil {
 		return nil, err
 	}
@@ -98,6 +120,24 @@ func Read(name string) ([]byte, error) {
 		"partial": d.partial,
 	}
 
+	data, err := d.unmarshal(seed)
+	if err != nil {
+		return nil, err
+	}
+
+	b, err := process(s, data, funcMap)
+	if err != nil {
+	}
+
+	b, err = process(string(b), data, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return b, nil
+}
+
+func process(s string, data interface{}, funcMap template.FuncMap) ([]byte, error) {
 	tmpl, err := template.New("apib").Funcs(funcMap).Parse(s)
 	if err != nil {
 		return nil, err
@@ -105,7 +145,7 @@ func Read(name string) ([]byte, error) {
 
 	z := bytes.NewBufferString("")
 
-	err = tmpl.Execute(z, nil)
+	err = tmpl.Execute(z, data)
 	if err != nil {
 		return nil, err
 	}
