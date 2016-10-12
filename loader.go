@@ -15,6 +15,7 @@ import (
 
 type loader struct {
 	name    string
+	seed    string
 	baseDir string
 }
 
@@ -64,11 +65,18 @@ func (d *loader) unmarshal(name string) (data map[string]interface{}, err error)
 	return
 }
 
+func (d *loader) loadSeed() (map[string]interface{}, error) {
+	return d.unmarshal(d.seed)
+}
+
 func (d *loader) convert(s string) string {
 	var format string
 	var re *regexp.Regexp
 
 	switch {
+	case strings.Contains(s, "seed"):
+		re = regexp.MustCompile(`<!-- seed\((.+)\) -->`)
+		format = "seed"
 	case strings.Contains(s, "include"):
 		re = regexp.MustCompile(`<!-- include\((.+)\) -->`)
 		format = `{{partial "%s"}}`
@@ -86,6 +94,11 @@ func (d *loader) convert(s string) string {
 		return s
 	}
 
+	if format == "seed" {
+		d.seed = rs[1]
+		return ""
+	}
+
 	return fmt.Sprintf(format, rs[1])
 }
 
@@ -100,9 +113,10 @@ func (d *loader) parse() (string, error) {
 	cs := []string{}
 
 	for scanner.Scan() {
-		if strings.HasPrefix(scanner.Text(), "<!--") {
+		switch {
+		case strings.HasPrefix(scanner.Text(), "<!--"):
 			cs = append(cs, d.convert(scanner.Text()))
-		} else {
+		default:
 			cs = append(cs, scanner.Text())
 		}
 	}
@@ -111,7 +125,7 @@ func (d *loader) parse() (string, error) {
 }
 
 // Read reads API blueprint from file as bytes
-func Read(name, seed string) ([]byte, error) {
+func Read(name string) ([]byte, error) {
 	d := newLoader(name)
 
 	s, err := d.parse()
@@ -123,7 +137,7 @@ func Read(name, seed string) ([]byte, error) {
 		"partial": d.partial,
 	}
 
-	data, err := d.unmarshal(seed)
+	data, err := d.loadSeed()
 	if err != nil {
 		return nil, err
 	}

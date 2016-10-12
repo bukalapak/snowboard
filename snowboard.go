@@ -43,8 +43,8 @@ func Validate(r io.Reader, engine Parser) (*api.API, error) {
 }
 
 // Load reads API blueprint from file as blueprint.API struct using selected Parser
-func Load(name, seed string, engine Parser) (*api.API, error) {
-	b, err := Read(name, seed)
+func Load(name string, engine Parser) (*api.API, error) {
+	b, err := Read(name)
 	if err != nil {
 		return nil, err
 	}
