@@ -21,7 +21,7 @@ import (
 	"github.com/subosito/snowboard/engines/drafterc"
 )
 
-const versionStr = "v0.3.3"
+var versionStr string
 
 var (
 	version  = flag.Bool("v", false, "Display version information")
