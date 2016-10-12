@@ -51,9 +51,8 @@ $ make install
 
 Let's say we have API Blueprint document called `API.apib`, like:
 
-```
-$ cat API.apib
-# My API
+```apib
+# API
 ## GET /message
 + Response 200 (text/plain)
 
@@ -106,6 +105,14 @@ $ snowboard -i API.apib -o output.html -e cli
 
 > Note: Ensure `drafter` is already on your `PATH` directories.
 
+### Generate formatted API blueprint
+
+When you have documentation splitted across files, you can customize flags `-o` and `-f` to allow `snowboard` to produce single formatted API blueprint.
+
+```
+$ snowboard -i project/splitted.apib -o API.apib -f apib
+```
+
 ## External Files
 
 You can split your API blueprint document to several files and use `partial` helper to includes it to your main document.
@@ -116,22 +123,14 @@ You can split your API blueprint document to several files and use `partial` hel
 
 Alternatively, you can also use HTML comment syntax to include those files:
 
-```
+```html
 <!-- partial(some-resource.apib) -->
 ```
 
 or
 
-```
+```html
 <!-- include(some-resource.apib) -->
-```
-
-### Generate formatted API blueprint
-
-When you have documentation splitted across files, you can customize flags `-o` and `-f` to allow `snowboard` to produce single formatted API blueprint.
-
-```
-$ snowboard -i project/api-splitted.apib -o API.apib -f apib
 ```
 
 ## Seed Files
@@ -140,19 +139,17 @@ As your API blueprint document become large, you might move some value to separa
 
 Just place your values into a json file, say, `seed.json`:
 
-```
-$ cat seed.json
+```json
 {
-    "official": {
-        "username": "olaf"
-    }
+  "official": {
+    "username": "olaf"
+  }
 }
 ```
 
 Then on your API blueprint document you can use `seed` comment helper:
 
 ```apib
-$ cat API.apib
 # API
 
 <!-- seed(seed.json) -->
