@@ -23,8 +23,11 @@ Alternatively, you can also use options below:
 ### Homebrew
 
 ```sh
-$ brew install --HEAD https://raw.github.com/subosito/snowboard/master/tools/homebrew/snowboard.rb
+$ brew tap subosito/packages
+$ brew install snowboard
 ```
+
+> Note: If you want build from master branch you can use `brew install --HEAD snowboard`
 
 ### Docker
 
