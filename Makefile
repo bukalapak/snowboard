@@ -2,7 +2,7 @@
 all: install
 submodules:
 	git submodule update --init --recursive
-drafter: submodules
+drafter:
 	cd engines/drafter/ext/drafter && ./configure && make drafter
 go-gen:
 	@go get github.com/mjibson/esc
@@ -13,8 +13,8 @@ go-install:
 	go install ./...
 go-test:
 	go test -v && go test -v ./engines/...
-build: drafter go-gen go-build
-install: drafter go-gen go-install
-test: drafter go-gen go-test
+build: submodules drafter go-gen go-build
+install: submodules drafter go-gen go-install
+test: submodules drafter go-gen go-test
 examples: build
 	./examples/generate.sh ./snowboard ./fixtures/api-blueprint/examples ./examples

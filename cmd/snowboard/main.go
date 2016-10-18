@@ -158,6 +158,10 @@ func engine() snowboard.Parser {
 }
 
 func displayVersion() {
+	if versionStr == "" {
+		versionStr = "HEAD"
+	}
+
 	fmt.Printf("Snowboard version: %s\n", versionStr)
 	fmt.Println("Engine:")
 

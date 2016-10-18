@@ -5,6 +5,7 @@ os:
 - linux
 - osx
 before_script:
+- make submodules
 - make drafter
 - export PATH=$TRAVIS_BUILD_DIR/engines/drafter/ext/drafter/bin:$PATH
 script:
