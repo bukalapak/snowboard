@@ -31,7 +31,9 @@ func NewAPI(el *Element) (*API, error) {
 		return nil, err
 	}
 
-	a := &API{}
+	a := &API{
+		DataStructures: make(DataStructures),
+	}
 
 	for _, child := range children {
 		a.digElements(child)
@@ -47,7 +49,8 @@ func (a *API) digElements(el *Element) {
 			a.digTitle(el)
 			a.digDescription(el)
 			a.digMetadata(el)
-			a.digResourceGroups(el)
+			a.digDataStructures(el)
+			a.digResourceGroups(el, a.DataStructures)
 			a.digHelperAttributes()
 		}
 	case "annotation":
@@ -118,7 +121,7 @@ func (a *API) digMetadata(el *Element) {
 	}
 }
 
-func (a *API) digResourceGroups(el *Element) {
+func (a *API) digResourceGroups(el *Element, data DataStructures) {
 	children := filterContentByClass("resourceGroup", el)
 
 	for _, child := range children {
@@ -127,8 +130,33 @@ func (a *API) digResourceGroups(el *Element) {
 			Description: extractCopy(child),
 		}
 
-		g.digResources(child)
+		g.digResources(child, data)
 		a.ResourceGroups = append(a.ResourceGroups, *g)
+	}
+}
+
+func (a *API) digDataStructures(el *Element) {
+	children := filterContentByClass("dataStructures", el)
+
+	for _, child := range children {
+		data, err := child.Path("content").Children()
+		if err != nil {
+			continue
+		}
+
+		objects, err := data[0].Path("content").Children()
+		if err != nil {
+			continue
+		}
+
+		for _, object := range objects {
+			d := &DataStructure{
+				Name:       object.Path("meta.id").String(),
+				Parameters: extractParameters(object.Path("content")),
+			}
+
+			a.DataStructures[d.Name] = *d
+		}
 	}
 }
 
@@ -154,7 +182,7 @@ func (a *API) digHelperAttributes() {
 	}
 }
 
-func (g *ResourceGroup) digResources(el *Element) {
+func (g *ResourceGroup) digResources(el *Element, data DataStructures) {
 	children := filterContentByElement("resource", el)
 
 	cr := make(chan *Resource)
@@ -171,7 +199,7 @@ func (g *ResourceGroup) digResources(el *Element) {
 				Href:        extractHrefs(c),
 			}
 
-			r.digTransitions(c)
+			r.digTransitions(c, data)
 
 			cr <- r
 		}(child)
@@ -190,7 +218,7 @@ func (g *ResourceGroup) digResources(el *Element) {
 	g.Resources = rs
 }
 
-func (r *Resource) digTransitions(el *Element) {
+func (r *Resource) digTransitions(el *Element, data DataStructures) {
 	children := filterContentByElement("transition", el)
 
 	for _, child := range children {
@@ -198,7 +226,7 @@ func (r *Resource) digTransitions(el *Element) {
 			Title:       child.Path("meta.title").String(),
 			Description: extractCopy(child),
 			Href:        extractHrefs(child),
-			Attributes:  extractAttributes(child),
+			Attributes:  extractAttributes(child, data),
 		}
 
 		t.digTransactions(child)
@@ -310,17 +338,26 @@ func extractHrefs(child *Element) (h Href) {
 	return
 }
 
-func extractAttributes(child *Element) (attrs []Attribute) {
+func extractAttributes(child *Element, data DataStructures) (attrs []Attribute) {
 	objects, err := child.Path("attributes.data.content").Children()
 	if err != nil {
 		return
 	}
 
+	isDataStruct := child.Path("attributes.data.element").String() == "dataStructure"
+
 	for _, object := range objects {
-		kind := object.Path("element")
+		kind := object.Path("element").String()
+		params := extractParameters(object.Path("content"))
+		if isDataStruct {
+			if ds, ok := data[kind]; ok {
+				params = append(params, ds.Parameters...)
+			}
+		}
+
 		a := &Attribute{
-			Kind:       kind.String(),
-			Parameters: extractParameters(object.Path("content")),
+			Kind:       kind,
+			Parameters: params,
 		}
 
 		attrs = append(attrs, *a)
