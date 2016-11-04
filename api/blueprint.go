@@ -31,6 +31,7 @@ type Transition struct {
 	Description  string
 	Href         Href
 	Transactions []Transaction
+	Attributes   []Attribute
 
 	Permalink string
 	Method    string
@@ -79,6 +80,11 @@ type Parameter struct {
 	Key         string
 	Value       string
 	Kind        string
+}
+
+type Attribute struct {
+	Kind       string
+	Parameters []Parameter
 }
 
 type Annotation struct {

@@ -198,6 +198,7 @@ func (r *Resource) digTransitions(el *Element) {
 			Title:       child.Path("meta.title").String(),
 			Description: extractCopy(child),
 			Href:        extractHrefs(child),
+			Attributes:  extractAttributes(child),
 		}
 
 		t.digTransactions(child)
@@ -304,11 +305,35 @@ func extractHrefs(child *Element) (h Href) {
 		h.Path = href.String()
 	}
 
-	contents, err := child.Path("attributes.hrefVariables.content").Children()
+	h.Parameters = extractParameters(child.Path("attributes.hrefVariables.content"))
+
+	return
+}
+
+func extractAttributes(child *Element) (attrs []Attribute) {
+	objects, err := child.Path("attributes.data.content").Children()
 	if err != nil {
 		return
 	}
 
+	for _, object := range objects {
+		kind := object.Path("element")
+		a := &Attribute{
+			Kind:       kind.String(),
+			Parameters: extractParameters(object.Path("content")),
+		}
+
+		attrs = append(attrs, *a)
+	}
+
+	return
+}
+
+func extractParameters(object *Element) (params []Parameter) {
+	contents, err := object.Children()
+	if err != nil {
+		return
+	}
 	for _, content := range contents {
 		v := &Parameter{
 			Required:    isContains("attributes.typeAttributes", "required", content),
@@ -318,7 +343,7 @@ func extractHrefs(child *Element) (h Href) {
 			Description: content.Path("meta.description").String(),
 		}
 
-		h.Parameters = append(h.Parameters, *v)
+		params = append(params, *v)
 	}
 
 	return
