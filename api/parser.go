@@ -140,7 +140,7 @@ func (a *API) digDataStructures(el *Element) {
 
 	for _, child := range children {
 		data, err := child.Path("content").Children()
-		if err != nil {
+		if err != nil || len(data) == 0 {
 			continue
 		}
 
