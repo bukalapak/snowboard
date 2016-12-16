@@ -49,6 +49,7 @@ type Header struct {
 
 type Request struct {
 	Title       string
+	Description string
 	Method      string
 	Body        Asset
 	Schema      Asset
@@ -57,10 +58,11 @@ type Request struct {
 }
 
 type Response struct {
-	StatusCode int
-	Headers    []Header
-	Body       Asset
-	Schema     Asset
+	StatusCode  int
+	Description string
+	Headers     []Header
+	Body        Asset
+	Schema      Asset
 }
 
 type Transaction struct {

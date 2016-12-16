@@ -236,6 +236,7 @@ func (t *Transition) digTransaction(el []*Element) Transaction {
 
 func (x *Transaction) digRequest(child *Element) {
 	x.Request.Title = child.Path("meta.title").String()
+	x.Request.Description = extractCopy(child)
 	x.Request.Method = child.Path("attributes.method").String()
 	x.Request.Headers = extractHeaders(child.Path("attributes.headers"))
 
@@ -258,6 +259,7 @@ func (x *Transaction) digRequest(child *Element) {
 func (x *Transaction) digResponse(child *Element) {
 	x.Response.StatusCode = extractInt("attributes.statusCode", child)
 	x.Response.Headers = extractHeaders(child.Path("attributes.headers"))
+	x.Response.Description = extractCopy(child)
 
 	cx, err := child.Path("content").Children()
 	if err != nil {

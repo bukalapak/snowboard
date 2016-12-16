@@ -186,6 +186,7 @@
               <h4 class="ui horizontal divider">
                 REQUEST{{if $transaction.Request.Title}} {{$transaction.Request.Title}}{{end}}
               </h4>
+              <div class="description">{{$transaction.Request.Description | markdownize}}</div>
               <div class="fluid ui large labeled button">
                 <div class="ui {{$transaction.Request.Method | colorize}} large button">
                   <h3>{{$transaction.Request.Method}}</h3>
@@ -227,6 +228,7 @@
               {{end}}
 
               <h4 class="ui horizontal divider">RESPONSE</h4>
+              <div class="description">{{$transaction.Response.Description | markdownize}}</div>
               {{template "Headers" $transaction.Response.Headers}}
               <div class="ui stacked {{$transaction.Response.StatusCode | colorize}} segment">
                 <div class="ui fluid transaction accordion">
