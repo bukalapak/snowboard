@@ -18,10 +18,10 @@ import (
 	"github.com/fsnotify/fsnotify"
 	"github.com/subosito/snowboard"
 	"github.com/subosito/snowboard/engines/drafter"
-	"github.com/subosito/snowboard/engines/drafterc"
 )
 
 var versionStr string
+var engine = drafter.Engine{}
 
 var (
 	version  = flag.Bool("v", false, "Display version information")
@@ -31,7 +31,6 @@ var (
 	serve    = flag.Bool("s", false, "Serve HTML via HTTP server")
 	bind     = flag.String("b", "127.0.0.1:8088", "Set HTTP server listen address and port")
 	tplFile  = flag.String("t", "alpha", "Custom template for documentation")
-	engineF  = flag.String("e", "cgo", "Use different engine. Supported engines: cgo, cli")
 	validate = flag.Bool("l", false, "Validate input only")
 )
 
@@ -100,7 +99,7 @@ func checkErr(err error) {
 }
 
 func renderHTML() {
-	bp, err := snowboard.Load(*input, engine())
+	bp, err := snowboard.Load(*input, engine)
 	logErr(err)
 
 	of, err := os.Create(*output)
@@ -144,30 +143,13 @@ func runServer() {
 	logErr(err)
 }
 
-func defaultEngine() snowboard.Parser {
-	return drafter.Engine{}
-}
-
-func engine() snowboard.Parser {
-	switch *engineF {
-	case "cli":
-		return drafterc.Engine{}
-	}
-
-	return defaultEngine()
-}
-
 func displayVersion() {
 	if versionStr == "" {
 		versionStr = "HEAD"
 	}
 
 	fmt.Printf("Snowboard version: %s\n", versionStr)
-	fmt.Println("Engine:")
-
-	for name, v := range engine().Version() {
-		fmt.Printf("  %s version: %s\n", name, v)
-	}
+	fmt.Printf("Drafter version: %s\n", engine.Version())
 
 	os.Exit(0)
 }
@@ -178,7 +160,7 @@ func performValidation() {
 
 	bf := bytes.NewReader(b)
 
-	out, err := snowboard.Validate(bf, defaultEngine())
+	out, err := snowboard.Validate(bf, engine)
 	if err == nil && out == nil {
 		fmt.Fprintf(os.Stdout, "OK\n")
 		os.Exit(0)

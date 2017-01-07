@@ -51,10 +51,8 @@ func (e Engine) Validate(r io.Reader) ([]byte, error) {
 	return e.serialize(cResult), nil
 }
 
-func (e Engine) Version() map[string]string {
-	return map[string]string{
-		"drafter": C.GoString(C.drafter_version_string()),
-	}
+func (e Engine) Version() string {
+	return C.GoString(C.drafter_version_string())
 }
 
 func (e Engine) serialize(r *C.drafter_result) []byte {

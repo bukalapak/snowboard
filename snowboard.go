@@ -11,7 +11,7 @@ import (
 type Parser interface {
 	Parse(r io.Reader) ([]byte, error)
 	Validate(r io.Reader) ([]byte, error)
-	Version() map[string]string
+	Version() string
 }
 
 // Parse formats API blueprint as blueprint.API struct using selected Parser
