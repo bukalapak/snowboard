@@ -1,6 +1,3 @@
-[submodule "engines/drafter/ext/drafter"]
-	path = engines/drafter/ext/drafter
-	url = https://github.com/apiaryio/drafter.git
 [submodule "fixtures/api-blueprint"]
 	path = fixtures/api-blueprint
 	url = https://github.com/apiaryio/api-blueprint.git
