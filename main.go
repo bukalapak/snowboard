@@ -1,6 +1,6 @@
 package main
 
-//go:generate esc -o templates.go ../../templates
+//go:generate esc -o templates.go ./templates
 
 import (
 	"bytes"
@@ -16,8 +16,8 @@ import (
 	"text/tabwriter"
 
 	"github.com/fsnotify/fsnotify"
-	"github.com/subosito/snowboard"
 	"github.com/subosito/snowboard/engines/drafter"
+	snowboard "github.com/subosito/snowboard/parser"
 )
 
 var versionStr string

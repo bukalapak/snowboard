@@ -1,12 +1,12 @@
-package snowboard_test
+package parser_test
 
 import (
 	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/subosito/snowboard"
 	"github.com/subosito/snowboard/engines/drafter"
+	snowboard "github.com/subosito/snowboard/parser"
 )
 
 func TestParse(t *testing.T) {

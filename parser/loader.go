@@ -1,4 +1,4 @@
-package snowboard
+package parser
 
 import (
 	"bufio"

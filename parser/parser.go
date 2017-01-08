@@ -1,5 +1,5 @@
 // Package snowboard API blueprint parser and renderer
-package snowboard
+package parser
 
 import (
 	"bytes"

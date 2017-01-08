@@ -6,9 +6,9 @@ drafter:
 	cd engines/drafter/ext/drafter && ./configure && make drafter
 go-gen:
 	@go get github.com/mjibson/esc
-	go generate ./cmd/snowboard/main.go
+	go generate ./main.go
 go-build:
-	go build -ldflags "-X main.versionStr=$$TRAVIS_TAG" -o snowboard ./cmd/snowboard/...
+	go build -ldflags "-X main.versionStr=$$TRAVIS_TAG" -o snowboard .
 go-install:
 	go install ./...
 go-test:
