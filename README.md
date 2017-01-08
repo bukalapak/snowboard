@@ -98,16 +98,6 @@ With this flag, You can access HTML documentation on `localhost:8088` and any up
 If you need to customize binding address, you can use flag `-b`.
 
 
-### Use Drafter CLI
-
-If you have `drafter` command line installed, you can use that for parsing API blueprint within `snowboard`, just pass `-e` flag:
-
-```
-$ snowboard -i API.apib -o output.html -e cli
-```
-
-> Note: Ensure `drafter` is already on your `PATH` directories.
-
 ### Generate formatted API blueprint
 
 When you have documentation splitted across files, you can customize flags `-o` and `-f` to allow `snowboard` to produce single formatted API blueprint.
