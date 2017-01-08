@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/subosito/snowboard/engines/drafter"
+	"github.com/subosito/snowboard/drafter"
 )
 
 func TestEngine_Parse(t *testing.T) {
