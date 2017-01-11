@@ -6,8 +6,7 @@ os:
 - osx
 before_script:
 - make submodules
-- make drafter
-- export PATH=$TRAVIS_BUILD_DIR/engines/drafter/ext/drafter/bin:$PATH
+- cd drafter/ext/drafter && make drafter
 script:
 - make go-gen
 - make go-test
