@@ -8,7 +8,7 @@ import (
 	"github.com/subosito/snowboard/drafter"
 )
 
-func TestEngine_Parse(t *testing.T) {
+func TestDrafter_Parse(t *testing.T) {
 	c := drafter.Engine{}
 	s := strings.NewReader("# API")
 
@@ -17,7 +17,7 @@ func TestEngine_Parse(t *testing.T) {
 	assert.Contains(t, string(b), "API")
 }
 
-func TestEngine_Validate(t *testing.T) {
+func TestDrafter_Validate(t *testing.T) {
 	c := drafter.Engine{}
 	s := strings.NewReader("# API\n## Data Structures\n### Hello-World (object)\n+ foo: bar (string, required)")
 
