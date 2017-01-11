@@ -6,7 +6,7 @@ os:
 - osx
 before_script:
 - make submodules
-- cd drafter/ext/drafter && make drafter
+- cd drafter/ext/drafter && make drafter && cd ../../..
 script:
 - make go-gen
 - make go-test
