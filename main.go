@@ -12,6 +12,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"path"
 	"strings"
 	"text/tabwriter"
 
@@ -27,7 +28,6 @@ var (
 	version  = flag.Bool("v", false, "Display version information")
 	input    = flag.String("i", "", "API blueprint file")
 	output   = flag.String("o", "index.html", "Output file")
-	format   = flag.String("f", "html", "Format of output file. Supported formats: html, apib")
 	serve    = flag.Bool("s", false, "Serve HTML via HTTP server")
 	bind     = flag.String("b", "127.0.0.1:8088", "Set HTTP server listen address and port")
 	tplFile  = flag.String("t", "alpha", "Custom template for documentation")
@@ -220,10 +220,15 @@ func watch() {
 }
 
 func render() {
-	switch *format {
+	switch format() {
 	case "html":
 		renderHTML()
 	case "apib":
 		renderAPIB()
 	}
+}
+
+func format() string {
+	ext := path.Ext(*output)
+	return strings.TrimPrefix(ext, ".")
 }
