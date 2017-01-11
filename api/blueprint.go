@@ -5,8 +5,11 @@ type API struct {
 	Description    string
 	Metadata       []Metadata
 	ResourceGroups []ResourceGroup
+	DataStructures DataStructures
 	Annotations    []Annotation
 }
+
+type DataStructures map[string]DataStructure
 
 type Metadata struct {
 	Key   string
@@ -17,6 +20,11 @@ type ResourceGroup struct {
 	Title       string
 	Description string
 	Resources   []*Resource
+}
+
+type DataStructure struct {
+	Name       string
+	Parameters []Parameter
 }
 
 type Resource struct {
@@ -31,6 +39,7 @@ type Transition struct {
 	Description  string
 	Href         Href
 	Transactions []Transaction
+	Attributes   []Attribute
 
 	Permalink string
 	Method    string
@@ -81,6 +90,11 @@ type Parameter struct {
 	Key         string
 	Value       string
 	Kind        string
+}
+
+type Attribute struct {
+	Kind       string
+	Parameters []Parameter
 }
 
 type Annotation struct {
