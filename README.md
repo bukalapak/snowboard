@@ -35,7 +35,13 @@ You can also use automated build docker image on `subosito/snowboard`:
 
 ```
 $ docker pull subosito/snowboard
-$ docker run subosito/snowboard -h
+$ docker run -it --rm subosito/snowboard -h
+```
+
+To run snowboard with the current directory mounted to /docs:
+
+```
+$ docker run -it --rm -v $PWD:/docs subosito/snowboard -i API.apib -o output.html
 ```
 
 > Note: Besides image on docker hub, you can also use image on `quay.io/subosito/snowboard`.
