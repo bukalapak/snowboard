@@ -33,6 +33,12 @@
 			"revisionTime": "2016-09-27T09:48:57Z"
 		},
 		{
+			"checksumSHA1": "IzE4RQKJy/h4YRXwcxTRanrwXWs=",
+			"path": "github.com/naoina/denco",
+			"revision": "a2656d3ed566ac9912ba18fcfc942c562d9463c7",
+			"revisionTime": "2016-10-03T19:06:51Z"
+		},
+		{
 			"checksumSHA1": "zKKp5SZ3d3ycKe4EKMNT0BqAWBw=",
 			"path": "github.com/pmezard/go-difflib/difflib",
 			"revision": "d8ed2627bdf02c080bf22230dbb337003b7aba2d",
