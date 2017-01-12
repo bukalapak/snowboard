@@ -3,8 +3,8 @@ package api
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
-	"path"
 	"reflect"
 	"strconv"
 	"strings"
@@ -132,7 +132,7 @@ func (a *API) digResourceGroups(el *Element) {
 	}
 }
 
-func (a *API) host() string {
+func (a *API) Host() string {
 	for _, m := range a.Metadata {
 		if m.Key == "HOST" {
 			return m.Value
@@ -148,7 +148,7 @@ func (a *API) digHelperAttributes() {
 			for _, t := range r.Transitions {
 				t.Method = requestMethod(*t)
 				t.Permalink = buildPermalink(g, r, t, t.Method)
-				t.URL = buildURL(a.host(), t, r)
+				t.URL = buildURL(a.Host(), t, r)
 			}
 		}
 	}
@@ -481,9 +481,16 @@ func buildPermalink(g ResourceGroup, r *Resource, t *Transition, fallback string
 }
 
 func buildURL(host string, t *Transition, r *Resource) string {
+	var path string
+
 	if t.Href.Path != "" {
-		return path.Join(host, t.Href.Path)
+		path = t.Href.Path
+	} else {
+		path = r.Href.Path
 	}
 
-	return path.Join(host, r.Href.Path)
+	h := strings.TrimSuffix(host, "/")
+	s := fmt.Sprintf("%s%s", h, path)
+
+	return s
 }
