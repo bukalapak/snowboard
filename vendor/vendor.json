@@ -21,12 +21,6 @@
 			"revisionTime": "2016-08-16T05:15:41Z"
 		},
 		{
-			"checksumSHA1": "L7vCR+T24+agfG7QQ2848/vMUOE=",
-			"path": "github.com/hashicorp/go-version",
-			"revision": "deeb027c13a95d56c7585df3fe29207208c6706e",
-			"revisionTime": "2016-07-25T21:20:58Z"
-		},
-		{
 			"checksumSHA1": "qiI+L9+51sZYqZxrWB7lM6U/G6E=",
 			"path": "github.com/miekg/mmark",
 			"revision": "701c11f87566b812e91c452879ff327ef4bc0171",
