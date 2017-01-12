@@ -82,7 +82,7 @@ func main() {
 			},
 			Action: func(c *cli.Context) error {
 				if c.Bool("s") {
-					return watchHTML(c, c.String("i"), c.String("o"), c.String("t"))
+					return watchHTML(c, c.String("i"), c.String("o"), c.String("t"), c.String("b"))
 				}
 
 				return renderHTML(c, c.String("i"), c.String("o"), c.String("t"))
@@ -103,6 +103,24 @@ func main() {
 			},
 			Action: func(c *cli.Context) error {
 				return renderAPIB(c, c.String("i"), c.String("o"))
+			},
+		},
+		{
+			Name:  "mock",
+			Usage: "Run Mock server",
+			Flags: []cli.Flag{
+				cli.StringFlag{
+					Name:  "i",
+					Usage: "API blueprint file",
+				},
+				cli.StringFlag{
+					Name:  "b",
+					Value: "127.0.0.1:8087",
+					Usage: "HTTP server listen address",
+				},
+			},
+			Action: func(c *cli.Context) error {
+				return serveMock(c, c.String("b"), c.String("i"))
 			},
 		},
 	}
@@ -225,7 +243,7 @@ func validate(c *cli.Context, input string) error {
 	return nil
 }
 
-func watchHTML(c *cli.Context, input, output, tplFile string) error {
+func watchHTML(c *cli.Context, input, output, tplFile, bind string) error {
 	watcher, err := fsnotify.NewWatcher()
 	if err != nil {
 		return err
@@ -259,7 +277,7 @@ func watchHTML(c *cli.Context, input, output, tplFile string) error {
 	}
 
 	renderHTML(c, input, output, tplFile)
-	serveHTML(c.String("b"), output)
+	serveHTML(bind, output)
 
 	<-done
 
@@ -272,4 +290,22 @@ func serveHTML(bind, output string) error {
 	})
 
 	return http.ListenAndServe(bind, nil)
+}
+
+func serveMock(c *cli.Context, bind, input string) error {
+	bp, err := snowboard.Load(input, engine)
+	if err != nil {
+		return err
+	}
+
+	fmt.Fprintf(c.App.Writer, "Mock server is ready. Use %s\n", bind)
+	fmt.Fprintln(c.App.Writer, "Available Routes:")
+
+	ms := snowboard.Mock(bp)
+	for _, m := range ms {
+		fmt.Fprintf(c.App.Writer, "%s\t%d\t%s\n", m.Method, m.StatusCode, m.Path)
+	}
+
+	h := snowboard.MockHandler(ms)
+	return http.ListenAndServe(bind, h)
 }
