@@ -5,61 +5,108 @@ package main
 import (
 	"bytes"
 	"errors"
-	"flag"
 	"fmt"
 	"io"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"os"
-	"path"
 	"strings"
 	"text/tabwriter"
 
 	"github.com/fsnotify/fsnotify"
 	"github.com/subosito/snowboard/drafter"
 	snowboard "github.com/subosito/snowboard/parser"
+	"github.com/urfave/cli"
 )
 
 var versionStr string
-var engine = drafter.Engine{}
-
-var (
-	version  = flag.Bool("v", false, "Display version information")
-	input    = flag.String("i", "", "API blueprint file")
-	output   = flag.String("o", "index.html", "Output file")
-	serve    = flag.Bool("s", false, "Serve HTML via HTTP server")
-	bind     = flag.String("b", "127.0.0.1:8088", "Set HTTP server listen address and port")
-	tplFile  = flag.String("t", "alpha", "Custom template for documentation")
-	validate = flag.Bool("l", false, "Validate input only")
-)
+var engine snowboard.Parser
 
 func main() {
-	flag.Usage = func() {
-		fmt.Fprintf(os.Stderr, "Usage:\n  snowboard [OPTIONS]\n\nOptions:\n")
-		flag.PrintDefaults()
-		os.Exit(0)
+	engine = drafter.Engine{}
+
+	cli.VersionPrinter = func(c *cli.Context) {
+		fmt.Fprintf(c.App.Writer, "Snowboard version: %s\n", c.App.Version)
+		fmt.Fprintf(c.App.Writer, "Drafter version: %s\n", engine.Version())
 	}
 
-	flag.Parse()
-
-	if *version {
-		displayVersion()
+	if versionStr == "" {
+		versionStr = "HEAD"
 	}
 
-	if *input == "" {
-		flag.Usage()
-	}
+	app := cli.NewApp()
+	app.Name = "snowboard"
+	app.Usage = "API blueprint toolkit"
+	app.Version = versionStr
+	app.Commands = []cli.Command{
+		{
+			Name:  "lint",
+			Usage: "Validate API blueprint",
+			Flags: []cli.Flag{
+				cli.StringFlag{
+					Name:  "i",
+					Usage: "API blueprint file",
+				},
+			},
+			Action: func(c *cli.Context) error {
+				return validate(c, c.String("i"))
+			},
+		},
+		{
+			Name:  "html",
+			Usage: "Render HTML documentation",
+			Flags: []cli.Flag{
+				cli.StringFlag{
+					Name:  "i",
+					Usage: "API blueprint file",
+				},
+				cli.StringFlag{
+					Name:  "o",
+					Value: "index.html",
+					Usage: "HTML file",
+				},
+				cli.StringFlag{
+					Name:  "t",
+					Value: "alpha",
+					Usage: "Template for HTML documentation",
+				},
+				cli.BoolFlag{
+					Name:  "s",
+					Usage: "Serve HTML via HTTP server",
+				},
+				cli.StringFlag{
+					Name:  "b",
+					Value: "127.0.0.1:8088",
+					Usage: "HTTP server listen address",
+				},
+			},
+			Action: func(c *cli.Context) error {
+				if c.Bool("s") {
+					return watchHTML(c, c.String("i"), c.String("o"), c.String("t"))
+				}
 
-	if *validate {
-		performValidation()
+				return renderHTML(c, c.String("i"), c.String("o"), c.String("t"))
+			},
+		},
+		{
+			Name:  "apib",
+			Usage: "Render API blueprint",
+			Flags: []cli.Flag{
+				cli.StringFlag{
+					Name:  "i",
+					Usage: "API blueprint file",
+				},
+				cli.StringFlag{
+					Name:  "o",
+					Usage: "API blueprint output file",
+				},
+			},
+			Action: func(c *cli.Context) error {
+				return renderAPIB(c, c.String("i"), c.String("o"))
+			},
+		},
 	}
-
-	if *serve {
-		watch()
-	} else {
-		render()
-	}
+	app.Run(os.Args)
 }
 
 func readFile(fn string) ([]byte, error) {
@@ -91,89 +138,77 @@ func readTemplate(fn string) ([]byte, error) {
 	return ioutil.ReadAll(ff)
 }
 
-func checkErr(err error) {
+func renderHTML(c *cli.Context, input, output, tplFile string) error {
+	bp, err := snowboard.Load(input, engine)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error: %s\n", err)
-		os.Exit(1)
+		return err
 	}
-}
 
-func renderHTML() {
-	bp, err := snowboard.Load(*input, engine)
-	logErr(err)
-
-	of, err := os.Create(*output)
-	logErr(err)
+	of, err := os.Create(output)
+	if err != nil {
+		return err
+	}
 	defer of.Close()
 
-	tf, err := readTemplate(*tplFile)
-	logErr(err)
+	tf, err := readTemplate(tplFile)
+	if err != nil {
+		return err
+	}
 
 	err = snowboard.HTML(string(tf), of, bp)
-	logErr(err)
-	log.Println("HTML has been generated!")
+	if err != nil {
+		return err
+	}
+
+	fmt.Fprintln(c.App.Writer, "HTML has been generated!")
+	return nil
 }
 
-func renderAPIB() {
-	b, err := snowboard.Read(*input)
-	logErr(err)
+func renderAPIB(c *cli.Context, input, output string) error {
+	b, err := snowboard.Read(input)
+	if err != nil {
+		return err
+	}
 
-	of, err := os.Create(*output)
-	logErr(err)
+	of, err := os.Create(output)
+	if err != nil {
+		return err
+	}
 	defer of.Close()
 
 	_, err = io.Copy(of, bytes.NewReader(b))
-	logErr(err)
-
-	log.Println("API blueprint has been generated!")
-}
-
-func logErr(err error) {
 	if err != nil {
-		log.Fatalln("Error: ", err)
-	}
-}
-
-func runServer() {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, *output)
-	})
-
-	err := http.ListenAndServe(*bind, nil)
-	logErr(err)
-}
-
-func displayVersion() {
-	if versionStr == "" {
-		versionStr = "HEAD"
+		return err
 	}
 
-	fmt.Printf("Snowboard version: %s\n", versionStr)
-	fmt.Printf("Drafter version: %s\n", engine.Version())
-
-	os.Exit(0)
+	fmt.Fprintln(c.App.Writer, "API blueprint has been generated!")
+	return nil
 }
 
-func performValidation() {
-	b, err := readFile(*input)
-	checkErr(err)
+func validate(c *cli.Context, input string) error {
+	b, err := readFile(input)
+	if err != nil {
+		return err
+	}
 
 	bf := bytes.NewReader(b)
 
 	out, err := snowboard.Validate(bf, engine)
-	if err == nil && out == nil {
-		fmt.Fprintf(os.Stdout, "OK\n")
-		os.Exit(0)
+	if err != nil {
+		return err
 	}
 
-	if err != nil {
-		checkErr(err)
+	if out == nil {
+		fmt.Fprintln(c.App.Writer, "OK")
+		return nil
 	}
+
+	var buf bytes.Buffer
 
 	s := "--------"
-	w := tabwriter.NewWriter(os.Stdout, 8, 0, 0, ' ', tabwriter.Debug)
+	w := tabwriter.NewWriter(&buf, 8, 0, 0, ' ', tabwriter.Debug)
 	fmt.Fprintln(w, "Row\tCol\tDescription")
-	fmt.Fprintf(w, "%s\t%s\t%s\n", s, s, strings.Repeat(s, 12))
+	fmt.Fprintf(w, "%s\t%s\t%s\n", s, s, strings.Repeat(s, 8))
 
 	for _, n := range out.Annotations {
 		for _, m := range n.SourceMaps {
@@ -182,12 +217,19 @@ func performValidation() {
 	}
 
 	w.Flush()
-	os.Exit(1)
+
+	if len(out.Annotations) > 0 {
+		return errors.New(buf.String())
+	}
+
+	return nil
 }
 
-func watch() {
+func watchHTML(c *cli.Context, input, output, tplFile string) error {
 	watcher, err := fsnotify.NewWatcher()
-	checkErr(err)
+	if err != nil {
+		return err
+	}
 	defer watcher.Close()
 
 	done := make(chan bool)
@@ -196,39 +238,38 @@ func watch() {
 			select {
 			case event := <-watcher.Events:
 				if event.Op&fsnotify.Write == fsnotify.Write {
-					render()
+					renderHTML(c, input, output, tplFile)
 				}
 			case err := <-watcher.Errors:
-				log.Println("Error:", err)
+				fmt.Fprintln(c.App.Writer, err)
 			}
 		}
 	}()
 
-	err = watcher.Add(*input)
-	checkErr(err)
-
-	_, err = os.Stat(*tplFile)
-	if err == nil {
-		err = watcher.Add(*tplFile)
-		checkErr(err)
+	err = watcher.Add(input)
+	if err != nil {
+		return err
 	}
 
-	render()
-	runServer()
+	if _, err = os.Stat(tplFile); err == nil {
+		err = watcher.Add(tplFile)
+		if err != nil {
+			return err
+		}
+	}
+
+	renderHTML(c, input, output, tplFile)
+	serveHTML(c.String("b"), output)
 
 	<-done
+
+	return nil
 }
 
-func render() {
-	switch format() {
-	case "html":
-		renderHTML()
-	case "apib":
-		renderAPIB()
-	}
-}
+func serveHTML(bind, output string) error {
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, output)
+	})
 
-func format() string {
-	ext := path.Ext(*output)
-	return strings.TrimPrefix(ext, ".")
+	return http.ListenAndServe(bind, nil)
 }

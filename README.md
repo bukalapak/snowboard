@@ -41,7 +41,7 @@ $ docker run -it --rm subosito/snowboard -h
 To run snowboard with the current directory mounted to /docs:
 
 ```
-$ docker run -it --rm -v $PWD:/docs subosito/snowboard -i API.apib -o output.html
+$ docker run -it --rm -v $PWD:/docs subosito/snowboard html -i API.apib -o output.html
 ```
 
 > Note: Besides image on docker hub, you can also use image on `quay.io/subosito/snowboard`.
@@ -76,7 +76,7 @@ There are some scenarios we can perform:
 To generate HTML documentation we can do:
 
 ```
-$ snowboard -i API.apib -o output.html
+$ snowboard html -i API.apib -o output.html
 ```
 
 Above command will generate `ouput.html` using `snowboard` default template (called `alpha`).
@@ -86,7 +86,7 @@ Above command will generate `ouput.html` using `snowboard` default template (cal
 If you want to use custom template, you can use flag `-t` for that:
 
 ```
-$ snowboard -i API.apib -o output.html -t awesome-template.html
+$ snowboard html -i API.apib -o output.html -t awesome-template.html
 ```
 
 To see how the template looks like, you can see `snowboard` default template located in [templates/alpha.html](templates/alpha.html).
@@ -96,7 +96,7 @@ To see how the template looks like, you can see `snowboard` default template loc
 If you want to access HTML documentation via HTTP, especially on local development, you can pass `-s` flag:
 
 ```
-$ snowboard -i API.apib -o output.html -t awesome-template.html -s
+$ snowboard html -i API.apib -o output.html -t awesome-template.html -s
 ```
 
 With this flag, You can access HTML documentation on `localhost:8088` and any updates on both input and template file will trigger auto-regeneration.
@@ -106,10 +106,10 @@ If you need to customize binding address, you can use flag `-b`.
 
 ### Generate formatted API blueprint
 
-When you have documentation splitted across files, you can customize flags `-o` and `-f` to allow `snowboard` to produce single formatted API blueprint.
+When you have documentation splitted across files, you can customize flags `-o` to allow `snowboard` to produce single formatted API blueprint.
 
 ```
-$ snowboard -i project/splitted.apib -o API.apib -f apib
+$ snowboard apib -i project/splitted.apib -o API.apib
 ```
 
 ## External Files
@@ -162,25 +162,21 @@ As usual, you can also see all supported flags by passing `-h`:
 
 ```
 $ snowboard -h
-Usage:
-  snowboard [OPTIONS]
+NAME:
+   snowboard - API blueprint toolkit
 
-Options:
-  -b string
-    	Set HTTP server listen address and port (default "127.0.0.1:8088")
-  -e string
-    	Use different engine. Supported engines: cgo, cli (default "cgo")
-  -f string
-    	Format of output file. Supported formats: html, apib (default "html")
-  -i string
-    	API blueprint file
-  -l	Validate input only
-  -o string
-    	Output file (default "index.html")
-  -s	Serve HTML via HTTP server
-  -t string
-    	Custom template for documentation (default "alpha")
-  -v	Display version information
+USAGE:
+   snowboard [global options] command [command options] [arguments...]
+
+COMMANDS:
+     lint     Validate API blueprint
+     html     Render HTML documentation
+     apib     Render API blueprint
+     help, h  Shows a list of commands or help for one command
+
+GLOBAL OPTIONS:
+   --help, -h     show help
+   --version, -v  print the version
 ```
 
 ## Examples
