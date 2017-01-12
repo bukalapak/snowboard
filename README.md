@@ -112,6 +112,24 @@ When you have documentation splitted across files, you can customize flags `-o` 
 $ snowboard apib -i project/splitted.apib -o API.apib
 ```
 
+### Validate API blueprint
+
+Besides render to HTML, snowboard also support validates API blueprint document. You can use `lint` subcommand.
+
+```
+$ snowboard lint -i API.apib
+```
+
+### Mock server from API blueprint
+
+Another snowboard useful feature is having mock server. You can use `mock` subcommand for that.
+
+```
+$ snowboard mock -i API.apib
+```
+
+Then you can use `localhost:8087` for accessing mock server. You can customize the address by passing flag `-b`.
+
 ## External Files
 
 You can split your API blueprint document to several files and use `partial` helper to includes it to your main document.
