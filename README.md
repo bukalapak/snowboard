@@ -35,7 +35,7 @@ You can also use automated build docker image on `subosito/snowboard`:
 
 ```
 $ docker pull subosito/snowboard
-$ docker run -it --rm subosito/snowboard -h
+$ docker run -it --rm subosito/snowboard help
 ```
 
 To run snowboard with the current directory mounted to /docs:
@@ -179,17 +179,21 @@ Our friendly username is {{.official.username}}.
 As usual, you can also see all supported flags by passing `-h`:
 
 ```
-$ snowboard -h
+$ snowboard help
 NAME:
    snowboard - API blueprint toolkit
 
 USAGE:
    snowboard [global options] command [command options] [arguments...]
 
+VERSION:
+   v0.5.0
+
 COMMANDS:
      lint     Validate API blueprint
      html     Render HTML documentation
      apib     Render API blueprint
+     mock     Run Mock server
      help, h  Shows a list of commands or help for one command
 
 GLOBAL OPTIONS:
