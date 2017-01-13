@@ -11,6 +11,6 @@ RUN cd /go/src/github.com/subosito/snowboard \
 
 WORKDIR /doc
 VOLUME /doc
-EXPOSE 8088
+EXPOSE 8088 8087
 
 ENTRYPOINT ["snowboard"]
