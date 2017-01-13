@@ -3,7 +3,7 @@ all: install
 submodules:
 	git submodule update --init --recursive
 drafter:
-	$(MAKE) -C drafter/ext/drafter libdrafter
+	$(MAKE) -C drafter/ext/drafter drafter
 go-gen:
 	@go get github.com/mjibson/esc
 	go generate ./main.go
