@@ -1,9 +1,9 @@
-.PHONY: all
+.PHONY: drafter examples
 all: install
 submodules:
 	git submodule update --init --recursive
 drafter:
-	cd drafter/ext/drafter && make drafter
+	$(MAKE) -C drafter/ext/drafter libdrafter
 go-gen:
 	@go get github.com/mjibson/esc
 	go generate ./main.go
