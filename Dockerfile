@@ -9,8 +9,8 @@ RUN cd /go/src/github.com/subosito/snowboard \
  && rm -Rf src bin pkg \
  && mkdir src bin pkg
 
-WORKDIR /docs
-VOLUME /docs
+WORKDIR /doc
+VOLUME /doc
 EXPOSE 8088
 
 ENTRYPOINT ["snowboard"]

@@ -38,10 +38,10 @@ $ docker pull subosito/snowboard
 $ docker run -it --rm subosito/snowboard help
 ```
 
-To run snowboard with the current directory mounted to /docs:
+To run snowboard with the current directory mounted to `/doc`:
 
 ```
-$ docker run -it --rm -v $PWD:/docs subosito/snowboard html -i API.apib -o output.html
+$ docker run -it --rm -v $PWD:/doc subosito/snowboard html -i API.apib -o output.html
 ```
 
 > Note: Besides image on docker hub, you can also use image on `quay.io/subosito/snowboard`.
