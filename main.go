@@ -1,6 +1,6 @@
 package main
 
-//go:generate esc -o templates.go ./templates
+//go:generate esc -o assets.go ./templates ./adapter/drafter/ext/drafter/bin
 
 import (
 	"bytes"
@@ -10,6 +10,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"path/filepath"
 	"strings"
 	"text/tabwriter"
 
@@ -121,6 +122,23 @@ func main() {
 			},
 			Action: func(c *cli.Context) error {
 				return serveMock(c, c.String("b"), c.String("i"))
+			},
+		},
+		{
+			Name:  "adapter",
+			Usage: "Snowboard adapter",
+			Flags: []cli.Flag{
+				cli.BoolFlag{
+					Name:  "c",
+					Usage: "Copy snowboard adapter to $GOPATH/bin",
+				},
+			},
+			Action: func(c *cli.Context) error {
+				if c.Bool("c") {
+					return installAdapters(c)
+				}
+
+				return nil
 			},
 		},
 	}
@@ -308,4 +326,21 @@ func serveMock(c *cli.Context, bind, input string) error {
 
 	h := snowboard.MockHandler(ms)
 	return http.ListenAndServe(bind, h)
+}
+
+func installAdapters(c *cli.Context) error {
+	b, err := FSByte(false, "/adapter/drafter/ext/drafter/bin/drafter")
+	if err != nil {
+		return err
+	}
+
+	dir := strings.SplitN(os.Getenv("GOPATH"), ":", 2)
+	name := filepath.Join(dir[0], "bin", "drafter")
+	err = ioutil.WriteFile(name, b, 0755)
+	if err != nil {
+		return err
+	}
+
+	fmt.Fprintln(c.App.Writer, "Snowboard adapter installed!\nLocation: "+name)
+	return nil
 }
