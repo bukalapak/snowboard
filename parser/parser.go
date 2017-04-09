@@ -1,4 +1,4 @@
-// Package snowboard API blueprint parser and renderer
+// Package parser is an API blueprint parser and renderer
 package parser
 
 import (
