@@ -1,6 +1,6 @@
 package main
 
-//go:generate esc -o assets.go ./templates ./adapter/drafter/ext/drafter/bin
+//go:generate esc -o templates.go ./templates
 
 import (
 	"bytes"

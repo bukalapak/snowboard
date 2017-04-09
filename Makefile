@@ -7,6 +7,7 @@ drafter:
 go-gen:
 	@go get github.com/mjibson/esc
 	go generate ./main.go
+	go generate ./adapter/drafterc/drafterc.go
 go-build:
 	go build -ldflags "-X main.versionStr=$$TRAVIS_TAG" -o snowboard .
 go-install:

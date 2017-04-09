@@ -2,4 +2,4 @@ snowboard
 index.html
 template.html
 templates.go
-assets.go
+adapter/drafterc/cli.go
