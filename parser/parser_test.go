@@ -23,16 +23,16 @@ func testParse(t *testing.T, parser snowboard.Parser) {
 
 func TestLoad(t *testing.T) {
 	engine := drafter.Engine{}
-	api, err := snowboard.Load("../drafter/ext/drafter/features/fixtures/blueprint.apib", engine)
+	api, err := snowboard.Load("../adapter/drafter/ext/drafter/features/fixtures/blueprint.apib", engine)
 	assert.Nil(t, err)
 	assert.Equal(t, "<API name>", api.Title)
 	assert.Equal(t, "<resource group name>", api.ResourceGroups[0].Title)
 	assert.Equal(t, "<resource name>", api.ResourceGroups[0].Resources[0].Title)
 	assert.Equal(t, "<action name>", api.ResourceGroups[0].Resources[0].Transitions[0].Title)
 	assert.Equal(t, "<request name>", api.ResourceGroups[0].Resources[0].Transitions[0].Transactions[0].Request.Title)
-	assert.Equal(t, "<request description>\n", api.ResourceGroups[0].Resources[0].Transitions[0].Transactions[0].Request.Description)
+	assert.Equal(t, "<request description>", api.ResourceGroups[0].Resources[0].Transitions[0].Transactions[0].Request.Description)
 	assert.Equal(t, 200, api.ResourceGroups[0].Resources[0].Transitions[0].Transactions[0].Response.StatusCode)
-	assert.Equal(t, "<response description>\n", api.ResourceGroups[0].Resources[0].Transitions[0].Transactions[0].Response.Description)
+	assert.Equal(t, "<response description>", api.ResourceGroups[0].Resources[0].Transitions[0].Transactions[0].Response.Description)
 }
 
 func TestLoad_partials(t *testing.T) {
