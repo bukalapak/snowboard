@@ -284,6 +284,11 @@ func validate(c *cli.Context, input string, lineNum bool) error {
 
 		fmt.Fprintf(w, "%s\t%s\t%s\n", dash(42), dash(16), dash(80))
 
+		if string(b) == "" {
+			fmt.Fprintln(c.App.Writer, "OK")
+			return nil
+		}
+
 		ns := strings.Split(string(b), "\n")
 
 		for _, n := range ns {
