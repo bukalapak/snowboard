@@ -21,10 +21,14 @@ import (
 )
 
 var versionStr string
-var engine snowboard.Parser
+var (
+	engine  snowboard.Parser
+	engineC snowboard.Parser
+)
 
 func main() {
 	engine = drafter.Engine{}
+	engineC = drafterc.Engine{}
 
 	cli.VersionPrinter = func(c *cli.Context) {
 		fmt.Fprintf(c.App.Writer, "Snowboard version: %s\n", c.App.Version)
@@ -48,9 +52,13 @@ func main() {
 					Name:  "i",
 					Usage: "API blueprint file",
 				},
+				cli.BoolFlag{
+					Name:  "u",
+					Usage: "Use line and row number instead of charater index",
+				},
 			},
 			Action: func(c *cli.Context) error {
-				return validate(c, c.String("i"))
+				return validate(c, c.String("i"), c.Bool("u"))
 			},
 		},
 		{
@@ -226,7 +234,7 @@ func renderAPIB(c *cli.Context, input, output string) error {
 	return nil
 }
 
-func validate(c *cli.Context, input string) error {
+func validate(c *cli.Context, input string, lineNum bool) error {
 	b, err := readFile(input)
 	if err != nil {
 		return err
@@ -234,36 +242,65 @@ func validate(c *cli.Context, input string) error {
 
 	bf := bytes.NewReader(b)
 
-	out, err := snowboard.Validate(bf, engine)
-	if err != nil {
-		return err
-	}
-
-	if out == nil {
-		fmt.Fprintln(c.App.Writer, "OK")
-		return nil
-	}
-
-	var buf bytes.Buffer
-
-	s := "--------"
-	w := tabwriter.NewWriter(&buf, 8, 0, 0, ' ', tabwriter.Debug)
-	fmt.Fprintln(w, "Row\tCol\tDescription")
-	fmt.Fprintf(w, "%s\t%s\t%s\n", s, s, strings.Repeat(s, 8))
-
-	for _, n := range out.Annotations {
-		for _, m := range n.SourceMaps {
-			fmt.Fprintf(w, "%d\t%d\t%s\n", m.Row, m.Col, n.Description)
+	if !lineNum {
+		out, err := snowboard.Validate(bf, engine)
+		if err != nil {
+			return err
 		}
-	}
 
-	w.Flush()
+		if out == nil {
+			fmt.Fprintln(c.App.Writer, "OK")
+			return nil
+		}
 
-	if len(out.Annotations) > 0 {
-		return errors.New(buf.String())
+		var buf bytes.Buffer
+
+		s := "--------"
+		w := tabwriter.NewWriter(&buf, 8, 0, 0, ' ', tabwriter.Debug)
+		fmt.Fprintln(w, "Row\tCol\tDescription")
+		fmt.Fprintf(w, "%s\t%s\t%s\n", s, s, strings.Repeat(s, 8))
+
+		for _, n := range out.Annotations {
+			for _, m := range n.SourceMaps {
+				fmt.Fprintf(w, "%d\t%d\t%s\n", m.Row, m.Col, n.Description)
+			}
+		}
+
+		w.Flush()
+
+		if len(out.Annotations) > 0 {
+			return errors.New(buf.String())
+		}
+	} else {
+		b, err := engineC.Validate(bf)
+		if err != nil {
+			return err
+		}
+
+		var buf bytes.Buffer
+
+		w := tabwriter.NewWriter(&buf, 8, 0, 0, ' ', tabwriter.Debug)
+		fmt.Fprintln(w, "Location\tSeverity\tDescription")
+
+		fmt.Fprintf(w, "%s\t%s\t%s\n", dash(42), dash(16), dash(80))
+
+		ns := strings.Split(string(b), "\n")
+
+		for _, n := range ns {
+			nn := strings.SplitN(n, "; ", 2)
+			mm := strings.SplitN(nn[0], "  ", 2)
+			fmt.Fprintf(w, "%s\t%s\t%s\n", nn[1], mm[0], mm[1])
+		}
+
+		w.Flush()
+		fmt.Fprintln(c.App.Writer, buf.String())
 	}
 
 	return nil
+}
+
+func dash(n int) string {
+	return strings.Repeat("-", n)
 }
 
 func watchHTML(c *cli.Context, input, output, tplFile, bind string) error {
