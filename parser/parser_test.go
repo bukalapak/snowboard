@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/subosito/snowboard/drafter"
+	"github.com/subosito/snowboard/adapter/drafter"
 	snowboard "github.com/subosito/snowboard/parser"
 )
 

@@ -14,7 +14,7 @@ import (
 	"text/tabwriter"
 
 	"github.com/fsnotify/fsnotify"
-	"github.com/subosito/snowboard/drafter"
+	"github.com/subosito/snowboard/adapter/drafter"
 	snowboard "github.com/subosito/snowboard/parser"
 	"github.com/urfave/cli"
 )
