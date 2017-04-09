@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"strings"
 )
 
@@ -27,6 +28,14 @@ func (c Engine) Validate(r io.Reader) ([]byte, error) {
 	s = strings.TrimSpace(s)
 
 	return []byte(s), nil
+}
+
+func (c Engine) CopyExec(dir string) (string, error) {
+	b := embeddedExec()
+	name := filepath.Join(dir, "drafter")
+	err := ioutil.WriteFile(name, b, 0755)
+
+	return name, err
 }
 
 func (c Engine) exec(r io.Reader, stdOut, stdErr io.Writer, args ...string) error {
@@ -67,11 +76,7 @@ func (c Engine) command() (string, bool, error) {
 }
 
 func tmpCommand() (string, error) {
-	b, err := _escFSByte(false, "/drafter/ext/drafter/bin/drafter")
-	if err != nil {
-		return "", err
-	}
-
+	b := embeddedExec()
 	tmp, err := ioutil.TempFile(os.TempDir(), "drafterc")
 	if err != nil {
 		return "", err
@@ -92,4 +97,8 @@ func version(path string) string {
 	}
 
 	return strings.TrimSpace(string(b))
+}
+
+func embeddedExec() []byte {
+	return _escFSMustByte(false, "/drafter/ext/drafter/bin/drafter")
 }

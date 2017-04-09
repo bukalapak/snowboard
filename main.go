@@ -10,12 +10,12 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
-	"path/filepath"
 	"strings"
 	"text/tabwriter"
 
 	"github.com/fsnotify/fsnotify"
 	"github.com/subosito/snowboard/adapter/drafter"
+	"github.com/subosito/snowboard/adapter/drafterc"
 	snowboard "github.com/subosito/snowboard/parser"
 	"github.com/urfave/cli"
 )
@@ -130,12 +130,17 @@ func main() {
 			Flags: []cli.Flag{
 				cli.BoolFlag{
 					Name:  "c",
-					Usage: "Copy snowboard adapter to $GOPATH/bin",
+					Usage: "Copy snowboard adapter to desired location",
+				},
+				cli.StringFlag{
+					Name:  "p",
+					Value: ".",
+					Usage: "Adapter location dir",
 				},
 			},
 			Action: func(c *cli.Context) error {
 				if c.Bool("c") {
-					return installAdapters(c)
+					return installAdapters(c, c.String("p"))
 				}
 
 				return nil
@@ -328,15 +333,9 @@ func serveMock(c *cli.Context, bind, input string) error {
 	return http.ListenAndServe(bind, h)
 }
 
-func installAdapters(c *cli.Context) error {
-	b, err := FSByte(false, "/adapter/drafter/ext/drafter/bin/drafter")
-	if err != nil {
-		return err
-	}
-
-	dir := strings.SplitN(os.Getenv("GOPATH"), ":", 2)
-	name := filepath.Join(dir[0], "bin", "drafter")
-	err = ioutil.WriteFile(name, b, 0755)
+func installAdapters(c *cli.Context, dir string) error {
+	n := drafterc.Engine{}
+	name, err := n.CopyExec(dir)
 	if err != nil {
 		return err
 	}
