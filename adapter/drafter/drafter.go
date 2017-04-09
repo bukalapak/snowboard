@@ -16,6 +16,8 @@ import (
 	"unsafe"
 )
 
+const Version = "v3.2.6"
+
 type Engine struct{}
 
 func (e Engine) Parse(r io.Reader) ([]byte, error) {

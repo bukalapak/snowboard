@@ -10,11 +10,22 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strings"
+
+	"github.com/subosito/snowboard/adapter/drafter"
 )
 
-const Version = "v3.2.6"
-
 type Engine struct{}
+
+func (c Engine) Parse(r io.Reader) ([]byte, error) {
+	var stdOut bytes.Buffer
+
+	err := c.exec(r, &stdOut, ioutil.Discard, "--format", "json", "--type", "refract")
+	if err != nil {
+		return nil, err
+	}
+
+	return stdOut.Bytes(), nil
+}
 
 func (c Engine) Validate(r io.Reader) ([]byte, error) {
 	var stdErr bytes.Buffer
@@ -28,6 +39,17 @@ func (c Engine) Validate(r io.Reader) ([]byte, error) {
 	s = strings.TrimSpace(s)
 
 	return []byte(s), nil
+}
+
+func (c Engine) Version() string {
+	var stdOut bytes.Buffer
+
+	err := c.exec(strings.NewReader(""), &stdOut, ioutil.Discard, "--version")
+	if err != nil {
+		return ""
+	}
+
+	return strings.TrimSpace(stdOut.String())
 }
 
 func (c Engine) CopyExec(dir string) (string, error) {
@@ -66,7 +88,7 @@ func (c Engine) exec(r io.Reader, stdOut, stdErr io.Writer, args ...string) erro
 
 func (c Engine) command() (string, bool, error) {
 	if path, err := exec.LookPath("drafter"); err == nil {
-		if v := version(path); v == Version {
+		if v := version(path); v == drafter.Version {
 			return path, false, nil
 		}
 	}
