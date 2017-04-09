@@ -298,7 +298,7 @@ func validate(c *cli.Context, input string, lineNum bool) error {
 		}
 
 		w.Flush()
-		fmt.Fprintln(c.App.Writer, buf.String())
+		return errors.New(buf.String())
 	}
 
 	return nil
