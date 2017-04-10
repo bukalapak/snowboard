@@ -29,6 +29,14 @@ $ brew install snowboard
 
 > Note: If you want build from master branch you can use `brew install --HEAD snowboard`
 
+### Arch Linux
+
+Snowboard available as [AUR package](https://aur.archlinux.org/packages/snowboard/).
+
+```sh
+$ pacaur -S snowboard
+```
+
 ### Docker
 
 You can also use automated build docker image on `subosito/snowboard`:
