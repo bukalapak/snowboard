@@ -368,7 +368,7 @@ func serveMock(c *cli.Context, bind, input string) error {
 
 	ms := snowboard.Mock(bp)
 	for _, m := range ms {
-		fmt.Fprintf(c.App.Writer, "%s\t%d\t%s\n", m.Method, m.StatusCode, m.Path)
+		fmt.Fprintf(c.App.Writer, "%s\t%d\t%s\n", m.Method, m.StatusCode, m.Pattern)
 	}
 
 	h := snowboard.MockHandler(ms)

@@ -5,6 +5,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"net/url"
 	"regexp"
 	"strconv"
 	"strings"
@@ -15,6 +16,7 @@ import (
 
 type MockTransaction struct {
 	Path        string
+	Pattern     string
 	Method      string
 	StatusCode  int
 	ContentType string
@@ -91,8 +93,10 @@ func Mock(b *api.API) []*MockTransaction {
 		for _, x := range g.Resources {
 			for _, t := range x.Transitions {
 				for _, n := range t.Transactions {
+					p := transformURL(t.URL, b.Host())
 					m := &MockTransaction{
-						Path:        transformURL(t.URL, b.Host()),
+						Path:        urlPath(p),
+						Pattern:     p,
 						Method:      n.Request.Method,
 						StatusCode:  n.Response.StatusCode,
 						ContentType: n.Response.Body.ContentType,
@@ -159,6 +163,14 @@ func transformURL(u, h string) string {
 	u = queryPattern.ReplaceAllString(u, ":${1}")
 	u = paramPattern.ReplaceAllLiteralString(u, "")
 	u = strings.Replace(u, h, "", 1)
+
+	return u
+}
+
+func urlPath(u string) string {
+	if x, err := url.Parse(u); err == nil {
+		return x.Path
+	}
 
 	return u
 }
