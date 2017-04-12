@@ -31,7 +31,7 @@ func (c Engine) Validate(r io.Reader) ([]byte, error) {
 	var stdErr bytes.Buffer
 
 	err := c.exec(r, ioutil.Discard, &stdErr, "--validate", "--use-line-num")
-	if err != nil {
+	if err != nil && !strings.Contains(err.Error(), "exit status") {
 		return nil, err
 	}
 
@@ -61,11 +61,6 @@ func (c Engine) CopyExec(dir string) (string, error) {
 }
 
 func (c Engine) exec(r io.Reader, stdOut, stdErr io.Writer, args ...string) error {
-	b, err := ioutil.ReadAll(r)
-	if err != nil {
-		return err
-	}
-
 	x, tmp, err := c.command()
 	if err != nil {
 		return err
@@ -77,9 +72,8 @@ func (c Engine) exec(r io.Reader, stdOut, stdErr io.Writer, args ...string) erro
 		}()
 	}
 
-	buf := bytes.NewReader(b)
 	cmd := exec.Command(x, args...)
-	cmd.Stdin = buf
+	cmd.Stdin = r
 	cmd.Stdout = stdOut
 	cmd.Stderr = stdErr
 
