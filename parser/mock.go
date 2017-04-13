@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+	"path"
 	"regexp"
 	"strconv"
 	"strings"
@@ -163,6 +164,7 @@ func transformURL(u, h string) string {
 	u = queryPattern.ReplaceAllString(u, ":${1}")
 	u = paramPattern.ReplaceAllLiteralString(u, "")
 	u = strings.Replace(u, h, "", 1)
+	u = path.Join("/", u)
 
 	return u
 }
