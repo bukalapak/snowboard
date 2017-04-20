@@ -7,6 +7,8 @@ import (
 	"strings"
 )
 
+var ErrIsNotSlice = errors.New("is not a slice")
+
 type Element struct {
 	object interface{}
 }
@@ -94,6 +96,31 @@ func (b *Element) ChildrenMap() (map[string]*Element, error) {
 	}
 
 	return nil, errors.New("is not an object")
+}
+
+func (b *Element) FlatChildren() ([]*Element, error) {
+	val := b.Value()
+
+	switch val.Kind() {
+	case reflect.Slice:
+		children := make([]*Element, 0, val.Len())
+
+		for i := 0; i < val.Len(); i++ {
+			childVal := val.Index(i).Elem()
+
+			if nestedChildren, err := (&Element{childVal.Interface()}).FlatChildren(); err == nil {
+				children = append(children, nestedChildren...)
+			} else if err == ErrIsNotSlice {
+				children = append(children, &Element{childVal.Interface()})
+			} else {
+				return nil, err
+			}
+		}
+
+		return children, nil
+	}
+
+	return nil, ErrIsNotSlice
 }
 
 func (b *Element) hierarchy(key string) []string {
