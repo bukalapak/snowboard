@@ -111,6 +111,13 @@ With this flag, You can access HTML documentation on `localhost:8088` and any up
 
 If you need to customize binding address, you can use flag `-b`.
 
+#### Serve HTML from Docker container
+
+If you want to serve HTML documentation from Docker container, don't forget to bind address and port in the contaier plus bind ports of host and container by `-p` option of Docker command.
+
+```
+$ docker run -it --rm -v $(pwd):/doc -p 8088:8088 subosito/snowboard html -i API.apib -o output.html -b 0.0.0.0:8088 -s
+```
 
 ### Generate formatted API blueprint
 
