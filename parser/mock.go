@@ -11,8 +11,8 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/bukalapak/snowboard/api"
 	"github.com/naoina/denco"
-	"github.com/subosito/snowboard/api"
 )
 
 type MockTransaction struct {

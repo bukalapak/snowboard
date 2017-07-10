@@ -6,8 +6,8 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/bukalapak/snowboard/api"
 	"github.com/miekg/mmark"
-	"github.com/subosito/snowboard/api"
 )
 
 func markdownize(s string) template.HTML {

@@ -4,8 +4,8 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/bukalapak/snowboard/adapter/drafter"
 	"github.com/stretchr/testify/assert"
-	"github.com/subosito/snowboard/adapter/drafter"
 )
 
 func TestDrafter_Parse(t *testing.T) {
