@@ -1,8 +1,8 @@
 FROM golang:1.7
 MAINTAINER Alif Rachmawadi <code@subosito.com>
 
-COPY . /go/src/github.com/subosito/snowboard
-RUN cd /go/src/github.com/subosito/snowboard \
+COPY . /go/src/github.com/bukalapak/snowboard
+RUN cd /go/src/github.com/bukalapak/snowboard \
  && make build \
  && cp snowboard /usr/local/bin \
  && cd /go \

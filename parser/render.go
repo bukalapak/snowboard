@@ -6,8 +6,8 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/bukalapak/snowboard/api"
 	"github.com/miekg/mmark"
-	"github.com/subosito/snowboard/api"
 )
 
 func markdownize(s string) template.HTML {
@@ -56,8 +56,7 @@ func colorize(v interface{}) string {
 }
 
 func alias(s string) string {
-	switch s {
-	case "application/json":
+	if strings.Contains(s, "json") {
 		return "json"
 	}
 

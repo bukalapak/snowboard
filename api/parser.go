@@ -329,7 +329,7 @@ func extractHrefs(child *Element) (h Href) {
 			Required:    isContains("attributes.typeAttributes", "required", content),
 			Key:         content.Path("content.key.content").String(),
 			Value:       value,
-			Kind:        content.Path("content.value.element").String(),
+			Kind:        content.Path("meta.title").String(),
 			Description: content.Path("meta.description").String(),
 		}
 

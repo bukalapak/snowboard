@@ -5,7 +5,7 @@ import (
 	"bytes"
 	"io"
 
-	"github.com/subosito/snowboard/api"
+	"github.com/bukalapak/snowboard/api"
 )
 
 type Parser interface {

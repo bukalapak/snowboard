@@ -4,9 +4,9 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/bukalapak/snowboard/adapter/drafter"
+	snowboard "github.com/bukalapak/snowboard/parser"
 	"github.com/stretchr/testify/assert"
-	"github.com/subosito/snowboard/adapter/drafter"
-	snowboard "github.com/subosito/snowboard/parser"
 )
 
 func TestParse(t *testing.T) {

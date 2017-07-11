@@ -13,10 +13,10 @@ import (
 	"strings"
 	"text/tabwriter"
 
+	"github.com/bukalapak/snowboard/adapter/drafter"
+	"github.com/bukalapak/snowboard/adapter/drafterc"
+	snowboard "github.com/bukalapak/snowboard/parser"
 	"github.com/fsnotify/fsnotify"
-	"github.com/subosito/snowboard/adapter/drafter"
-	"github.com/subosito/snowboard/adapter/drafterc"
-	snowboard "github.com/subosito/snowboard/parser"
 	"github.com/urfave/cli"
 )
 

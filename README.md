@@ -1,19 +1,19 @@
 # snowboard
 
-[![Build Status](https://travis-ci.org/subosito/snowboard.svg?branch=master)](https://travis-ci.org/subosito/snowboard)
-[![GoDoc](https://godoc.org/github.com/subosito/snowboard?status.svg)](https://godoc.org/github.com/subosito/snowboard)
-[![Docker Automated build](https://img.shields.io/docker/automated/subosito/snowboard.svg?maxAge=2592000)](https://hub.docker.com/r/subosito/snowboard/)
+[![Build Status](https://travis-ci.org/bukalapak/snowboard.svg?branch=master)](https://travis-ci.org/bukalapak/snowboard)
+[![GoDoc](https://godoc.org/github.com/bukalapak/snowboard?status.svg)](https://godoc.org/github.com/bukalapak/snowboard)
+[![Docker Automated build](https://img.shields.io/docker/automated/bukalapak/snowboard.svg?maxAge=2592000)](https://hub.docker.com/r/bukalapak/snowboard/)
 
 API blueprint parser and renderer.
 
 ## Installation
 
-The latest executables for supported platforms are available from the [release page](https://github.com/subosito/snowboard/releases).
+The latest executables for supported platforms are available from the [release page](https://github.com/bukalapak/snowboard/releases).
 
 Just extract and start using it:
 
 ```
-$ wget https://github.com/subosito/snowboard/releases/download/${version}/snowboard-${version}.${os}-${arch}.tar.gz
+$ wget https://github.com/bukalapak/snowboard/releases/download/${version}/snowboard-${version}.${os}-${arch}.tar.gz
 $ tar -zxvf snowboard-${version}.${os}-${arch}.tar.gz
 $ ./snowboard -h
 ```
@@ -23,7 +23,7 @@ Alternatively, you can also use options below:
 ### Homebrew
 
 ```sh
-$ brew tap subosito/packages
+$ brew tap bukalapak/packages
 $ brew install snowboard
 ```
 
@@ -39,25 +39,25 @@ $ pacaur -S snowboard
 
 ### Docker
 
-You can also use automated build docker image on `subosito/snowboard`:
+You can also use automated build docker image on `bukalapak/snowboard`:
 
 ```
-$ docker pull subosito/snowboard
-$ docker run -it --rm subosito/snowboard help
+$ docker pull bukalapak/snowboard
+$ docker run -it --rm bukalapak/snowboard help
 ```
 
 To run snowboard with the current directory mounted to `/doc`:
 
 ```
-$ docker run -it --rm -v $PWD:/doc subosito/snowboard html -i API.apib -o output.html
+$ docker run -it --rm -v $PWD:/doc bukalapak/snowboard html -i API.apib -o output.html
 ```
 
-> Note: Besides image on docker hub, you can also use image on `quay.io/subosito/snowboard`.
+> Note: Besides image on docker hub, you can also use image on `quay.io/bukalapak/snowboard`.
 
 ### Manual
 
 ```sh
-$ git clone https://github.com/subosito/snowboard.git
+$ git clone https://github.com/bukalapak/snowboard.git
 $ cd snowboard
 $ make install
 ```
@@ -111,6 +111,13 @@ With this flag, You can access HTML documentation on `localhost:8088` and any up
 
 If you need to customize binding address, you can use flag `-b`.
 
+#### Serve HTML from Docker container
+
+If you want to serve HTML documentation from Docker container, don't forget to bind address and port in the contaier plus bind ports of host and container by `-p` option of Docker command.
+
+```
+$ docker run -it --rm -v $(pwd):/doc -p 8088:8088 bukalapak/snowboard html -i API.apib -o output.html -b 0.0.0.0:8088 -s
+```
 
 ### Generate formatted API blueprint
 
@@ -213,8 +220,8 @@ GLOBAL OPTIONS:
 
 You can see examples of `snowboard` default template outputs, in [examples/alpha](examples/alpha) directory. They looks like:
 
-- [Named Resource and Actions](https://htmlpreview.github.io/?https://github.com/subosito/snowboard/blob/master/examples/alpha/03.%20Named%20Resource%20and%20Actions.html)
-- [Real World API](https://htmlpreview.github.io/?https://github.com/subosito/snowboard/blob/master/examples/alpha/Real%20World%20API.html)
+- [Named Resource and Actions](https://htmlpreview.github.io/?https://github.com/bukalapak/snowboard/blob/master/examples/alpha/03.%20Named%20Resource%20and%20Actions.html)
+- [Real World API](https://htmlpreview.github.io/?https://github.com/bukalapak/snowboard/blob/master/examples/alpha/Real%20World%20API.html)
 - And many more...
 
 All of the examples are generated from official [API Blueprint examples](https://github.com/apiaryio/api-blueprint/tree/master/examples)

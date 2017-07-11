@@ -11,7 +11,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/subosito/snowboard/adapter/drafter"
+	"github.com/bukalapak/snowboard/adapter/drafter"
 )
 
 type Engine struct{}
