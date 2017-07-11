@@ -56,8 +56,7 @@ func colorize(v interface{}) string {
 }
 
 func alias(s string) string {
-	switch s {
-	case "application/json":
+	if strings.Contains(s, "json") {
 		return "json"
 	}
 
