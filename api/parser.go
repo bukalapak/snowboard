@@ -312,10 +312,23 @@ func extractHrefs(child *Element) (h Href) {
 	}
 
 	for _, content := range contents {
+		value := content.Path("content.value.content").String()
+
+		if content.Path("content.value.element").String() == "enum" {
+			// Enum values are stored in a different location.
+			// As `attributes.samples` is an array of arrays
+			// and Parameter does not support multiple values,
+			// flattening the array and selecting the first elem works fine.
+			samples, err := content.Path("content.value.attributes.samples").FlatChildren()
+			if err == nil && len(samples) > 0 {
+				value = samples[0].Path("content").String()
+			}
+		}
+
 		v := &Parameter{
 			Required:    isContains("attributes.typeAttributes", "required", content),
 			Key:         content.Path("content.key.content").String(),
-			Value:       content.Path("content.value.content").String(),
+			Value:       value,
 			Kind:        content.Path("meta.title").String(),
 			Description: content.Path("meta.description").String(),
 		}
