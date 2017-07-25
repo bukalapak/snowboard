@@ -59,13 +59,14 @@ func main() {
 				},
 			},
 			Action: func(c *cli.Context) error {
-				err := validate(c, c.String("i"), c.Bool("c"))
+				if err := validate(c, c.String("i"), c.Bool("c")); err != nil {
+					if strings.Contains(err.Error(), "read failed") {
+						return xerrors.Cause(err)
+					}
 
-				if strings.Contains(err.Error(), "read failed") {
-					return xerrors.Cause(err)
+					io.WriteString(c.App.Writer, err.Error())
 				}
 
-				io.WriteString(c.App.Writer, err.Error())
 				return nil
 			},
 		},
