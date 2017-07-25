@@ -54,12 +54,12 @@ func main() {
 					Usage: "API blueprint file",
 				},
 				cli.BoolFlag{
-					Name:  "u",
-					Usage: "Use line and row number instead of charater index",
+					Name:  "c",
+					Usage: "Use character index instead of line and row number",
 				},
 			},
 			Action: func(c *cli.Context) error {
-				err := validate(c, c.String("i"), c.Bool("u"))
+				err := validate(c, c.String("i"), c.Bool("c"))
 
 				if strings.Contains(err.Error(), "read failed") {
 					return xerrors.Cause(err)
@@ -242,7 +242,7 @@ func renderAPIB(c *cli.Context, input, output string) error {
 	return nil
 }
 
-func validate(c *cli.Context, input string, lineNum bool) error {
+func validate(c *cli.Context, input string, charIdx bool) error {
 	b, err := readFile(input)
 	if err != nil {
 		return xerrors.Wrap(err, "read failed")
@@ -250,7 +250,7 @@ func validate(c *cli.Context, input string, lineNum bool) error {
 
 	bf := bytes.NewReader(b)
 
-	if !lineNum {
+	if charIdx {
 		out, err := snowboard.Validate(bf, engine)
 		if err != nil {
 			return err
@@ -265,12 +265,12 @@ func validate(c *cli.Context, input string, lineNum bool) error {
 
 		s := "--------"
 		w := tabwriter.NewWriter(&buf, 8, 0, 0, ' ', tabwriter.Debug)
-		fmt.Fprintln(w, "Row\tCol\tDescription")
-		fmt.Fprintf(w, "%s\t%s\t%s\n", s, s, strings.Repeat(s, 8))
+		fmt.Fprintln(w, "Char Index\tDescription")
+		fmt.Fprintf(w, "%s\t%s\n", s, strings.Repeat(s, 8))
 
 		for _, n := range out.Annotations {
 			for _, m := range n.SourceMaps {
-				fmt.Fprintf(w, "%d\t%d\t%s\n", m.Row, m.Col, n.Description)
+				fmt.Fprintf(w, "%d:%d\t%s\n", m.Row, m.Col, n.Description)
 			}
 		}
 
