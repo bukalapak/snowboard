@@ -17,6 +17,7 @@ import (
 	"github.com/bukalapak/snowboard/adapter/drafterc"
 	snowboard "github.com/bukalapak/snowboard/parser"
 	"github.com/fsnotify/fsnotify"
+	xerrors "github.com/pkg/errors"
 	"github.com/urfave/cli"
 )
 
@@ -58,7 +59,14 @@ func main() {
 				},
 			},
 			Action: func(c *cli.Context) error {
-				return validate(c, c.String("i"), c.Bool("u"))
+				err := validate(c, c.String("i"), c.Bool("u"))
+
+				if strings.Contains(err.Error(), "read failed") {
+					return xerrors.Cause(err)
+				}
+
+				io.WriteString(c.App.Writer, err.Error())
+				return nil
 			},
 		},
 		{
@@ -237,7 +245,7 @@ func renderAPIB(c *cli.Context, input, output string) error {
 func validate(c *cli.Context, input string, lineNum bool) error {
 	b, err := readFile(input)
 	if err != nil {
-		return err
+		return xerrors.Wrap(err, "read failed")
 	}
 
 	bf := bytes.NewReader(b)
