@@ -44,22 +44,29 @@ func main() {
 	app.Name = "snowboard"
 	app.Usage = "API blueprint toolkit"
 	app.Version = versionStr
+	app.Before = func(c *cli.Context) error {
+		if c.Args().Get(1) == "" {
+			cli.ShowCommandHelp(c, c.Args().Get(0))
+		}
+
+		return nil
+	}
 	app.Commands = []cli.Command{
 		{
 			Name:  "lint",
 			Usage: "Validate API blueprint",
 			Flags: []cli.Flag{
-				cli.StringFlag{
-					Name:  "i",
-					Usage: "API blueprint file",
-				},
 				cli.BoolFlag{
 					Name:  "c",
 					Usage: "Use character index instead of line and row number",
 				},
 			},
 			Action: func(c *cli.Context) error {
-				if err := validate(c, c.String("i"), c.Bool("c")); err != nil {
+				if c.Args().Get(0) == "" {
+					return nil
+				}
+
+				if err := validate(c, c.Args().Get(0), c.Bool("c")); err != nil {
 					if strings.Contains(err.Error(), "read failed") {
 						return xerrors.Cause(err)
 					}
@@ -74,10 +81,6 @@ func main() {
 			Name:  "html",
 			Usage: "Render HTML documentation",
 			Flags: []cli.Flag{
-				cli.StringFlag{
-					Name:  "i",
-					Usage: "API blueprint file",
-				},
 				cli.StringFlag{
 					Name:  "o",
 					Value: "index.html",
@@ -99,11 +102,15 @@ func main() {
 				},
 			},
 			Action: func(c *cli.Context) error {
-				if c.Bool("s") {
-					return watchHTML(c, c.String("i"), c.String("o"), c.String("t"), c.String("b"))
+				if c.Args().Get(0) == "" {
+					return nil
 				}
 
-				return renderHTML(c, c.String("i"), c.String("o"), c.String("t"))
+				if c.Bool("s") {
+					return watchHTML(c, c.Args().Get(0), c.String("o"), c.String("t"), c.String("b"))
+				}
+
+				return renderHTML(c, c.Args().Get(0), c.String("o"), c.String("t"))
 			},
 		},
 		{
@@ -111,16 +118,16 @@ func main() {
 			Usage: "Render API blueprint",
 			Flags: []cli.Flag{
 				cli.StringFlag{
-					Name:  "i",
-					Usage: "API blueprint file",
-				},
-				cli.StringFlag{
 					Name:  "o",
 					Usage: "API blueprint output file",
 				},
 			},
 			Action: func(c *cli.Context) error {
-				return renderAPIB(c, c.String("i"), c.String("o"))
+				if c.Args().Get(0) == "" {
+					return nil
+				}
+
+				return renderAPIB(c, c.Args().Get(0), c.String("o"))
 			},
 		},
 		{
@@ -128,17 +135,17 @@ func main() {
 			Usage: "Run Mock server",
 			Flags: []cli.Flag{
 				cli.StringFlag{
-					Name:  "i",
-					Usage: "API blueprint file",
-				},
-				cli.StringFlag{
 					Name:  "b",
 					Value: "127.0.0.1:8087",
 					Usage: "HTTP server listen address",
 				},
 			},
 			Action: func(c *cli.Context) error {
-				return serveMock(c, c.String("b"), c.String("i"))
+				if c.Args().Get(0) == "" {
+					return nil
+				}
+
+				return serveMock(c, c.String("b"), c.Args().Get(0))
 			},
 		},
 		{
