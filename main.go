@@ -83,7 +83,6 @@ func main() {
 			Flags: []cli.Flag{
 				cli.StringFlag{
 					Name:  "o",
-					Value: "index.html",
 					Usage: "HTML file",
 				},
 				cli.StringFlag{
@@ -226,16 +225,27 @@ func renderHTML(c *cli.Context, input, output, tplFile string) error {
 		return err
 	}
 
+	tf, err := readTemplate(tplFile)
+	if err != nil {
+		return err
+	}
+
+	if output == "" {
+		var bf bytes.Buffer
+
+		if err := snowboard.HTML(string(tf), &bf, bp); err != nil {
+			return err
+		}
+
+		fmt.Fprintln(c.App.Writer, bf.String())
+		return nil
+	}
+
 	of, err := os.Create(output)
 	if err != nil {
 		return err
 	}
 	defer of.Close()
-
-	tf, err := readTemplate(tplFile)
-	if err != nil {
-		return err
-	}
 
 	err = snowboard.HTML(string(tf), of, bp)
 	if err != nil {
@@ -250,6 +260,11 @@ func renderAPIB(c *cli.Context, input, output string) error {
 	b, err := snowboard.Read(input)
 	if err != nil {
 		return err
+	}
+
+	if output == "" {
+		fmt.Fprintln(c.App.Writer, string(b))
+		return nil
 	}
 
 	of, err := os.Create(output)
@@ -271,6 +286,11 @@ func renderJSON(c *cli.Context, input, output string) error {
 	b, err := snowboard.LoadAsJSON(input, engine)
 	if err != nil {
 		return err
+	}
+
+	if output == "" {
+		fmt.Fprintln(c.App.Writer, string(b))
+		return nil
 	}
 
 	of, err := os.Create(output)
@@ -363,6 +383,10 @@ func dash(n int) string {
 }
 
 func watchHTML(c *cli.Context, input, output, tplFile, bind string) error {
+	if output == "" {
+		output = "index.html"
+	}
+
 	watcher, err := fsnotify.NewWatcher()
 	if err != nil {
 		return err
