@@ -13,12 +13,24 @@ func TestParse(t *testing.T) {
 	testParse(t, drafter.Engine{})
 }
 
+func TestParseAsJSON(t *testing.T) {
+	testParseAsJSON(t, drafter.Engine{})
+}
+
 func testParse(t *testing.T, parser snowboard.Parser) {
 	s := strings.NewReader("# API")
 
 	api, err := snowboard.Parse(s, parser)
 	assert.Nil(t, err)
 	assert.Equal(t, "API", api.Title)
+}
+
+func testParseAsJSON(t *testing.T, parser snowboard.Parser) {
+	s := strings.NewReader("# API")
+
+	b, err := snowboard.ParseAsJSON(s, parser)
+	assert.Nil(t, err)
+	assert.Contains(t, string(b), `"title": "API"`)
 }
 
 func TestLoad(t *testing.T) {
@@ -43,6 +55,13 @@ func TestLoad_partials(t *testing.T) {
 	assert.Equal(t, "Messages", api.ResourceGroups[0].Title)
 	assert.Equal(t, "Users", api.ResourceGroups[1].Title)
 	assert.Equal(t, "Tasks", api.ResourceGroups[2].Title)
+}
+
+func TestLoadAsJSON(t *testing.T) {
+	engine := drafter.Engine{}
+	b, err := snowboard.LoadAsJSON("../adapter/drafter/ext/drafter/features/fixtures/blueprint.apib", engine)
+	assert.Nil(t, err)
+	assert.Contains(t, string(b), `"title": "<API name>"`)
 }
 
 func TestRead(t *testing.T) {

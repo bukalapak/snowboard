@@ -24,6 +24,11 @@ func Parse(r io.Reader, engine Parser) (*api.API, error) {
 	return api.NewAPI(el)
 }
 
+// ParseAsJSON parse API blueprint as API Element JSON
+func ParseAsJSON(r io.Reader, engine Parser) ([]byte, error) {
+	return engine.Parse(r)
+}
+
 // Validate validates API blueprint using selected Parser
 func Validate(r io.Reader, engine Parser) (*api.API, error) {
 	el, err := validateElement(r, engine)
@@ -48,8 +53,18 @@ func Load(name string, engine Parser) (*api.API, error) {
 	return Parse(bytes.NewReader(b), engine)
 }
 
+// LoadAsJSON reads API blueprint from file as API Element JSON using selected Parser
+func LoadAsJSON(name string, engine Parser) ([]byte, error) {
+	b, err := Read(name)
+	if err != nil {
+		return nil, err
+	}
+
+	return ParseAsJSON(bytes.NewReader(b), engine)
+}
+
 func parseElement(r io.Reader, engine Parser) (*api.Element, error) {
-	b, err := engine.Parse(r)
+	b, err := ParseAsJSON(r, engine)
 	if err != nil {
 		return nil, err
 	}
