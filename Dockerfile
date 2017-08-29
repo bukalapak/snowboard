@@ -1,13 +1,12 @@
-FROM golang:1.7
-MAINTAINER Alif Rachmawadi <code@subosito.com>
+FROM golang:1.9 AS builder
+MAINTAINER Alif Rachmawadi <subosito@bukalapak.com>
 
 COPY . /go/src/github.com/bukalapak/snowboard
 RUN cd /go/src/github.com/bukalapak/snowboard \
- && make build \
- && cp snowboard /usr/local/bin \
- && cd /go \
- && rm -Rf src bin pkg \
- && mkdir src bin pkg
+ && make build
+
+FROM debian:stretch-slim
+COPY --from=builder /go/src/github.com/bukalapak/snowboard/snowboard /usr/local/bin
 
 WORKDIR /doc
 VOLUME /doc
