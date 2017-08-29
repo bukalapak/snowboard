@@ -131,6 +131,23 @@ func main() {
 			},
 		},
 		{
+			Name:  "json",
+			Usage: "Render API element json",
+			Flags: []cli.Flag{
+				cli.StringFlag{
+					Name:  "o",
+					Usage: "API element output file",
+				},
+			},
+			Action: func(c *cli.Context) error {
+				if c.Args().Get(0) == "" {
+					return nil
+				}
+
+				return renderJSON(c, c.Args().Get(0), c.String("o"))
+			},
+		},
+		{
 			Name:  "mock",
 			Usage: "Run Mock server",
 			Flags: []cli.Flag{
@@ -247,6 +264,27 @@ func renderAPIB(c *cli.Context, input, output string) error {
 	}
 
 	fmt.Fprintln(c.App.Writer, "API blueprint has been generated!")
+	return nil
+}
+
+func renderJSON(c *cli.Context, input, output string) error {
+	b, err := snowboard.LoadAsJSON(input, engine)
+	if err != nil {
+		return err
+	}
+
+	of, err := os.Create(output)
+	if err != nil {
+		return err
+	}
+	defer of.Close()
+
+	_, err = io.Copy(of, bytes.NewReader(b))
+	if err != nil {
+		return err
+	}
+
+	fmt.Fprintln(c.App.Writer, "API element JSON has been generated!")
 	return nil
 }
 
