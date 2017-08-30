@@ -21,6 +21,12 @@
 			"revisionTime": "2016-08-16T05:15:41Z"
 		},
 		{
+			"checksumSHA1": "66lykxpWgSmQodnhkADqn6tnroQ=",
+			"path": "github.com/imdario/mergo",
+			"revision": "e3000cb3d28c72b837601cac94debd91032d19fe",
+			"revisionTime": "2017-06-20T10:47:01Z"
+		},
+		{
 			"checksumSHA1": "qiI+L9+51sZYqZxrWB7lM6U/G6E=",
 			"path": "github.com/miekg/mmark",
 			"revision": "701c11f87566b812e91c452879ff327ef4bc0171",
