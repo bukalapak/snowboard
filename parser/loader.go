@@ -11,12 +11,14 @@ import (
 	"regexp"
 	"strings"
 	"text/template"
+
+	"github.com/imdario/mergo"
 )
 
 type loader struct {
 	name    string
-	seed    string
 	baseDir string
+	seeds   []string
 }
 
 func newLoader(name string) *loader {
@@ -65,8 +67,19 @@ func (d *loader) unmarshal(name string) (data map[string]interface{}, err error)
 	return
 }
 
-func (d *loader) loadSeed() (map[string]interface{}, error) {
-	return d.unmarshal(d.seed)
+func (d *loader) loadSeeds() (map[string]interface{}, error) {
+	z := map[string]interface{}{}
+
+	for _, seed := range d.seeds {
+		m, err := d.unmarshal(seed)
+		if err != nil {
+			return z, err
+		}
+
+		mergo.Merge(&z, m)
+	}
+
+	return z, nil
 }
 
 func (d *loader) convert(s string) string {
@@ -95,7 +108,7 @@ func (d *loader) convert(s string) string {
 	}
 
 	if format == "seed" {
-		d.seed = rs[1]
+		d.seeds = append(d.seeds, rs[1])
 		return ""
 	}
 
@@ -145,7 +158,7 @@ func Read(name string) ([]byte, error) {
 		return nil, err
 	}
 
-	data, err := d.loadSeed()
+	data, err := d.loadSeeds()
 	if err != nil {
 		return nil, err
 	}

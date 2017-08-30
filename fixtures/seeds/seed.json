@@ -2,8 +2,5 @@
   "description": "This API example demonstrates seeds usage.",
   "http_status": {
     "ok": 200
-  },
-  "users": {
-    "description": "Group of all user-related resources."
   }
 }
