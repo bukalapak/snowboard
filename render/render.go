@@ -1,4 +1,4 @@
-package parser
+package render
 
 import (
 	"html/template"

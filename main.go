@@ -17,6 +17,7 @@ import (
 	"github.com/bukalapak/snowboard/adapter/drafterc"
 	"github.com/bukalapak/snowboard/mock"
 	snowboard "github.com/bukalapak/snowboard/parser"
+	"github.com/bukalapak/snowboard/render"
 	"github.com/fsnotify/fsnotify"
 	xerrors "github.com/pkg/errors"
 	"github.com/urfave/cli"
@@ -234,7 +235,7 @@ func renderHTML(c *cli.Context, input, output, tplFile string) error {
 	if output == "" {
 		var bf bytes.Buffer
 
-		if err := snowboard.HTML(string(tf), &bf, bp); err != nil {
+		if err := render.HTML(string(tf), &bf, bp); err != nil {
 			return err
 		}
 
@@ -248,7 +249,7 @@ func renderHTML(c *cli.Context, input, output, tplFile string) error {
 	}
 	defer of.Close()
 
-	err = snowboard.HTML(string(tf), of, bp)
+	err = render.HTML(string(tf), of, bp)
 	if err != nil {
 		return err
 	}
