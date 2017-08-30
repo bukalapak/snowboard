@@ -126,7 +126,7 @@ func MockHandler(ms MockTransactions) http.Handler {
 		}
 
 		m := data.(*mockRecord)
-		s := r.Header.Get("X-Status-Code")
+		s := preferStatusCode(r)
 
 		if s == "" {
 			for _, t := range m.Transactions {
@@ -155,6 +155,22 @@ func MockHandler(ms MockTransactions) http.Handler {
 	}
 
 	return http.HandlerFunc(fn)
+}
+
+func preferStatusCode(r *http.Request) string {
+	var c string
+
+	for _, v := range strings.Split(r.Header.Get("Prefer"), ",") {
+		if z := strings.SplitN(v, "=", 2); z[0] == "status" {
+			c = z[1]
+		}
+	}
+
+	if c == "" {
+		c = r.Header.Get("X-Status-Code")
+	}
+
+	return c
 }
 
 func transformURL(u, h string) string {
