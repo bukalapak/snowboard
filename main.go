@@ -15,6 +15,7 @@ import (
 
 	"github.com/bukalapak/snowboard/adapter/drafter"
 	"github.com/bukalapak/snowboard/adapter/drafterc"
+	"github.com/bukalapak/snowboard/mock"
 	snowboard "github.com/bukalapak/snowboard/parser"
 	"github.com/fsnotify/fsnotify"
 	xerrors "github.com/pkg/errors"
@@ -444,12 +445,12 @@ func serveMock(c *cli.Context, bind, input string) error {
 	fmt.Fprintf(c.App.Writer, "Mock server is ready. Use %s\n", bind)
 	fmt.Fprintln(c.App.Writer, "Available Routes:")
 
-	ms := snowboard.Mock(bp)
+	ms := mock.Mock(bp)
 	for _, m := range ms {
 		fmt.Fprintf(c.App.Writer, "%s\t%d\t%s\n", m.Method, m.StatusCode, m.Pattern)
 	}
 
-	h := snowboard.MockHandler(ms)
+	h := mock.MockHandler(ms)
 	return http.ListenAndServe(bind, h)
 }
 
