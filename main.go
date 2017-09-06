@@ -166,28 +166,6 @@ func main() {
 				return serveMock(c, c.String("b"), c.Args().Get(0))
 			},
 		},
-		{
-			Name:  "adapter",
-			Usage: "Snowboard adapter",
-			Flags: []cli.Flag{
-				cli.BoolFlag{
-					Name:  "c",
-					Usage: "Copy snowboard adapter to desired location",
-				},
-				cli.StringFlag{
-					Name:  "p",
-					Value: ".",
-					Usage: "Adapter location dir",
-				},
-			},
-			Action: func(c *cli.Context) error {
-				if c.Bool("c") {
-					return installAdapters(c, c.String("p"))
-				}
-
-				return nil
-			},
-		},
 	}
 	app.Run(os.Args)
 }
@@ -453,15 +431,4 @@ func serveMock(c *cli.Context, bind, input string) error {
 
 	h := mock.MockHandler(ms)
 	return http.ListenAndServe(bind, h)
-}
-
-func installAdapters(c *cli.Context, dir string) error {
-	n := drafterc.Engine{}
-	name, err := n.CopyExec(dir)
-	if err != nil {
-		return err
-	}
-
-	fmt.Fprintln(c.App.Writer, "Snowboard adapter installed!\nLocation: "+name)
-	return nil
 }
