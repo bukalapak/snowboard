@@ -47,7 +47,7 @@ func main() {
 	app.Usage = "API blueprint toolkit"
 	app.Version = versionStr
 	app.Before = func(c *cli.Context) error {
-		if c.Args().Get(1) == "" {
+		if c.Args().Present() && c.Args().Get(1) == "" {
 			cli.ShowCommandHelp(c, c.Args().Get(0))
 		}
 
