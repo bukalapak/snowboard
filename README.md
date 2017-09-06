@@ -52,8 +52,6 @@ To run snowboard with the current directory mounted to `/doc`:
 $ docker run -it --rm -v $PWD:/doc bukalapak/snowboard html -o output.html API.apib
 ```
 
-> Note: Besides image on docker hub, you can also use image on `quay.io/bukalapak/snowboard`.
-
 ### Manual
 
 ```sh
