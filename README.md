@@ -145,6 +145,16 @@ $ snowboard mock API.apib
 
 Then you can use `localhost:8087` for accessing mock server. You can customize the address by passing flag `-b`.
 
+For multiple responses, you can set `X-Status-Code` or `Prefer` header to select specific response:
+
+```
+X-Status-Code: 200
+
+// or
+
+Prefer: status=200
+```
+
 ## External Files
 
 You can split your API blueprint document to several files and use `partial` helper to includes it to your main document.
@@ -189,6 +199,16 @@ Then on your API blueprint document you can use `seed` comment helper:
 Our friendly username is {{.official.username}}.
 ```
 
+Multiple seeds are also supported.
+
+## API Element JSON
+
+In case you need to get API element JSON output for further processing, you can use:
+
+```
+$ snowboard json API.apib
+```
+
 ## Help
 
 As usual, you can also see all supported flags by passing `-h`:
@@ -205,8 +225,8 @@ COMMANDS:
      lint     Validate API blueprint
      html     Render HTML documentation
      apib     Render API blueprint
+     json     Render API element json
      mock     Run Mock server
-     adapter  Snowboard adapter
      help, h  Shows a list of commands or help for one command
 
 GLOBAL OPTIONS:
