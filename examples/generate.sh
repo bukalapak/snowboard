@@ -15,7 +15,7 @@ for template in $TEMPLATES; do
     fi
 
     echo "Generating ${fname}..."
-    "$1" -i "${example}" -t "${template}" -o "${output_dir}/${fname_html}"
+    "$1" html -t "${template}" -o "${output_dir}/${fname_html}" "${example}"
     echo "Done!"
   done
 done
