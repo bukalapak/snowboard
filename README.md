@@ -217,7 +217,7 @@ NAME:
    snowboard - API blueprint toolkit
 
 USAGE:
-   snowboard [global options] command [command options] [arguments...]
+   snowboard [GLOBAL OPTIONS] command [COMMAND OPTIONS] [ARGUMENTS...]
 
 COMMANDS:
      lint     Validate API blueprint
