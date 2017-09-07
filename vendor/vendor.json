@@ -3,22 +3,22 @@
 	"ignore": "test",
 	"package": [
 		{
-			"checksumSHA1": "hqDDDpue/5363luidNMBS8z8eJU=",
+			"checksumSHA1": "Pc2ORQp+VY3Un/dkh4QwLC7R6lE=",
 			"path": "github.com/BurntSushi/toml",
-			"revision": "99064174e013895bbd9b025c31100bd1d9b590ca",
-			"revisionTime": "2016-07-17T15:07:09Z"
+			"revision": "a368813c5e648fee92e5f6c30e3944ff9d5e8895",
+			"revisionTime": "2017-06-26T11:06:00Z"
 		},
 		{
-			"checksumSHA1": "5rPfda8jFccr3A6heL+JAmi9K9g=",
+			"checksumSHA1": "mrz/kicZiUaHxkyfvC/DyQcr8Do=",
 			"path": "github.com/davecgh/go-spew/spew",
-			"revision": "5215b55f46b2b919f50a1df0eaa5886afe4e3b3d",
-			"revisionTime": "2015-11-05T21:09:06Z"
+			"revision": "a476722483882dd40b8111f0eb64e1d7f43f56e4",
+			"revisionTime": "2017-08-29T19:49:58Z"
 		},
 		{
-			"checksumSHA1": "xgjI2W3RGiQwNlxsOW2V9fJ9kaM=",
+			"checksumSHA1": "x2Km0Qy3WgJJnV19Zv25VwTJcBM=",
 			"path": "github.com/fsnotify/fsnotify",
-			"revision": "f12c6236fe7b5cf6bcf30e5935d08cb079d78334",
-			"revisionTime": "2016-08-16T05:15:41Z"
+			"revision": "4da3e2cfbabc9f751898f250b49f2439785783a1",
+			"revisionTime": "2017-03-29T04:21:07Z"
 		},
 		{
 			"checksumSHA1": "66lykxpWgSmQodnhkADqn6tnroQ=",
@@ -27,10 +27,10 @@
 			"revisionTime": "2017-06-20T10:47:01Z"
 		},
 		{
-			"checksumSHA1": "qiI+L9+51sZYqZxrWB7lM6U/G6E=",
+			"checksumSHA1": "7ifp6/zJUKXLYsziM4TO6Si9VY8=",
 			"path": "github.com/miekg/mmark",
-			"revision": "701c11f87566b812e91c452879ff327ef4bc0171",
-			"revisionTime": "2016-09-27T09:48:57Z"
+			"revision": "057eb9e3ae87944c038036d046101dec0c56e21f",
+			"revisionTime": "2017-08-31T06:33:44Z"
 		},
 		{
 			"checksumSHA1": "IzE4RQKJy/h4YRXwcxTRanrwXWs=",
@@ -45,28 +45,28 @@
 			"revisionTime": "2017-05-05T04:36:39Z"
 		},
 		{
-			"checksumSHA1": "zKKp5SZ3d3ycKe4EKMNT0BqAWBw=",
+			"checksumSHA1": "LuFv4/jlrmFNnDb/5SCSEPAM9vU=",
 			"path": "github.com/pmezard/go-difflib/difflib",
-			"revision": "d8ed2627bdf02c080bf22230dbb337003b7aba2d",
-			"revisionTime": "2015-10-28T09:42:44Z"
+			"revision": "792786c7400a136282c1664665ae0a8db921c6c2",
+			"revisionTime": "2016-01-10T10:55:54Z"
 		},
 		{
-			"checksumSHA1": "5XAzjZrdlLh1mgd7xEvoK6LeLCA=",
+			"checksumSHA1": "mGbTYZ8dHVTiPTTJu3ktp+84pPI=",
 			"path": "github.com/stretchr/testify/assert",
-			"revision": "a1f97990ddc16022ec7610326dd9bce31332c116",
-			"revisionTime": "2015-12-02T18:41:52Z"
+			"revision": "890a5c3458b43e6104ff5da8dfa139d013d77544",
+			"revisionTime": "2017-07-05T02:17:15Z"
 		},
 		{
-			"checksumSHA1": "GmKjIzwPYM1tBXPZH5tZAaivqds=",
+			"checksumSHA1": "8YLoOB7KeQqUSPvlBynceGY4xOc=",
 			"path": "github.com/urfave/cli",
-			"revision": "8ef3805c9de2519805c3f060524b695bba2cd715",
-			"revisionTime": "2017-01-10T04:57:14Z"
+			"revision": "f017f86fccc5a039a98f23311f34fdf78b014f78",
+			"revisionTime": "2017-08-13T14:59:49Z"
 		},
 		{
-			"checksumSHA1": "vu7njn8O4vhFtmgGWntwjA2NAbk=",
+			"checksumSHA1": "KqOZbEWiXVGUp0TMR58UCpVB9+4=",
 			"path": "golang.org/x/sys/unix",
-			"revision": "8f0908ab3b2457e2e15403d3697c9ef5cb4b57a9",
-			"revisionTime": "2016-09-14T20:33:16Z"
+			"revision": "9aade4d3a3b7e6d876cd3823ad20ec45fc035402",
+			"revisionTime": "2017-09-05T23:24:40Z"
 		}
 	],
 	"rootPath": "github.com/bukalapak/snowboard"

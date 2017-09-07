@@ -1,0 +1,70 @@
+# Makefile for releasing CoreDNS
+#
+# The release is controlled from markdown.go. The version found
+# there is used to tag the git repo and to build the assets that are
+# uploaded to github (after some sanity checks).
+#
+# We use https://github.com/progrium/gh-release to automate github stuff
+# be sure to have that binary in your path.
+#
+# Steps:
+# * Get an access token: https://help.github.com/articles/creating-an-access-token-for-command-line-use/
+# * export GITHUB_ACCESS_TOKEN=<token>
+# * Up the version in markdown.go
+# * Run: make -f Makefile.release
+#   * will commit your change with 'Release $VERSION'
+#   * push to github
+#   * build the release and do all that fluff.
+NAME:=mmark
+VERSION:=$(shell grep 'Version' markdown.go | awk '{ print $$4 }' | tr -d '"')
+ARCH:=$(shell uname -m)
+GITHUB:=miekg
+
+all:	commit push build tar release
+
+.PHONY: push
+push:
+	@echo Pushing release to master
+	git push
+
+.PHONY: commit
+commit:
+	@echo Committing
+	@git commit -am"Release $(VERSION)"
+	exit 0
+
+.PHONY: build
+build: build-arm build-darwin build-linux
+
+.PHONY: build-linux
+build-linux:
+	@echo Building: linux $(VERSION)
+	mkdir -p build/Linux      && cd mmark && CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -o ../build/Linux/$(NAME)
+
+.PHONY: build-darwin
+build-darwin:
+	@echo Building: darwin $(VERSION)
+	mkdir -p build/Darwin     && cd mmark && CGO_ENABLED=0 GOOS=darwin go build -ldflags="-s -w" -o ../build/Darwin/$(NAME)
+
+.PHONY: build-arm
+build-arm:
+	@echo Building: arm $(VERSION)
+	mkdir -p build/Linux/Arm  && cd mmark && CGO_ENABLED=0 GOOS=linux GOARCH=arm go build -ldflags="-s -w" -o ../build/Linux/Arm/$(NAME)
+
+
+.PHONY: tar
+tar:
+	rm -rf release && mkdir release
+	tar -zcf release/$(NAME)_$(VERSION)_linux_$(ARCH).tgz -C build/Linux $(NAME)
+	tar -zcf release/$(NAME)_$(VERSION)_linux_armv6l.tgz -C build/Linux/Arm $(NAME)
+	tar -zcf release/$(NAME)_$(VERSION)_darwin_$(ARCH).tgz -C build/Darwin $(NAME)
+
+.PHONY: release
+release:
+	@echo Releasing: $(VERSION)
+	gh-release create $(GITHUB)/$(NAME) $(VERSION)
+
+.PHONY: clean
+clean:
+	rm -rf release
+	rm -rf build
