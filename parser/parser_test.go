@@ -45,6 +45,13 @@ func TestLoad(t *testing.T) {
 	assert.Equal(t, "<request description>", api.ResourceGroups[0].Resources[0].Transitions[0].Transactions[0].Request.Description)
 	assert.Equal(t, 200, api.ResourceGroups[0].Resources[0].Transitions[0].Transactions[0].Response.StatusCode)
 	assert.Equal(t, "<response description>", api.ResourceGroups[0].Resources[0].Transitions[0].Transactions[0].Response.Description)
+
+	api, err = snowboard.Load("../fixtures/api-blueprint/examples/10. Data Structures.md", engine)
+	assert.Nil(t, err)
+	assert.False(t, api.ResourceGroups[0].Resources[1].Transitions[0].Href.Parameters[0].Required)
+	assert.Equal(t, "limit", api.ResourceGroups[0].Resources[1].Transitions[0].Href.Parameters[0].Key)
+	assert.Equal(t, "number", api.ResourceGroups[0].Resources[1].Transitions[0].Href.Parameters[0].Kind)
+	assert.Equal(t, "10", api.ResourceGroups[0].Resources[1].Transitions[0].Href.Parameters[0].Default)
 }
 
 func TestLoad_partials(t *testing.T) {
