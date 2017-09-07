@@ -81,6 +81,7 @@ type Parameter struct {
 	Key         string
 	Value       string
 	Kind        string
+	Default     string
 }
 
 type Annotation struct {

@@ -331,6 +331,7 @@ func extractHrefs(child *Element) (h Href) {
 			Value:       value,
 			Kind:        content.Path("meta.title").String(),
 			Description: content.Path("meta.description").String(),
+			Default:     content.Path("content.value.attributes.default").String(),
 		}
 
 		h.Parameters = append(h.Parameters, *v)
