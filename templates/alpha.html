@@ -303,7 +303,16 @@
         {{if .Value}}<code class="ui label">{{.Value}}</code>{{end}}
         {{if .Default}}<div class="ui violet image label">Default<div class="detail">{{.Default}}</div></div>{{end}}
       </td>
-      <td class="eight wide">{{if .Description}}{{.Description | markdownize}}{{else}}-{{end}}</td>
+      <td class="eight wide">
+        {{if .Description}}{{.Description | markdownize}}{{else}}-{{end}}
+        {{if .Members}}
+          <ul class="ui bulleted list">
+            {{range .Members}}
+              <li class="item">{{.}}</li>
+            {{end}}
+          </ul>
+        {{end}}
+      </td>
     </tr>
   {{end}}
   </tbody>
