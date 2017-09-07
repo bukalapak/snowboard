@@ -312,7 +312,9 @@ func extractHrefs(child *Element) (h Href) {
 	}
 
 	for _, content := range contents {
+		kind := content.Path("meta.title").String()
 		value := content.Path("content.value.content").String()
+		members := []string{}
 
 		if content.Path("content.value.element").String() == "enum" {
 			// Enum values are stored in a different location.
@@ -323,15 +325,25 @@ func extractHrefs(child *Element) (h Href) {
 			if err == nil && len(samples) > 0 {
 				value = samples[0].Path("content").String()
 			}
+
+			values, err := content.Path("content.value.content").FlatChildren()
+			if err == nil && len(values) > 0 {
+				for i := range values {
+					members = append(members, values[i].Path("content").String())
+				}
+			}
+
+			kind = fmt.Sprintf("enum[%s]", kind)
 		}
 
 		v := &Parameter{
 			Required:    isContains("attributes.typeAttributes", "required", content),
 			Key:         content.Path("content.key.content").String(),
 			Value:       value,
-			Kind:        content.Path("meta.title").String(),
+			Kind:        kind,
 			Description: content.Path("meta.description").String(),
 			Default:     content.Path("content.value.attributes.default").String(),
+			Members:     members,
 		}
 
 		h.Parameters = append(h.Parameters, *v)
