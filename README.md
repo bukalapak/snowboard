@@ -3,8 +3,9 @@
 [![Build Status](https://travis-ci.org/bukalapak/snowboard.svg?branch=master)](https://travis-ci.org/bukalapak/snowboard)
 [![GoDoc](https://godoc.org/github.com/bukalapak/snowboard?status.svg)](https://godoc.org/github.com/bukalapak/snowboard)
 [![Docker Automated build](https://img.shields.io/docker/automated/bukalapak/snowboard.svg?maxAge=2592000)](https://hub.docker.com/r/bukalapak/snowboard/)
+[![GitHub release](https://img.shields.io/github/release/bukalapak/snowboard.svg)](https://github.com/bukalapak/snowboard)
 
-API blueprint parser and renderer.
+API blueprint toolkit.
 
 ## Installation
 
