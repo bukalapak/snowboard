@@ -301,6 +301,7 @@
       <td class="center aligned">
         <code>{{.Kind}}</code>
         {{if .Value}}<code class="ui label">{{.Value}}</code>{{end}}
+        {{if .Default}}<div class="ui violet image label">Default<div class="detail">{{.Default}}</div></div>{{end}}
       </td>
       <td class="eight wide">{{if .Description}}{{.Description | markdownize}}{{else}}-{{end}}</td>
     </tr>
