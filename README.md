@@ -232,6 +232,17 @@ GLOBAL OPTIONS:
    --version, -v  print the version
 ```
 
+## FAQ
+
+- I am using Vim and snowboard file watcher doesn't trigger auto-regeneration, any idea?
+
+  It is known issue due Vim backup scheme. You can set on your `.vimrc`:
+	
+    ```
+    set nobackup
+    set nowritebackup
+    ```
+
 ## Examples
 
 You can see examples of `snowboard` default template outputs, in [examples/alpha](examples/alpha) directory. They looks like:
