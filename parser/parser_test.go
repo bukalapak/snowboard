@@ -52,6 +52,14 @@ func TestLoad(t *testing.T) {
 	assert.Equal(t, "limit", api.ResourceGroups[0].Resources[1].Transitions[0].Href.Parameters[0].Key)
 	assert.Equal(t, "number", api.ResourceGroups[0].Resources[1].Transitions[0].Href.Parameters[0].Kind)
 	assert.Equal(t, "10", api.ResourceGroups[0].Resources[1].Transitions[0].Href.Parameters[0].Default)
+
+	api, err = snowboard.Load("../fixtures/examples/enum.apib", engine)
+	assert.Nil(t, err)
+	assert.True(t, api.ResourceGroups[0].Resources[0].Transitions[0].Href.Parameters[0].Required)
+	assert.Equal(t, "type", api.ResourceGroups[0].Resources[0].Transitions[0].Href.Parameters[0].Key)
+	assert.Equal(t, "enum[string]", api.ResourceGroups[0].Resources[0].Transitions[0].Href.Parameters[0].Kind)
+	assert.Equal(t, "foo", api.ResourceGroups[0].Resources[0].Transitions[0].Href.Parameters[0].Value)
+	assert.Equal(t, []string{"foo", "bar", "baz"}, api.ResourceGroups[0].Resources[0].Transitions[0].Href.Parameters[0].Members)
 }
 
 func TestLoad_partials(t *testing.T) {
