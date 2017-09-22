@@ -195,8 +195,8 @@
                   <code>{{$transition.URL}}</code>
                 </a>
               </div>
-              {{if $transition.Href.Parameters}}
-                {{template "Parameters" $transition.Href.Parameters}}
+              {{if $resource.Href.Parameters}}
+                {{template "Parameters" $resource.Href.Parameters}}
               {{end}}
               {{if $transaction.Request.Headers}}
                 {{template "Headers" $transaction.Request.Headers}}
