@@ -195,8 +195,22 @@
                   <code>{{$transition.URL}}</code>
                 </a>
               </div>
-              {{if $resource.Href.Parameters}}
-                {{template "Parameters" $resource.Href.Parameters}}
+              {{ if or (ne (len $transition.Href.Parameters) 0) (ne (len $resource.Href.Parameters) 0)}}
+                <table class="ui celled definition table">
+                  <thead>
+                    <tr>
+                      <th colspan="4">Parameters</th>
+                    </tr>
+                  <thead>
+                  <tbody>
+                    {{if $transition.Href.Parameters}}
+                      {{template "Parameters" $transition.Href.Parameters}}
+                    {{end}}
+                    {{if $resource.Href.Parameters}}
+                      {{template "Parameters" $resource.Href.Parameters}}
+                    {{end}}
+                  </tbody>
+                </table>
               {{end}}
               {{if $transaction.Request.Headers}}
                 {{template "Headers" $transaction.Request.Headers}}
@@ -285,13 +299,6 @@
 {{end}}
 
 {{define "Parameters"}}
-<table class="ui celled definition table">
-  <thead>
-    <tr>
-      <th colspan="4">Parameters</th>
-    </tr>
-  <thead>
-  <tbody>
   {{range $index, $param := .}}
     <tr>
       <td class="center aligned one wide">
@@ -315,8 +322,6 @@
       </td>
     </tr>
   {{end}}
-  </tbody>
-</table>
 {{end}}
 
 {{define "Divider"}}
