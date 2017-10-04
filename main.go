@@ -424,6 +424,12 @@ func watchHTML(c *cli.Context, input, output, tplFile, bind string) error {
 		return err
 	}
 
+	for _, s := range snowboard.Seeds(input) {
+		if err = watcher.Add(s); err != nil {
+			return err
+		}
+	}
+
 	fmt.Fprintf(c.App.Writer, "snowboard: listening on %s\n", bind)
 
 	if err := serveHTML(bind, output); err != nil {

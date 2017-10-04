@@ -194,3 +194,14 @@ func process(s string, data interface{}, funcMap template.FuncMap) ([]byte, erro
 
 	return z.Bytes(), nil
 }
+
+// Seeds lists filenames of API blueprint's seeds.
+func Seeds(name string) []string {
+	d := newLoader(name)
+
+	if _, err := d.parse(); err != nil {
+		return []string{}
+	}
+
+	return d.seeds
+}
