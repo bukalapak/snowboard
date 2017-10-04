@@ -108,10 +108,16 @@ func main() {
 				}
 
 				if c.Bool("s") {
-					return watchHTML(c, c.Args().Get(0), c.String("o"), c.String("t"), c.String("b"))
+					if err := watchHTML(c, c.Args().Get(0), c.String("o"), c.String("t"), c.String("b")); err != nil {
+						return cli.NewExitError(err.Error()+"\n", 1)
+					}
 				}
 
-				return renderHTML(c, c.Args().Get(0), c.String("o"), c.String("t"))
+				if err := renderHTML(c, c.Args().Get(0), c.String("o"), c.String("t")); err != nil {
+					return cli.NewExitError(err.Error(), 1)
+				}
+
+				return nil
 			},
 		},
 		{
@@ -128,7 +134,11 @@ func main() {
 					return nil
 				}
 
-				return renderAPIB(c, c.Args().Get(0), c.String("o"))
+				if err := renderAPIB(c, c.Args().Get(0), c.String("o")); err != nil {
+					return cli.NewExitError(err.Error(), 1)
+				}
+
+				return nil
 			},
 		},
 		{
@@ -145,7 +155,11 @@ func main() {
 					return nil
 				}
 
-				return renderJSON(c, c.Args().Get(0), c.String("o"))
+				if err := renderJSON(c, c.Args().Get(0), c.String("o")); err != nil {
+					return cli.NewExitError(err.Error(), 1)
+				}
+
+				return nil
 			},
 		},
 		{
@@ -163,10 +177,15 @@ func main() {
 					return nil
 				}
 
-				return serveMock(c, c.String("b"), c.Args().Get(0))
+				if err := serveMock(c, c.String("b"), c.Args().Get(0)); err != nil {
+					return cli.NewExitError(err.Error(), 1)
+				}
+
+				return nil
 			},
 		},
 	}
+
 	app.Run(os.Args)
 }
 
@@ -232,7 +251,7 @@ func renderHTML(c *cli.Context, input, output, tplFile string) error {
 		return err
 	}
 
-	fmt.Fprintln(c.App.Writer, "HTML has been generated!")
+	fmt.Fprintf(c.App.Writer, "%s: HTML has been generated!\n", of.Name())
 	return nil
 }
 
@@ -258,7 +277,7 @@ func renderAPIB(c *cli.Context, input, output string) error {
 		return err
 	}
 
-	fmt.Fprintln(c.App.Writer, "API blueprint has been generated!")
+	fmt.Fprintf(c.App.Writer, "%s: API blueprint has been generated!\n", of.Name())
 	return nil
 }
 
@@ -284,7 +303,7 @@ func renderJSON(c *cli.Context, input, output string) error {
 		return err
 	}
 
-	fmt.Fprintln(c.App.Writer, "API element JSON has been generated!")
+	fmt.Fprintf(c.App.Writer, "%s: API element JSON has been generated!\n", of.Name())
 	return nil
 }
 
@@ -379,28 +398,37 @@ func watchHTML(c *cli.Context, input, output, tplFile, bind string) error {
 			select {
 			case event := <-watcher.Events:
 				if event.Op&fsnotify.Write == fsnotify.Write {
-					renderHTML(c, input, output, tplFile)
+					if err := renderHTML(c, input, output, tplFile); err != nil {
+						fmt.Fprintln(c.App.Writer, err)
+					}
 				}
 			case err := <-watcher.Errors:
-				fmt.Fprintln(c.App.Writer, err)
+				if err != nil {
+					fmt.Fprintln(c.App.Writer, err)
+				}
 			}
 		}
 	}()
 
-	err = watcher.Add(input)
-	if err != nil {
+	if err = watcher.Add(input); err != nil {
 		return err
 	}
 
 	if _, err = os.Stat(tplFile); err == nil {
-		err = watcher.Add(tplFile)
-		if err != nil {
+		if err = watcher.Add(tplFile); err != nil {
 			return err
 		}
 	}
 
-	renderHTML(c, input, output, tplFile)
-	serveHTML(bind, output)
+	if err := renderHTML(c, input, output, tplFile); err != nil {
+		return err
+	}
+
+	fmt.Fprintf(c.App.Writer, "snowboard: listening on %s\n", bind)
+
+	if err := serveHTML(bind, output); err != nil {
+		return err
+	}
 
 	<-done
 

@@ -13,6 +13,7 @@ import (
 	"text/template"
 
 	"github.com/imdario/mergo"
+	"github.com/pkg/errors"
 )
 
 type loader struct {
@@ -73,7 +74,7 @@ func (d *loader) loadSeeds() (map[string]interface{}, error) {
 	for _, seed := range d.seeds {
 		m, err := d.unmarshal(seed)
 		if err != nil {
-			return z, err
+			return z, errors.Wrap(err, fmt.Sprintf("%s -> %s", d.name, seed))
 		}
 
 		mergo.Merge(&z, m)
@@ -118,7 +119,7 @@ func (d *loader) convert(s string) string {
 func (d *loader) parse() (string, error) {
 	f, err := os.Open(d.name)
 	if err != nil {
-		return "", err
+		return "", errors.Wrap(err, d.name)
 	}
 	defer f.Close()
 
