@@ -57,16 +57,16 @@
 			"revisionTime": "2017-07-05T02:17:15Z"
 		},
 		{
-			"checksumSHA1": "8YLoOB7KeQqUSPvlBynceGY4xOc=",
-			"path": "github.com/urfave/cli",
-			"revision": "f017f86fccc5a039a98f23311f34fdf78b014f78",
-			"revisionTime": "2017-08-13T14:59:49Z"
-		},
-		{
 			"checksumSHA1": "KqOZbEWiXVGUp0TMR58UCpVB9+4=",
 			"path": "golang.org/x/sys/unix",
 			"revision": "9aade4d3a3b7e6d876cd3823ad20ec45fc035402",
 			"revisionTime": "2017-09-05T23:24:40Z"
+		},
+		{
+			"checksumSHA1": "Yx1MU40fyGe7hhqW9+dkv8kXa60=",
+			"path": "gopkg.in/urfave/cli.v1",
+			"revision": "cfb38830724cc34fedffe9a2a29fb54fa9169cd1",
+			"revisionTime": "2017-08-11T01:42:03Z"
 		}
 	],
 	"rootPath": "github.com/bukalapak/snowboard"

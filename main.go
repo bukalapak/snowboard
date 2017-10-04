@@ -20,7 +20,7 @@ import (
 	"github.com/bukalapak/snowboard/render"
 	"github.com/fsnotify/fsnotify"
 	xerrors "github.com/pkg/errors"
-	"github.com/urfave/cli"
+	cli "gopkg.in/urfave/cli.v1"
 )
 
 var versionStr string
