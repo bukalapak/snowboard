@@ -73,7 +73,7 @@ func main() {
 						return xerrors.Cause(err)
 					}
 
-					io.WriteString(c.App.Writer, err.Error())
+					return cli.NewExitError(err.Error(), 1)
 				}
 
 				return nil
