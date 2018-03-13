@@ -12,6 +12,7 @@ import (
 	"strings"
 	"text/template"
 
+	"github.com/Masterminds/sprig"
 	"github.com/imdario/mergo"
 	"github.com/pkg/errors"
 )
@@ -138,18 +139,6 @@ func (d *loader) parse() (string, error) {
 	return strings.Join(cs, "\n"), nil
 }
 
-func join(ss []interface{}, s string) string {
-	xs := []string{}
-
-	for _, s := range ss {
-		if z, ok := s.(string); ok {
-			xs = append(xs, z)
-		}
-	}
-
-	return strings.Join(xs, s)
-}
-
 // Read reads API blueprint from file as bytes
 func Read(name string) ([]byte, error) {
 	d := newLoader(name)
@@ -164,11 +153,12 @@ func Read(name string) ([]byte, error) {
 		return nil, err
 	}
 
-	b, _ := process(s, data, template.FuncMap{"partial": d.partial})
+	funcMap := sprig.TxtFuncMap()
+	funcMap["partial"] = d.partial
 
-	funcMap := template.FuncMap{
-		"upcase": strings.ToUpper,
-		"join":   join,
+	b, err := process(s, data, funcMap)
+	if err != nil {
+		return nil, err
 	}
 
 	b, err = process(string(b), data, funcMap)
