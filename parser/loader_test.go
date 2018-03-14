@@ -21,3 +21,10 @@ func TestRead_seed(t *testing.T) {
 	assert.Contains(t, string(b), `seeds usage`)
 	assert.Contains(t, string(b), `user-related`)
 }
+
+func TestRead_helperFuncs(t *testing.T) {
+	b, err := snowboard.Read("../fixtures/extensions/helper-funcs.apib")
+	assert.Nil(t, err)
+	assert.Contains(t, string(b), `"type": "object",`)
+	assert.Contains(t, string(b), `            {`) // indented by 12 spaces
+}
