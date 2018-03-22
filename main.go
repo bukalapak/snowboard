@@ -55,12 +55,6 @@ func main() {
 
 		return nil
 	}
-	app.Flags = []cli.Flag{
-		cli.StringFlag{
-			Name:  "watch-interval",
-			Usage: "Set watch interval. This activates polling watcher. Accepted format like: 100ms, 1s, etc",
-		},
-	}
 	app.Commands = []cli.Command{
 		{
 			Name:  "lint",
@@ -109,14 +103,18 @@ func main() {
 					Value: ":8088",
 					Usage: "HTTP server listen address",
 				},
+				cli.StringFlag{
+					Name:  "watch-interval, n",
+					Usage: "Set watch interval. This activates polling watcher. Accepted format like: 100ms, 1s, etc",
+				},
 			},
 			Action: func(c *cli.Context) error {
 				if c.Args().Get(0) == "" {
 					return nil
 				}
 
-				if n := c.GlobalString("watch-interval"); n != "" {
-					d, err := time.ParseDuration(c.GlobalString("watch-interval"))
+				if n := c.String("watch-interval"); n != "" {
+					d, err := time.ParseDuration(c.String("watch-interval"))
 					if err != nil {
 						return cli.NewExitError(fmt.Errorf("invalid value for `watch-interval`: %s", err), 1)
 					}
@@ -486,11 +484,11 @@ func watchIntervalHTML(c *cli.Context, input, output, tplFile, bind string, inte
 		watcher.Wait()
 	}()
 
+	fmt.Fprintf(c.App.Writer, "snowboard: listening on %s\n", bind)
+
 	if err := watcher.Start(interval); err != nil {
 		return err
 	}
-
-	fmt.Fprintf(c.App.Writer, "snowboard: listening on %s\n", bind)
 
 	if err := serveHTML(bind, output); err != nil {
 		return err
