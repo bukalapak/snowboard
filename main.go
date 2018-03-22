@@ -12,6 +12,7 @@ import (
 	"os"
 	"strings"
 	"text/tabwriter"
+	"time"
 
 	"github.com/bukalapak/snowboard/adapter/drafter"
 	"github.com/bukalapak/snowboard/adapter/drafterc"
@@ -20,6 +21,7 @@ import (
 	"github.com/bukalapak/snowboard/render"
 	"github.com/fsnotify/fsnotify"
 	xerrors "github.com/pkg/errors"
+	pWatcher "github.com/radovskyb/watcher"
 	cli "gopkg.in/urfave/cli.v1"
 )
 
@@ -52,6 +54,12 @@ func main() {
 		}
 
 		return nil
+	}
+	app.Flags = []cli.Flag{
+		cli.StringFlag{
+			Name:  "watch-interval",
+			Usage: "Set watch interval. This activates polling watcher. Accepted format like: 100ms, 1s, etc",
+		},
 	}
 	app.Commands = []cli.Command{
 		{
@@ -104,6 +112,21 @@ func main() {
 			},
 			Action: func(c *cli.Context) error {
 				if c.Args().Get(0) == "" {
+					return nil
+				}
+
+				if n := c.GlobalString("watch-interval"); n != "" {
+					d, err := time.ParseDuration(c.GlobalString("watch-interval"))
+					if err != nil {
+						return cli.NewExitError(fmt.Errorf("invalid value for `watch-interval`: %s", err), 1)
+					}
+
+					if c.Bool("s") {
+						if err := watchIntervalHTML(c, c.Args().Get(0), c.String("o"), c.String("t"), c.String("b"), d); err != nil {
+							return cli.NewExitError(err.Error()+"\n", 1)
+						}
+					}
+
 					return nil
 				}
 
@@ -251,7 +274,7 @@ func renderHTML(c *cli.Context, input, output, tplFile string) error {
 		return err
 	}
 
-	fmt.Fprintf(c.App.Writer, "%s: HTML has been generated!\n", of.Name())
+	fmt.Fprintf(c.App.Writer, "[%s] %s: HTML has been generated!\n", time.Now().Format(time.RFC3339), of.Name())
 	return nil
 }
 
@@ -381,6 +404,10 @@ func dash(n int) string {
 	return strings.Repeat("-", n)
 }
 
+type fsWatcher interface {
+	Add(string) error
+}
+
 func watchHTML(c *cli.Context, input, output, tplFile, bind string) error {
 	if output == "" {
 		output = "index.html"
@@ -410,11 +437,74 @@ func watchHTML(c *cli.Context, input, output, tplFile, bind string) error {
 		}
 	}()
 
-	if err = watcher.Add(input); err != nil {
+	if err := watchFiles(c, watcher, input, output, tplFile, bind); err != nil {
 		return err
 	}
 
-	if _, err = os.Stat(tplFile); err == nil {
+	fmt.Fprintf(c.App.Writer, "snowboard: listening on %s\n", bind)
+
+	if err := serveHTML(bind, output); err != nil {
+		return err
+	}
+
+	<-done
+
+	return nil
+}
+
+func watchIntervalHTML(c *cli.Context, input, output, tplFile, bind string, interval time.Duration) error {
+	if output == "" {
+		output = "index.html"
+	}
+
+	watcher := pWatcher.New()
+
+	go func() {
+		for {
+			select {
+			case event := <-watcher.Event:
+				if event.Op&pWatcher.Write == pWatcher.Write {
+					if err := renderHTML(c, input, output, tplFile); err != nil {
+						fmt.Fprintln(c.App.Writer, err)
+					}
+				}
+			case err := <-watcher.Error:
+				if err != nil {
+					fmt.Fprintln(c.App.Writer, err)
+				}
+			case <-watcher.Closed:
+				return
+			}
+		}
+	}()
+
+	if err := watchFiles(c, watcher, input, output, tplFile, bind); err != nil {
+		return err
+	}
+
+	go func() {
+		watcher.Wait()
+	}()
+
+	if err := watcher.Start(interval); err != nil {
+		return err
+	}
+
+	fmt.Fprintf(c.App.Writer, "snowboard: listening on %s\n", bind)
+
+	if err := serveHTML(bind, output); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func watchFiles(c *cli.Context, watcher fsWatcher, input, output, tplFile, bind string) error {
+	if err := watcher.Add(input); err != nil {
+		return err
+	}
+
+	if _, err := os.Stat(tplFile); err == nil {
 		if err = watcher.Add(tplFile); err != nil {
 			return err
 		}
@@ -425,18 +515,10 @@ func watchHTML(c *cli.Context, input, output, tplFile, bind string) error {
 	}
 
 	for _, s := range snowboard.Seeds(input) {
-		if err = watcher.Add(s); err != nil {
+		if err := watcher.Add(s); err != nil {
 			return err
 		}
 	}
-
-	fmt.Fprintf(c.App.Writer, "snowboard: listening on %s\n", bind)
-
-	if err := serveHTML(bind, output); err != nil {
-		return err
-	}
-
-	<-done
 
 	return nil
 }
