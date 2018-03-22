@@ -89,6 +89,12 @@
 			"revisionTime": "2016-01-10T10:55:54Z"
 		},
 		{
+			"checksumSHA1": "kjrbJnuRRZxcPUzJrPEc38iACH4=",
+			"path": "github.com/radovskyb/watcher",
+			"revision": "6145e1439b9de93806925353403f91d2abbad8a5",
+			"revisionTime": "2017-08-10T06:39:29Z"
+		},
+		{
 			"checksumSHA1": "+nVM+CEZGAopOrYlLifgWP+X01E=",
 			"path": "github.com/satori/go.uuid",
 			"revision": "f58768cc1a7a7e77a3bd49e98cdd21419399b6a3",
