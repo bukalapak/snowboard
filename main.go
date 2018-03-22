@@ -103,6 +103,10 @@ func main() {
 					Value: ":8088",
 					Usage: "HTTP server listen address",
 				},
+				cli.BoolFlag{
+					Name:  "watch, w",
+					Usage: "Watch for the files changes",
+				},
 				cli.StringFlag{
 					Name:  "watch-interval, n",
 					Usage: "Set watch interval. This activates polling watcher. Accepted format like: 100ms, 1s, etc",
@@ -113,24 +117,19 @@ func main() {
 					return nil
 				}
 
-				if n := c.String("watch-interval"); n != "" {
-					d, err := time.ParseDuration(c.String("watch-interval"))
-					if err != nil {
-						return cli.NewExitError(fmt.Errorf("invalid value for `watch-interval`: %s", err), 1)
+				cerr := make(chan error, 1)
+
+				go func() {
+					if err := serveHTML(c, c.String("b"), c.String("o")); err != nil {
+						cerr <- cli.NewExitError(err.Error(), 1)
 					}
 
-					if c.Bool("s") {
-						if err := watchIntervalHTML(c, c.Args().Get(0), c.String("o"), c.String("t"), c.String("b"), d); err != nil {
-							return cli.NewExitError(err.Error()+"\n", 1)
-						}
-					}
+					cli.HandleExitCoder(<-cerr)
+				}()
 
-					return nil
-				}
-
-				if c.Bool("s") {
-					if err := watchHTML(c, c.Args().Get(0), c.String("o"), c.String("t"), c.String("b")); err != nil {
-						return cli.NewExitError(err.Error()+"\n", 1)
+				if c.Bool("watch") {
+					if err := appWatcher(c); err != nil {
+						return err
 					}
 				}
 
@@ -210,6 +209,25 @@ func main() {
 	app.Run(os.Args)
 }
 
+func appWatcher(c *cli.Context) error {
+	if n := c.String("watch-interval"); n != "" {
+		d, err := time.ParseDuration(n)
+		if err != nil {
+			return cli.NewExitError(fmt.Errorf("invalid value for `watch-interval`: %s", err), 1)
+		}
+
+		if err := watchInterval(c, c.Args().Get(0), c.String("o"), c.String("t"), d); err != nil {
+			return cli.NewExitError(err.Error()+"\n", 1)
+		}
+	} else {
+		if err := watch(c, c.Args().Get(0), c.String("o"), c.String("t")); err != nil {
+			return cli.NewExitError(err.Error()+"\n", 1)
+		}
+	}
+
+	return nil
+}
+
 func readFile(fn string) ([]byte, error) {
 	info, err := os.Stat(fn)
 	if err != nil {
@@ -253,7 +271,7 @@ func renderHTML(c *cli.Context, input, output, tplFile string) error {
 	if output == "" {
 		var bf bytes.Buffer
 
-		if err := render.HTML(string(tf), &bf, bp); err != nil {
+		if err = render.HTML(string(tf), &bf, bp); err != nil {
 			return err
 		}
 
@@ -406,7 +424,7 @@ type fsWatcher interface {
 	Add(string) error
 }
 
-func watchHTML(c *cli.Context, input, output, tplFile, bind string) error {
+func watch(c *cli.Context, input, output, tplFile string) error {
 	if output == "" {
 		output = "index.html"
 	}
@@ -418,6 +436,7 @@ func watchHTML(c *cli.Context, input, output, tplFile, bind string) error {
 	defer watcher.Close()
 
 	done := make(chan bool)
+
 	go func() {
 		for {
 			select {
@@ -428,20 +447,12 @@ func watchHTML(c *cli.Context, input, output, tplFile, bind string) error {
 					}
 				}
 			case err := <-watcher.Errors:
-				if err != nil {
-					fmt.Fprintln(c.App.Writer, err)
-				}
+				fmt.Fprintln(c.App.Writer, err)
 			}
 		}
 	}()
 
-	if err := watchFiles(c, watcher, input, output, tplFile, bind); err != nil {
-		return err
-	}
-
-	fmt.Fprintf(c.App.Writer, "snowboard: listening on %s\n", bind)
-
-	if err := serveHTML(bind, output); err != nil {
+	if err := watchFiles(c, watcher, input, tplFile); err != nil {
 		return err
 	}
 
@@ -450,12 +461,13 @@ func watchHTML(c *cli.Context, input, output, tplFile, bind string) error {
 	return nil
 }
 
-func watchIntervalHTML(c *cli.Context, input, output, tplFile, bind string, interval time.Duration) error {
+func watchInterval(c *cli.Context, input, output, tplFile string, interval time.Duration) error {
 	if output == "" {
 		output = "index.html"
 	}
 
 	watcher := pWatcher.New()
+	defer watcher.Close()
 
 	go func() {
 		for {
@@ -467,49 +479,35 @@ func watchIntervalHTML(c *cli.Context, input, output, tplFile, bind string, inte
 					}
 				}
 			case err := <-watcher.Error:
-				if err != nil {
-					fmt.Fprintln(c.App.Writer, err)
-				}
+				fmt.Fprintln(c.App.Writer, err)
 			case <-watcher.Closed:
 				return
 			}
 		}
 	}()
 
-	if err := watchFiles(c, watcher, input, output, tplFile, bind); err != nil {
+	if err := watchFiles(c, watcher, input, tplFile); err != nil {
 		return err
 	}
-
-	go func() {
-		watcher.Wait()
-	}()
-
-	fmt.Fprintf(c.App.Writer, "snowboard: listening on %s\n", bind)
 
 	if err := watcher.Start(interval); err != nil {
-		return err
-	}
-
-	if err := serveHTML(bind, output); err != nil {
 		return err
 	}
 
 	return nil
 }
 
-func watchFiles(c *cli.Context, watcher fsWatcher, input, output, tplFile, bind string) error {
+func watchFiles(c *cli.Context, watcher fsWatcher, input, tplFile string) error {
 	if err := watcher.Add(input); err != nil {
 		return err
 	}
 
-	if _, err := os.Stat(tplFile); err == nil {
-		if err = watcher.Add(tplFile); err != nil {
-			return err
+	if tplFile != "" {
+		if _, err := os.Stat(tplFile); err == nil {
+			if err = watcher.Add(tplFile); err != nil {
+				return err
+			}
 		}
-	}
-
-	if err := renderHTML(c, input, output, tplFile); err != nil {
-		return err
 	}
 
 	for _, s := range snowboard.Seeds(input) {
@@ -521,7 +519,9 @@ func watchFiles(c *cli.Context, watcher fsWatcher, input, output, tplFile, bind 
 	return nil
 }
 
-func serveHTML(bind, output string) error {
+func serveHTML(c *cli.Context, bind, output string) error {
+	fmt.Fprintf(c.App.Writer, "snowboard: listening on %s\n", bind)
+
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, output)
 	})
