@@ -106,7 +106,7 @@ func main() {
 				},
 				cli.StringFlag{
 					Name:  "b",
-					Value: "127.0.0.1:8088",
+					Value: ":8088",
 					Usage: "HTTP server listen address",
 				},
 			},
@@ -191,7 +191,7 @@ func main() {
 			Flags: []cli.Flag{
 				cli.StringFlag{
 					Name:  "b",
-					Value: "127.0.0.1:8087",
+					Value: ":8087",
 					Usage: "HTTP server listen address",
 				},
 			},
