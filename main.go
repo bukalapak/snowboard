@@ -55,6 +55,16 @@ func main() {
 
 		return nil
 	}
+	app.Flags = []cli.Flag{
+		cli.BoolFlag{
+			Name:  "watch, w",
+			Usage: "Watch for the files changes",
+		},
+		cli.StringFlag{
+			Name:  "watch-interval, n",
+			Usage: "Set watch interval. This activates polling watcher. Accepted format like: 100ms, 1s, etc",
+		},
+	}
 	app.Commands = []cli.Command{
 		{
 			Name:  "lint",
@@ -103,14 +113,6 @@ func main() {
 					Value: ":8088",
 					Usage: "HTTP server listen address",
 				},
-				cli.BoolFlag{
-					Name:  "watch, w",
-					Usage: "Watch for the files changes",
-				},
-				cli.StringFlag{
-					Name:  "watch-interval, n",
-					Usage: "Set watch interval. This activates polling watcher. Accepted format like: 100ms, 1s, etc",
-				},
 			},
 			Action: func(c *cli.Context) error {
 				if c.Args().Get(0) == "" {
@@ -127,7 +129,7 @@ func main() {
 					cli.HandleExitCoder(<-cerr)
 				}()
 
-				if c.Bool("watch") {
+				if c.GlobalBool("watch") {
 					if err := appWatcher(c); err != nil {
 						return err
 					}
@@ -154,6 +156,12 @@ func main() {
 					return nil
 				}
 
+				if c.GlobalBool("watch") {
+					if err := appWatcher(c); err != nil {
+						return err
+					}
+				}
+
 				if err := renderAPIB(c, c.Args().Get(0), c.String("o")); err != nil {
 					return cli.NewExitError(err.Error(), 1)
 				}
@@ -173,6 +181,12 @@ func main() {
 			Action: func(c *cli.Context) error {
 				if c.Args().Get(0) == "" {
 					return nil
+				}
+
+				if c.GlobalBool("watch") {
+					if err := appWatcher(c); err != nil {
+						return err
+					}
 				}
 
 				if err := renderJSON(c, c.Args().Get(0), c.String("o")); err != nil {
@@ -210,7 +224,7 @@ func main() {
 }
 
 func appWatcher(c *cli.Context) error {
-	if n := c.String("watch-interval"); n != "" {
+	if n := c.GlobalString("watch-interval"); n != "" {
 		d, err := time.ParseDuration(n)
 		if err != nil {
 			return cli.NewExitError(fmt.Errorf("invalid value for `watch-interval`: %s", err), 1)
@@ -424,10 +438,38 @@ type fsWatcher interface {
 	Add(string) error
 }
 
-func watch(c *cli.Context, input, output, tplFile string) error {
-	if output == "" {
-		output = "index.html"
+func outputName(c *cli.Context, output string) string {
+	switch c.Command.Name {
+	case "html":
+		if output == "" {
+			return "index.html"
+		}
 	}
+
+	return ""
+}
+
+func actionCommand(c *cli.Context, input, output, tplFile string) error {
+	switch c.Command.Name {
+	case "html":
+		if err := renderHTML(c, input, output, tplFile); err != nil {
+			return err
+		}
+	case "apib":
+		if err := renderAPIB(c, input, output); err != nil {
+			return err
+		}
+	case "json":
+		if err := renderJSON(c, input, output); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func watch(c *cli.Context, input, output, tplFile string) error {
+	output = outputName(c, output)
 
 	watcher, err := fsnotify.NewWatcher()
 	if err != nil {
@@ -442,7 +484,7 @@ func watch(c *cli.Context, input, output, tplFile string) error {
 			select {
 			case event := <-watcher.Events:
 				if event.Op&fsnotify.Write == fsnotify.Write {
-					if err := renderHTML(c, input, output, tplFile); err != nil {
+					if err := actionCommand(c, input, output, tplFile); err != nil {
 						fmt.Fprintln(c.App.Writer, err)
 					}
 				}
@@ -462,9 +504,7 @@ func watch(c *cli.Context, input, output, tplFile string) error {
 }
 
 func watchInterval(c *cli.Context, input, output, tplFile string, interval time.Duration) error {
-	if output == "" {
-		output = "index.html"
-	}
+	output = outputName(c, output)
 
 	watcher := pWatcher.New()
 	defer watcher.Close()
@@ -474,7 +514,7 @@ func watchInterval(c *cli.Context, input, output, tplFile string, interval time.
 			select {
 			case event := <-watcher.Event:
 				if event.Op&pWatcher.Write == pWatcher.Write {
-					if err := renderHTML(c, input, output, tplFile); err != nil {
+					if err := actionCommand(c, input, output, tplFile); err != nil {
 						fmt.Fprintln(c.App.Writer, err)
 					}
 				}
