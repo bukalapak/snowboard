@@ -156,8 +156,10 @@
     {{$group.Title}}
   </div>
   <div class="ui header center aligned">
-    <div class="ui sub header">
-      {{$group.Description | markdownize}}
+    <div class="ui header">
+      <div class="sub header">
+        {{$group.Description | markdownize}}
+      </div>
     </div>
   </div>
   {{range $resourceN, $resource := $group.Resources}}
