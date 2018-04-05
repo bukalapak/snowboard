@@ -119,17 +119,23 @@ func main() {
 					return nil
 				}
 
-				cerr := make(chan error, 1)
-
-				go func() {
-					if err := serveHTML(c, c.String("b"), c.String("o")); err != nil {
-						cerr <- cli.NewExitError(err.Error(), 1)
-					}
-
-					cli.HandleExitCoder(<-cerr)
-				}()
-
 				if c.GlobalBool("watch") {
+					cerr := make(chan error, 1)
+
+					go func() {
+						if err := renderHTML(c, c.Args().Get(0), c.String("o"), c.String("t")); err != nil {
+							cerr <- cli.NewExitError(err.Error(), 1)
+						}
+
+						if c.Bool("s") {
+							if err := serveHTML(c, c.String("b"), c.String("o")); err != nil {
+								cerr <- cli.NewExitError(err.Error(), 1)
+							}
+						}
+
+						cli.HandleExitCoder(<-cerr)
+					}()
+
 					if err := appWatcher(c); err != nil {
 						return err
 					}
@@ -137,6 +143,12 @@ func main() {
 
 				if err := renderHTML(c, c.Args().Get(0), c.String("o"), c.String("t")); err != nil {
 					return cli.NewExitError(err.Error(), 1)
+				}
+
+				if c.Bool("s") {
+					if err := serveHTML(c, c.String("b"), c.String("o")); err != nil {
+						return cli.NewExitError(err.Error(), 1)
+					}
 				}
 
 				return nil
@@ -443,6 +455,8 @@ func outputName(c *cli.Context, output string) string {
 	case "html":
 		if output == "" {
 			return "index.html"
+		} else {
+			return output
 		}
 	}
 
