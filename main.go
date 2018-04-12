@@ -113,6 +113,10 @@ func main() {
 					Value: ":8088",
 					Usage: "HTTP server listen address",
 				},
+				cli.BoolFlag{
+					Name:  "q",
+					Usage: "Quiet mode",
+				},
 			},
 			Action: func(c *cli.Context) error {
 				if c.Args().Get(0) == "" {
@@ -162,6 +166,10 @@ func main() {
 					Name:  "o",
 					Usage: "API blueprint output file",
 				},
+				cli.BoolFlag{
+					Name:  "q",
+					Usage: "Quiet mode",
+				},
 			},
 			Action: func(c *cli.Context) error {
 				if c.Args().Get(0) == "" {
@@ -188,6 +196,10 @@ func main() {
 				cli.StringFlag{
 					Name:  "o",
 					Usage: "API element output file",
+				},
+				cli.BoolFlag{
+					Name:  "q",
+					Usage: "Quiet mode",
 				},
 			},
 			Action: func(c *cli.Context) error {
@@ -316,7 +328,10 @@ func renderHTML(c *cli.Context, input, output, tplFile string) error {
 		return err
 	}
 
-	fmt.Fprintf(c.App.Writer, "[%s] %s: HTML has been generated!\n", time.Now().Format(time.RFC3339), of.Name())
+	if !c.Bool("q") {
+		fmt.Fprintf(c.App.Writer, "[%s] %s: HTML has been generated!\n", time.Now().Format(time.RFC3339), of.Name())
+	}
+
 	return nil
 }
 
@@ -342,7 +357,10 @@ func renderAPIB(c *cli.Context, input, output string) error {
 		return err
 	}
 
-	fmt.Fprintf(c.App.Writer, "%s: API blueprint has been generated!\n", of.Name())
+	if !c.Bool("q") {
+		fmt.Fprintf(c.App.Writer, "%s: API blueprint has been generated!\n", of.Name())
+	}
+
 	return nil
 }
 
@@ -368,7 +386,10 @@ func renderJSON(c *cli.Context, input, output string) error {
 		return err
 	}
 
-	fmt.Fprintf(c.App.Writer, "%s: API element JSON has been generated!\n", of.Name())
+	if !c.Bool("q") {
+		fmt.Fprintf(c.App.Writer, "%s: API element JSON has been generated!\n", of.Name())
+	}
+
 	return nil
 }
 
