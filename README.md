@@ -106,9 +106,23 @@ If you want to access HTML documentation via HTTP, especially on local developme
 $ snowboard html -o output.html -t awesome-template.html -s API.apib
 ```
 
-With this flag, You can access HTML documentation on `localhost:8088` and any updates on both input and template file will trigger auto-regeneration.
+With this flag, You can access HTML documentation on `localhost:8088`.
 
 If you need to customize binding address, you can use flag `-b`.
+
+#### Auto-regeneration
+
+To enable auto-regeneration on both input and template file updates, you can add global flag `--watch`
+
+```
+$ snowboard --watch html -o output.html -t awesome-template.html -s API.apib
+```
+
+Optionally, you can also use `--watch-interval` to enable polling interval.
+
+```
+$ snowboard --watch --watch-interval 100ms html -o output.html -t awesome-template.html -s API.apib
+```
 
 #### Serve HTML from Docker container
 
