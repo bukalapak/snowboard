@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/bukalapak/snowboard/api"
+	"github.com/gosimple/slug"
 	"github.com/miekg/mmark"
 )
 
@@ -15,7 +16,7 @@ func markdownize(s string) template.HTML {
 }
 
 func parameterize(s string) string {
-	return strings.Replace(strings.ToLower(s), " ", "-", -1)
+	return slug.Make(s)
 }
 
 func toString(v interface{}) string {
