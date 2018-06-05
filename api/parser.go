@@ -8,6 +8,8 @@ import (
 	"reflect"
 	"strconv"
 	"strings"
+
+	"github.com/gosimple/slug"
 )
 
 func ParseJSON(r io.Reader) (*Element, error) {
@@ -470,7 +472,7 @@ func strUnescapse(s string) string {
 }
 
 func parameterize(s string) string {
-	return strings.Replace(strings.ToLower(s), " ", "-", -1)
+	return slug.Make(s)
 }
 
 func requestMethod(t Transition) string {

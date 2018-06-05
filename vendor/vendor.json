@@ -51,6 +51,12 @@
 			"revisionTime": "2017-03-29T04:21:07Z"
 		},
 		{
+			"checksumSHA1": "MVoL41wTwCHNLMk61ObjsW8EXi0=",
+			"path": "github.com/gosimple/slug",
+			"revision": "e9f42fa127660e552d0ad2b589868d403a9be7c6",
+			"revisionTime": "2017-08-21T11:09:01Z"
+		},
+		{
 			"checksumSHA1": "EZeV0QZvFvXk/Dnt9yFa9ob8l3k=",
 			"path": "github.com/huandu/xstrings",
 			"revision": "2bf18b218c51864a87384c06996e40ff9dcff8e1",
@@ -93,6 +99,12 @@
 			"path": "github.com/radovskyb/watcher",
 			"revision": "6145e1439b9de93806925353403f91d2abbad8a5",
 			"revisionTime": "2017-08-10T06:39:29Z"
+		},
+		{
+			"checksumSHA1": "pvg8L4xN+zO9HLJislpVeHPPLjM=",
+			"path": "github.com/rainycape/unidecode",
+			"revision": "cb7f23ec59bec0d61b19c56cd88cee3d0cc1870c",
+			"revisionTime": "2015-09-07T02:38:54Z"
 		},
 		{
 			"checksumSHA1": "+nVM+CEZGAopOrYlLifgWP+X01E=",
