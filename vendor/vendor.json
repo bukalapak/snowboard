@@ -9,14 +9,6 @@
 			"revisionTime": "2017-06-26T11:06:00Z"
 		},
 		{
-			"checksumSHA1": "aH1UXmLsw9BZAOZnVOEjWKgt3i8=",
-			"path": "github.com/Masterminds/goutils",
-			"revision": "45307ec16e3cd47cd841506c081f7afd8237d210",
-			"revisionTime": "2014-04-30T21:20:01Z",
-			"version": "1.0.0",
-			"versionExact": "1.0.0"
-		},
-		{
 			"checksumSHA1": "K4ks8YKQ9QV4zXmtLDA+W18HHHg=",
 			"path": "github.com/Masterminds/semver",
 			"revision": "59c29afe1a994eacb71c833025ca7acf874bb1da",
@@ -107,6 +99,12 @@
 			"revisionTime": "2015-09-07T02:38:54Z"
 		},
 		{
+			"checksumSHA1": "XNmWIjMqYUL0qWEfRUi3X5rfYhw=",
+			"path": "github.com/rs/cors",
+			"revision": "694cf2ad010fcf91ee35161f5bfdad8f42ed1b9a",
+			"revisionTime": "2018-05-24T07:14:09Z"
+		},
+		{
 			"checksumSHA1": "+nVM+CEZGAopOrYlLifgWP+X01E=",
 			"path": "github.com/satori/go.uuid",
 			"revision": "f58768cc1a7a7e77a3bd49e98cdd21419399b6a3",
@@ -115,34 +113,10 @@
 			"versionExact": "v1.2.0"
 		},
 		{
-			"checksumSHA1": "6thzskcj6XrMO5kW6GlRiuTDYjU=",
-			"path": "github.com/stretchr/objx",
-			"revision": "8a3f7159479fbc75b30357fbc48f380b7320f08e",
-			"revisionTime": "2018-01-29T17:20:03Z"
-		},
-		{
-			"checksumSHA1": "9ju1AM4pMKOFfJ2ZycjSrzHHwSI=",
-			"path": "github.com/stretchr/testify",
-			"revision": "b89eecf5ca5db6d3ba60b237ffe3df7bafb7662f",
-			"revisionTime": "2018-03-03T13:51:14Z"
-		},
-		{
 			"checksumSHA1": "mGbTYZ8dHVTiPTTJu3ktp+84pPI=",
 			"path": "github.com/stretchr/testify/assert",
 			"revision": "890a5c3458b43e6104ff5da8dfa139d013d77544",
 			"revisionTime": "2017-07-05T02:17:15Z"
-		},
-		{
-			"checksumSHA1": "fg3TzS9/QK3wZbzei3Z6O8XPLHg=",
-			"path": "github.com/stretchr/testify/http",
-			"revision": "b89eecf5ca5db6d3ba60b237ffe3df7bafb7662f",
-			"revisionTime": "2018-03-03T13:51:14Z"
-		},
-		{
-			"checksumSHA1": "MJoPfiHr+RliMn+sRXWOvVIg9TE=",
-			"path": "github.com/stretchr/testify/mock",
-			"revision": "b89eecf5ca5db6d3ba60b237ffe3df7bafb7662f",
-			"revisionTime": "2018-03-03T13:51:14Z"
 		},
 		{
 			"checksumSHA1": "1MGpGDQqnUoRpv7VEcQrXOBydXE=",
