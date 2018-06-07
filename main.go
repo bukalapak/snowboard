@@ -394,7 +394,7 @@ func renderJSON(c *cli.Context, input, output string) error {
 }
 
 func validate(c *cli.Context, input string, charIdx bool) error {
-	b, err := readFile(input)
+	b, err := snowboard.Read(input)
 	if err != nil {
 		return xerrors.Wrap(err, "read failed")
 	}
