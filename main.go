@@ -22,6 +22,7 @@ import (
 	"github.com/fsnotify/fsnotify"
 	xerrors "github.com/pkg/errors"
 	pWatcher "github.com/radovskyb/watcher"
+	"github.com/rs/cors"
 	cli "gopkg.in/urfave/cli.v1"
 )
 
@@ -619,5 +620,7 @@ func serveMock(c *cli.Context, bind, input string) error {
 	}
 
 	h := mock.MockHandler(ms)
-	return http.ListenAndServe(bind, h)
+	z := cors.AllowAll().Handler(h)
+
+	return http.ListenAndServe(bind, z)
 }
