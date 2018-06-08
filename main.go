@@ -16,6 +16,7 @@ import (
 
 	"github.com/bukalapak/snowboard/adapter/drafter"
 	"github.com/bukalapak/snowboard/adapter/drafterc"
+	"github.com/bukalapak/snowboard/api"
 	"github.com/bukalapak/snowboard/mock"
 	snowboard "github.com/bukalapak/snowboard/parser"
 	"github.com/bukalapak/snowboard/render"
@@ -236,7 +237,7 @@ func main() {
 					return nil
 				}
 
-				if err := serveMock(c, c.String("b"), c.Args().Get(0)); err != nil {
+				if err := serveMock(c, c.String("b"), c.Args()); err != nil {
 					return cli.NewExitError(err.Error(), 1)
 				}
 
@@ -605,18 +606,26 @@ func serveHTML(c *cli.Context, bind, output string) error {
 	return http.ListenAndServe(bind, nil)
 }
 
-func serveMock(c *cli.Context, bind, input string) error {
-	bp, err := snowboard.Load(input, engine)
-	if err != nil {
-		return err
+func serveMock(c *cli.Context, bind string, inputs []string) error {
+	bs := make([]*api.API, len(inputs))
+
+	for i := range inputs {
+		bp, err := snowboard.Load(inputs[i], engine)
+		if err != nil {
+			return err
+		}
+
+		bs[i] = bp
 	}
 
 	fmt.Fprintf(c.App.Writer, "Mock server is ready. Use %s\n", bind)
 	fmt.Fprintln(c.App.Writer, "Available Routes:")
 
-	ms := mock.Mock(bp)
-	for _, m := range ms {
-		fmt.Fprintf(c.App.Writer, "%s\t%d\t%s\n", m.Method, m.StatusCode, m.Pattern)
+	ms := mock.MockMulti(bs)
+	for _, mm := range ms {
+		for _, m := range mm {
+			fmt.Fprintf(c.App.Writer, "%s\t%d\t%s\n", m.Method, m.StatusCode, m.Pattern)
+		}
 	}
 
 	h := mock.MockHandler(ms)

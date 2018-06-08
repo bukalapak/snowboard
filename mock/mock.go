@@ -113,13 +113,37 @@ func Mock(b *api.API) []*MockTransaction {
 	return ms
 }
 
-func MockHandler(ms MockTransactions) http.Handler {
+func MockMulti(bs []*api.API) []MockTransactions {
+	ms := make([]MockTransactions, len(bs))
+
+	for i := range bs {
+		ms[i] = Mock(bs[i])
+	}
+
+	return ms
+}
+
+func MockHandler(ms []MockTransactions) http.Handler {
+	mr := make([]*mockRouter, len(ms))
+
+	for i := range ms {
+		mr[i] = ms[i].Router()
+	}
+
 	fn := func(w http.ResponseWriter, r *http.Request) {
 		var n *MockTransaction
 
-		z := ms.Router()
-		router := z.Router(r.Method)
-		data, _, found := router.Lookup(r.URL.Path)
+		var found bool
+		var data interface{}
+
+		for _, q := range mr {
+			router := q.Router(r.Method)
+
+			if !found {
+				data, _, found = router.Lookup(r.URL.Path)
+			}
+		}
+
 		if !found {
 			w.WriteHeader(http.StatusNotFound)
 			return
