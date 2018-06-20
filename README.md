@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/bukalapak/snowboard.svg?branch=master)](https://travis-ci.org/bukalapak/snowboard)
 [![GoDoc](https://godoc.org/github.com/bukalapak/snowboard?status.svg)](https://godoc.org/github.com/bukalapak/snowboard)
-[![Docker Automated build](https://img.shields.io/docker/automated/bukalapak/snowboard.svg?maxAge=2592000)](https://hub.docker.com/r/bukalapak/snowboard/)
+[![Docker Repository on Quay](https://quay.io/repository/bukalapak/snowboard/status)](https://quay.io/repository/bukalapak/snowboard)
 [![GitHub release](https://img.shields.io/github/release/bukalapak/snowboard.svg)](https://github.com/bukalapak/snowboard)
 
 API blueprint toolkit.
@@ -40,17 +40,17 @@ $ pacaur -S snowboard
 
 ### Docker
 
-You can also use automated build docker image on `bukalapak/snowboard`:
+You can also use automated build docker image on `quay.io/bukalapak/snowboard`:
 
 ```
-$ docker pull bukalapak/snowboard
-$ docker run -it --rm bukalapak/snowboard help
+$ docker pull quay.io/bukalapak/snowboard
+$ docker run -it --rm quay.io/bukalapak/snowboard help
 ```
 
 To run snowboard with the current directory mounted to `/doc`:
 
 ```
-$ docker run -it --rm -v $PWD:/doc bukalapak/snowboard html -o output.html API.apib
+$ docker run -it --rm -v $PWD:/doc quay.io/bukalapak/snowboard html -o output.html API.apib
 ```
 
 ### Manual
