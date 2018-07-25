@@ -39,6 +39,10 @@
         text-align: left;
         overflow: auto;
       }
+      
+      .ui.basic.label.request-url {
+        user-select: text;
+      }
 
       .resource .ui.sub.header {
         text-transform: none;
@@ -193,7 +197,7 @@
                 <div class="ui {{$transaction.Request.Method | colorize}} large button">
                   <h3>{{$transaction.Request.Method}}</h3>
                 </div>
-                <a class="ui basic fluid {{$transaction.Request.Method | colorize}} label">
+                <a class="ui basic fluid request-url {{$transaction.Request.Method | colorize}} label">
                   <code>{{$transition.URL}}</code>
                 </a>
               </div>
