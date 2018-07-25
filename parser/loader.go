@@ -139,6 +139,18 @@ func (d *loader) parse() (string, error) {
 	return strings.Join(cs, "\n"), nil
 }
 
+func join(ss []interface{}, s string) string {
+	xs := []string{}
+
+	for _, s := range ss {
+		if z, ok := s.(string); ok {
+			xs = append(xs, z)
+		}
+	}
+
+	return strings.Join(xs, s)
+}
+
 // Read reads API blueprint from file as bytes
 func Read(name string) ([]byte, error) {
 	d := newLoader(name)
@@ -153,13 +165,12 @@ func Read(name string) ([]byte, error) {
 		return nil, err
 	}
 
-	funcMap := sprig.TxtFuncMap()
-	funcMap["partial"] = d.partial
+	b, _ := process(s, data, template.FuncMap{"partial": d.partial})
 
-	b, err := process(s, data, funcMap)
-	if err != nil {
-		return nil, err
-	}
+	funcMap := sprig.TxtFuncMap()
+	funcMap["joinString"] = funcMap["join"]
+	funcMap["join"] = join
+	funcMap["upcase"] = strings.ToUpper
 
 	b, err = process(string(b), data, funcMap)
 	if err != nil {
