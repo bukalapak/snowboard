@@ -5,8 +5,8 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/themes/prism-okaidia.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/themes/prism-okaidia.min.css" />
     <style>
       blockquote {
         border-left: solid 4px #eee;
@@ -38,6 +38,10 @@
       .ui.basic.label {
         text-align: left;
         overflow: auto;
+      }
+      
+      .ui.basic.label.request-url {
+        user-select: text;
       }
 
       .resource .ui.sub.header {
@@ -86,14 +90,14 @@
     <div class="content active">
       <div class="ui fluid secondary vertical menu">
       
-        <a class="item green" href="#%2fmessage-get">
+        <a class="item green" href="#message-get">
           <i class="ui green empty circular label"></i>
           
             <span>GET</span>
           
         </a>
       
-        <a class="item teal" href="#%2fmessage-put">
+        <a class="item teal" href="#message-put">
           <i class="ui teal empty circular label"></i>
           
             <span>PUT</span>
@@ -171,7 +175,7 @@ precisely, by its <a href="http://tools.ietf.org/html/rfc6570">URI Template</a>.
 </div>
 
           <div class="ui basic segment">
-            <h3 class="ui block center aligned header" id="/message-get">
+            <h3 class="ui block center aligned header" id="message-get">
               GET
             </h3>
             <div class="description"><p>Here we define an action using the <code>GET</code> <a href="http://www.w3schools.com/tags/ref_httpmethods.asp">HTTP request method</a> for our resource <code>/message</code>.</p>
@@ -192,7 +196,7 @@ our response.</p>
                 <div class="ui green large button">
                   <h3>GET</h3>
                 </div>
-                <a class="ui basic fluid green label">
+                <a class="ui basic fluid request-url green label">
                   <code>/message</code>
                 </a>
               </div>
@@ -257,7 +261,7 @@ our response.</p>
 </div>
 
           <div class="ui basic segment">
-            <h3 class="ui block center aligned header" id="/message-put">
+            <h3 class="ui block center aligned header" id="message-put">
               PUT
             </h3>
             <div class="description"><p>OK, let&rsquo;s add another action. This time to put new data to our resource
@@ -276,7 +280,7 @@ Resource updated successfully, no content is returned</em>).</p>
                 <div class="ui teal large button">
                   <h3>PUT</h3>
                 </div>
-                <a class="ui basic fluid teal label">
+                <a class="ui basic fluid request-url teal label">
                   <code>/message</code>
                 </a>
               </div>
@@ -378,13 +382,13 @@ Resource updated successfully, no content is returned</em>).</p>
 
       </div>
     </div>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/components/accordion.min.js"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/components/tab.min.js"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/components/transition.min.js"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/components/popup.min.js"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/prism/1.13.0/prism.min.js"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/prism/1.13.0/components/prism-json.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/components/accordion.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/components/tab.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/components/transition.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/components/popup.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.13.0/prism.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.13.0/components/prism-json.min.js"></script>
     <script type="text/javascript">
       $(function() {
         $('.ui.accordion').accordion({ animateChildren: false, duration: 0 });

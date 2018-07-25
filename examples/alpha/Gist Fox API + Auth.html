@@ -5,8 +5,8 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/themes/prism-okaidia.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/themes/prism-okaidia.min.css" />
     <style>
       blockquote {
         border-left: solid 4px #eee;
@@ -38,6 +38,10 @@
       .ui.basic.label {
         text-align: left;
         overflow: auto;
+      }
+      
+      .ui.basic.label.request-url {
+        user-select: text;
       }
 
       .resource .ui.sub.header {
@@ -331,7 +335,7 @@ HAL links.</p>
                 <div class="ui green large button">
                   <h3>GET</h3>
                 </div>
-                <a class="ui basic fluid green label">
+                <a class="ui basic fluid request-url green label">
                   <code>/</code>
                 </a>
               </div>
@@ -467,7 +471,7 @@ HAL links.</p>
                 <div class="ui green large button">
                   <h3>GET</h3>
                 </div>
-                <a class="ui basic fluid green label">
+                <a class="ui basic fluid request-url green label">
                   <code>/gists/{id}{?access_token}</code>
                 </a>
               </div>
@@ -612,7 +616,7 @@ HAL links.</p>
                 <div class="ui violet large button">
                   <h3>PATCH</h3>
                 </div>
-                <a class="ui basic fluid violet label">
+                <a class="ui basic fluid request-url violet label">
                   <code>/gists/{id}{?access_token}</code>
                 </a>
               </div>
@@ -801,7 +805,7 @@ HAL links.</p>
                 <div class="ui red large button">
                   <h3>DELETE</h3>
                 </div>
-                <a class="ui basic fluid red label">
+                <a class="ui basic fluid request-url red label">
                   <code>/gists/{id}{?access_token}</code>
                 </a>
               </div>
@@ -951,7 +955,7 @@ HAL links.</p>
                 <div class="ui green large button">
                   <h3>GET</h3>
                 </div>
-                <a class="ui basic fluid green label">
+                <a class="ui basic fluid request-url green label">
                   <code>/gists{?access_token,since}</code>
                 </a>
               </div>
@@ -1089,7 +1093,7 @@ HAL links.</p>
                 <div class="ui blue large button">
                   <h3>POST</h3>
                 </div>
-                <a class="ui basic fluid blue label">
+                <a class="ui basic fluid request-url blue label">
                   <code>/gists{?access_token,since}</code>
                 </a>
               </div>
@@ -1288,7 +1292,7 @@ HAL links.</p>
                 <div class="ui teal large button">
                   <h3>PUT</h3>
                 </div>
-                <a class="ui basic fluid teal label">
+                <a class="ui basic fluid request-url teal label">
                   <code>/gists/{id}/star{?access_token}</code>
                 </a>
               </div>
@@ -1412,7 +1416,7 @@ HAL links.</p>
                 <div class="ui red large button">
                   <h3>DELETE</h3>
                 </div>
-                <a class="ui basic fluid red label">
+                <a class="ui basic fluid request-url red label">
                   <code>/gists/{id}/star{?access_token}</code>
                 </a>
               </div>
@@ -1535,7 +1539,7 @@ HAL links.</p>
                 <div class="ui green large button">
                   <h3>GET</h3>
                 </div>
-                <a class="ui basic fluid green label">
+                <a class="ui basic fluid request-url green label">
                   <code>/gists/{id}/star{?access_token}</code>
                 </a>
               </div>
@@ -1717,7 +1721,7 @@ HAL links.</p>
                 <div class="ui green large button">
                   <h3>GET</h3>
                 </div>
-                <a class="ui basic fluid green label">
+                <a class="ui basic fluid request-url green label">
                   <code>/authorization</code>
                 </a>
               </div>
@@ -1827,7 +1831,7 @@ HAL links.</p>
                 <div class="ui blue large button">
                   <h3>POST</h3>
                 </div>
-                <a class="ui basic fluid blue label">
+                <a class="ui basic fluid request-url blue label">
                   <code>/authorization</code>
                 </a>
               </div>
@@ -1953,7 +1957,7 @@ HAL links.</p>
                 <div class="ui red large button">
                   <h3>DELETE</h3>
                 </div>
-                <a class="ui basic fluid red label">
+                <a class="ui basic fluid request-url red label">
                   <code>/authorization</code>
                 </a>
               </div>
@@ -2030,13 +2034,13 @@ HAL links.</p>
 
       </div>
     </div>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/components/accordion.min.js"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/components/tab.min.js"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/components/transition.min.js"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/components/popup.min.js"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/prism/1.13.0/prism.min.js"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/prism/1.13.0/components/prism-json.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/components/accordion.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/components/tab.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/components/transition.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/components/popup.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.13.0/prism.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.13.0/components/prism-json.min.js"></script>
     <script type="text/javascript">
       $(function() {
         $('.ui.accordion').accordion({ animateChildren: false, duration: 0 });
