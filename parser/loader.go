@@ -165,12 +165,16 @@ func Read(name string) ([]byte, error) {
 		return nil, err
 	}
 
-	b, _ := process(s, data, template.FuncMap{"partial": d.partial})
+	b, err := process(s, data, template.FuncMap{"partial": d.partial})
+	if err != nil {
+		return nil, err
+	}
 
-	funcMap := sprig.TxtFuncMap()
-	funcMap["joinString"] = funcMap["join"]
-	funcMap["join"] = join
-	funcMap["upcase"] = strings.ToUpper
+	// backward compatible
+	funcMap := template.FuncMap{
+		"join":   join,
+		"upcase": strings.ToUpper,
+	}
 
 	b, err = process(string(b), data, funcMap)
 	if err != nil {
@@ -181,7 +185,7 @@ func Read(name string) ([]byte, error) {
 }
 
 func process(s string, data interface{}, funcMap template.FuncMap) ([]byte, error) {
-	tmpl, err := template.New("apib").Funcs(funcMap).Parse(s)
+	tmpl, err := template.New("apib").Funcs(sprig.TxtFuncMap()).Funcs(funcMap).Parse(s)
 	if err != nil {
 		return nil, err
 	}
