@@ -137,9 +137,7 @@ func MockHandler(ms []MockTransactions) http.Handler {
 		var data interface{}
 
 		for _, q := range mr {
-			router := q.Router(r.Method)
-
-			if !found {
+			if router := q.Router(r.Method); router != nil {
 				data, _, found = router.Lookup(r.URL.Path)
 			}
 		}
