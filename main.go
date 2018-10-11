@@ -223,6 +223,19 @@ func main() {
 			},
 		},
 		{
+			Name: "list",
+			Usage: "List available routes",
+			Action: func(c *cli.Context) error {
+				if c.Args().Get(0) == "" {
+					return nil
+				}
+				if err := outputPath(c, c.Args()); err != nil {
+					return cli.NewExitError(err.Error(), 1)
+				}
+				return nil
+			},
+		},
+		{
 			Name:  "mock",
 			Usage: "Run Mock server",
 			Flags: []cli.Flag{
@@ -593,6 +606,25 @@ func watchFiles(c *cli.Context, watcher fsWatcher, input, tplFile string) error 
 		}
 	}
 
+	return nil
+}
+
+func outputPath(c *cli.Context, inputs []string) error {
+	bs := make([]*api.API, len(inputs))
+	for i := range inputs {
+		bp, err := snowboard.Load(inputs[i], engine)
+		if err != nil {
+			return err
+		}
+
+		bs[i] = bp
+	}
+	ms := mock.MockMulti(bs)
+	for _, mm := range ms {
+		for _, m := range mm {
+			fmt.Fprintf(c.App.Writer, "%s\t%d\t%s\n", m.Method, m.StatusCode, m.Pattern)
+		}
+	}
 	return nil
 }
 
