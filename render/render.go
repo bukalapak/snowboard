@@ -36,19 +36,19 @@ func toString(v interface{}) string {
 func colorize(v interface{}) string {
 	switch toString(v) {
 	case "GET":
-		return "green"
-	case "POST":
 		return "blue"
+	case "POST":
+		return "green"
 	case "PUT":
-		return "teal"
+		return "yellow"
 	case "PATCH":
-		return "violet"
+		return "yellow"
 	case "DELETE":
 		return "red"
 	case "200", "201", "202", "204":
 		return "blue"
 	case "401", "403", "404", "422":
-		return "orange"
+		return "yellow"
 	case "500":
 		return "red"
 	}
