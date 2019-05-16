@@ -9,7 +9,8 @@
   "bin": "lib/main.js",
   "scripts": {
     "fmt": "prettier --write README.md 'lib/**/*.js' 'test/**/*.js'",
-    "test": "tape 'test/**/*.js'"
+    "test": "tape 'test/**/*.js'",
+    "examples": "./examples/generate.sh ./test/fixtures/api-blueprint/examples ./examples"
   },
   "dependencies": {
     "commander": "^2.19.0",
