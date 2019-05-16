@@ -3,6 +3,8 @@ dist: xenial
 os:
 - linux
 - osx
+node_js:
+  - "10"
 cache: npm
 before_deploy:
 - ./tools/travis/prepare-release.sh
