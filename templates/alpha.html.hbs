@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{{title}}</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/themes/prism-okaidia.min.css" />
+    <style>
+      blockquote {
+        border-left: solid 4px #eee;
+        padding-left: 8px;
+        font-style: italic;
+        margin-left: 0;
+        padding: 8px;
+      }
+
+      .ui.micro.label {
+        font-size: .25rem;
+      }
+
+      .ui.transaction.accordion .title {
+        text-align: center;
+      }
+
+      .ui.transaction.accordion .content {
+        border-top: solid 1px #ddd !important;
+        border-bottom: solid 1px #ddd !important;
+        background-color: rgba(0,0,0,.03);
+        padding: 0.5em 1em !important;
+      }
+
+      .ui.transaction.accordion .content.active {
+        margin-top: 0.5em;
+      }
+
+      .ui.basic.label {
+        text-align: left;
+        overflow: auto;
+      }
+
+      .ui.basic.label.request-url {
+        user-select: text;
+      }
+
+      .resource .ui.sub.header {
+        text-transform: none;
+      }
+
+      @media only screen and (min-width: 768px) {
+        .sidewrap {
+          margin-right: 2rem;
+        }
+
+        .sidenav {
+          left: 0;
+          top: 0;
+          width: inherit;
+          position: fixed !important;
+          height: 100% !important;
+          overflow-y: auto !important;
+          padding-left: 0.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="ui padded grid">
+      <div class="sidewrap four wide computer five wide tablet sixteen wide mobile column">
+        <div class="sidenav">
+          {{> navigation}}
+        </div>
+      </div>
+      <div class="eleven wide computer ten wide tablet sixteen wide mobile column">
+        {{> introduction}}
+        <div class="ui hidden divider"></div>
+        {{> resourceGroups}}
+      </div>
+    </div>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/components/accordion.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/components/tab.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/components/transition.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/components/popup.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.13.0/prism.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.13.0/components/prism-json.min.js"></script>
+    <script type="text/javascript">
+      $(function() {
+        $('table').addClass('ui table');
+        $('.ui.accordion').accordion({ animateChildren: false, duration: 0 });
+        $('.content.tabbed').each(function(index) {
+          $('.ui.tabular .item', $(this)).tab({ context: $(this) });
+        });
+        $('.ui.vertical.menu').on('click', '.item', function() {
+          $('.ui.vertical.menu .item').removeClass('active');
+          $(this).addClass('active');
+        });
+        $('.ui.empty.circular.label').popup();
+      });
+    </script>
+  </body>
+</html>
+
+{{#* inline "navigation"}}
+<div class="ui horizontal divider">
+  <a href="#introduction">Introduction</a>
+</div>
+<div class="ui fluid secondary vertical menu">
+  <a class="item" href="#introduction">{{title}}</a>
+</div>
+{{#each resourceGroups}}
+{{#if title}}
+<div class="ui horizontal divider">
+  <a href="#{{parameterize title}}">{{title}}</a>
+</div>
+{{/if}}
+<div class="ui accordion fluid">
+  {{#each resources}}
+    {{#if transitions}}
+    <div class="title {{#if @first}}active{{/if}}">
+      <i class="dropdown icon"></i>
+      {{#if title}}
+        <strong>{{title}}</strong>
+      {{else}}
+        <strong>{{href}}</strong>
+      {{/if}}
+    </div>
+    <div class="content {{#if @first}}active{{/if}}">
+      <div class="ui fluid secondary vertical menu">
+      {{#each transitions}}
+        <a class="item {{colorize method}}" href="#{{parameterize nestedTitle}}">
+          <i class="ui {{colorize method}} empty circular label"></i>
+          {{#if title}}
+            <span>{{title}}</span>
+          {{else}}
+            <span>{{method}}</span>
+          {{/if}}
+        </a>
+      {{/each}}
+      </div>
+    </div>
+    {{/if}}
+  {{/each}}
+</div>
+{{/each}}
+{{/inline}}
+
+{{#* inline "introduction"}}
+<div class="ui hidden divider header"></div>
+<h1 class="ui huge header" id="introduction">{{title}}</h1>
+<hr class="ui divider">
+<div class="description">{{{markdownize description}}}</div>
+{{/inline}}
+
+{{#* inline "resourceGroups"}}
+{{#each resourceGroups}}
+  <div class="ui horizontal divider" {{#if title}}id="{{parameterize title}}"{{/if}}>
+    {{title}}
+  </div>
+  <div class="ui header center aligned">
+    <div class="ui header">
+      <div class="sub header">
+        {{{markdownize description}}}
+      </div>
+    </div>
+  </div>
+  {{#each resources}}
+    <div class="ui stacked segments">
+      <div class="ui basic segment resource">
+        <div class="ui purple huge ribbon label">
+          {{#if title}}{{title}}{{else}}{{href}}{{/if}}
+        </div>
+        <div class="ui header">
+          <div class="ui sub header">
+            {{{markdownize description}}}
+          </div>
+        </div>
+      </div>
+
+      {{#each transitions}}
+        {{> divider}}
+        <div class="ui basic segment">
+          <h3 class="ui block center aligned header" id="{{parameterize nestedTitle}}">
+            {{#if title}}{{title}}{{else}}{{method}}{{/if}}
+          </h3>
+          <div class="description">{{{markdownize description}}}</div>
+
+          {{#each transactions}}
+            <h4 class="ui horizontal divider">
+              REQUEST{{#if request.title}} {{request.title}}{{/if}}
+            </h4>
+            <div class="description">{{{markdownize request.description}}}</div>
+            <div class="fluid ui large labeled button">
+              <div class="ui {{colorize request.method}} large button">
+                <h3>{{request.method}}</h3>
+              </div>
+              <a class="ui basic fluid request-url {{colorize request.method}} label">
+                <code>{{../../../../metadata.host}}{{request.href}}</code>
+              </a>
+            </div>
+
+            {{#if ../hrefVariables}}
+              <table class="ui celled definition table">
+                <thead>
+                  <tr>
+                    <th colspan="4">Parameters</th>
+                  </tr>
+                <thead>
+                <tbody>
+                  {{#with ../hrefVariables}}
+                    {{> parameters}}
+                  {{/with}}
+
+                  {{#with ../../hrefVariables}}
+                    {{> parameters}}
+                  {{/with}}
+                </tbody>
+              </table>
+            {{/if}}
+
+            {{#with request.headers}}{{> headers}}{{/with}}
+
+            {{#if request.messageBody}}
+              <div class="ui stacked segment">
+                <div class="ui fluid transaction accordion">
+                  <div class="title">
+                    <code>{{request.contentType}}</code>
+                  </div>
+                  <div class="content tabbed">
+                    <div class="ui top attached tabular menu">
+                      <a data-tab="body" class="active item">BODY</a>
+                      <a data-tab="schema" class="item">SCHEMA</a>
+                    </div>
+                    <div class="ui bottom attached active tab segment" data-tab="body">
+                      <pre style="white-space: inherit">
+                        <code class="language-{{alias request.contentType}}">{{request.messageBody}}</code>
+                      </pre>
+                    </div>
+                    <div class="ui bottom attached tab segment" data-tab="schema">
+                      <pre style="white-space: inherit">
+                        <code class="language-json">{{request.messageBodySchema}}</code>
+                      </pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {{/if}}
+
+            <h4 class="ui horizontal divider">RESPONSE</h4>
+            <div class="description">{{{markdownize response.description}}}</div>
+            {{#with response.headers}}{{> headers}}{{/with}}
+            <div class="ui stacked {{colorize response.statusCode}} segment">
+              <div class="ui fluid transaction accordion">
+                <div class="title center aligned">
+                  <a class="ui {{colorize response.statusCode}} circular label">
+                    {{response.statusCode}}
+                  </a>
+                  <code>{{response.contentType}}</code>
+                </div>
+                <div class="content tabbed">
+                  <div class="ui top attached tabular menu">
+                    <a data-tab="body" class="active item">BODY</a>
+                    <a data-tab="schema" class="item">SCHEMA</a>
+                  </div>
+                  <div class="ui bottom attached active tab segment" data-tab="body">
+                    <pre style="white-space: inherit">
+                      <code class="language-{{alias response.contentType}}">{{response.messageBody}}</code>
+                    </pre>
+                  </div>
+                  <div class="ui bottom attached tab segment" data-tab="schema">
+                    <pre style="white-space: inherit">
+                      <code class="language-json">{{response.messageBodySchema}}</code>
+                    </pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {{/each}}
+        </div>
+      {{/each}}
+    </div>
+  {{/each}}
+{{/each}}
+{{/inline}}
+
+{{#* inline "headers"}}
+<table class="ui celled definition table">
+  <thead>
+    <tr>
+      <th colspan="2">Headers</th>
+    </tr>
+  </thead>
+  <tbody>
+  {{#each .}}
+    <tr>
+      <td class="four wide">{{key}}</td>
+      <td><code>{{value}}</code></td>
+    </tr>
+  {{/each}}
+  </tbody>
+</table>
+{{/inline}}
+
+{{#* inline "parameters"}}
+  {{#each .}}
+    <tr>
+      <td class="center aligned one wide">
+        <i class="ui empty circular label {{#if required}}black{{else}}grey{{/if}}" data-content="{{#if required}}required{{else}}optional{{/if}}" data-position="top center"></i>
+      </td>
+      <td><code>{{key}}</code></td>
+      <td class="center aligned">
+        <code>{{title}}</code>
+        {{#if value}}<code class="ui label">{{value}}</code>{{/if}}
+        {{#if default}}<div class="ui violet image label">Default<div class="detail">{{default}}</div></div>{{/if}}
+        {{#if members}}<div class="ui teal image label">Values<div class="detail"><code>{{members}}</code></div></div>{{/if}}
+      </td>
+      <td class="eight wide">
+        {{#if description}}{{{markdownize description}}}{{else}}-{{/if}}
+      </td>
+    </tr>
+  {{/each}}
+{{/inline}}
+
+{{#* inline "divider"}}
+<div class="ui grey horizontal small divider header">
+  <i class="ui grey micro circular label"></i>
+  <i class="ui pink micro circular label"></i>
+  <i class="ui grey micro circular label"></i>
+</div>
+{{/inline}}

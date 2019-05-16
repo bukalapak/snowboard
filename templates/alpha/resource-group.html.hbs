@@ -1,0 +1,49 @@
+{{> __header}}
+  <div class="ui padded grid">
+    <div class="sidewrap four wide computer five wide tablet sixteen wide mobile column">
+      <div class="sidenav">
+        {{> __resource-group-navigation}}
+        {{> _navigation}}
+      </div>
+    </div>
+    <div class="eleven wide computer ten wide tablet sixteen wide mobile column">
+      {{> __resource-group}}
+    </div>
+  </div>
+{{> __footer}}
+
+{{#* inline "__resource-group-navigation"}}
+{{#if title}}
+<div class="ui horizontal divider">
+  <a href="{{parameterize title}}.html#{{parameterize title}}">{{title}}</a>
+</div>
+{{/if}}
+<div class="ui accordion fluid">
+  {{#each resources}}
+    {{#if transitions}}
+    <div class="title {{#if @first}}active{{/if}}">
+      <i class="dropdown icon"></i>
+      {{#if title}}
+        <strong>{{title}}</strong>
+      {{else}}
+        <strong>{{href}}</strong>
+      {{/if}}
+    </div>
+    <div class="content {{#if @first}}active{{/if}}">
+      <div class="ui fluid secondary vertical menu">
+      {{#each transitions}}
+      <a class="item {{colorize method}}" href="{{parameterize ../../title}}.html#{{parameterize nestedTitle}}">
+          <i class="ui {{colorize method}} empty circular label"></i>
+          {{#if title}}
+            <span>{{title}}</span>
+          {{else}}
+            <span>{{method}}</span>
+          {{/if}}
+        </a>
+      {{/each}}
+      </div>
+    </div>
+    {{/if}}
+  {{/each}}
+</div>
+{{/inline}}

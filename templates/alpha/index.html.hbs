@@ -1,0 +1,15 @@
+{{> __header}}
+  <div class="ui padded grid">
+    <div class="sidewrap four wide computer five wide tablet sixteen wide mobile column">
+      <div class="sidenav">
+        {{> _navigation}}
+      </div>
+    </div>
+    <div class="eleven wide computer ten wide tablet sixteen wide mobile column">
+      <div class="ui hidden divider header"></div>
+      <h1 class="ui huge header" id="introduction">{{title}}</h1>
+      <hr class="ui divider">
+      <div class="description">{{{markdownize description}}}</div>
+    </div>
+  </div>
+{{> __footer}}

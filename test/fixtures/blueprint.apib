@@ -1,0 +1,105 @@
+Format: 1A
+
+# <API name>
+<API description>
+
+# Group <resource group name>
+<resource group description>
+
+## <resource name> [/resource/{parameter}]
+<resource description>
+
++ Attributes (object)
+
+    + `<attribute property name>`: `<attribute property value>` (number) - <attribute property description>
+
++ Model
+
+    <resource model description>
+
+    + Headers
+
+            header1: <header1 value>
+
+    + Body
+
+            <resource model body>
+
+    + Schema
+
+            <resource model schema>
+
++ Parameters
+    + parameter = `<default value>` (<type>, optional, `<example value>`) ... <description>
+
+        + Values
+            + `<default value>`
+            + `<example value>`
+
++ Headers
+
+        header2: <header2 value>
+
+### <action name> [POST]
+<action description>
+
++ Relation: relation-name
+
++ Parameters
+    + parameter = `<default value>` (<type>, optional, `<example value>`) ... <description>
+
+        + Values
+            + `<default value>`
+            + `<example value>`
+
++ Headers
+
+        header3: <header3 value>
+
++ Request <request name> (text/plain)
+
+    <request description>
+
+    + Headers
+
+            header4: <header4 value>
+
+    + Body
+
+            <request body>
+
+    + Schema
+
+            <request schema>
+
++ Response 200 (text/plain)
+
+    <response description>
+
+    + Headers
+
+            header5: <header5 value>
+
+    + Body
+
+            <response body>
+
+    + Schema
+
+            <response schema>
+
++ Response 201
+
+    [<resource name>][]
+
++ Response 201 (application/json)
+
+    + Attributes (<data structure name>)
+
+# Data Structures
+
+## `<data structure name>`
+<data structure description>
+
+### Properties
++ `<data structure property name>`: `<data structure property value>` (string) - <data structure property description>

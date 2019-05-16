@@ -1,67 +1,15 @@
-# snowboard
+# snowboard.js
 
-[![Build Status](https://travis-ci.org/bukalapak/snowboard.svg?branch=master)](https://travis-ci.org/bukalapak/snowboard)
-[![GoDoc](https://godoc.org/github.com/bukalapak/snowboard?status.svg)](https://godoc.org/github.com/bukalapak/snowboard)
-[![Docker Repository on Quay](https://quay.io/repository/bukalapak/snowboard/status)](https://quay.io/repository/bukalapak/snowboard)
-[![GitHub release](https://img.shields.io/github/release/bukalapak/snowboard.svg)](https://github.com/bukalapak/snowboard)
+[![Build Status](https://badgen.net/circleci/github/bukalapak/snowboard.js)](https://circleci.com/gh/bukalapak/snowboard.js)
+[![npm version](https://badgen.net/npm/v/snowboard)](https://www.npmjs.com/package/snowboard)
 
 API blueprint toolkit.
 
 ## Installation
 
-The latest executables for supported platforms are available from the [release page](https://github.com/bukalapak/snowboard/releases).
-
-Just extract and start using it:
-
 ```
-$ wget https://github.com/bukalapak/snowboard/releases/download/${version}/snowboard-${version}.${os}-${arch}.tar.gz
-$ tar -zxvf snowboard-${version}.${os}-${arch}.tar.gz
-$ ./snowboard -h
+$ npm install -g snowboard
 ```
-
-Alternatively, you can also use options below:
-
-### Homebrew
-
-```sh
-$ brew tap bukalapak/packages
-$ brew install snowboard
-```
-
-> Note: If you want build from master branch you can use `brew install --HEAD snowboard`
-
-### Arch Linux
-
-Snowboard available as [AUR package](https://aur.archlinux.org/packages/snowboard/).
-
-```sh
-$ pacaur -S snowboard
-```
-
-### Docker
-
-You can also use automated build docker image on `quay.io/bukalapak/snowboard`:
-
-```
-$ docker pull quay.io/bukalapak/snowboard
-$ docker run -it --rm quay.io/bukalapak/snowboard help
-```
-
-To run snowboard with the current directory mounted to `/doc`:
-
-```
-$ docker run -it --rm -v $PWD:/doc quay.io/bukalapak/snowboard html -o output.html API.apib
-```
-
-### Manual
-
-```sh
-$ git clone https://github.com/bukalapak/snowboard.git
-$ cd snowboard
-$ make install
-```
-
-> Note: ensure you have installed [Go](https://golang.org/doc/install#tarball) and configured your `GOPATH` and `PATH`.
 
 ## Usage
 
@@ -76,7 +24,6 @@ Let's say we have API Blueprint document called `API.apib`, like:
 ```
 
 There are some scenarios we can perform:
-
 
 ### Generate HTML Documentation
 
@@ -96,45 +43,33 @@ If you want to use custom template, you can use flag `-t` for that:
 $ snowboard html -o output.html -t awesome-template.html API.apib
 ```
 
-To see how the template looks like, you can see `snowboard` default template located in [templates/alpha.html](templates/alpha.html).
+To see how the template looks like, you can see `snowboard` default template located in [templates/alpha.html.hbs](templates/alpha.html.hbs).
+
+### Multi Pages HTML
+
+When your API blueprints large enough to be served as single HTML file, you can pass `-o` flag with value without `.html` extension to let snowboard generate multi pages documentation:
+
+```
+$ snowboard html -o output-dir API-LARGE.apib
+```
 
 ### Serve HTML Documentation
 
-If you want to access HTML documentation via HTTP, especially on local development, you can pass `-s` flag:
+If you want to access HTML documentation via HTTP, especially on local development, you can use `http` subcommand:
 
 ```
-$ snowboard html -o output.html -t awesome-template.html -s API.apib
+$ snowboard http -t awesome-template.html API.apib
 ```
 
 With this flag, You can access HTML documentation on `localhost:8088`.
 
 If you need to customize binding address, you can use flag `-b`.
 
-#### Auto-regeneration
-
-To enable auto-regeneration on both input and template file updates, you can add global flag `--watch`
-
-```
-$ snowboard --watch html -o output.html -t awesome-template.html -s API.apib
-```
-
-Optionally, you can also use `--watch-interval` to enable polling interval.
-
-```
-$ snowboard --watch --watch-interval 100ms html -o output.html -t awesome-template.html -s API.apib
-```
-
-#### Serve HTML from Docker container
-
-If you want to serve HTML documentation from Docker container, don't forget to bind address and port in the contaier plus bind ports of host and container by `-p` option of Docker command.
-
-```
-$ docker run -it --rm -v $(pwd):/doc -p 8088:8088 bukalapak/snowboard html -o output.html -b 0.0.0.0:8088 -s API.apib
-```
+You can also use multi pages feature as above, just pass `-o` flag without `.html` extension.
 
 ### Generate formatted API blueprint
 
-When you have documentation splitted across files, you can customize flags `-o` to allow `snowboard` to produce single formatted API blueprint.
+When you have documentation splitted across files, you can use `apib` subcommand to allow `snowboard` to produce single formatted API blueprint.
 
 ```
 $ snowboard apib -o API.apib project/splitted.apib
@@ -158,14 +93,16 @@ $ snowboard mock API.apib
 
 Then you can use `localhost:8087` for accessing mock server. You can customize the address by passing flag `-b`.
 
-For multiple responses, you can set `X-Status-Code` or `Prefer` header to select specific response:
+For multiple responses, you can set `Prefer` header to select specific response:
 
 ```
-X-Status-Code: 200
-
-// or
-
 Prefer: status=200
+```
+
+You can also supply multiple inputs for `mock` subcommand:
+
+```
+$ snowboard mock API.apib OTHER.apib
 ```
 
 ## External Files
@@ -222,48 +159,34 @@ In case you need to get API element JSON output for further processing, you can 
 $ snowboard json API.apib
 ```
 
+## List Available Routes
+
+If you need to list all available routes for current API blueprints you can do:
+
+```
+$ snowboard list API.apib ANOTHER.apib
+```
+
 ## Help
 
 As usual, you can also see all supported flags by passing `-h`:
 
 ```
-$ snowboard help
-NAME:
-   snowboard - API blueprint toolkit
+$ snowboard
+Usage: snowboard <command> [options] <input>
 
-USAGE:
-   snowboard [GLOBAL OPTIONS] command [COMMAND OPTIONS] [ARGUMENTS...]
+API blueprint toolkit
 
-COMMANDS:
-     lint     Validate API blueprint
-     html     Render HTML documentation
-     apib     Render API blueprint
-     json     Render API element json
-     mock     Run Mock server
-     help, h  Shows a list of commands or help for one command
+Options:
+  -v, --version                       output the version number
+  -h, --help                          output usage information
 
-GLOBAL OPTIONS:
-   --help, -h     show help
-   --version, -v  print the version
+Commands:
+  lint <input>                        validate API blueprint
+  html [options] <input>              render HTML documentation
+  http [options] <input>              HTML documentation via HTTP server
+  apib [options] <input>              render API blueprint
+  json [options] <input>              render API elements json
+  mock [options] <input> [inputs...]  run mock server
+  list <input> [inputs...]            list available routes
 ```
-
-## FAQ
-
-- I am using Vim and snowboard file watcher doesn't trigger auto-regeneration, any idea?
-
-  It is known issue due Vim backup scheme. You can set on your `.vimrc`:
-	
-    ```
-    set nobackup
-    set nowritebackup
-    ```
-
-## Examples
-
-You can see examples of `snowboard` default template outputs, in [examples/alpha](examples/alpha) directory. They looks like:
-
-- [Named Resource and Actions](https://htmlpreview.github.io/?https://github.com/bukalapak/snowboard/blob/master/examples/alpha/03.%20Named%20Resource%20and%20Actions.html)
-- [Real World API](https://htmlpreview.github.io/?https://github.com/bukalapak/snowboard/blob/master/examples/alpha/Real%20World%20API.html)
-- And many more...
-
-All of the examples are generated from official [API Blueprint examples](https://github.com/apiaryio/api-blueprint/tree/master/examples)

@@ -1,15 +1,9 @@
-language: go
-dist: trusty
-sudo: required
+language: node_js
+dist: xenial
 os:
 - linux
 - osx
-before_script:
-- make submodules
-- make drafter
-script:
-- make go-gen
-- make go-test
+cache: npm
 before_deploy:
 - ./tools/travis/prepare-release.sh
 deploy:

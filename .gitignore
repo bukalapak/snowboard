@@ -1,6 +1,4 @@
-snowboard
-drafter
-index.html
-template.html
-templates.go
-adapter/drafterc/cli.go
+node_modules/
+yarn.lock
+package-lock.json
+snowboard-*
