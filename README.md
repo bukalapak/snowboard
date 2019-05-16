@@ -1,6 +1,7 @@
-# snowboard.js
+# snowboard
 
-[![Build Status](https://badgen.net/circleci/github/bukalapak/snowboard.js)](https://circleci.com/gh/bukalapak/snowboard.js)
+[![Build Status](https://travis-ci.org/bukalapak/snowboard.svg?branch=master)](https://travis-ci.org/bukalapak/snowboard)
+[![Docker Repository on Quay](https://quay.io/repository/bukalapak/snowboard/status)](https://quay.io/repository/bukalapak/snowboard)
 [![npm version](https://badgen.net/npm/v/snowboard)](https://www.npmjs.com/package/snowboard)
 
 API blueprint toolkit.
