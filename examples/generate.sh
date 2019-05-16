@@ -2,11 +2,13 @@
 
 TEMPLATES=('alpha');
 
+git submodules update --init
+
 for template in $TEMPLATES; do
-  output_dir="$3/${template}"
+  output_dir="$2/${template}"
   mkdir -p "${output_dir}"
 
-  for example in ${2}/*.md; do
+  for example in ${1}/*.md; do
     fname="${example##*/}"
     fname_html="${fname/md/html}"
 
@@ -15,7 +17,7 @@ for template in $TEMPLATES; do
     fi
 
     echo "Generating ${fname}..."
-    "$1" html -t "${template}" -o "${output_dir}/${fname_html}" "${example}"
+    node lib/main.js html -o "${output_dir}/${fname_html}" "${example}"
     echo "Done!"
   done
 done

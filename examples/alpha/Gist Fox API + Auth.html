@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/themes/prism-okaidia.min.css" />
     <style>
       blockquote {
@@ -39,7 +39,7 @@
         text-align: left;
         overflow: auto;
       }
-      
+
       .ui.basic.label.request-url {
         user-select: text;
       }
@@ -69,346 +69,115 @@
     <div class="ui padded grid">
       <div class="sidewrap four wide computer five wide tablet sixteen wide mobile column">
         <div class="sidenav">
-          
-<div class="ui horizontal divider">
+          <div class="ui horizontal divider">
   <a href="#introduction">Introduction</a>
 </div>
 <div class="ui fluid secondary vertical menu">
   <a class="item" href="#introduction">Gist Fox API</a>
 </div>
-
-
-<div class="ui accordion fluid">
-  
-    
-    <div class="title active">
-      <i class="dropdown icon"></i>
-      
-        <strong>Gist Fox API Root</strong>
-      
-    </div>
-    <div class="content active">
-      <div class="ui fluid secondary vertical menu">
-      
-        <a class="item green" href="#gist-fox-api-root-retrieve-the-entry-point">
-          <i class="ui green empty circular label"></i>
-          
-            <span>Retrieve the Entry Point</span>
-          
-        </a>
-      
-      </div>
-    </div>
-    
-  
-</div>
-
-
 <div class="ui horizontal divider">
   <a href="#gist">Gist</a>
 </div>
-
 <div class="ui accordion fluid">
-  
-    
     <div class="title active">
       <i class="dropdown icon"></i>
-      
         <strong>Gist</strong>
-      
     </div>
     <div class="content active">
       <div class="ui fluid secondary vertical menu">
-      
         <a class="item green" href="#gist-gist-retrieve-a-single-gist">
           <i class="ui green empty circular label"></i>
-          
             <span>Retrieve a Single Gist</span>
-          
         </a>
-      
         <a class="item violet" href="#gist-gist-edit-a-gist">
           <i class="ui violet empty circular label"></i>
-          
             <span>Edit a Gist</span>
-          
         </a>
-      
         <a class="item red" href="#gist-gist-delete-a-gist">
           <i class="ui red empty circular label"></i>
-          
             <span>Delete a Gist</span>
-          
         </a>
-      
       </div>
     </div>
-    
-  
-    
     <div class="title ">
       <i class="dropdown icon"></i>
-      
         <strong>Gists Collection</strong>
-      
     </div>
     <div class="content ">
       <div class="ui fluid secondary vertical menu">
-      
         <a class="item green" href="#gist-gists-collection-list-all-gists">
           <i class="ui green empty circular label"></i>
-          
             <span>List All Gists</span>
-          
         </a>
-      
         <a class="item blue" href="#gist-gists-collection-create-a-gist">
           <i class="ui blue empty circular label"></i>
-          
             <span>Create a Gist</span>
-          
         </a>
-      
       </div>
     </div>
-    
-  
-    
     <div class="title ">
       <i class="dropdown icon"></i>
-      
         <strong>Star</strong>
-      
     </div>
     <div class="content ">
       <div class="ui fluid secondary vertical menu">
-      
         <a class="item teal" href="#gist-star-star-a-gist">
           <i class="ui teal empty circular label"></i>
-          
             <span>Star a Gist</span>
-          
         </a>
-      
         <a class="item red" href="#gist-star-unstar-a-gist">
           <i class="ui red empty circular label"></i>
-          
             <span>Unstar a Gist</span>
-          
         </a>
-      
         <a class="item green" href="#gist-star-check-if-a-gist-is-starred">
           <i class="ui green empty circular label"></i>
-          
             <span>Check if a Gist is Starred</span>
-          
         </a>
-      
       </div>
     </div>
-    
-  
 </div>
-
-
 <div class="ui horizontal divider">
   <a href="#access-authorization-and-control">Access Authorization and Control</a>
 </div>
-
 <div class="ui accordion fluid">
-  
-    
     <div class="title active">
       <i class="dropdown icon"></i>
-      
         <strong>Authorization</strong>
-      
     </div>
     <div class="content active">
       <div class="ui fluid secondary vertical menu">
-      
         <a class="item green" href="#access-authorization-and-control-authorization-retrieve-authorization">
           <i class="ui green empty circular label"></i>
-          
             <span>Retrieve Authorization</span>
-          
         </a>
-      
         <a class="item blue" href="#access-authorization-and-control-authorization-create-authorization">
           <i class="ui blue empty circular label"></i>
-          
             <span>Create Authorization</span>
-          
         </a>
-      
         <a class="item red" href="#access-authorization-and-control-authorization-remove-an-authorization">
           <i class="ui red empty circular label"></i>
-          
             <span>Remove an Authorization</span>
-          
         </a>
-      
       </div>
     </div>
-    
-  
 </div>
-
-
         </div>
       </div>
       <div class="eleven wide computer ten wide tablet sixteen wide mobile column">
-        
-<div class="ui hidden divider header"></div>
+        <div class="ui hidden divider header"></div>
 <h1 class="ui huge header" id="introduction">Gist Fox API</h1>
 <hr class="ui divider">
-<div class="description">
-  <p>Gist Fox API is a <strong>pastes service</strong> similar to <a href="http://gist.github.com">GitHub&rsquo;s Gist</a>.</p>
-
-<h2 id="authentication">Authentication</h2>
-
-<p><em>Gist Fox API</em> uses OAuth Authorization. First you create a new (or acquire existing) OAuth token using Basic Authentication. After you have acquired your token you can use it to access other resources within token&rsquo; scope.</p>
-
-<h2 id="media-types">Media Types</h2>
-
+<div class="description"><p>Gist Fox API is a <strong>pastes service</strong> similar to <a href="http://gist.github.com">GitHub's Gist</a>.</p>
+<h2>Authentication</h2>
+<p><em>Gist Fox API</em> uses OAuth Authorization. First you create a new (or acquire existing) OAuth token using Basic Authentication. After you have acquired your token you can use it to access other resources within token' scope.</p>
+<h2>Media Types</h2>
 <p>Where applicable this API uses the <a href="https://github.com/mikekelly/hal_specification/blob/master/hal_specification.md">HAL+JSON</a> media-type to represent resources states and affordances.</p>
-
 <p>Requests with a message-body are using plain JSON to set or update resource states.</p>
-
-<h2 id="error-states">Error States</h2>
-
+<h2>Error States</h2>
 <p>The common <a href="https://github.com/for-GET/know-your-http-well/blob/master/status-codes.md">HTTP Response Status Codes</a> are used.</p>
-
 </div>
-
         <div class="ui hidden divider"></div>
-        
-
-  <div class="ui horizontal divider" >
-    
-  </div>
-  <div class="ui header center aligned">
-    <div class="ui header">
-      <div class="sub header">
-        
-      </div>
-    </div>
-  </div>
-  
-    
-      <div class="ui stacked segments">
-        <div class="ui basic segment resource">
-          <div class="ui purple huge ribbon label">
-            Gist Fox API Root
-          </div>
-          <div class="ui header">
-            <div class="ui sub header">
-              <p>Gist Fox API entry point.</p>
-
-<p>This resource does not have any attributes. Instead it offers the initial API affordances in the form of the HTTP Link header and
-HAL links.</p>
-
-            </div>
-          </div>
-        </div>
-
-        
-          
-<div class="ui grey horizontal small divider header">
-  <i class="ui grey micro circular label"></i>
-  <i class="ui pink micro circular label"></i>
-  <i class="ui grey micro circular label"></i>
-</div>
-
-          <div class="ui basic segment">
-            <h3 class="ui block center aligned header" id="gist-fox-api-root-retrieve-the-entry-point">
-              Retrieve the Entry Point
-            </h3>
-            <div class="description"></div>
-
-            
-              <h4 class="ui horizontal divider">
-                REQUEST
-              </h4>
-              <div class="description"></div>
-              <div class="fluid ui large labeled button">
-                <div class="ui green large button">
-                  <h3>GET</h3>
-                </div>
-                <a class="ui basic fluid request-url green label">
-                  <code>/</code>
-                </a>
-              </div>
-              
-              
-              
-
-              <h4 class="ui horizontal divider">RESPONSE</h4>
-              <div class="description"></div>
-              
-<table class="ui celled definition table">
-  <thead>
-    <tr>
-      <th colspan="2">Headers</th>
-    </tr>
-  </thead>
-  <tbody>
-  
-    <tr>
-      <td class="four wide">Content-Type</td>
-      <td><code>application/hal&#43;json</code></td>
-    </tr>
-  
-    <tr>
-      <td class="four wide">Link</td>
-      <td><code>&lt;http:/api.gistfox.com/&gt;;rel=&#34;self&#34;,&lt;http:/api.gistfox.com/gists&gt;;rel=&#34;gists&#34;,&lt;http:/api.gistfox.com/authorization&gt;;rel=&#34;authorization&#34;</code></td>
-    </tr>
-  
-  </tbody>
-</table>
-
-              <div class="ui stacked blue segment">
-                <div class="ui fluid transaction accordion">
-                  <div class="title center aligned">
-                    <a class="ui blue circular label">
-                      200
-                    </a>
-                    <code>application/hal&#43;json</code>
-                  </div>
-                  <div class="content tabbed">
-                    <div class="ui top attached tabular menu">
-                      <a data-tab="body" class="active item">BODY</a>
-                      <a data-tab="schema" class="item">SCHEMA</a>
-                    </div>
-                    <div class="ui bottom attached active tab segment" data-tab="body">
-                      <pre style="white-space: inherit">
-                        <code class="language-json">{
-    &#34;_links&#34;: {
-        &#34;self&#34;: { &#34;href&#34;: &#34;/&#34; },
-        &#34;gists&#34;: { &#34;href&#34;: &#34;/gists?{since}&#34;, &#34;templated&#34;: true },
-        &#34;authorization&#34;: { &#34;href&#34;: &#34;/authorization&#34;}
-    }
-}
-</code>
-                      </pre>
-                    </div>
-                    <div class="ui bottom attached tab segment" data-tab="schema">
-                      <pre style="white-space: inherit">
-                        <code class="language-json"></code>
-                      </pre>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            
-          </div>
-        
-        </div>
-      <div class="ui hidden divider"></div>
-    
-  
-
-  <div class="ui horizontal divider" id="gist">
+          <div class="ui horizontal divider" id="gist">
     Gist
   </div>
   <div class="ui header center aligned">
@@ -419,338 +188,166 @@ HAL links.</p>
       </div>
     </div>
   </div>
-  
-    
-      <div class="ui stacked segments">
-        <div class="ui basic segment resource">
-          <div class="ui purple huge ribbon label">
-            Gist
-          </div>
-          <div class="ui header">
-            <div class="ui sub header">
-              <p>A single Gist object. The Gist resource is the central resource in the Gist Fox API. It represents one paste - a single text note.</p>
-
+    <div class="ui stacked segments">
+      <div class="ui basic segment resource">
+        <div class="ui purple huge ribbon label">
+          Gist
+        </div>
+        <div class="ui header">
+          <div class="ui sub header">
+            <p>A single Gist object. The Gist resource is the central resource in the Gist Fox API. It represents one paste - a single text note.</p>
 <p>The Gist resource has the following attributes:</p>
-
 <ul>
-<li><p>id</p></li>
-
-<li><p>created_at</p></li>
-
-<li><p>description</p></li>
-
-<li><p>content</p></li>
+<li>
+<p>id</p>
+</li>
+<li>
+<p>created_at</p>
+</li>
+<li>
+<p>description</p>
+</li>
+<li>
+<p>content</p>
+</li>
 </ul>
-
 <p>The states <em>id</em> and <em>created_at</em> are assigned by the Gist Fox API at the moment of creation.</p>
 
-            </div>
           </div>
         </div>
+      </div>
 
-        
-          
-<div class="ui grey horizontal small divider header">
+        <div class="ui grey horizontal small divider header">
   <i class="ui grey micro circular label"></i>
   <i class="ui pink micro circular label"></i>
   <i class="ui grey micro circular label"></i>
 </div>
+        <div class="ui basic segment">
+          <h3 class="ui block center aligned header" id="gist-gist-retrieve-a-single-gist">
+            Retrieve a Single Gist
+          </h3>
+          <div class="description"></div>
 
-          <div class="ui basic segment">
-            <h3 class="ui block center aligned header" id="gist-gist-retrieve-a-single-gist">
-              Retrieve a Single Gist
-            </h3>
+            <h4 class="ui horizontal divider">
+              REQUEST
+            </h4>
             <div class="description"></div>
+            <div class="fluid ui large labeled button">
+              <div class="ui green large button">
+                <h3>GET</h3>
+              </div>
+              <a class="ui basic fluid request-url green label">
+                <code>/gists/{id}{?access_token}</code>
+              </a>
+            </div>
+
 
             
-              <h4 class="ui horizontal divider">
-                REQUEST
-              </h4>
-              <div class="description"></div>
-              <div class="fluid ui large labeled button">
-                <div class="ui green large button">
-                  <h3>GET</h3>
-                </div>
-                <a class="ui basic fluid request-url green label">
-                  <code>/gists/{id}{?access_token}</code>
-                </a>
-              </div>
-              
-                <table class="ui celled definition table">
-                  <thead>
-                    <tr>
-                      <th colspan="4">Parameters</th>
-                    </tr>
-                  <thead>
-                  <tbody>
-                    
-                    
-                      
-  
-    <tr>
-      <td class="center aligned one wide">
-        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
-      </td>
-      <td><code>id</code></td>
-      <td class="center aligned">
-        <code>string</code>
-        
-        
-      </td>
-      <td class="eight wide">
-        <p>ID of the Gist in the form of a hash.</p>
 
-        
-      </td>
-    </tr>
-  
-    <tr>
-      <td class="center aligned one wide">
-        <i class="ui empty circular label grey" data-content="optional" data-position="top center"></i>
-      </td>
-      <td><code>access_token</code></td>
-      <td class="center aligned">
-        <code>string</code>
-        
-        
-      </td>
-      <td class="eight wide">
-        <p>Gist Fox API access token.</p>
 
-        
-      </td>
-    </tr>
-  
-
-                    
-                  </tbody>
-                </table>
-              
-              
-              
-
-              <h4 class="ui horizontal divider">RESPONSE</h4>
-              <div class="description"><p>HAL+JSON representation of Gist Resource. In addition to representing its state in the JSON form it offers affordances in the form of the HTTP Link header and HAL links.</p>
+            <h4 class="ui horizontal divider">RESPONSE</h4>
+            <div class="description"><p>HAL+JSON representation of Gist Resource. In addition to representing its state in the JSON form it offers affordances in the form of the HTTP Link header and HAL links.</p>
 </div>
-              
-<table class="ui celled definition table">
+            <table class="ui celled definition table">
   <thead>
     <tr>
       <th colspan="2">Headers</th>
     </tr>
   </thead>
   <tbody>
-  
     <tr>
       <td class="four wide">Content-Type</td>
-      <td><code>application/hal&#43;json</code></td>
+      <td><code>application/hal+json</code></td>
     </tr>
-  
     <tr>
       <td class="four wide">Link</td>
-      <td><code>&lt;http:/api.gistfox.com/gists/42&gt;;rel=&#34;self&#34;, &lt;http:/api.gistfox.com/gists/42/star&gt;;rel=&#34;star&#34;</code></td>
+      <td><code>&lt;http:/api.gistfox.com/gists/42&gt;;rel&#x3D;&quot;self&quot;, &lt;http:/api.gistfox.com/gists/42/star&gt;;rel&#x3D;&quot;star&quot;</code></td>
     </tr>
-  
   </tbody>
 </table>
 
-              <div class="ui stacked blue segment">
-                <div class="ui fluid transaction accordion">
-                  <div class="title center aligned">
-                    <a class="ui blue circular label">
-                      200
-                    </a>
-                    <code>application/hal&#43;json</code>
+            <div class="ui stacked blue segment">
+              <div class="ui fluid transaction accordion">
+                <div class="title center aligned">
+                  <a class="ui blue circular label">
+                    200
+                  </a>
+                  <code>application/hal+json</code>
+                </div>
+                <div class="content tabbed">
+                  <div class="ui top attached tabular menu">
+                    <a data-tab="body" class="active item">BODY</a>
+                    <a data-tab="schema" class="item">SCHEMA</a>
                   </div>
-                  <div class="content tabbed">
-                    <div class="ui top attached tabular menu">
-                      <a data-tab="body" class="active item">BODY</a>
-                      <a data-tab="schema" class="item">SCHEMA</a>
-                    </div>
-                    <div class="ui bottom attached active tab segment" data-tab="body">
-                      <pre style="white-space: inherit">
-                        <code class="language-json">{
-    &#34;_links&#34;: {
-        &#34;self&#34;: { &#34;href&#34;: &#34;/gists/42&#34; },
-        &#34;star&#34;: { &#34;href&#34;: &#34;/gists/42/star&#34; },
+                  <div class="ui bottom attached active tab segment" data-tab="body">
+                    <pre style="white-space: inherit">
+                      <code class="language-json">{
+    &quot;_links&quot;: {
+        &quot;self&quot;: { &quot;href&quot;: &quot;/gists/42&quot; },
+        &quot;star&quot;: { &quot;href&quot;: &quot;/gists/42/star&quot; },
     },
-    &#34;id&#34;: &#34;42&#34;,
-    &#34;created_at&#34;: &#34;2014-04-14T02:15:15Z&#34;,
-    &#34;description&#34;: &#34;Description of Gist&#34;,
-    &#34;content&#34;: &#34;String contents&#34;
+    &quot;id&quot;: &quot;42&quot;,
+    &quot;created_at&quot;: &quot;2014-04-14T02:15:15Z&quot;,
+    &quot;description&quot;: &quot;Description of Gist&quot;,
+    &quot;content&quot;: &quot;String contents&quot;
 }
 </code>
-                      </pre>
-                    </div>
-                    <div class="ui bottom attached tab segment" data-tab="schema">
-                      <pre style="white-space: inherit">
-                        <code class="language-json"></code>
-                      </pre>
-                    </div>
+                    </pre>
+                  </div>
+                  <div class="ui bottom attached tab segment" data-tab="schema">
+                    <pre style="white-space: inherit">
+                      <code class="language-json"></code>
+                    </pre>
                   </div>
                 </div>
               </div>
-            
-          </div>
-        
-          
-<div class="ui grey horizontal small divider header">
+            </div>
+        </div>
+        <div class="ui grey horizontal small divider header">
   <i class="ui grey micro circular label"></i>
   <i class="ui pink micro circular label"></i>
   <i class="ui grey micro circular label"></i>
 </div>
-
-          <div class="ui basic segment">
-            <h3 class="ui block center aligned header" id="gist-gist-edit-a-gist">
-              Edit a Gist
-            </h3>
-            <div class="description"><p>To update a Gist send a JSON with updated value for one or more of the Gist resource attributes. All attributes values (states) from the previous version of this Gist are carried over by default if not included in the hash.</p>
+        <div class="ui basic segment">
+          <h3 class="ui block center aligned header" id="gist-gist-edit-a-gist">
+            Edit a Gist
+          </h3>
+          <div class="description"><p>To update a Gist send a JSON with updated value for one or more of the Gist resource attributes. All attributes values (states) from the previous version of this Gist are carried over by default if not included in the hash.</p>
 </div>
 
-            
-              <h4 class="ui horizontal divider">
-                REQUEST
-              </h4>
-              <div class="description"></div>
-              <div class="fluid ui large labeled button">
-                <div class="ui violet large button">
-                  <h3>PATCH</h3>
-                </div>
-                <a class="ui basic fluid request-url violet label">
-                  <code>/gists/{id}{?access_token}</code>
-                </a>
+            <h4 class="ui horizontal divider">
+              REQUEST
+            </h4>
+            <div class="description"></div>
+            <div class="fluid ui large labeled button">
+              <div class="ui violet large button">
+                <h3>PATCH</h3>
               </div>
-              
-                <table class="ui celled definition table">
-                  <thead>
-                    <tr>
-                      <th colspan="4">Parameters</th>
-                    </tr>
-                  <thead>
-                  <tbody>
-                    
-                    
-                      
-  
-    <tr>
-      <td class="center aligned one wide">
-        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
-      </td>
-      <td><code>id</code></td>
-      <td class="center aligned">
-        <code>string</code>
-        
-        
-      </td>
-      <td class="eight wide">
-        <p>ID of the Gist in the form of a hash.</p>
+              <a class="ui basic fluid request-url violet label">
+                <code>/gists/{id}{?access_token}</code>
+              </a>
+            </div>
 
-        
-      </td>
-    </tr>
-  
-    <tr>
-      <td class="center aligned one wide">
-        <i class="ui empty circular label grey" data-content="optional" data-position="top center"></i>
-      </td>
-      <td><code>access_token</code></td>
-      <td class="center aligned">
-        <code>string</code>
-        
-        
-      </td>
-      <td class="eight wide">
-        <p>Gist Fox API access token.</p>
 
-        
-      </td>
-    </tr>
-  
-
-                    
-                  </tbody>
-                </table>
-              
-              
-                
-<table class="ui celled definition table">
+            <table class="ui celled definition table">
   <thead>
     <tr>
       <th colspan="2">Headers</th>
     </tr>
   </thead>
   <tbody>
-  
     <tr>
       <td class="four wide">Content-Type</td>
       <td><code>application/json</code></td>
     </tr>
-  
   </tbody>
 </table>
 
-              
-              
-                <div class="ui stacked segment">
-                  <div class="ui fluid transaction accordion">
-                    <div class="title">
-                      <code>application/json</code>
-                    </div>
-                    <div class="content tabbed">
-                      <div class="ui top attached tabular menu">
-                        <a data-tab="body" class="active item">BODY</a>
-                        <a data-tab="schema" class="item">SCHEMA</a>
-                      </div>
-                      <div class="ui bottom attached active tab segment" data-tab="body">
-                        <pre style="white-space: inherit">
-                          <code class="language-json">{
-    &#34;content&#34;: &#34;Updated file contents&#34;
-}
-</code>
-                        </pre>
-                      </div>
-                      <div class="ui bottom attached tab segment" data-tab="schema">
-                        <pre style="white-space: inherit">
-                          <code class="language-json"></code>
-                        </pre>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              
 
-              <h4 class="ui horizontal divider">RESPONSE</h4>
-              <div class="description"><p>HAL+JSON representation of Gist Resource. In addition to representing its state in the JSON form it offers affordances in the form of the HTTP Link header and HAL links.</p>
-</div>
-              
-<table class="ui celled definition table">
-  <thead>
-    <tr>
-      <th colspan="2">Headers</th>
-    </tr>
-  </thead>
-  <tbody>
-  
-    <tr>
-      <td class="four wide">Content-Type</td>
-      <td><code>application/hal&#43;json</code></td>
-    </tr>
-  
-    <tr>
-      <td class="four wide">Link</td>
-      <td><code>&lt;http:/api.gistfox.com/gists/42&gt;;rel=&#34;self&#34;, &lt;http:/api.gistfox.com/gists/42/star&gt;;rel=&#34;star&#34;</code></td>
-    </tr>
-  
-  </tbody>
-</table>
-
-              <div class="ui stacked blue segment">
+              <div class="ui stacked segment">
                 <div class="ui fluid transaction accordion">
-                  <div class="title center aligned">
-                    <a class="ui blue circular label">
-                      200
-                    </a>
-                    <code>application/hal&#43;json</code>
+                  <div class="title">
+                    <code>application/json</code>
                   </div>
                   <div class="content tabbed">
                     <div class="ui top attached tabular menu">
@@ -760,14 +357,7 @@ HAL links.</p>
                     <div class="ui bottom attached active tab segment" data-tab="body">
                       <pre style="white-space: inherit">
                         <code class="language-json">{
-    &#34;_links&#34;: {
-        &#34;self&#34;: { &#34;href&#34;: &#34;/gists/42&#34; },
-        &#34;star&#34;: { &#34;href&#34;: &#34;/gists/42/star&#34; },
-    },
-    &#34;id&#34;: &#34;42&#34;,
-    &#34;created_at&#34;: &#34;2014-04-14T02:15:15Z&#34;,
-    &#34;description&#34;: &#34;Description of Gist&#34;,
-    &#34;content&#34;: &#34;String contents&#34;
+    &quot;content&quot;: &quot;Updated file contents&quot;
 }
 </code>
                       </pre>
@@ -780,197 +370,174 @@ HAL links.</p>
                   </div>
                 </div>
               </div>
-            
-          </div>
-        
-          
-<div class="ui grey horizontal small divider header">
-  <i class="ui grey micro circular label"></i>
-  <i class="ui pink micro circular label"></i>
-  <i class="ui grey micro circular label"></i>
+
+            <h4 class="ui horizontal divider">RESPONSE</h4>
+            <div class="description"><p>HAL+JSON representation of Gist Resource. In addition to representing its state in the JSON form it offers affordances in the form of the HTTP Link header and HAL links.</p>
 </div>
-
-          <div class="ui basic segment">
-            <h3 class="ui block center aligned header" id="gist-gist-delete-a-gist">
-              Delete a Gist
-            </h3>
-            <div class="description"></div>
-
-            
-              <h4 class="ui horizontal divider">
-                REQUEST
-              </h4>
-              <div class="description"></div>
-              <div class="fluid ui large labeled button">
-                <div class="ui red large button">
-                  <h3>DELETE</h3>
-                </div>
-                <a class="ui basic fluid request-url red label">
-                  <code>/gists/{id}{?access_token}</code>
-                </a>
-              </div>
-              
-                <table class="ui celled definition table">
-                  <thead>
-                    <tr>
-                      <th colspan="4">Parameters</th>
-                    </tr>
-                  <thead>
-                  <tbody>
-                    
-                    
-                      
-  
-    <tr>
-      <td class="center aligned one wide">
-        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
-      </td>
-      <td><code>id</code></td>
-      <td class="center aligned">
-        <code>string</code>
-        
-        
-      </td>
-      <td class="eight wide">
-        <p>ID of the Gist in the form of a hash.</p>
-
-        
-      </td>
-    </tr>
-  
-    <tr>
-      <td class="center aligned one wide">
-        <i class="ui empty circular label grey" data-content="optional" data-position="top center"></i>
-      </td>
-      <td><code>access_token</code></td>
-      <td class="center aligned">
-        <code>string</code>
-        
-        
-      </td>
-      <td class="eight wide">
-        <p>Gist Fox API access token.</p>
-
-        
-      </td>
-    </tr>
-  
-
-                    
-                  </tbody>
-                </table>
-              
-              
-              
-
-              <h4 class="ui horizontal divider">RESPONSE</h4>
-              <div class="description"></div>
-              
-<table class="ui celled definition table">
+            <table class="ui celled definition table">
   <thead>
     <tr>
       <th colspan="2">Headers</th>
     </tr>
   </thead>
   <tbody>
-  
+    <tr>
+      <td class="four wide">Content-Type</td>
+      <td><code>application/hal+json</code></td>
+    </tr>
+    <tr>
+      <td class="four wide">Link</td>
+      <td><code>&lt;http:/api.gistfox.com/gists/42&gt;;rel&#x3D;&quot;self&quot;, &lt;http:/api.gistfox.com/gists/42/star&gt;;rel&#x3D;&quot;star&quot;</code></td>
+    </tr>
   </tbody>
 </table>
 
-              <div class="ui stacked blue segment">
-                <div class="ui fluid transaction accordion">
-                  <div class="title center aligned">
-                    <a class="ui blue circular label">
-                      204
-                    </a>
-                    <code></code>
+            <div class="ui stacked blue segment">
+              <div class="ui fluid transaction accordion">
+                <div class="title center aligned">
+                  <a class="ui blue circular label">
+                    200
+                  </a>
+                  <code>application/hal+json</code>
+                </div>
+                <div class="content tabbed">
+                  <div class="ui top attached tabular menu">
+                    <a data-tab="body" class="active item">BODY</a>
+                    <a data-tab="schema" class="item">SCHEMA</a>
                   </div>
-                  <div class="content tabbed">
-                    <div class="ui top attached tabular menu">
-                      <a data-tab="body" class="active item">BODY</a>
-                      <a data-tab="schema" class="item">SCHEMA</a>
-                    </div>
-                    <div class="ui bottom attached active tab segment" data-tab="body">
-                      <pre style="white-space: inherit">
-                        <code class="language-"></code>
-                      </pre>
-                    </div>
-                    <div class="ui bottom attached tab segment" data-tab="schema">
-                      <pre style="white-space: inherit">
-                        <code class="language-json"></code>
-                      </pre>
-                    </div>
+                  <div class="ui bottom attached active tab segment" data-tab="body">
+                    <pre style="white-space: inherit">
+                      <code class="language-json">{
+    &quot;_links&quot;: {
+        &quot;self&quot;: { &quot;href&quot;: &quot;/gists/42&quot; },
+        &quot;star&quot;: { &quot;href&quot;: &quot;/gists/42/star&quot; },
+    },
+    &quot;id&quot;: &quot;42&quot;,
+    &quot;created_at&quot;: &quot;2014-04-14T02:15:15Z&quot;,
+    &quot;description&quot;: &quot;Description of Gist&quot;,
+    &quot;content&quot;: &quot;String contents&quot;
+}
+</code>
+                    </pre>
+                  </div>
+                  <div class="ui bottom attached tab segment" data-tab="schema">
+                    <pre style="white-space: inherit">
+                      <code class="language-json"></code>
+                    </pre>
                   </div>
                 </div>
               </div>
-            
-          </div>
-        
-        </div>
-      <div class="ui hidden divider"></div>
-    
-  
-    
-      <div class="ui stacked segments">
-        <div class="ui basic segment resource">
-          <div class="ui purple huge ribbon label">
-            Gists Collection
-          </div>
-          <div class="ui header">
-            <div class="ui sub header">
-              <p>Collection of all Gists.</p>
-
-<p>The Gist Collection resource has the following attribute:</p>
-
-<ul>
-<li>total</li>
-</ul>
-
-<p>In addition it <strong>embeds</strong> <em>Gist Resources</em> in the Gist Fox API.</p>
-
             </div>
-          </div>
         </div>
-
-        
-          
-<div class="ui grey horizontal small divider header">
+        <div class="ui grey horizontal small divider header">
   <i class="ui grey micro circular label"></i>
   <i class="ui pink micro circular label"></i>
   <i class="ui grey micro circular label"></i>
 </div>
+        <div class="ui basic segment">
+          <h3 class="ui block center aligned header" id="gist-gist-delete-a-gist">
+            Delete a Gist
+          </h3>
+          <div class="description"></div>
 
-          <div class="ui basic segment">
-            <h3 class="ui block center aligned header" id="gist-gists-collection-list-all-gists">
-              List All Gists
-            </h3>
+            <h4 class="ui horizontal divider">
+              REQUEST
+            </h4>
             <div class="description"></div>
+            <div class="fluid ui large labeled button">
+              <div class="ui red large button">
+                <h3>DELETE</h3>
+              </div>
+              <a class="ui basic fluid request-url red label">
+                <code>/gists/{id}{?access_token}</code>
+              </a>
+            </div>
+
 
             
-              <h4 class="ui horizontal divider">
-                REQUEST
-              </h4>
-              <div class="description"></div>
-              <div class="fluid ui large labeled button">
-                <div class="ui green large button">
-                  <h3>GET</h3>
+
+
+            <h4 class="ui horizontal divider">RESPONSE</h4>
+            <div class="description"></div>
+            
+            <div class="ui stacked blue segment">
+              <div class="ui fluid transaction accordion">
+                <div class="title center aligned">
+                  <a class="ui blue circular label">
+                    204
+                  </a>
+                  <code></code>
                 </div>
-                <a class="ui basic fluid request-url green label">
-                  <code>/gists{?access_token,since}</code>
-                </a>
+                <div class="content tabbed">
+                  <div class="ui top attached tabular menu">
+                    <a data-tab="body" class="active item">BODY</a>
+                    <a data-tab="schema" class="item">SCHEMA</a>
+                  </div>
+                  <div class="ui bottom attached active tab segment" data-tab="body">
+                    <pre style="white-space: inherit">
+                      <code class="language-"></code>
+                    </pre>
+                  </div>
+                  <div class="ui bottom attached tab segment" data-tab="schema">
+                    <pre style="white-space: inherit">
+                      <code class="language-json"></code>
+                    </pre>
+                  </div>
+                </div>
               </div>
-              
-                <table class="ui celled definition table">
-                  <thead>
-                    <tr>
-                      <th colspan="4">Parameters</th>
-                    </tr>
-                  <thead>
-                  <tbody>
-                    
-                      
-  
-    <tr>
+            </div>
+        </div>
+    </div>
+    <div class="ui stacked segments">
+      <div class="ui basic segment resource">
+        <div class="ui purple huge ribbon label">
+          Gists Collection
+        </div>
+        <div class="ui header">
+          <div class="ui sub header">
+            <p>Collection of all Gists.</p>
+<p>The Gist Collection resource has the following attribute:</p>
+<ul>
+<li>total</li>
+</ul>
+<p>In addition it <strong>embeds</strong> <em>Gist Resources</em> in the Gist Fox API.</p>
+
+          </div>
+        </div>
+      </div>
+
+        <div class="ui grey horizontal small divider header">
+  <i class="ui grey micro circular label"></i>
+  <i class="ui pink micro circular label"></i>
+  <i class="ui grey micro circular label"></i>
+</div>
+        <div class="ui basic segment">
+          <h3 class="ui block center aligned header" id="gist-gists-collection-list-all-gists">
+            List All Gists
+          </h3>
+          <div class="description"></div>
+
+            <h4 class="ui horizontal divider">
+              REQUEST
+            </h4>
+            <div class="description"></div>
+            <div class="fluid ui large labeled button">
+              <div class="ui green large button">
+                <h3>GET</h3>
+              </div>
+              <a class="ui basic fluid request-url green label">
+                <code>/gists{?access_token,since}</code>
+              </a>
+            </div>
+
+              <table class="ui celled definition table">
+                <thead>
+                  <tr>
+                    <th colspan="4">Parameters</th>
+                  </tr>
+                <thead>
+                <tbody>
+                        <tr>
       <td class="center aligned one wide">
         <i class="ui empty circular label grey" data-content="optional" data-position="top center"></i>
       </td>
@@ -979,136 +546,120 @@ HAL links.</p>
         <code>string</code>
         
         
+        
       </td>
       <td class="eight wide">
         <p>Timestamp in ISO 8601 format: <code>YYYY-MM-DDTHH:MM:SSZ</code> Only gists updated at or after this time are returned.</p>
 
-        
       </td>
     </tr>
-  
 
-                    
-                    
-                  </tbody>
-                </table>
-              
-              
-              
+                </tbody>
+              </table>
 
-              <h4 class="ui horizontal divider">RESPONSE</h4>
-              <div class="description"><p>HAL+JSON representation of Gist Collection Resource. The Gist resources in collections are embedded. Note the embedded Gists resource are incomplete representations of the Gist in question. Use the respective Gist link to retrieve its full representation.</p>
+            
+
+
+            <h4 class="ui horizontal divider">RESPONSE</h4>
+            <div class="description"><p>HAL+JSON representation of Gist Collection Resource. The Gist resources in collections are embedded. Note the embedded Gists resource are incomplete representations of the Gist in question. Use the respective Gist link to retrieve its full representation.</p>
 </div>
-              
-<table class="ui celled definition table">
+            <table class="ui celled definition table">
   <thead>
     <tr>
       <th colspan="2">Headers</th>
     </tr>
   </thead>
   <tbody>
-  
     <tr>
       <td class="four wide">Content-Type</td>
-      <td><code>application/hal&#43;json</code></td>
+      <td><code>application/hal+json</code></td>
     </tr>
-  
     <tr>
       <td class="four wide">Link</td>
-      <td><code>&lt;http:/api.gistfox.com/gists&gt;;rel=&#34;self&#34;</code></td>
+      <td><code>&lt;http:/api.gistfox.com/gists&gt;;rel&#x3D;&quot;self&quot;</code></td>
     </tr>
-  
   </tbody>
 </table>
 
-              <div class="ui stacked blue segment">
-                <div class="ui fluid transaction accordion">
-                  <div class="title center aligned">
-                    <a class="ui blue circular label">
-                      200
-                    </a>
-                    <code>application/hal&#43;json</code>
+            <div class="ui stacked blue segment">
+              <div class="ui fluid transaction accordion">
+                <div class="title center aligned">
+                  <a class="ui blue circular label">
+                    200
+                  </a>
+                  <code>application/hal+json</code>
+                </div>
+                <div class="content tabbed">
+                  <div class="ui top attached tabular menu">
+                    <a data-tab="body" class="active item">BODY</a>
+                    <a data-tab="schema" class="item">SCHEMA</a>
                   </div>
-                  <div class="content tabbed">
-                    <div class="ui top attached tabular menu">
-                      <a data-tab="body" class="active item">BODY</a>
-                      <a data-tab="schema" class="item">SCHEMA</a>
-                    </div>
-                    <div class="ui bottom attached active tab segment" data-tab="body">
-                      <pre style="white-space: inherit">
-                        <code class="language-json">{
-    &#34;_links&#34;: {
-        &#34;self&#34;: { &#34;href&#34;: &#34;/gists&#34; }
+                  <div class="ui bottom attached active tab segment" data-tab="body">
+                    <pre style="white-space: inherit">
+                      <code class="language-json">{
+    &quot;_links&quot;: {
+        &quot;self&quot;: { &quot;href&quot;: &quot;/gists&quot; }
     },
-    &#34;_embedded&#34;: {
-        &#34;gists&#34;: [
+    &quot;_embedded&quot;: {
+        &quot;gists&quot;: [
             {
-                &#34;_links&#34; : {
-                    &#34;self&#34;: { &#34;href&#34;: &#34;/gists/42&#34; }
+                &quot;_links&quot; : {
+                    &quot;self&quot;: { &quot;href&quot;: &quot;/gists/42&quot; }
                 },
-                &#34;id&#34;: &#34;42&#34;,
-                &#34;created_at&#34;: &#34;2014-04-14T02:15:15Z&#34;,
-                &#34;description&#34;: &#34;Description of Gist&#34;
+                &quot;id&quot;: &quot;42&quot;,
+                &quot;created_at&quot;: &quot;2014-04-14T02:15:15Z&quot;,
+                &quot;description&quot;: &quot;Description of Gist&quot;
             }
         ]
     },
-    &#34;total&#34;: 1
+    &quot;total&quot;: 1
 }
 </code>
-                      </pre>
-                    </div>
-                    <div class="ui bottom attached tab segment" data-tab="schema">
-                      <pre style="white-space: inherit">
-                        <code class="language-json"></code>
-                      </pre>
-                    </div>
+                    </pre>
+                  </div>
+                  <div class="ui bottom attached tab segment" data-tab="schema">
+                    <pre style="white-space: inherit">
+                      <code class="language-json"></code>
+                    </pre>
                   </div>
                 </div>
               </div>
-            
-          </div>
-        
-          
-<div class="ui grey horizontal small divider header">
+            </div>
+        </div>
+        <div class="ui grey horizontal small divider header">
   <i class="ui grey micro circular label"></i>
   <i class="ui pink micro circular label"></i>
   <i class="ui grey micro circular label"></i>
 </div>
-
-          <div class="ui basic segment">
-            <h3 class="ui block center aligned header" id="gist-gists-collection-create-a-gist">
-              Create a Gist
-            </h3>
-            <div class="description"><p>To create a new Gist simply provide a JSON hash of the <em>description</em> and <em>content</em> attributes for the new Gist.</p>
-
+        <div class="ui basic segment">
+          <h3 class="ui block center aligned header" id="gist-gists-collection-create-a-gist">
+            Create a Gist
+          </h3>
+          <div class="description"><p>To create a new Gist simply provide a JSON hash of the <em>description</em> and <em>content</em> attributes for the new Gist.</p>
 <p>This action requires an <code>access_token</code> with <code>gist_write</code> scope.</p>
 </div>
 
-            
-              <h4 class="ui horizontal divider">
-                REQUEST
-              </h4>
-              <div class="description"></div>
-              <div class="fluid ui large labeled button">
-                <div class="ui blue large button">
-                  <h3>POST</h3>
-                </div>
-                <a class="ui basic fluid request-url blue label">
-                  <code>/gists{?access_token,since}</code>
-                </a>
+            <h4 class="ui horizontal divider">
+              REQUEST
+            </h4>
+            <div class="description"></div>
+            <div class="fluid ui large labeled button">
+              <div class="ui blue large button">
+                <h3>POST</h3>
               </div>
-              
-                <table class="ui celled definition table">
-                  <thead>
-                    <tr>
-                      <th colspan="4">Parameters</th>
-                    </tr>
-                  <thead>
-                  <tbody>
-                    
-                      
-  
-    <tr>
+              <a class="ui basic fluid request-url blue label">
+                <code>/gists{?access_token,since}</code>
+              </a>
+            </div>
+
+              <table class="ui celled definition table">
+                <thead>
+                  <tr>
+                    <th colspan="4">Parameters</th>
+                  </tr>
+                <thead>
+                <tbody>
+                        <tr>
       <td class="center aligned one wide">
         <i class="ui empty circular label grey" data-content="optional" data-position="top center"></i>
       </td>
@@ -1117,101 +668,36 @@ HAL links.</p>
         <code>string</code>
         
         
+        
       </td>
       <td class="eight wide">
         <p>Gist Fox API access token.</p>
 
-        
       </td>
     </tr>
-  
 
-                    
-                    
-                  </tbody>
-                </table>
-              
-              
-                
-<table class="ui celled definition table">
+                </tbody>
+              </table>
+
+            <table class="ui celled definition table">
   <thead>
     <tr>
       <th colspan="2">Headers</th>
     </tr>
   </thead>
   <tbody>
-  
     <tr>
       <td class="four wide">Content-Type</td>
       <td><code>application/json</code></td>
     </tr>
-  
   </tbody>
 </table>
 
-              
-              
-                <div class="ui stacked segment">
-                  <div class="ui fluid transaction accordion">
-                    <div class="title">
-                      <code>application/json</code>
-                    </div>
-                    <div class="content tabbed">
-                      <div class="ui top attached tabular menu">
-                        <a data-tab="body" class="active item">BODY</a>
-                        <a data-tab="schema" class="item">SCHEMA</a>
-                      </div>
-                      <div class="ui bottom attached active tab segment" data-tab="body">
-                        <pre style="white-space: inherit">
-                          <code class="language-json">{
-    &#34;description&#34;: &#34;Description of Gist&#34;,
-    &#34;content&#34;: &#34;String content&#34;
-}
-</code>
-                        </pre>
-                      </div>
-                      <div class="ui bottom attached tab segment" data-tab="schema">
-                        <pre style="white-space: inherit">
-                          <code class="language-json"></code>
-                        </pre>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              
 
-              <h4 class="ui horizontal divider">RESPONSE</h4>
-              <div class="description"><p>HAL+JSON representation of Gist Resource. In addition to representing its state in the JSON form it offers affordances in the form of the HTTP Link header and HAL links.</p>
-</div>
-              
-<table class="ui celled definition table">
-  <thead>
-    <tr>
-      <th colspan="2">Headers</th>
-    </tr>
-  </thead>
-  <tbody>
-  
-    <tr>
-      <td class="four wide">Content-Type</td>
-      <td><code>application/hal&#43;json</code></td>
-    </tr>
-  
-    <tr>
-      <td class="four wide">Link</td>
-      <td><code>&lt;http:/api.gistfox.com/gists/42&gt;;rel=&#34;self&#34;, &lt;http:/api.gistfox.com/gists/42/star&gt;;rel=&#34;star&#34;</code></td>
-    </tr>
-  
-  </tbody>
-</table>
-
-              <div class="ui stacked blue segment">
+              <div class="ui stacked segment">
                 <div class="ui fluid transaction accordion">
-                  <div class="title center aligned">
-                    <a class="ui blue circular label">
-                      201
-                    </a>
-                    <code>application/hal&#43;json</code>
+                  <div class="title">
+                    <code>application/json</code>
                   </div>
                   <div class="content tabbed">
                     <div class="ui top attached tabular menu">
@@ -1221,14 +707,8 @@ HAL links.</p>
                     <div class="ui bottom attached active tab segment" data-tab="body">
                       <pre style="white-space: inherit">
                         <code class="language-json">{
-    &#34;_links&#34;: {
-        &#34;self&#34;: { &#34;href&#34;: &#34;/gists/42&#34; },
-        &#34;star&#34;: { &#34;href&#34;: &#34;/gists/42/star&#34; },
-    },
-    &#34;id&#34;: &#34;42&#34;,
-    &#34;created_at&#34;: &#34;2014-04-14T02:15:15Z&#34;,
-    &#34;description&#34;: &#34;Description of Gist&#34;,
-    &#34;content&#34;: &#34;String contents&#34;
+    &quot;description&quot;: &quot;Description of Gist&quot;,
+    &quot;content&quot;: &quot;String content&quot;
 }
 </code>
                       </pre>
@@ -1241,427 +721,284 @@ HAL links.</p>
                   </div>
                 </div>
               </div>
-            
-          </div>
-        
+
+            <h4 class="ui horizontal divider">RESPONSE</h4>
+            <div class="description"><p>HAL+JSON representation of Gist Resource. In addition to representing its state in the JSON form it offers affordances in the form of the HTTP Link header and HAL links.</p>
+</div>
+            <table class="ui celled definition table">
+  <thead>
+    <tr>
+      <th colspan="2">Headers</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="four wide">Content-Type</td>
+      <td><code>application/hal+json</code></td>
+    </tr>
+    <tr>
+      <td class="four wide">Link</td>
+      <td><code>&lt;http:/api.gistfox.com/gists/42&gt;;rel&#x3D;&quot;self&quot;, &lt;http:/api.gistfox.com/gists/42/star&gt;;rel&#x3D;&quot;star&quot;</code></td>
+    </tr>
+  </tbody>
+</table>
+
+            <div class="ui stacked blue segment">
+              <div class="ui fluid transaction accordion">
+                <div class="title center aligned">
+                  <a class="ui blue circular label">
+                    201
+                  </a>
+                  <code>application/hal+json</code>
+                </div>
+                <div class="content tabbed">
+                  <div class="ui top attached tabular menu">
+                    <a data-tab="body" class="active item">BODY</a>
+                    <a data-tab="schema" class="item">SCHEMA</a>
+                  </div>
+                  <div class="ui bottom attached active tab segment" data-tab="body">
+                    <pre style="white-space: inherit">
+                      <code class="language-json">{
+    &quot;_links&quot;: {
+        &quot;self&quot;: { &quot;href&quot;: &quot;/gists/42&quot; },
+        &quot;star&quot;: { &quot;href&quot;: &quot;/gists/42/star&quot; },
+    },
+    &quot;id&quot;: &quot;42&quot;,
+    &quot;created_at&quot;: &quot;2014-04-14T02:15:15Z&quot;,
+    &quot;description&quot;: &quot;Description of Gist&quot;,
+    &quot;content&quot;: &quot;String contents&quot;
+}
+</code>
+                    </pre>
+                  </div>
+                  <div class="ui bottom attached tab segment" data-tab="schema">
+                    <pre style="white-space: inherit">
+                      <code class="language-json"></code>
+                    </pre>
+                  </div>
+                </div>
+              </div>
+            </div>
         </div>
-      <div class="ui hidden divider"></div>
-    
-  
-    
-      <div class="ui stacked segments">
-        <div class="ui basic segment resource">
-          <div class="ui purple huge ribbon label">
-            Star
-          </div>
-          <div class="ui header">
-            <div class="ui sub header">
-              <p>Star resource represents a Gist starred status.</p>
-
+    </div>
+    <div class="ui stacked segments">
+      <div class="ui basic segment resource">
+        <div class="ui purple huge ribbon label">
+          Star
+        </div>
+        <div class="ui header">
+          <div class="ui sub header">
+            <p>Star resource represents a Gist starred status.</p>
 <p>The Star resource has the following attribute:</p>
-
 <ul>
 <li>starred</li>
 </ul>
 
-            </div>
           </div>
         </div>
+      </div>
 
-        
-          
-<div class="ui grey horizontal small divider header">
+        <div class="ui grey horizontal small divider header">
   <i class="ui grey micro circular label"></i>
   <i class="ui pink micro circular label"></i>
   <i class="ui grey micro circular label"></i>
 </div>
-
-          <div class="ui basic segment">
-            <h3 class="ui block center aligned header" id="gist-star-star-a-gist">
-              Star a Gist
-            </h3>
-            <div class="description"><p>This action requires an <code>access_token</code> with <code>gist_write</code> scope.</p>
+        <div class="ui basic segment">
+          <h3 class="ui block center aligned header" id="gist-star-star-a-gist">
+            Star a Gist
+          </h3>
+          <div class="description"><p>This action requires an <code>access_token</code> with <code>gist_write</code> scope.</p>
 </div>
 
-            
-              <h4 class="ui horizontal divider">
-                REQUEST
-              </h4>
-              <div class="description"></div>
-              <div class="fluid ui large labeled button">
-                <div class="ui teal large button">
-                  <h3>PUT</h3>
-                </div>
-                <a class="ui basic fluid request-url teal label">
-                  <code>/gists/{id}/star{?access_token}</code>
-                </a>
-              </div>
-              
-                <table class="ui celled definition table">
-                  <thead>
-                    <tr>
-                      <th colspan="4">Parameters</th>
-                    </tr>
-                  <thead>
-                  <tbody>
-                    
-                    
-                      
-  
-    <tr>
-      <td class="center aligned one wide">
-        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
-      </td>
-      <td><code>id</code></td>
-      <td class="center aligned">
-        <code>string</code>
-        
-        
-      </td>
-      <td class="eight wide">
-        <p>ID of the gist in the form of a hash</p>
-
-        
-      </td>
-    </tr>
-  
-    <tr>
-      <td class="center aligned one wide">
-        <i class="ui empty circular label grey" data-content="optional" data-position="top center"></i>
-      </td>
-      <td><code>access_token</code></td>
-      <td class="center aligned">
-        <code>string</code>
-        
-        
-      </td>
-      <td class="eight wide">
-        <p>Gist Fox API access token.</p>
-
-        
-      </td>
-    </tr>
-  
-
-                    
-                  </tbody>
-                </table>
-              
-              
-              
-
-              <h4 class="ui horizontal divider">RESPONSE</h4>
-              <div class="description"></div>
-              
-<table class="ui celled definition table">
-  <thead>
-    <tr>
-      <th colspan="2">Headers</th>
-    </tr>
-  </thead>
-  <tbody>
-  
-  </tbody>
-</table>
-
-              <div class="ui stacked blue segment">
-                <div class="ui fluid transaction accordion">
-                  <div class="title center aligned">
-                    <a class="ui blue circular label">
-                      204
-                    </a>
-                    <code></code>
-                  </div>
-                  <div class="content tabbed">
-                    <div class="ui top attached tabular menu">
-                      <a data-tab="body" class="active item">BODY</a>
-                      <a data-tab="schema" class="item">SCHEMA</a>
-                    </div>
-                    <div class="ui bottom attached active tab segment" data-tab="body">
-                      <pre style="white-space: inherit">
-                        <code class="language-"></code>
-                      </pre>
-                    </div>
-                    <div class="ui bottom attached tab segment" data-tab="schema">
-                      <pre style="white-space: inherit">
-                        <code class="language-json"></code>
-                      </pre>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            
-          </div>
-        
-          
-<div class="ui grey horizontal small divider header">
-  <i class="ui grey micro circular label"></i>
-  <i class="ui pink micro circular label"></i>
-  <i class="ui grey micro circular label"></i>
-</div>
-
-          <div class="ui basic segment">
-            <h3 class="ui block center aligned header" id="gist-star-unstar-a-gist">
-              Unstar a Gist
-            </h3>
-            <div class="description"><p>This action requires an <code>access_token</code> with <code>gist_write</code> scope.</p>
-</div>
-
-            
-              <h4 class="ui horizontal divider">
-                REQUEST
-              </h4>
-              <div class="description"></div>
-              <div class="fluid ui large labeled button">
-                <div class="ui red large button">
-                  <h3>DELETE</h3>
-                </div>
-                <a class="ui basic fluid request-url red label">
-                  <code>/gists/{id}/star{?access_token}</code>
-                </a>
-              </div>
-              
-                <table class="ui celled definition table">
-                  <thead>
-                    <tr>
-                      <th colspan="4">Parameters</th>
-                    </tr>
-                  <thead>
-                  <tbody>
-                    
-                    
-                      
-  
-    <tr>
-      <td class="center aligned one wide">
-        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
-      </td>
-      <td><code>id</code></td>
-      <td class="center aligned">
-        <code>string</code>
-        
-        
-      </td>
-      <td class="eight wide">
-        <p>ID of the gist in the form of a hash</p>
-
-        
-      </td>
-    </tr>
-  
-    <tr>
-      <td class="center aligned one wide">
-        <i class="ui empty circular label grey" data-content="optional" data-position="top center"></i>
-      </td>
-      <td><code>access_token</code></td>
-      <td class="center aligned">
-        <code>string</code>
-        
-        
-      </td>
-      <td class="eight wide">
-        <p>Gist Fox API access token.</p>
-
-        
-      </td>
-    </tr>
-  
-
-                    
-                  </tbody>
-                </table>
-              
-              
-              
-
-              <h4 class="ui horizontal divider">RESPONSE</h4>
-              <div class="description"></div>
-              
-<table class="ui celled definition table">
-  <thead>
-    <tr>
-      <th colspan="2">Headers</th>
-    </tr>
-  </thead>
-  <tbody>
-  
-  </tbody>
-</table>
-
-              <div class="ui stacked blue segment">
-                <div class="ui fluid transaction accordion">
-                  <div class="title center aligned">
-                    <a class="ui blue circular label">
-                      204
-                    </a>
-                    <code></code>
-                  </div>
-                  <div class="content tabbed">
-                    <div class="ui top attached tabular menu">
-                      <a data-tab="body" class="active item">BODY</a>
-                      <a data-tab="schema" class="item">SCHEMA</a>
-                    </div>
-                    <div class="ui bottom attached active tab segment" data-tab="body">
-                      <pre style="white-space: inherit">
-                        <code class="language-"></code>
-                      </pre>
-                    </div>
-                    <div class="ui bottom attached tab segment" data-tab="schema">
-                      <pre style="white-space: inherit">
-                        <code class="language-json"></code>
-                      </pre>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            
-          </div>
-        
-          
-<div class="ui grey horizontal small divider header">
-  <i class="ui grey micro circular label"></i>
-  <i class="ui pink micro circular label"></i>
-  <i class="ui grey micro circular label"></i>
-</div>
-
-          <div class="ui basic segment">
-            <h3 class="ui block center aligned header" id="gist-star-check-if-a-gist-is-starred">
-              Check if a Gist is Starred
-            </h3>
+            <h4 class="ui horizontal divider">
+              REQUEST
+            </h4>
             <div class="description"></div>
+            <div class="fluid ui large labeled button">
+              <div class="ui teal large button">
+                <h3>PUT</h3>
+              </div>
+              <a class="ui basic fluid request-url teal label">
+                <code>/gists/{id}/star{?access_token}</code>
+              </a>
+            </div>
+
 
             
-              <h4 class="ui horizontal divider">
-                REQUEST
-              </h4>
-              <div class="description"></div>
-              <div class="fluid ui large labeled button">
-                <div class="ui green large button">
-                  <h3>GET</h3>
+
+
+            <h4 class="ui horizontal divider">RESPONSE</h4>
+            <div class="description"></div>
+            
+            <div class="ui stacked blue segment">
+              <div class="ui fluid transaction accordion">
+                <div class="title center aligned">
+                  <a class="ui blue circular label">
+                    204
+                  </a>
+                  <code></code>
                 </div>
-                <a class="ui basic fluid request-url green label">
-                  <code>/gists/{id}/star{?access_token}</code>
-                </a>
+                <div class="content tabbed">
+                  <div class="ui top attached tabular menu">
+                    <a data-tab="body" class="active item">BODY</a>
+                    <a data-tab="schema" class="item">SCHEMA</a>
+                  </div>
+                  <div class="ui bottom attached active tab segment" data-tab="body">
+                    <pre style="white-space: inherit">
+                      <code class="language-"></code>
+                    </pre>
+                  </div>
+                  <div class="ui bottom attached tab segment" data-tab="schema">
+                    <pre style="white-space: inherit">
+                      <code class="language-json"></code>
+                    </pre>
+                  </div>
+                </div>
               </div>
-              
-                <table class="ui celled definition table">
-                  <thead>
-                    <tr>
-                      <th colspan="4">Parameters</th>
-                    </tr>
-                  <thead>
-                  <tbody>
-                    
-                    
-                      
-  
-    <tr>
-      <td class="center aligned one wide">
-        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
-      </td>
-      <td><code>id</code></td>
-      <td class="center aligned">
-        <code>string</code>
-        
-        
-      </td>
-      <td class="eight wide">
-        <p>ID of the gist in the form of a hash</p>
-
-        
-      </td>
-    </tr>
-  
-    <tr>
-      <td class="center aligned one wide">
-        <i class="ui empty circular label grey" data-content="optional" data-position="top center"></i>
-      </td>
-      <td><code>access_token</code></td>
-      <td class="center aligned">
-        <code>string</code>
-        
-        
-      </td>
-      <td class="eight wide">
-        <p>Gist Fox API access token.</p>
-
-        
-      </td>
-    </tr>
-  
-
-                    
-                  </tbody>
-                </table>
-              
-              
-              
-
-              <h4 class="ui horizontal divider">RESPONSE</h4>
-              <div class="description"><p>HAL+JSON representation of Star Resource.</p>
+            </div>
+        </div>
+        <div class="ui grey horizontal small divider header">
+  <i class="ui grey micro circular label"></i>
+  <i class="ui pink micro circular label"></i>
+  <i class="ui grey micro circular label"></i>
 </div>
-              
-<table class="ui celled definition table">
+        <div class="ui basic segment">
+          <h3 class="ui block center aligned header" id="gist-star-unstar-a-gist">
+            Unstar a Gist
+          </h3>
+          <div class="description"><p>This action requires an <code>access_token</code> with <code>gist_write</code> scope.</p>
+</div>
+
+            <h4 class="ui horizontal divider">
+              REQUEST
+            </h4>
+            <div class="description"></div>
+            <div class="fluid ui large labeled button">
+              <div class="ui red large button">
+                <h3>DELETE</h3>
+              </div>
+              <a class="ui basic fluid request-url red label">
+                <code>/gists/{id}/star{?access_token}</code>
+              </a>
+            </div>
+
+
+            
+
+
+            <h4 class="ui horizontal divider">RESPONSE</h4>
+            <div class="description"></div>
+            
+            <div class="ui stacked blue segment">
+              <div class="ui fluid transaction accordion">
+                <div class="title center aligned">
+                  <a class="ui blue circular label">
+                    204
+                  </a>
+                  <code></code>
+                </div>
+                <div class="content tabbed">
+                  <div class="ui top attached tabular menu">
+                    <a data-tab="body" class="active item">BODY</a>
+                    <a data-tab="schema" class="item">SCHEMA</a>
+                  </div>
+                  <div class="ui bottom attached active tab segment" data-tab="body">
+                    <pre style="white-space: inherit">
+                      <code class="language-"></code>
+                    </pre>
+                  </div>
+                  <div class="ui bottom attached tab segment" data-tab="schema">
+                    <pre style="white-space: inherit">
+                      <code class="language-json"></code>
+                    </pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="ui grey horizontal small divider header">
+  <i class="ui grey micro circular label"></i>
+  <i class="ui pink micro circular label"></i>
+  <i class="ui grey micro circular label"></i>
+</div>
+        <div class="ui basic segment">
+          <h3 class="ui block center aligned header" id="gist-star-check-if-a-gist-is-starred">
+            Check if a Gist is Starred
+          </h3>
+          <div class="description"></div>
+
+            <h4 class="ui horizontal divider">
+              REQUEST
+            </h4>
+            <div class="description"></div>
+            <div class="fluid ui large labeled button">
+              <div class="ui green large button">
+                <h3>GET</h3>
+              </div>
+              <a class="ui basic fluid request-url green label">
+                <code>/gists/{id}/star{?access_token}</code>
+              </a>
+            </div>
+
+
+            
+
+
+            <h4 class="ui horizontal divider">RESPONSE</h4>
+            <div class="description"><p>HAL+JSON representation of Star Resource.</p>
+</div>
+            <table class="ui celled definition table">
   <thead>
     <tr>
       <th colspan="2">Headers</th>
     </tr>
   </thead>
   <tbody>
-  
     <tr>
       <td class="four wide">Content-Type</td>
-      <td><code>application/hal&#43;json</code></td>
+      <td><code>application/hal+json</code></td>
     </tr>
-  
     <tr>
       <td class="four wide">Link</td>
-      <td><code>&lt;http:/api.gistfox.com/gists/42/star&gt;;rel=&#34;self&#34;</code></td>
+      <td><code>&lt;http:/api.gistfox.com/gists/42/star&gt;;rel&#x3D;&quot;self&quot;</code></td>
     </tr>
-  
   </tbody>
 </table>
 
-              <div class="ui stacked blue segment">
-                <div class="ui fluid transaction accordion">
-                  <div class="title center aligned">
-                    <a class="ui blue circular label">
-                      200
-                    </a>
-                    <code>application/hal&#43;json</code>
+            <div class="ui stacked blue segment">
+              <div class="ui fluid transaction accordion">
+                <div class="title center aligned">
+                  <a class="ui blue circular label">
+                    200
+                  </a>
+                  <code>application/hal+json</code>
+                </div>
+                <div class="content tabbed">
+                  <div class="ui top attached tabular menu">
+                    <a data-tab="body" class="active item">BODY</a>
+                    <a data-tab="schema" class="item">SCHEMA</a>
                   </div>
-                  <div class="content tabbed">
-                    <div class="ui top attached tabular menu">
-                      <a data-tab="body" class="active item">BODY</a>
-                      <a data-tab="schema" class="item">SCHEMA</a>
-                    </div>
-                    <div class="ui bottom attached active tab segment" data-tab="body">
-                      <pre style="white-space: inherit">
-                        <code class="language-json">{
-    &#34;_links&#34;: {
-        &#34;self&#34;: { &#34;href&#34;: &#34;/gists/42/star&#34; },
+                  <div class="ui bottom attached active tab segment" data-tab="body">
+                    <pre style="white-space: inherit">
+                      <code class="language-json">{
+    &quot;_links&quot;: {
+        &quot;self&quot;: { &quot;href&quot;: &quot;/gists/42/star&quot; },
     },
-    &#34;starred&#34;: true
+    &quot;starred&quot;: true
 }
 </code>
-                      </pre>
-                    </div>
-                    <div class="ui bottom attached tab segment" data-tab="schema">
-                      <pre style="white-space: inherit">
-                        <code class="language-json"></code>
-                      </pre>
-                    </div>
+                    </pre>
+                  </div>
+                  <div class="ui bottom attached tab segment" data-tab="schema">
+                    <pre style="white-space: inherit">
+                      <code class="language-json"></code>
+                    </pre>
                   </div>
                 </div>
               </div>
-            
-          </div>
-        
+            </div>
         </div>
-      <div class="ui hidden divider"></div>
-    
-  
-
+    </div>
   <div class="ui horizontal divider" id="access-authorization-and-control">
     Access Authorization and Control
   </div>
@@ -1673,111 +1010,174 @@ HAL links.</p>
       </div>
     </div>
   </div>
-  
-    
-      <div class="ui stacked segments">
-        <div class="ui basic segment resource">
-          <div class="ui purple huge ribbon label">
-            Authorization
-          </div>
-          <div class="ui header">
-            <div class="ui sub header">
-              <p>Authorization Resource represents an authorization granted to the user. You can <strong>only</strong> access your own authorization, and only through <strong>Basic Authentication</strong>.</p>
-
+    <div class="ui stacked segments">
+      <div class="ui basic segment resource">
+        <div class="ui purple huge ribbon label">
+          Authorization
+        </div>
+        <div class="ui header">
+          <div class="ui sub header">
+            <p>Authorization Resource represents an authorization granted to the user. You can <strong>only</strong> access your own authorization, and only through <strong>Basic Authentication</strong>.</p>
 <p>The Authorization Resource has the following attribute:</p>
-
 <ul>
-<li><p>token</p></li>
-
-<li><p>scopes</p></li>
+<li>
+<p>token</p>
+</li>
+<li>
+<p>scopes</p>
+</li>
 </ul>
-
 <p>Where <em>token</em> represents an OAuth token and <em>scopes</em> is an array of scopes granted for the given authorization. At this moment the only available scope is <code>gist_write</code>.</p>
 
-            </div>
           </div>
         </div>
+      </div>
 
-        
-          
-<div class="ui grey horizontal small divider header">
+        <div class="ui grey horizontal small divider header">
   <i class="ui grey micro circular label"></i>
   <i class="ui pink micro circular label"></i>
   <i class="ui grey micro circular label"></i>
 </div>
+        <div class="ui basic segment">
+          <h3 class="ui block center aligned header" id="access-authorization-and-control-authorization-retrieve-authorization">
+            Retrieve Authorization
+          </h3>
+          <div class="description"></div>
 
-          <div class="ui basic segment">
-            <h3 class="ui block center aligned header" id="access-authorization-and-control-authorization-retrieve-authorization">
-              Retrieve Authorization
-            </h3>
+            <h4 class="ui horizontal divider">
+              REQUEST
+            </h4>
             <div class="description"></div>
-
-            
-              <h4 class="ui horizontal divider">
-                REQUEST
-              </h4>
-              <div class="description"></div>
-              <div class="fluid ui large labeled button">
-                <div class="ui green large button">
-                  <h3>GET</h3>
-                </div>
-                <a class="ui basic fluid request-url green label">
-                  <code>/authorization</code>
-                </a>
+            <div class="fluid ui large labeled button">
+              <div class="ui green large button">
+                <h3>GET</h3>
               </div>
-              
-              
-                
-<table class="ui celled definition table">
+              <a class="ui basic fluid request-url green label">
+                <code>/authorization</code>
+              </a>
+            </div>
+
+
+            <table class="ui celled definition table">
   <thead>
     <tr>
       <th colspan="2">Headers</th>
     </tr>
   </thead>
   <tbody>
-  
     <tr>
       <td class="four wide">Authorization</td>
-      <td><code>Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==</code></td>
+      <td><code>Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ&#x3D;&#x3D;</code></td>
     </tr>
-  
   </tbody>
 </table>
 
-              
-              
 
-              <h4 class="ui horizontal divider">RESPONSE</h4>
-              <div class="description"></div>
-              
-<table class="ui celled definition table">
+
+            <h4 class="ui horizontal divider">RESPONSE</h4>
+            <div class="description"></div>
+            <table class="ui celled definition table">
   <thead>
     <tr>
       <th colspan="2">Headers</th>
     </tr>
   </thead>
   <tbody>
-  
     <tr>
       <td class="four wide">Content-Type</td>
-      <td><code>application/hal&#43;json</code></td>
+      <td><code>application/hal+json</code></td>
     </tr>
-  
     <tr>
       <td class="four wide">Link</td>
-      <td><code>&lt;http:/api.gistfox.com/authorizations/1&gt;;rel=&#34;self&#34;</code></td>
+      <td><code>&lt;http:/api.gistfox.com/authorizations/1&gt;;rel&#x3D;&quot;self&quot;</code></td>
     </tr>
-  
   </tbody>
 </table>
 
-              <div class="ui stacked blue segment">
+            <div class="ui stacked blue segment">
+              <div class="ui fluid transaction accordion">
+                <div class="title center aligned">
+                  <a class="ui blue circular label">
+                    200
+                  </a>
+                  <code>application/hal+json</code>
+                </div>
+                <div class="content tabbed">
+                  <div class="ui top attached tabular menu">
+                    <a data-tab="body" class="active item">BODY</a>
+                    <a data-tab="schema" class="item">SCHEMA</a>
+                  </div>
+                  <div class="ui bottom attached active tab segment" data-tab="body">
+                    <pre style="white-space: inherit">
+                      <code class="language-json">{
+    &quot;_links&quot;: {
+        &quot;self&quot;: { &quot;href&quot;: &quot;/authorizations&quot; },
+    },
+    &quot;scopes&quot;: [
+        &quot;gist_write&quot;
+    ],
+    &quot;token&quot;: &quot;abc123&quot;
+}
+</code>
+                    </pre>
+                  </div>
+                  <div class="ui bottom attached tab segment" data-tab="schema">
+                    <pre style="white-space: inherit">
+                      <code class="language-json"></code>
+                    </pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="ui grey horizontal small divider header">
+  <i class="ui grey micro circular label"></i>
+  <i class="ui pink micro circular label"></i>
+  <i class="ui grey micro circular label"></i>
+</div>
+        <div class="ui basic segment">
+          <h3 class="ui block center aligned header" id="access-authorization-and-control-authorization-create-authorization">
+            Create Authorization
+          </h3>
+          <div class="description"></div>
+
+            <h4 class="ui horizontal divider">
+              REQUEST
+            </h4>
+            <div class="description"></div>
+            <div class="fluid ui large labeled button">
+              <div class="ui blue large button">
+                <h3>POST</h3>
+              </div>
+              <a class="ui basic fluid request-url blue label">
+                <code>/authorization</code>
+              </a>
+            </div>
+
+
+            <table class="ui celled definition table">
+  <thead>
+    <tr>
+      <th colspan="2">Headers</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="four wide">Content-Type</td>
+      <td><code>application/json</code></td>
+    </tr>
+    <tr>
+      <td class="four wide">Authorization</td>
+      <td><code>Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ&#x3D;&#x3D;</code></td>
+    </tr>
+  </tbody>
+</table>
+
+
+              <div class="ui stacked segment">
                 <div class="ui fluid transaction accordion">
-                  <div class="title center aligned">
-                    <a class="ui blue circular label">
-                      200
-                    </a>
-                    <code>application/hal&#43;json</code>
+                  <div class="title">
+                    <code>application/json</code>
                   </div>
                   <div class="content tabbed">
                     <div class="ui top attached tabular menu">
@@ -1787,141 +1187,11 @@ HAL links.</p>
                     <div class="ui bottom attached active tab segment" data-tab="body">
                       <pre style="white-space: inherit">
                         <code class="language-json">{
-    &#34;_links&#34;: {
-        &#34;self&#34;: { &#34;href&#34;: &#34;/authorizations&#34; },
-    },
-    &#34;scopes&#34;: [
-        &#34;gist_write&#34;
-    ],
-    &#34;token&#34;: &#34;abc123&#34;
-}
-</code>
-                      </pre>
-                    </div>
-                    <div class="ui bottom attached tab segment" data-tab="schema">
-                      <pre style="white-space: inherit">
-                        <code class="language-json"></code>
-                      </pre>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            
-          </div>
-        
-          
-<div class="ui grey horizontal small divider header">
-  <i class="ui grey micro circular label"></i>
-  <i class="ui pink micro circular label"></i>
-  <i class="ui grey micro circular label"></i>
-</div>
-
-          <div class="ui basic segment">
-            <h3 class="ui block center aligned header" id="access-authorization-and-control-authorization-create-authorization">
-              Create Authorization
-            </h3>
-            <div class="description"></div>
-
-            
-              <h4 class="ui horizontal divider">
-                REQUEST
-              </h4>
-              <div class="description"></div>
-              <div class="fluid ui large labeled button">
-                <div class="ui blue large button">
-                  <h3>POST</h3>
-                </div>
-                <a class="ui basic fluid request-url blue label">
-                  <code>/authorization</code>
-                </a>
-              </div>
-              
-              
-                
-<table class="ui celled definition table">
-  <thead>
-    <tr>
-      <th colspan="2">Headers</th>
-    </tr>
-  </thead>
-  <tbody>
-  
-    <tr>
-      <td class="four wide">Content-Type</td>
-      <td><code>application/json</code></td>
-    </tr>
-  
-    <tr>
-      <td class="four wide">Authorization</td>
-      <td><code>Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==</code></td>
-    </tr>
-  
-  </tbody>
-</table>
-
-              
-              
-                <div class="ui stacked segment">
-                  <div class="ui fluid transaction accordion">
-                    <div class="title">
-                      <code>application/json</code>
-                    </div>
-                    <div class="content tabbed">
-                      <div class="ui top attached tabular menu">
-                        <a data-tab="body" class="active item">BODY</a>
-                        <a data-tab="schema" class="item">SCHEMA</a>
-                      </div>
-                      <div class="ui bottom attached active tab segment" data-tab="body">
-                        <pre style="white-space: inherit">
-                          <code class="language-json">{
-    &#34;scopes&#34;: [
-        &#34;gist_write&#34;
+    &quot;scopes&quot;: [
+        &quot;gist_write&quot;
     ]
 }
 </code>
-                        </pre>
-                      </div>
-                      <div class="ui bottom attached tab segment" data-tab="schema">
-                        <pre style="white-space: inherit">
-                          <code class="language-json"></code>
-                        </pre>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              
-
-              <h4 class="ui horizontal divider">RESPONSE</h4>
-              <div class="description"></div>
-              
-<table class="ui celled definition table">
-  <thead>
-    <tr>
-      <th colspan="2">Headers</th>
-    </tr>
-  </thead>
-  <tbody>
-  
-  </tbody>
-</table>
-
-              <div class="ui stacked blue segment">
-                <div class="ui fluid transaction accordion">
-                  <div class="title center aligned">
-                    <a class="ui blue circular label">
-                      201
-                    </a>
-                    <code></code>
-                  </div>
-                  <div class="content tabbed">
-                    <div class="ui top attached tabular menu">
-                      <a data-tab="body" class="active item">BODY</a>
-                      <a data-tab="schema" class="item">SCHEMA</a>
-                    </div>
-                    <div class="ui bottom attached active tab segment" data-tab="body">
-                      <pre style="white-space: inherit">
-                        <code class="language-">[Authorization][]
-</code>
                       </pre>
                     </div>
                     <div class="ui bottom attached tab segment" data-tab="schema">
@@ -1932,106 +1202,110 @@ HAL links.</p>
                   </div>
                 </div>
               </div>
+
+            <h4 class="ui horizontal divider">RESPONSE</h4>
+            <div class="description"></div>
             
-          </div>
-        
-          
-<div class="ui grey horizontal small divider header">
+            <div class="ui stacked blue segment">
+              <div class="ui fluid transaction accordion">
+                <div class="title center aligned">
+                  <a class="ui blue circular label">
+                    201
+                  </a>
+                  <code></code>
+                </div>
+                <div class="content tabbed">
+                  <div class="ui top attached tabular menu">
+                    <a data-tab="body" class="active item">BODY</a>
+                    <a data-tab="schema" class="item">SCHEMA</a>
+                  </div>
+                  <div class="ui bottom attached active tab segment" data-tab="body">
+                    <pre style="white-space: inherit">
+                      <code class="language-">[Authorization][]
+</code>
+                    </pre>
+                  </div>
+                  <div class="ui bottom attached tab segment" data-tab="schema">
+                    <pre style="white-space: inherit">
+                      <code class="language-json"></code>
+                    </pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="ui grey horizontal small divider header">
   <i class="ui grey micro circular label"></i>
   <i class="ui pink micro circular label"></i>
   <i class="ui grey micro circular label"></i>
 </div>
+        <div class="ui basic segment">
+          <h3 class="ui block center aligned header" id="access-authorization-and-control-authorization-remove-an-authorization">
+            Remove an Authorization
+          </h3>
+          <div class="description"></div>
 
-          <div class="ui basic segment">
-            <h3 class="ui block center aligned header" id="access-authorization-and-control-authorization-remove-an-authorization">
-              Remove an Authorization
-            </h3>
+            <h4 class="ui horizontal divider">
+              REQUEST
+            </h4>
             <div class="description"></div>
-
-            
-              <h4 class="ui horizontal divider">
-                REQUEST
-              </h4>
-              <div class="description"></div>
-              <div class="fluid ui large labeled button">
-                <div class="ui red large button">
-                  <h3>DELETE</h3>
-                </div>
-                <a class="ui basic fluid request-url red label">
-                  <code>/authorization</code>
-                </a>
+            <div class="fluid ui large labeled button">
+              <div class="ui red large button">
+                <h3>DELETE</h3>
               </div>
-              
-              
-                
-<table class="ui celled definition table">
+              <a class="ui basic fluid request-url red label">
+                <code>/authorization</code>
+              </a>
+            </div>
+
+
+            <table class="ui celled definition table">
   <thead>
     <tr>
       <th colspan="2">Headers</th>
     </tr>
   </thead>
   <tbody>
-  
     <tr>
       <td class="four wide">Authorization</td>
-      <td><code>Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==</code></td>
+      <td><code>Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ&#x3D;&#x3D;</code></td>
     </tr>
-  
   </tbody>
 </table>
 
-              
-              
 
-              <h4 class="ui horizontal divider">RESPONSE</h4>
-              <div class="description"></div>
-              
-<table class="ui celled definition table">
-  <thead>
-    <tr>
-      <th colspan="2">Headers</th>
-    </tr>
-  </thead>
-  <tbody>
-  
-  </tbody>
-</table>
 
-              <div class="ui stacked blue segment">
-                <div class="ui fluid transaction accordion">
-                  <div class="title center aligned">
-                    <a class="ui blue circular label">
-                      204
-                    </a>
-                    <code></code>
+            <h4 class="ui horizontal divider">RESPONSE</h4>
+            <div class="description"></div>
+            
+            <div class="ui stacked blue segment">
+              <div class="ui fluid transaction accordion">
+                <div class="title center aligned">
+                  <a class="ui blue circular label">
+                    204
+                  </a>
+                  <code></code>
+                </div>
+                <div class="content tabbed">
+                  <div class="ui top attached tabular menu">
+                    <a data-tab="body" class="active item">BODY</a>
+                    <a data-tab="schema" class="item">SCHEMA</a>
                   </div>
-                  <div class="content tabbed">
-                    <div class="ui top attached tabular menu">
-                      <a data-tab="body" class="active item">BODY</a>
-                      <a data-tab="schema" class="item">SCHEMA</a>
-                    </div>
-                    <div class="ui bottom attached active tab segment" data-tab="body">
-                      <pre style="white-space: inherit">
-                        <code class="language-"></code>
-                      </pre>
-                    </div>
-                    <div class="ui bottom attached tab segment" data-tab="schema">
-                      <pre style="white-space: inherit">
-                        <code class="language-json"></code>
-                      </pre>
-                    </div>
+                  <div class="ui bottom attached active tab segment" data-tab="body">
+                    <pre style="white-space: inherit">
+                      <code class="language-"></code>
+                    </pre>
+                  </div>
+                  <div class="ui bottom attached tab segment" data-tab="schema">
+                    <pre style="white-space: inherit">
+                      <code class="language-json"></code>
+                    </pre>
                   </div>
                 </div>
               </div>
-            
-          </div>
-        
+            </div>
         </div>
-      <div class="ui hidden divider"></div>
-    
-  
-
-
+    </div>
       </div>
     </div>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -2043,6 +1317,7 @@ HAL links.</p>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.13.0/components/prism-json.min.js"></script>
     <script type="text/javascript">
       $(function() {
+        $('table').addClass('ui table');
         $('.ui.accordion').accordion({ animateChildren: false, duration: 0 });
         $('.content.tabbed').each(function(index) {
           $('.ui.tabular .item', $(this)).tab({ context: $(this) });
@@ -2056,12 +1331,6 @@ HAL links.</p>
     </script>
   </body>
 </html>
-
-
-
-
-
-
 
 
 

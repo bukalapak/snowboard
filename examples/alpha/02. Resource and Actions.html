@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/themes/prism-okaidia.min.css" />
     <style>
       blockquote {
@@ -39,7 +39,7 @@
         text-align: left;
         overflow: auto;
       }
-      
+
       .ui.basic.label.request-url {
         user-select: text;
       }
@@ -69,318 +69,34 @@
     <div class="ui padded grid">
       <div class="sidewrap four wide computer five wide tablet sixteen wide mobile column">
         <div class="sidenav">
-          
-<div class="ui horizontal divider">
+          <div class="ui horizontal divider">
   <a href="#introduction">Introduction</a>
 </div>
 <div class="ui fluid secondary vertical menu">
   <a class="item" href="#introduction">Resource and Actions API</a>
 </div>
-
-
-<div class="ui accordion fluid">
-  
-    
-    <div class="title active">
-      <i class="dropdown icon"></i>
-      
-        <strong>/message</strong>
-      
-    </div>
-    <div class="content active">
-      <div class="ui fluid secondary vertical menu">
-      
-        <a class="item green" href="#message-get">
-          <i class="ui green empty circular label"></i>
-          
-            <span>GET</span>
-          
-        </a>
-      
-        <a class="item teal" href="#message-put">
-          <i class="ui teal empty circular label"></i>
-          
-            <span>PUT</span>
-          
-        </a>
-      
-      </div>
-    </div>
-    
-  
-</div>
-
-
         </div>
       </div>
       <div class="eleven wide computer ten wide tablet sixteen wide mobile column">
-        
-<div class="ui hidden divider header"></div>
+        <div class="ui hidden divider header"></div>
 <h1 class="ui huge header" id="introduction">Resource and Actions API</h1>
 <hr class="ui divider">
-<div class="description">
-  <p>This API example demonstrates how to define a resource with multiple actions.</p>
-
-<h2 id="api-blueprint">API Blueprint</h2>
-
+<div class="description"><p>This API example demonstrates how to define a resource with multiple actions.</p>
+<h2>API Blueprint</h2>
 <ul>
-<li><p><a href="01.%20Simplest%20API.md">Previous: The Simplest API</a></p></li>
-
-<li><p><a href="https://raw.github.com/apiaryio/api-blueprint/master/examples/02.%20Resource%20and%20Actions.md">This: Raw API Blueprint</a></p></li>
-
-<li><p><a href="03.%20Named%20Resource%20and%20Actions.md">Next: Named Resource and Actions</a></p></li>
+<li>
+<p><a href="01.%20Simplest%20API.md">Previous: The Simplest API</a></p>
+</li>
+<li>
+<p><a href="https://raw.github.com/apiaryio/api-blueprint/master/examples/02.%20Resource%20and%20Actions.md">This: Raw API Blueprint</a></p>
+</li>
+<li>
+<p><a href="03.%20Named%20Resource%20and%20Actions.md">Next: Named Resource and Actions</a></p>
+</li>
 </ul>
-
 </div>
-
         <div class="ui hidden divider"></div>
-        
-
-  <div class="ui horizontal divider" >
-    
-  </div>
-  <div class="ui header center aligned">
-    <div class="ui header">
-      <div class="sub header">
-        
-      </div>
-    </div>
-  </div>
-  
-    
-      <div class="ui stacked segments">
-        <div class="ui basic segment resource">
-          <div class="ui purple huge ribbon label">
-            /message
-          </div>
-          <div class="ui header">
-            <div class="ui sub header">
-              <p>This is our <a href="http://www.w3.org/TR/di-gloss/#def-resource">resource</a>. It is
-defined by its
-<a href="http://www.w3.org/TR/di-gloss/#def-uniform-resource-identifier">URI</a> or, more
-precisely, by its <a href="http://tools.ietf.org/html/rfc6570">URI Template</a>.</p>
-
-<p>This resource has no actions specified but we will fix that soon.</p>
-
-            </div>
-          </div>
-        </div>
-
-        
-          
-<div class="ui grey horizontal small divider header">
-  <i class="ui grey micro circular label"></i>
-  <i class="ui pink micro circular label"></i>
-  <i class="ui grey micro circular label"></i>
-</div>
-
-          <div class="ui basic segment">
-            <h3 class="ui block center aligned header" id="message-get">
-              GET
-            </h3>
-            <div class="description"><p>Here we define an action using the <code>GET</code> <a href="http://www.w3schools.com/tags/ref_httpmethods.asp">HTTP request method</a> for our resource <code>/message</code>.</p>
-
-<p>As with every good action it should return a
-<a href="http://www.w3.org/TR/di-gloss/#def-http-response">response</a>. A response always
-bears a status code. Code 200 is great as it means all is green. Responding
-with some data can be a great idea as well so let&rsquo;s add a plain text message to
-our response.</p>
-</div>
-
-            
-              <h4 class="ui horizontal divider">
-                REQUEST
-              </h4>
-              <div class="description"></div>
-              <div class="fluid ui large labeled button">
-                <div class="ui green large button">
-                  <h3>GET</h3>
-                </div>
-                <a class="ui basic fluid request-url green label">
-                  <code>/message</code>
-                </a>
               </div>
-              
-              
-              
-
-              <h4 class="ui horizontal divider">RESPONSE</h4>
-              <div class="description"></div>
-              
-<table class="ui celled definition table">
-  <thead>
-    <tr>
-      <th colspan="2">Headers</th>
-    </tr>
-  </thead>
-  <tbody>
-  
-    <tr>
-      <td class="four wide">Content-Type</td>
-      <td><code>text/plain</code></td>
-    </tr>
-  
-  </tbody>
-</table>
-
-              <div class="ui stacked blue segment">
-                <div class="ui fluid transaction accordion">
-                  <div class="title center aligned">
-                    <a class="ui blue circular label">
-                      200
-                    </a>
-                    <code>text/plain</code>
-                  </div>
-                  <div class="content tabbed">
-                    <div class="ui top attached tabular menu">
-                      <a data-tab="body" class="active item">BODY</a>
-                      <a data-tab="schema" class="item">SCHEMA</a>
-                    </div>
-                    <div class="ui bottom attached active tab segment" data-tab="body">
-                      <pre style="white-space: inherit">
-                        <code class="language-">Hello World!
-</code>
-                      </pre>
-                    </div>
-                    <div class="ui bottom attached tab segment" data-tab="schema">
-                      <pre style="white-space: inherit">
-                        <code class="language-json"></code>
-                      </pre>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            
-          </div>
-        
-          
-<div class="ui grey horizontal small divider header">
-  <i class="ui grey micro circular label"></i>
-  <i class="ui pink micro circular label"></i>
-  <i class="ui grey micro circular label"></i>
-</div>
-
-          <div class="ui basic segment">
-            <h3 class="ui block center aligned header" id="message-put">
-              PUT
-            </h3>
-            <div class="description"><p>OK, let&rsquo;s add another action. This time to put new data to our resource
-(essentially an update action). We will need to send something in a
-<a href="http://www.w3.org/TR/di-gloss/#def-http-request">request</a> and then send a
-response back confirming the posting was a success (<em>HTTP Status Code 204 ~
-Resource updated successfully, no content is returned</em>).</p>
-</div>
-
-            
-              <h4 class="ui horizontal divider">
-                REQUEST
-              </h4>
-              <div class="description"></div>
-              <div class="fluid ui large labeled button">
-                <div class="ui teal large button">
-                  <h3>PUT</h3>
-                </div>
-                <a class="ui basic fluid request-url teal label">
-                  <code>/message</code>
-                </a>
-              </div>
-              
-              
-                
-<table class="ui celled definition table">
-  <thead>
-    <tr>
-      <th colspan="2">Headers</th>
-    </tr>
-  </thead>
-  <tbody>
-  
-    <tr>
-      <td class="four wide">Content-Type</td>
-      <td><code>text/plain</code></td>
-    </tr>
-  
-  </tbody>
-</table>
-
-              
-              
-                <div class="ui stacked segment">
-                  <div class="ui fluid transaction accordion">
-                    <div class="title">
-                      <code>text/plain</code>
-                    </div>
-                    <div class="content tabbed">
-                      <div class="ui top attached tabular menu">
-                        <a data-tab="body" class="active item">BODY</a>
-                        <a data-tab="schema" class="item">SCHEMA</a>
-                      </div>
-                      <div class="ui bottom attached active tab segment" data-tab="body">
-                        <pre style="white-space: inherit">
-                          <code class="language-">All your base are belong to us.
-</code>
-                        </pre>
-                      </div>
-                      <div class="ui bottom attached tab segment" data-tab="schema">
-                        <pre style="white-space: inherit">
-                          <code class="language-json"></code>
-                        </pre>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              
-
-              <h4 class="ui horizontal divider">RESPONSE</h4>
-              <div class="description"></div>
-              
-<table class="ui celled definition table">
-  <thead>
-    <tr>
-      <th colspan="2">Headers</th>
-    </tr>
-  </thead>
-  <tbody>
-  
-  </tbody>
-</table>
-
-              <div class="ui stacked blue segment">
-                <div class="ui fluid transaction accordion">
-                  <div class="title center aligned">
-                    <a class="ui blue circular label">
-                      204
-                    </a>
-                    <code></code>
-                  </div>
-                  <div class="content tabbed">
-                    <div class="ui top attached tabular menu">
-                      <a data-tab="body" class="active item">BODY</a>
-                      <a data-tab="schema" class="item">SCHEMA</a>
-                    </div>
-                    <div class="ui bottom attached active tab segment" data-tab="body">
-                      <pre style="white-space: inherit">
-                        <code class="language-"></code>
-                      </pre>
-                    </div>
-                    <div class="ui bottom attached tab segment" data-tab="schema">
-                      <pre style="white-space: inherit">
-                        <code class="language-json"></code>
-                      </pre>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            
-          </div>
-        
-        </div>
-      <div class="ui hidden divider"></div>
-    
-  
-
-
-      </div>
     </div>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/components/accordion.min.js"></script>
@@ -391,6 +107,7 @@ Resource updated successfully, no content is returned</em>).</p>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.13.0/components/prism-json.min.js"></script>
     <script type="text/javascript">
       $(function() {
+        $('table').addClass('ui table');
         $('.ui.accordion').accordion({ animateChildren: false, duration: 0 });
         $('.content.tabbed').each(function(index) {
           $('.ui.tabular .item', $(this)).tab({ context: $(this) });
@@ -404,12 +121,6 @@ Resource updated successfully, no content is returned</em>).</p>
     </script>
   </body>
 </html>
-
-
-
-
-
-
 
 
 

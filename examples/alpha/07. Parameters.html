@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/themes/prism-okaidia.min.css" />
     <style>
       blockquote {
@@ -39,7 +39,7 @@
         text-align: left;
         overflow: auto;
       }
-      
+
       .ui.basic.label.request-url {
         user-select: text;
       }
@@ -69,103 +69,70 @@
     <div class="ui padded grid">
       <div class="sidewrap four wide computer five wide tablet sixteen wide mobile column">
         <div class="sidenav">
-          
-<div class="ui horizontal divider">
+          <div class="ui horizontal divider">
   <a href="#introduction">Introduction</a>
 </div>
 <div class="ui fluid secondary vertical menu">
   <a class="item" href="#introduction">Parameters API</a>
 </div>
-
-
 <div class="ui horizontal divider">
   <a href="#messages">Messages</a>
 </div>
-
 <div class="ui accordion fluid">
-  
-    
     <div class="title active">
       <i class="dropdown icon"></i>
-      
         <strong>My Message</strong>
-      
     </div>
     <div class="content active">
       <div class="ui fluid secondary vertical menu">
-      
         <a class="item green" href="#messages-my-message-retrieve-a-message">
           <i class="ui green empty circular label"></i>
-          
             <span>Retrieve a Message</span>
-          
         </a>
-      
         <a class="item teal" href="#messages-my-message-update-a-message">
           <i class="ui teal empty circular label"></i>
-          
             <span>Update a Message</span>
-          
         </a>
-      
       </div>
     </div>
-    
-  
-    
     <div class="title ">
       <i class="dropdown icon"></i>
-      
         <strong>All My Messages</strong>
-      
     </div>
     <div class="content ">
       <div class="ui fluid secondary vertical menu">
-      
         <a class="item green" href="#messages-all-my-messages-retrieve-all-messages">
           <i class="ui green empty circular label"></i>
-          
             <span>Retrieve all Messages</span>
-          
         </a>
-      
       </div>
     </div>
-    
-  
 </div>
-
-
         </div>
       </div>
       <div class="eleven wide computer ten wide tablet sixteen wide mobile column">
-        
-<div class="ui hidden divider header"></div>
+        <div class="ui hidden divider header"></div>
 <h1 class="ui huge header" id="introduction">Parameters API</h1>
 <hr class="ui divider">
-<div class="description">
-  <p>In this installment of the API Blueprint course we will discuss how to describe URI parameters.</p>
-
-<p>But first let&rsquo;s add more messages to our system. For that we would need
+<div class="description"><p>In this installment of the API Blueprint course we will discuss how to describe URI parameters.</p>
+<p>But first let's add more messages to our system. For that we would need
 introduce an message identifier – id. This id will be our parameter when
 communicating with our API about messages.</p>
-
-<h2 id="api-blueprint">API Blueprint</h2>
-
+<h2>API Blueprint</h2>
 <ul>
-<li><p><a href="06.%20Requests.md">Previous: Requests</a></p></li>
-
-<li><p><a href="https://raw.github.com/apiaryio/api-blueprint/master/examples/07.%20Parameters.md">This: Raw API Blueprint</a></p></li>
-
-<li><p><a href="08.%20Attributes.md">Next: Attributes</a></p></li>
+<li>
+<p><a href="06.%20Requests.md">Previous: Requests</a></p>
+</li>
+<li>
+<p><a href="https://raw.github.com/apiaryio/api-blueprint/master/examples/07.%20Parameters.md">This: Raw API Blueprint</a></p>
+</li>
+<li>
+<p><a href="08.%20Attributes.md">Next: Attributes</a></p>
+</li>
 </ul>
-
 </div>
-
         <div class="ui hidden divider"></div>
-        
-
-  <div class="ui horizontal divider" id="messages">
+          <div class="ui horizontal divider" id="messages">
     Messages
   </div>
   <div class="ui header center aligned">
@@ -176,137 +143,235 @@ communicating with our API about messages.</p>
       </div>
     </div>
   </div>
-  
-    
-      <div class="ui stacked segments">
-        <div class="ui basic segment resource">
-          <div class="ui purple huge ribbon label">
-            My Message
-          </div>
-          <div class="ui header">
-            <div class="ui sub header">
-              <p>Here we have added the message <code>id</code> parameter as an
+    <div class="ui stacked segments">
+      <div class="ui basic segment resource">
+        <div class="ui purple huge ribbon label">
+          My Message
+        </div>
+        <div class="ui header">
+          <div class="ui sub header">
+            <p>Here we have added the message <code>id</code> parameter as an
 <a href="http://tools.ietf.org/html/rfc6570">URI Template variable</a> in the Message
-resource&rsquo;s URI. Note the parameter name <code>id</code> is enclosed in curly brackets. We
+resource's URI. Note the parameter name <code>id</code> is enclosed in curly brackets. We
 will discuss this parameter in the <code>Parameters</code> section below, where we will
-also set its example value to <code>1</code> and declare it of an arbitrary &lsquo;number&rsquo; type.</p>
+also set its example value to <code>1</code> and declare it of an arbitrary 'number' type.</p>
 
-            </div>
           </div>
         </div>
+      </div>
 
-        
-          
-<div class="ui grey horizontal small divider header">
+        <div class="ui grey horizontal small divider header">
   <i class="ui grey micro circular label"></i>
   <i class="ui pink micro circular label"></i>
   <i class="ui grey micro circular label"></i>
 </div>
+        <div class="ui basic segment">
+          <h3 class="ui block center aligned header" id="messages-my-message-retrieve-a-message">
+            Retrieve a Message
+          </h3>
+          <div class="description"></div>
 
-          <div class="ui basic segment">
-            <h3 class="ui block center aligned header" id="messages-my-message-retrieve-a-message">
-              Retrieve a Message
-            </h3>
+            <h4 class="ui horizontal divider">
+              REQUEST Plain Text Message
+            </h4>
             <div class="description"></div>
-
-            
-              <h4 class="ui horizontal divider">
-                REQUEST Plain Text Message
-              </h4>
-              <div class="description"></div>
-              <div class="fluid ui large labeled button">
-                <div class="ui green large button">
-                  <h3>GET</h3>
-                </div>
-                <a class="ui basic fluid request-url green label">
-                  <code>/message/{id}</code>
-                </a>
+            <div class="fluid ui large labeled button">
+              <div class="ui green large button">
+                <h3>GET</h3>
               </div>
-              
-                <table class="ui celled definition table">
-                  <thead>
-                    <tr>
-                      <th colspan="4">Parameters</th>
-                    </tr>
-                  <thead>
-                  <tbody>
-                    
-                    
-                      
-  
-    <tr>
-      <td class="center aligned one wide">
-        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
-      </td>
-      <td><code>id</code></td>
-      <td class="center aligned">
-        <code>number</code>
-        <code class="ui label">1</code>
-        
-      </td>
-      <td class="eight wide">
-        <p>An unique identifier of the message.</p>
+              <a class="ui basic fluid request-url green label">
+                <code>/message/{id}</code>
+              </a>
+            </div>
 
-        
-      </td>
-    </tr>
-  
 
-                    
-                  </tbody>
-                </table>
-              
-              
-                
-<table class="ui celled definition table">
+            <table class="ui celled definition table">
   <thead>
     <tr>
       <th colspan="2">Headers</th>
     </tr>
   </thead>
   <tbody>
-  
     <tr>
       <td class="four wide">Accept</td>
       <td><code>text/plain</code></td>
     </tr>
-  
   </tbody>
 </table>
 
-              
-              
 
-              <h4 class="ui horizontal divider">RESPONSE</h4>
-              <div class="description"></div>
-              
-<table class="ui celled definition table">
+
+            <h4 class="ui horizontal divider">RESPONSE</h4>
+            <div class="description"></div>
+            <table class="ui celled definition table">
   <thead>
     <tr>
       <th colspan="2">Headers</th>
     </tr>
   </thead>
   <tbody>
-  
     <tr>
       <td class="four wide">Content-Type</td>
       <td><code>text/plain</code></td>
     </tr>
-  
     <tr>
       <td class="four wide">X-My-Message-Header</td>
       <td><code>42</code></td>
     </tr>
-  
   </tbody>
 </table>
 
-              <div class="ui stacked blue segment">
+            <div class="ui stacked blue segment">
+              <div class="ui fluid transaction accordion">
+                <div class="title center aligned">
+                  <a class="ui blue circular label">
+                    200
+                  </a>
+                  <code>text/plain</code>
+                </div>
+                <div class="content tabbed">
+                  <div class="ui top attached tabular menu">
+                    <a data-tab="body" class="active item">BODY</a>
+                    <a data-tab="schema" class="item">SCHEMA</a>
+                  </div>
+                  <div class="ui bottom attached active tab segment" data-tab="body">
+                    <pre style="white-space: inherit">
+                      <code class="language-">Hello World!
+</code>
+                    </pre>
+                  </div>
+                  <div class="ui bottom attached tab segment" data-tab="schema">
+                    <pre style="white-space: inherit">
+                      <code class="language-json"></code>
+                    </pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <h4 class="ui horizontal divider">
+              REQUEST JSON Message
+            </h4>
+            <div class="description"></div>
+            <div class="fluid ui large labeled button">
+              <div class="ui green large button">
+                <h3>GET</h3>
+              </div>
+              <a class="ui basic fluid request-url green label">
+                <code>/message/{id}</code>
+              </a>
+            </div>
+
+
+            <table class="ui celled definition table">
+  <thead>
+    <tr>
+      <th colspan="2">Headers</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="four wide">Accept</td>
+      <td><code>application/json</code></td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+            <h4 class="ui horizontal divider">RESPONSE</h4>
+            <div class="description"></div>
+            <table class="ui celled definition table">
+  <thead>
+    <tr>
+      <th colspan="2">Headers</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="four wide">Content-Type</td>
+      <td><code>application/json</code></td>
+    </tr>
+    <tr>
+      <td class="four wide">X-My-Message-Header</td>
+      <td><code>42</code></td>
+    </tr>
+  </tbody>
+</table>
+
+            <div class="ui stacked blue segment">
+              <div class="ui fluid transaction accordion">
+                <div class="title center aligned">
+                  <a class="ui blue circular label">
+                    200
+                  </a>
+                  <code>application/json</code>
+                </div>
+                <div class="content tabbed">
+                  <div class="ui top attached tabular menu">
+                    <a data-tab="body" class="active item">BODY</a>
+                    <a data-tab="schema" class="item">SCHEMA</a>
+                  </div>
+                  <div class="ui bottom attached active tab segment" data-tab="body">
+                    <pre style="white-space: inherit">
+                      <code class="language-json">{
+  &quot;id&quot;: 1,
+  &quot;message&quot;: &quot;Hello World!&quot;
+}
+</code>
+                    </pre>
+                  </div>
+                  <div class="ui bottom attached tab segment" data-tab="schema">
+                    <pre style="white-space: inherit">
+                      <code class="language-json"></code>
+                    </pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="ui grey horizontal small divider header">
+  <i class="ui grey micro circular label"></i>
+  <i class="ui pink micro circular label"></i>
+  <i class="ui grey micro circular label"></i>
+</div>
+        <div class="ui basic segment">
+          <h3 class="ui block center aligned header" id="messages-my-message-update-a-message">
+            Update a Message
+          </h3>
+          <div class="description"></div>
+
+            <h4 class="ui horizontal divider">
+              REQUEST Update Plain Text Message
+            </h4>
+            <div class="description"></div>
+            <div class="fluid ui large labeled button">
+              <div class="ui teal large button">
+                <h3>PUT</h3>
+              </div>
+              <a class="ui basic fluid request-url teal label">
+                <code>/message/{id}</code>
+              </a>
+            </div>
+
+
+            <table class="ui celled definition table">
+  <thead>
+    <tr>
+      <th colspan="2">Headers</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="four wide">Content-Type</td>
+      <td><code>text/plain</code></td>
+    </tr>
+  </tbody>
+</table>
+
+
+              <div class="ui stacked segment">
                 <div class="ui fluid transaction accordion">
-                  <div class="title center aligned">
-                    <a class="ui blue circular label">
-                      200
-                    </a>
+                  <div class="title">
                     <code>text/plain</code>
                   </div>
                   <div class="content tabbed">
@@ -316,7 +381,7 @@ also set its example value to <code>1</code> and declare it of an arbitrary &lsq
                     </div>
                     <div class="ui bottom attached active tab segment" data-tab="body">
                       <pre style="white-space: inherit">
-                        <code class="language-">Hello World!
+                        <code class="language-">All your base are belong to us.
 </code>
                       </pre>
                     </div>
@@ -328,104 +393,68 @@ also set its example value to <code>1</code> and declare it of an arbitrary &lsq
                   </div>
                 </div>
               </div>
+
+            <h4 class="ui horizontal divider">RESPONSE</h4>
+            <div class="description"></div>
             
-              <h4 class="ui horizontal divider">
-                REQUEST JSON Message
-              </h4>
-              <div class="description"></div>
-              <div class="fluid ui large labeled button">
-                <div class="ui green large button">
-                  <h3>GET</h3>
+            <div class="ui stacked blue segment">
+              <div class="ui fluid transaction accordion">
+                <div class="title center aligned">
+                  <a class="ui blue circular label">
+                    204
+                  </a>
+                  <code></code>
                 </div>
-                <a class="ui basic fluid request-url green label">
-                  <code>/message/{id}</code>
-                </a>
+                <div class="content tabbed">
+                  <div class="ui top attached tabular menu">
+                    <a data-tab="body" class="active item">BODY</a>
+                    <a data-tab="schema" class="item">SCHEMA</a>
+                  </div>
+                  <div class="ui bottom attached active tab segment" data-tab="body">
+                    <pre style="white-space: inherit">
+                      <code class="language-"></code>
+                    </pre>
+                  </div>
+                  <div class="ui bottom attached tab segment" data-tab="schema">
+                    <pre style="white-space: inherit">
+                      <code class="language-json"></code>
+                    </pre>
+                  </div>
+                </div>
               </div>
-              
-                <table class="ui celled definition table">
-                  <thead>
-                    <tr>
-                      <th colspan="4">Parameters</th>
-                    </tr>
-                  <thead>
-                  <tbody>
-                    
-                    
-                      
-  
-    <tr>
-      <td class="center aligned one wide">
-        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
-      </td>
-      <td><code>id</code></td>
-      <td class="center aligned">
-        <code>number</code>
-        <code class="ui label">1</code>
-        
-      </td>
-      <td class="eight wide">
-        <p>An unique identifier of the message.</p>
+            </div>
+            <h4 class="ui horizontal divider">
+              REQUEST Update JSON Message
+            </h4>
+            <div class="description"></div>
+            <div class="fluid ui large labeled button">
+              <div class="ui teal large button">
+                <h3>PUT</h3>
+              </div>
+              <a class="ui basic fluid request-url teal label">
+                <code>/message/{id}</code>
+              </a>
+            </div>
 
-        
-      </td>
-    </tr>
-  
 
-                    
-                  </tbody>
-                </table>
-              
-              
-                
-<table class="ui celled definition table">
+            <table class="ui celled definition table">
   <thead>
     <tr>
       <th colspan="2">Headers</th>
     </tr>
   </thead>
   <tbody>
-  
-    <tr>
-      <td class="four wide">Accept</td>
-      <td><code>application/json</code></td>
-    </tr>
-  
-  </tbody>
-</table>
-
-              
-              
-
-              <h4 class="ui horizontal divider">RESPONSE</h4>
-              <div class="description"></div>
-              
-<table class="ui celled definition table">
-  <thead>
-    <tr>
-      <th colspan="2">Headers</th>
-    </tr>
-  </thead>
-  <tbody>
-  
     <tr>
       <td class="four wide">Content-Type</td>
       <td><code>application/json</code></td>
     </tr>
-  
-    <tr>
-      <td class="four wide">X-My-Message-Header</td>
-      <td><code>42</code></td>
-    </tr>
-  
   </tbody>
 </table>
 
-              <div class="ui stacked blue segment">
+
+              <div class="ui stacked segment">
                 <div class="ui fluid transaction accordion">
-                  <div class="title center aligned">
-                    <a class="ui blue circular label">
-                      200
-                    </a>
+                  <div class="title">
                     <code>application/json</code>
                   </div>
                   <div class="content tabbed">
@@ -435,10 +464,7 @@ also set its example value to <code>1</code> and declare it of an arbitrary &lsq
                     </div>
                     <div class="ui bottom attached active tab segment" data-tab="body">
                       <pre style="white-space: inherit">
-                        <code class="language-json">{
-  &#34;id&#34;: 1,
-  &#34;message&#34;: &#34;Hello World!&#34;
-}
+                        <code class="language-json">{ &quot;message&quot;: &quot;All your base are belong to us.&quot; }
 </code>
                       </pre>
                     </div>
@@ -450,353 +476,87 @@ also set its example value to <code>1</code> and declare it of an arbitrary &lsq
                   </div>
                 </div>
               </div>
-            
-          </div>
-        
-          
-<div class="ui grey horizontal small divider header">
-  <i class="ui grey micro circular label"></i>
-  <i class="ui pink micro circular label"></i>
-  <i class="ui grey micro circular label"></i>
-</div>
 
-          <div class="ui basic segment">
-            <h3 class="ui block center aligned header" id="messages-my-message-update-a-message">
-              Update a Message
-            </h3>
+            <h4 class="ui horizontal divider">RESPONSE</h4>
             <div class="description"></div>
-
             
-              <h4 class="ui horizontal divider">
-                REQUEST Update Plain Text Message
-              </h4>
-              <div class="description"></div>
-              <div class="fluid ui large labeled button">
-                <div class="ui teal large button">
-                  <h3>PUT</h3>
+            <div class="ui stacked blue segment">
+              <div class="ui fluid transaction accordion">
+                <div class="title center aligned">
+                  <a class="ui blue circular label">
+                    204
+                  </a>
+                  <code></code>
                 </div>
-                <a class="ui basic fluid request-url teal label">
-                  <code>/message/{id}</code>
-                </a>
-              </div>
-              
-                <table class="ui celled definition table">
-                  <thead>
-                    <tr>
-                      <th colspan="4">Parameters</th>
-                    </tr>
-                  <thead>
-                  <tbody>
-                    
-                    
-                      
-  
-    <tr>
-      <td class="center aligned one wide">
-        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
-      </td>
-      <td><code>id</code></td>
-      <td class="center aligned">
-        <code>number</code>
-        <code class="ui label">1</code>
-        
-      </td>
-      <td class="eight wide">
-        <p>An unique identifier of the message.</p>
-
-        
-      </td>
-    </tr>
-  
-
-                    
-                  </tbody>
-                </table>
-              
-              
-                
-<table class="ui celled definition table">
-  <thead>
-    <tr>
-      <th colspan="2">Headers</th>
-    </tr>
-  </thead>
-  <tbody>
-  
-    <tr>
-      <td class="four wide">Content-Type</td>
-      <td><code>text/plain</code></td>
-    </tr>
-  
-  </tbody>
-</table>
-
-              
-              
-                <div class="ui stacked segment">
-                  <div class="ui fluid transaction accordion">
-                    <div class="title">
-                      <code>text/plain</code>
-                    </div>
-                    <div class="content tabbed">
-                      <div class="ui top attached tabular menu">
-                        <a data-tab="body" class="active item">BODY</a>
-                        <a data-tab="schema" class="item">SCHEMA</a>
-                      </div>
-                      <div class="ui bottom attached active tab segment" data-tab="body">
-                        <pre style="white-space: inherit">
-                          <code class="language-">All your base are belong to us.
-</code>
-                        </pre>
-                      </div>
-                      <div class="ui bottom attached tab segment" data-tab="schema">
-                        <pre style="white-space: inherit">
-                          <code class="language-json"></code>
-                        </pre>
-                      </div>
-                    </div>
+                <div class="content tabbed">
+                  <div class="ui top attached tabular menu">
+                    <a data-tab="body" class="active item">BODY</a>
+                    <a data-tab="schema" class="item">SCHEMA</a>
                   </div>
-                </div>
-              
-
-              <h4 class="ui horizontal divider">RESPONSE</h4>
-              <div class="description"></div>
-              
-<table class="ui celled definition table">
-  <thead>
-    <tr>
-      <th colspan="2">Headers</th>
-    </tr>
-  </thead>
-  <tbody>
-  
-  </tbody>
-</table>
-
-              <div class="ui stacked blue segment">
-                <div class="ui fluid transaction accordion">
-                  <div class="title center aligned">
-                    <a class="ui blue circular label">
-                      204
-                    </a>
-                    <code></code>
+                  <div class="ui bottom attached active tab segment" data-tab="body">
+                    <pre style="white-space: inherit">
+                      <code class="language-"></code>
+                    </pre>
                   </div>
-                  <div class="content tabbed">
-                    <div class="ui top attached tabular menu">
-                      <a data-tab="body" class="active item">BODY</a>
-                      <a data-tab="schema" class="item">SCHEMA</a>
-                    </div>
-                    <div class="ui bottom attached active tab segment" data-tab="body">
-                      <pre style="white-space: inherit">
-                        <code class="language-"></code>
-                      </pre>
-                    </div>
-                    <div class="ui bottom attached tab segment" data-tab="schema">
-                      <pre style="white-space: inherit">
-                        <code class="language-json"></code>
-                      </pre>
-                    </div>
+                  <div class="ui bottom attached tab segment" data-tab="schema">
+                    <pre style="white-space: inherit">
+                      <code class="language-json"></code>
+                    </pre>
                   </div>
                 </div>
               </div>
-            
-              <h4 class="ui horizontal divider">
-                REQUEST Update JSON Message
-              </h4>
-              <div class="description"></div>
-              <div class="fluid ui large labeled button">
-                <div class="ui teal large button">
-                  <h3>PUT</h3>
-                </div>
-                <a class="ui basic fluid request-url teal label">
-                  <code>/message/{id}</code>
-                </a>
-              </div>
-              
-                <table class="ui celled definition table">
-                  <thead>
-                    <tr>
-                      <th colspan="4">Parameters</th>
-                    </tr>
-                  <thead>
-                  <tbody>
-                    
-                    
-                      
-  
-    <tr>
-      <td class="center aligned one wide">
-        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
-      </td>
-      <td><code>id</code></td>
-      <td class="center aligned">
-        <code>number</code>
-        <code class="ui label">1</code>
-        
-      </td>
-      <td class="eight wide">
-        <p>An unique identifier of the message.</p>
-
-        
-      </td>
-    </tr>
-  
-
-                    
-                  </tbody>
-                </table>
-              
-              
-                
-<table class="ui celled definition table">
-  <thead>
-    <tr>
-      <th colspan="2">Headers</th>
-    </tr>
-  </thead>
-  <tbody>
-  
-    <tr>
-      <td class="four wide">Content-Type</td>
-      <td><code>application/json</code></td>
-    </tr>
-  
-  </tbody>
-</table>
-
-              
-              
-                <div class="ui stacked segment">
-                  <div class="ui fluid transaction accordion">
-                    <div class="title">
-                      <code>application/json</code>
-                    </div>
-                    <div class="content tabbed">
-                      <div class="ui top attached tabular menu">
-                        <a data-tab="body" class="active item">BODY</a>
-                        <a data-tab="schema" class="item">SCHEMA</a>
-                      </div>
-                      <div class="ui bottom attached active tab segment" data-tab="body">
-                        <pre style="white-space: inherit">
-                          <code class="language-json">{ &#34;message&#34;: &#34;All your base are belong to us.&#34; }
-</code>
-                        </pre>
-                      </div>
-                      <div class="ui bottom attached tab segment" data-tab="schema">
-                        <pre style="white-space: inherit">
-                          <code class="language-json"></code>
-                        </pre>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              
-
-              <h4 class="ui horizontal divider">RESPONSE</h4>
-              <div class="description"></div>
-              
-<table class="ui celled definition table">
-  <thead>
-    <tr>
-      <th colspan="2">Headers</th>
-    </tr>
-  </thead>
-  <tbody>
-  
-  </tbody>
-</table>
-
-              <div class="ui stacked blue segment">
-                <div class="ui fluid transaction accordion">
-                  <div class="title center aligned">
-                    <a class="ui blue circular label">
-                      204
-                    </a>
-                    <code></code>
-                  </div>
-                  <div class="content tabbed">
-                    <div class="ui top attached tabular menu">
-                      <a data-tab="body" class="active item">BODY</a>
-                      <a data-tab="schema" class="item">SCHEMA</a>
-                    </div>
-                    <div class="ui bottom attached active tab segment" data-tab="body">
-                      <pre style="white-space: inherit">
-                        <code class="language-"></code>
-                      </pre>
-                    </div>
-                    <div class="ui bottom attached tab segment" data-tab="schema">
-                      <pre style="white-space: inherit">
-                        <code class="language-json"></code>
-                      </pre>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            
-          </div>
-        
+            </div>
         </div>
-      <div class="ui hidden divider"></div>
-    
-  
-    
-      <div class="ui stacked segments">
-        <div class="ui basic segment resource">
-          <div class="ui purple huge ribbon label">
-            All My Messages
-          </div>
-          <div class="ui header">
-            <div class="ui sub header">
-              <p>A resource representing all of my messages in the system.</p>
-
+    </div>
+    <div class="ui stacked segments">
+      <div class="ui basic segment resource">
+        <div class="ui purple huge ribbon label">
+          All My Messages
+        </div>
+        <div class="ui header">
+          <div class="ui sub header">
+            <p>A resource representing all of my messages in the system.</p>
 <p>We have added the query URI template parameter - <code>limit</code>. This parameter is
 used for limiting the number of results returned by some actions on this
 resource. It does not affect every possible action of this resource, therefore
 we will discuss it only at the particular action level below.</p>
 
-            </div>
           </div>
         </div>
+      </div>
 
-        
-          
-<div class="ui grey horizontal small divider header">
+        <div class="ui grey horizontal small divider header">
   <i class="ui grey micro circular label"></i>
   <i class="ui pink micro circular label"></i>
   <i class="ui grey micro circular label"></i>
 </div>
+        <div class="ui basic segment">
+          <h3 class="ui block center aligned header" id="messages-all-my-messages-retrieve-all-messages">
+            Retrieve all Messages
+          </h3>
+          <div class="description"></div>
 
-          <div class="ui basic segment">
-            <h3 class="ui block center aligned header" id="messages-all-my-messages-retrieve-all-messages">
-              Retrieve all Messages
-            </h3>
+            <h4 class="ui horizontal divider">
+              REQUEST
+            </h4>
             <div class="description"></div>
-
-            
-              <h4 class="ui horizontal divider">
-                REQUEST
-              </h4>
-              <div class="description"></div>
-              <div class="fluid ui large labeled button">
-                <div class="ui green large button">
-                  <h3>GET</h3>
-                </div>
-                <a class="ui basic fluid request-url green label">
-                  <code>/messages{?limit}</code>
-                </a>
+            <div class="fluid ui large labeled button">
+              <div class="ui green large button">
+                <h3>GET</h3>
               </div>
-              
-                <table class="ui celled definition table">
-                  <thead>
-                    <tr>
-                      <th colspan="4">Parameters</th>
-                    </tr>
-                  <thead>
-                  <tbody>
-                    
-                      
-  
-    <tr>
+              <a class="ui basic fluid request-url green label">
+                <code>/messages{?limit}</code>
+              </a>
+            </div>
+
+              <table class="ui celled definition table">
+                <thead>
+                  <tr>
+                    <th colspan="4">Parameters</th>
+                  </tr>
+                <thead>
+                <tbody>
+                        <tr>
       <td class="center aligned one wide">
         <i class="ui empty circular label grey" data-content="optional" data-position="top center"></i>
       </td>
@@ -804,92 +564,79 @@ we will discuss it only at the particular action level below.</p>
       <td class="center aligned">
         <code>number</code>
         
-        <div class="ui violet image label">Default<div class="detail">20</div></div>
+        
+        
       </td>
       <td class="eight wide">
         <p>The maximum number of results to return.</p>
 
-        
       </td>
     </tr>
-  
 
-                    
-                    
-                  </tbody>
-                </table>
-              
-              
-              
+                </tbody>
+              </table>
 
-              <h4 class="ui horizontal divider">RESPONSE</h4>
-              <div class="description"></div>
-              
-<table class="ui celled definition table">
+            
+
+
+            <h4 class="ui horizontal divider">RESPONSE</h4>
+            <div class="description"></div>
+            <table class="ui celled definition table">
   <thead>
     <tr>
       <th colspan="2">Headers</th>
     </tr>
   </thead>
   <tbody>
-  
     <tr>
       <td class="four wide">Content-Type</td>
       <td><code>application/json</code></td>
     </tr>
-  
   </tbody>
 </table>
 
-              <div class="ui stacked blue segment">
-                <div class="ui fluid transaction accordion">
-                  <div class="title center aligned">
-                    <a class="ui blue circular label">
-                      200
-                    </a>
-                    <code>application/json</code>
+            <div class="ui stacked blue segment">
+              <div class="ui fluid transaction accordion">
+                <div class="title center aligned">
+                  <a class="ui blue circular label">
+                    200
+                  </a>
+                  <code>application/json</code>
+                </div>
+                <div class="content tabbed">
+                  <div class="ui top attached tabular menu">
+                    <a data-tab="body" class="active item">BODY</a>
+                    <a data-tab="schema" class="item">SCHEMA</a>
                   </div>
-                  <div class="content tabbed">
-                    <div class="ui top attached tabular menu">
-                      <a data-tab="body" class="active item">BODY</a>
-                      <a data-tab="schema" class="item">SCHEMA</a>
-                    </div>
-                    <div class="ui bottom attached active tab segment" data-tab="body">
-                      <pre style="white-space: inherit">
-                        <code class="language-json">[
+                  <div class="ui bottom attached active tab segment" data-tab="body">
+                    <pre style="white-space: inherit">
+                      <code class="language-json">[
   {
-    &#34;id&#34;: 1,
-    &#34;message&#34;: &#34;Hello World!&#34;
+    &quot;id&quot;: 1,
+    &quot;message&quot;: &quot;Hello World!&quot;
   },
   {
-    &#34;id&#34;: 2,
-    &#34;message&#34;: &#34;Time is an illusion. Lunchtime doubly so.&#34;
+    &quot;id&quot;: 2,
+    &quot;message&quot;: &quot;Time is an illusion. Lunchtime doubly so.&quot;
   },
   {
-    &#34;id&#34;: 3,
-    &#34;message&#34;: &#34;So long, and thanks for all the fish.&#34;
+    &quot;id&quot;: 3,
+    &quot;message&quot;: &quot;So long, and thanks for all the fish.&quot;
   }
 ]
 </code>
-                      </pre>
-                    </div>
-                    <div class="ui bottom attached tab segment" data-tab="schema">
-                      <pre style="white-space: inherit">
-                        <code class="language-json"></code>
-                      </pre>
-                    </div>
+                    </pre>
+                  </div>
+                  <div class="ui bottom attached tab segment" data-tab="schema">
+                    <pre style="white-space: inherit">
+                      <code class="language-json"></code>
+                    </pre>
                   </div>
                 </div>
               </div>
-            
-          </div>
-        
+            </div>
         </div>
-      <div class="ui hidden divider"></div>
-    
-  
-
-
+    </div>
       </div>
     </div>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -901,6 +648,7 @@ we will discuss it only at the particular action level below.</p>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.13.0/components/prism-json.min.js"></script>
     <script type="text/javascript">
       $(function() {
+        $('table').addClass('ui table');
         $('.ui.accordion').accordion({ animateChildren: false, duration: 0 });
         $('.content.tabbed').each(function(index) {
           $('.ui.tabular .item', $(this)).tab({ context: $(this) });
@@ -914,12 +662,6 @@ we will discuss it only at the particular action level below.</p>
     </script>
   </body>
 </html>
-
-
-
-
-
-
 
 
 

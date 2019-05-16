@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/themes/prism-okaidia.min.css" />
     <style>
       blockquote {
@@ -39,7 +39,7 @@
         text-align: left;
         overflow: auto;
       }
-      
+
       .ui.basic.label.request-url {
         user-select: text;
       }
@@ -69,77 +69,56 @@
     <div class="ui padded grid">
       <div class="sidewrap four wide computer five wide tablet sixteen wide mobile column">
         <div class="sidenav">
-          
-<div class="ui horizontal divider">
+          <div class="ui horizontal divider">
   <a href="#introduction">Introduction</a>
 </div>
 <div class="ui fluid secondary vertical menu">
   <a class="item" href="#introduction">Attributes API</a>
 </div>
-
-
 <div class="ui horizontal divider">
   <a href="#coupons">Coupons</a>
 </div>
-
 <div class="ui accordion fluid">
-  
-    
     <div class="title active">
       <i class="dropdown icon"></i>
-      
         <strong>Coupon</strong>
-      
     </div>
     <div class="content active">
       <div class="ui fluid secondary vertical menu">
-      
         <a class="item green" href="#coupons-coupon-retrieve-a-coupon">
           <i class="ui green empty circular label"></i>
-          
             <span>Retrieve a Coupon</span>
-          
         </a>
-      
       </div>
     </div>
-    
-  
 </div>
-
-
         </div>
       </div>
       <div class="eleven wide computer ten wide tablet sixteen wide mobile column">
-        
-<div class="ui hidden divider header"></div>
+        <div class="ui hidden divider header"></div>
 <h1 class="ui huge header" id="introduction">Attributes API</h1>
 <hr class="ui divider">
-<div class="description">
-  <p>This API example demonstrates how to describe body attributes of a request or
+<div class="description"><p>This API example demonstrates how to describe body attributes of a request or
 response message.</p>
-
 <p>In this case, the description is complementary (and duplicate!) to the provided
 JSON example in the body section. The
 <a href="09.%20Advanced%20Attributes.md">Advanced Attributes</a> API example will
 demonstrate how to avoid duplicates and how to reuse attribute descriptions.</p>
-
-<h2 id="api-blueprint">API Blueprint</h2>
-
+<h2>API Blueprint</h2>
 <ul>
-<li><p><a href="07.%20Parameters.md">Previous: Parameters</a></p></li>
-
-<li><p><a href="https://raw.github.com/apiaryio/api-blueprint/master/examples/08.%20Attributes.md">This: Raw API Blueprint</a></p></li>
-
-<li><p><a href="09.%20Advanced%20Attributes.md">Next: Advanced Attributes</a></p></li>
+<li>
+<p><a href="07.%20Parameters.md">Previous: Parameters</a></p>
+</li>
+<li>
+<p><a href="https://raw.github.com/apiaryio/api-blueprint/master/examples/08.%20Attributes.md">This: Raw API Blueprint</a></p>
+</li>
+<li>
+<p><a href="09.%20Advanced%20Attributes.md">Next: Advanced Attributes</a></p>
+</li>
 </ul>
-
 </div>
-
         <div class="ui hidden divider"></div>
-        
-
-  <div class="ui horizontal divider" id="coupons">
+          <div class="ui horizontal divider" id="coupons">
     Coupons
   </div>
   <div class="ui header center aligned">
@@ -149,137 +128,119 @@ demonstrate how to avoid duplicates and how to reuse attribute descriptions.</p>
       </div>
     </div>
   </div>
-  
-    
-      <div class="ui stacked segments">
-        <div class="ui basic segment resource">
-          <div class="ui purple huge ribbon label">
-            Coupon
-          </div>
-          <div class="ui header">
-            <div class="ui sub header">
-              <p>A coupon contains information about a percent-off or amount-off discount you
+    <div class="ui stacked segments">
+      <div class="ui basic segment resource">
+        <div class="ui purple huge ribbon label">
+          Coupon
+        </div>
+        <div class="ui header">
+          <div class="ui sub header">
+            <p>A coupon contains information about a percent-off or amount-off discount you
 might want to apply to a customer.</p>
 
-            </div>
           </div>
         </div>
+      </div>
 
-        
-          
-<div class="ui grey horizontal small divider header">
+        <div class="ui grey horizontal small divider header">
   <i class="ui grey micro circular label"></i>
   <i class="ui pink micro circular label"></i>
   <i class="ui grey micro circular label"></i>
 </div>
-
-          <div class="ui basic segment">
-            <h3 class="ui block center aligned header" id="coupons-coupon-retrieve-a-coupon">
-              Retrieve a Coupon
-            </h3>
-            <div class="description"><p>Retrieves the coupon with the given ID.</p>
+        <div class="ui basic segment">
+          <h3 class="ui block center aligned header" id="coupons-coupon-retrieve-a-coupon">
+            Retrieve a Coupon
+          </h3>
+          <div class="description"><p>Retrieves the coupon with the given ID.</p>
 </div>
 
-            
-              <h4 class="ui horizontal divider">
-                REQUEST
-              </h4>
-              <div class="description"></div>
-              <div class="fluid ui large labeled button">
-                <div class="ui green large button">
-                  <h3>GET</h3>
-                </div>
-                <a class="ui basic fluid request-url green label">
-                  <code>/coupons/{id}</code>
-                </a>
+            <h4 class="ui horizontal divider">
+              REQUEST
+            </h4>
+            <div class="description"></div>
+            <div class="fluid ui large labeled button">
+              <div class="ui green large button">
+                <h3>GET</h3>
               </div>
-              
-              
-              
+              <a class="ui basic fluid request-url green label">
+                <code>/coupons/{id}</code>
+              </a>
+            </div>
 
-              <h4 class="ui horizontal divider">RESPONSE</h4>
-              <div class="description"></div>
-              
-<table class="ui celled definition table">
+
+            
+
+
+            <h4 class="ui horizontal divider">RESPONSE</h4>
+            <div class="description"></div>
+            <table class="ui celled definition table">
   <thead>
     <tr>
       <th colspan="2">Headers</th>
     </tr>
   </thead>
   <tbody>
-  
     <tr>
       <td class="four wide">Content-Type</td>
       <td><code>application/json</code></td>
     </tr>
-  
   </tbody>
 </table>
 
-              <div class="ui stacked blue segment">
-                <div class="ui fluid transaction accordion">
-                  <div class="title center aligned">
-                    <a class="ui blue circular label">
-                      200
-                    </a>
-                    <code>application/json</code>
+            <div class="ui stacked blue segment">
+              <div class="ui fluid transaction accordion">
+                <div class="title center aligned">
+                  <a class="ui blue circular label">
+                    200
+                  </a>
+                  <code>application/json</code>
+                </div>
+                <div class="content tabbed">
+                  <div class="ui top attached tabular menu">
+                    <a data-tab="body" class="active item">BODY</a>
+                    <a data-tab="schema" class="item">SCHEMA</a>
                   </div>
-                  <div class="content tabbed">
-                    <div class="ui top attached tabular menu">
-                      <a data-tab="body" class="active item">BODY</a>
-                      <a data-tab="schema" class="item">SCHEMA</a>
-                    </div>
-                    <div class="ui bottom attached active tab segment" data-tab="body">
-                      <pre style="white-space: inherit">
-                        <code class="language-json">{
-    &#34;id&#34;: &#34;250FF&#34;,
-    &#34;created&#34;: 1415203908,
-    &#34;percent_off&#34;: 25,
-    &#34;redeem_by&#34;: null
+                  <div class="ui bottom attached active tab segment" data-tab="body">
+                    <pre style="white-space: inherit">
+                      <code class="language-json">{
+    &quot;id&quot;: &quot;250FF&quot;,
+    &quot;created&quot;: 1415203908,
+    &quot;percent_off&quot;: 25,
+    &quot;redeem_by&quot;: null
 }
 </code>
-                      </pre>
-                    </div>
-                    <div class="ui bottom attached tab segment" data-tab="schema">
-                      <pre style="white-space: inherit">
-                        <code class="language-json">{
-  &#34;$schema&#34;: &#34;http://json-schema.org/draft-04/schema#&#34;,
-  &#34;type&#34;: &#34;object&#34;,
-  &#34;properties&#34;: {
-    &#34;id&#34;: {
-      &#34;type&#34;: &#34;string&#34;
+                    </pre>
+                  </div>
+                  <div class="ui bottom attached tab segment" data-tab="schema">
+                    <pre style="white-space: inherit">
+                      <code class="language-json">{
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-04/schema#&quot;,
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;id&quot;: {
+      &quot;type&quot;: &quot;string&quot;
     },
-    &#34;created&#34;: {
-      &#34;type&#34;: &#34;number&#34;,
-      &#34;description&#34;: &#34;Time stamp&#34;
+    &quot;created&quot;: {
+      &quot;type&quot;: &quot;number&quot;
     },
-    &#34;percent_off&#34;: {
-      &#34;type&#34;: &#34;number&#34;,
-      &#34;description&#34;: &#34;A positive integer between 1 and 100 that represents the discount\nthe coupon will apply.&#34;
+    &quot;percent_off&quot;: {
+      &quot;type&quot;: &quot;number&quot;
     },
-    &#34;redeem_by&#34;: {
-      &#34;type&#34;: &#34;number&#34;,
-      &#34;description&#34;: &#34;Date after which the coupon can no longer be redeemed&#34;
+    &quot;redeem_by&quot;: {
+      &quot;type&quot;: &quot;number&quot;
     }
   },
-  &#34;required&#34;: [
-    &#34;id&#34;
+  &quot;required&quot;: [
+    &quot;id&quot;
   ]
 }</code>
-                      </pre>
-                    </div>
+                    </pre>
                   </div>
                 </div>
               </div>
-            
-          </div>
-        
+            </div>
         </div>
-      <div class="ui hidden divider"></div>
-    
-  
-
-
+    </div>
       </div>
     </div>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -291,6 +252,7 @@ might want to apply to a customer.</p>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.13.0/components/prism-json.min.js"></script>
     <script type="text/javascript">
       $(function() {
+        $('table').addClass('ui table');
         $('.ui.accordion').accordion({ animateChildren: false, duration: 0 });
         $('.content.tabbed').each(function(index) {
           $('.ui.tabular .item', $(this)).tab({ context: $(this) });
@@ -304,12 +266,6 @@ might want to apply to a customer.</p>
     </script>
   </body>
 </html>
-
-
-
-
-
-
 
 
 
