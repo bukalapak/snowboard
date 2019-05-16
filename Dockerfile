@@ -1,4 +1,4 @@
-FROM node:8 AS builder
+FROM node:10 AS builder
 COPY . /app
 RUN cd /app && npm install
 
