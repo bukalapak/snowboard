@@ -1,6 +1,0 @@
-[submodule "fixtures/api-blueprint"]
-	path = fixtures/api-blueprint
-	url = https://github.com/apiaryio/api-blueprint.git
-[submodule "adapter/drafter/ext/drafter"]
-	path = adapter/drafter/ext/drafter
-	url = https://github.com/apiaryio/drafter.git
