@@ -14,23 +14,19 @@
   },
   "dependencies": {
     "commander": "^2.19.0",
-    "drafter": "^2.0.0-pre.1",
     "express": "^4.16.4",
     "glob": "^7.1.3",
     "handlebars": "^4.1.0",
     "highlight.js": "^9.15.6",
     "lodash": "^4.17.11",
     "markdown-it": "^8.4.2",
-    "minim": "^0.23.1",
-    "minim-api-description": "^0.9.0",
-    "minim-parse-result": "^0.11.0",
     "mkdirp": "^0.5.1",
     "morgan": "^1.9.1",
+    "outboard": "^2.6.0",
     "parse-prefer-header": "^1.0.0",
     "slugify": "^1.3.4",
     "table": "^5.2.3",
-    "tmp": "^0.0.33",
-    "uritemplate": "^0.3.4"
+    "tmp": "^0.0.33"
   },
   "devDependencies": {
     "eslint": "^5.15.1",

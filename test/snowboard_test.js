@@ -36,19 +36,30 @@ test("read with seeds", t => {
 });
 
 test("load", async t => {
-  const result = await load(fixturePath("partials/API.apib"));
-  const names = result.api.resourceGroups.map(group => group.title.toValue());
-  const expected = ["Messages", "Users", "Tasks"];
+  const result = await load(
+    fixturePath("api-blueprint/examples/04. Grouping Resources.md")
+  );
+  const data = result.actions.map(action => ({
+    title: action.title,
+    tagNames: action.tags.join(" / ")
+  }));
 
-  t.deepEqual(names, expected, "group names");
+  t.deepEqual(
+    { title: "Retrieve a Message", tagNames: "Messages / My Message" },
+    data[0]
+  );
+  t.deepEqual(
+    { title: "Update a Message", tagNames: "Messages / My Message" },
+    data[1]
+  );
   t.end();
 });
 
 test("lint", async t => {
   const result1 = await lint(fixturePath("partials/API.apib"));
-  t.ok(result1 === null);
+  t.equal(0, result1.length);
 
   const result2 = await lint(fixturePath("blueprint-invalid.apib"));
-  t.ok(result2.annotations.toValue().length === 1);
+  t.equal(1, result2.length);
   t.end();
 });

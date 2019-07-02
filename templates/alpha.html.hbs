@@ -118,14 +118,12 @@
 <div class="ui accordion fluid">
   {{#each resources}}
     {{#if transitions}}
-    <div class="title {{#if @first}}active{{/if}}">
-      <i class="dropdown icon"></i>
-      {{#if title}}
+    {{#if title}}
+      <div class="title {{#if @first}}active{{/if}}">
+        <i class="dropdown icon"></i>
         <strong>{{title}}</strong>
-      {{else}}
-        <strong>{{href}}</strong>
-      {{/if}}
-    </div>
+      </div>
+    {{/if}}
     <div class="content {{#if @first}}active{{/if}}">
       <div class="ui fluid secondary vertical menu">
       {{#each transitions}}
