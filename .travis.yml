@@ -5,7 +5,7 @@ os:
 - osx
 node_js:
 - "10"
-cache: npm
+cache: yarn
 before_deploy:
 - ./tools/travis/prepare-release.sh
 deploy:
