@@ -75,6 +75,28 @@
 <div class="ui fluid secondary vertical menu">
   <a class="item" href="#introduction">Advanced Action API</a>
 </div>
+<div class="ui accordion fluid">
+      <div class="title active">
+        <i class="dropdown icon"></i>
+        <strong>Tasks</strong>
+      </div>
+    <div class="content active">
+      <div class="ui fluid secondary vertical menu">
+        <a class="item green" href="#tasks-list-all-tasks">
+          <i class="ui green empty circular label"></i>
+            <span>List All Tasks</span>
+        </a>
+        <a class="item green" href="#tasks-retrieve-task">
+          <i class="ui green empty circular label"></i>
+            <span>Retrieve Task</span>
+        </a>
+        <a class="item red" href="#tasks-delete-task">
+          <i class="ui red empty circular label"></i>
+            <span>Delete Task</span>
+        </a>
+      </div>
+    </div>
+</div>
         </div>
       </div>
       <div class="eleven wide computer ten wide tablet sixteen wide mobile column">
@@ -97,7 +119,399 @@ demonstrates an action - state transition - to another resource.</p>
 </ul>
 </div>
         <div class="ui hidden divider"></div>
+          <div class="ui horizontal divider" >
+    
+  </div>
+  <div class="ui header center aligned">
+    <div class="ui header">
+      <div class="sub header">
+        
+      </div>
+    </div>
+  </div>
+    <div class="ui stacked segments">
+      <div class="ui basic segment resource">
+        <div class="ui purple huge ribbon label">
+          Tasks
+        </div>
+        <div class="ui header">
+          <div class="ui sub header">
+            
+          </div>
+        </div>
+      </div>
+
+        <div class="ui grey horizontal small divider header">
+  <i class="ui grey micro circular label"></i>
+  <i class="ui pink micro circular label"></i>
+  <i class="ui grey micro circular label"></i>
+</div>
+        <div class="ui basic segment">
+          <h3 class="ui block center aligned header" id="tasks-list-all-tasks">
+            List All Tasks
+          </h3>
+          <div class="description"></div>
+
+            <h4 class="ui horizontal divider">
+              REQUEST
+            </h4>
+            <div class="description"></div>
+            <div class="fluid ui large labeled button">
+              <div class="ui green large button">
+                <h3>GET</h3>
               </div>
+              <a class="ui basic fluid request-url green label">
+                <code>/tasks/tasks</code>
+              </a>
+            </div>
+
+              <table class="ui celled definition table">
+                <thead>
+                  <tr>
+                    <th colspan="4">Parameters</th>
+                  </tr>
+                <thead>
+                <tbody>
+                        <tr>
+      <td class="center aligned one wide">
+        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
+      </td>
+      <td><code>status</code></td>
+      <td class="center aligned">
+        <code>status</code>
+        
+        
+        
+      </td>
+      <td class="eight wide">
+        -
+      </td>
+    </tr>
+    <tr>
+      <td class="center aligned one wide">
+        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
+      </td>
+      <td><code>priority</code></td>
+      <td class="center aligned">
+        <code>priority</code>
+        
+        
+        
+      </td>
+      <td class="eight wide">
+        -
+      </td>
+    </tr>
+
+                </tbody>
+              </table>
+
+            
+
+
+            <h4 class="ui horizontal divider">RESPONSE</h4>
+            <div class="description"></div>
+            <table class="ui celled definition table">
+  <thead>
+    <tr>
+      <th colspan="2">Headers</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="four wide">Content-Type</td>
+      <td><code>application/json</code></td>
+    </tr>
+  </tbody>
+</table>
+
+            <div class="ui stacked blue segment">
+              <div class="ui fluid transaction accordion">
+                <div class="title center aligned">
+                  <a class="ui blue circular label">
+                    200
+                  </a>
+                  <code>application/json</code>
+                </div>
+                <div class="content tabbed">
+                  <div class="ui top attached tabular menu">
+                    <a data-tab="body" class="active item">BODY</a>
+                    <a data-tab="schema" class="item">SCHEMA</a>
+                  </div>
+                  <div class="ui bottom attached active tab segment" data-tab="body">
+                    <pre style="white-space: inherit">
+                      <code class="language-json">[
+  {
+    &quot;id&quot;: 123,
+    &quot;name&quot;: &quot;Exercise in gym&quot;,
+    &quot;done&quot;: false,
+    &quot;type&quot;: &quot;task&quot;
+  },
+  {
+    &quot;id&quot;: 124,
+    &quot;name&quot;: &quot;Shop for groceries&quot;,
+    &quot;done&quot;: true,
+    &quot;type&quot;: &quot;task&quot;
+  }
+]</code>
+                    </pre>
+                  </div>
+                  <div class="ui bottom attached tab segment" data-tab="schema">
+                    <pre style="white-space: inherit">
+                      <code class="language-json"></code>
+                    </pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="ui grey horizontal small divider header">
+  <i class="ui grey micro circular label"></i>
+  <i class="ui pink micro circular label"></i>
+  <i class="ui grey micro circular label"></i>
+</div>
+        <div class="ui basic segment">
+          <h3 class="ui block center aligned header" id="tasks-retrieve-task">
+            Retrieve Task
+          </h3>
+          <div class="description"><p>This is a state transition to another resource.</p>
+</div>
+
+            <h4 class="ui horizontal divider">
+              REQUEST
+            </h4>
+            <div class="description"></div>
+            <div class="fluid ui large labeled button">
+              <div class="ui green large button">
+                <h3>GET</h3>
+              </div>
+              <a class="ui basic fluid request-url green label">
+                <code>/task/{id}</code>
+              </a>
+            </div>
+
+              <table class="ui celled definition table">
+                <thead>
+                  <tr>
+                    <th colspan="4">Parameters</th>
+                  </tr>
+                <thead>
+                <tbody>
+                        <tr>
+      <td class="center aligned one wide">
+        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
+      </td>
+      <td><code>status</code></td>
+      <td class="center aligned">
+        <code>status</code>
+        
+        
+        
+      </td>
+      <td class="eight wide">
+        -
+      </td>
+    </tr>
+    <tr>
+      <td class="center aligned one wide">
+        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
+      </td>
+      <td><code>priority</code></td>
+      <td class="center aligned">
+        <code>priority</code>
+        
+        
+        
+      </td>
+      <td class="eight wide">
+        -
+      </td>
+    </tr>
+    <tr>
+      <td class="center aligned one wide">
+        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
+      </td>
+      <td><code>id</code></td>
+      <td class="center aligned">
+        <code>id</code>
+        
+        
+        
+      </td>
+      <td class="eight wide">
+        -
+      </td>
+    </tr>
+
+                </tbody>
+              </table>
+
+            
+
+
+            <h4 class="ui horizontal divider">RESPONSE</h4>
+            <div class="description"></div>
+            <table class="ui celled definition table">
+  <thead>
+    <tr>
+      <th colspan="2">Headers</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="four wide">Content-Type</td>
+      <td><code>application/json</code></td>
+    </tr>
+  </tbody>
+</table>
+
+            <div class="ui stacked blue segment">
+              <div class="ui fluid transaction accordion">
+                <div class="title center aligned">
+                  <a class="ui blue circular label">
+                    200
+                  </a>
+                  <code>application/json</code>
+                </div>
+                <div class="content tabbed">
+                  <div class="ui top attached tabular menu">
+                    <a data-tab="body" class="active item">BODY</a>
+                    <a data-tab="schema" class="item">SCHEMA</a>
+                  </div>
+                  <div class="ui bottom attached active tab segment" data-tab="body">
+                    <pre style="white-space: inherit">
+                      <code class="language-json">{
+  &quot;id&quot;: 123,
+  &quot;name&quot;: &quot;Go to gym&quot;,
+  &quot;done&quot;: false,
+  &quot;type&quot;: &quot;task&quot;
+}</code>
+                    </pre>
+                  </div>
+                  <div class="ui bottom attached tab segment" data-tab="schema">
+                    <pre style="white-space: inherit">
+                      <code class="language-json"></code>
+                    </pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="ui grey horizontal small divider header">
+  <i class="ui grey micro circular label"></i>
+  <i class="ui pink micro circular label"></i>
+  <i class="ui grey micro circular label"></i>
+</div>
+        <div class="ui basic segment">
+          <h3 class="ui block center aligned header" id="tasks-delete-task">
+            Delete Task
+          </h3>
+          <div class="description"></div>
+
+            <h4 class="ui horizontal divider">
+              REQUEST
+            </h4>
+            <div class="description"></div>
+            <div class="fluid ui large labeled button">
+              <div class="ui red large button">
+                <h3>DELETE</h3>
+              </div>
+              <a class="ui basic fluid request-url red label">
+                <code>/task/{id}</code>
+              </a>
+            </div>
+
+              <table class="ui celled definition table">
+                <thead>
+                  <tr>
+                    <th colspan="4">Parameters</th>
+                  </tr>
+                <thead>
+                <tbody>
+                        <tr>
+      <td class="center aligned one wide">
+        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
+      </td>
+      <td><code>status</code></td>
+      <td class="center aligned">
+        <code>status</code>
+        
+        
+        
+      </td>
+      <td class="eight wide">
+        -
+      </td>
+    </tr>
+    <tr>
+      <td class="center aligned one wide">
+        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
+      </td>
+      <td><code>priority</code></td>
+      <td class="center aligned">
+        <code>priority</code>
+        
+        
+        
+      </td>
+      <td class="eight wide">
+        -
+      </td>
+    </tr>
+    <tr>
+      <td class="center aligned one wide">
+        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
+      </td>
+      <td><code>id</code></td>
+      <td class="center aligned">
+        <code>id</code>
+        
+        
+        
+      </td>
+      <td class="eight wide">
+        -
+      </td>
+    </tr>
+
+                </tbody>
+              </table>
+
+            
+
+
+            <h4 class="ui horizontal divider">RESPONSE</h4>
+            <div class="description"></div>
+            
+            <div class="ui stacked blue segment">
+              <div class="ui fluid transaction accordion">
+                <div class="title center aligned">
+                  <a class="ui blue circular label">
+                    204
+                  </a>
+                  <code></code>
+                </div>
+                <div class="content tabbed">
+                  <div class="ui top attached tabular menu">
+                    <a data-tab="body" class="active item">BODY</a>
+                    <a data-tab="schema" class="item">SCHEMA</a>
+                  </div>
+                  <div class="ui bottom attached active tab segment" data-tab="body">
+                    <pre style="white-space: inherit">
+                      <code class="language-"></code>
+                    </pre>
+                  </div>
+                  <div class="ui bottom attached tab segment" data-tab="schema">
+                    <pre style="white-space: inherit">
+                      <code class="language-json"></code>
+                    </pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+      </div>
     </div>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/components/accordion.min.js"></script>

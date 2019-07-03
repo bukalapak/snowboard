@@ -79,11 +79,23 @@
   <a href="#messages">Messages</a>
 </div>
 <div class="ui accordion fluid">
-    <div class="title active">
-      <i class="dropdown icon"></i>
-        <strong>My Message</strong>
-    </div>
+      <div class="title active">
+        <i class="dropdown icon"></i>
+        <strong>All My Messages</strong>
+      </div>
     <div class="content active">
+      <div class="ui fluid secondary vertical menu">
+        <a class="item green" href="#messages-all-my-messages-retrieve-all-messages">
+          <i class="ui green empty circular label"></i>
+            <span>Retrieve all Messages</span>
+        </a>
+      </div>
+    </div>
+      <div class="title ">
+        <i class="dropdown icon"></i>
+        <strong>My Message</strong>
+      </div>
+    <div class="content ">
       <div class="ui fluid secondary vertical menu">
         <a class="item green" href="#messages-my-message-retrieve-a-message">
           <i class="ui green empty circular label"></i>
@@ -92,18 +104,6 @@
         <a class="item teal" href="#messages-my-message-update-a-message">
           <i class="ui teal empty circular label"></i>
             <span>Update a Message</span>
-        </a>
-      </div>
-    </div>
-    <div class="title ">
-      <i class="dropdown icon"></i>
-        <strong>All My Messages</strong>
-    </div>
-    <div class="content ">
-      <div class="ui fluid secondary vertical menu">
-        <a class="item green" href="#messages-all-my-messages-retrieve-all-messages">
-          <i class="ui green empty circular label"></i>
-            <span>Retrieve all Messages</span>
         </a>
       </div>
     </div>
@@ -146,6 +146,139 @@ communicating with our API about messages.</p>
     <div class="ui stacked segments">
       <div class="ui basic segment resource">
         <div class="ui purple huge ribbon label">
+          All My Messages
+        </div>
+        <div class="ui header">
+          <div class="ui sub header">
+            <p>A resource representing all of my messages in the system.</p>
+<p>We have added the query URI template parameter - <code>limit</code>. This parameter is
+used for limiting the number of results returned by some actions on this
+resource. It does not affect every possible action of this resource, therefore
+we will discuss it only at the particular action level below.</p>
+
+          </div>
+        </div>
+      </div>
+
+        <div class="ui grey horizontal small divider header">
+  <i class="ui grey micro circular label"></i>
+  <i class="ui pink micro circular label"></i>
+  <i class="ui grey micro circular label"></i>
+</div>
+        <div class="ui basic segment">
+          <h3 class="ui block center aligned header" id="messages-all-my-messages-retrieve-all-messages">
+            Retrieve all Messages
+          </h3>
+          <div class="description"><p>A resource representing all of my messages in the system.</p>
+<p>We have added the query URI template parameter - <code>limit</code>. This parameter is
+used for limiting the number of results returned by some actions on this
+resource. It does not affect every possible action of this resource, therefore
+we will discuss it only at the particular action level below.</p>
+</div>
+
+            <h4 class="ui horizontal divider">
+              REQUEST
+            </h4>
+            <div class="description"></div>
+            <div class="fluid ui large labeled button">
+              <div class="ui green large button">
+                <h3>GET</h3>
+              </div>
+              <a class="ui basic fluid request-url green label">
+                <code>/messages</code>
+              </a>
+            </div>
+
+              <table class="ui celled definition table">
+                <thead>
+                  <tr>
+                    <th colspan="4">Parameters</th>
+                  </tr>
+                <thead>
+                <tbody>
+                        <tr>
+      <td class="center aligned one wide">
+        <i class="ui empty circular label grey" data-content="optional" data-position="top center"></i>
+      </td>
+      <td><code>limit</code></td>
+      <td class="center aligned">
+        <code>limit</code>
+        
+        
+        
+      </td>
+      <td class="eight wide">
+        <p>The maximum number of results to return.</p>
+
+      </td>
+    </tr>
+
+                </tbody>
+              </table>
+
+            
+
+
+            <h4 class="ui horizontal divider">RESPONSE</h4>
+            <div class="description"></div>
+            <table class="ui celled definition table">
+  <thead>
+    <tr>
+      <th colspan="2">Headers</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="four wide">Content-Type</td>
+      <td><code>application/json</code></td>
+    </tr>
+  </tbody>
+</table>
+
+            <div class="ui stacked blue segment">
+              <div class="ui fluid transaction accordion">
+                <div class="title center aligned">
+                  <a class="ui blue circular label">
+                    200
+                  </a>
+                  <code>application/json</code>
+                </div>
+                <div class="content tabbed">
+                  <div class="ui top attached tabular menu">
+                    <a data-tab="body" class="active item">BODY</a>
+                    <a data-tab="schema" class="item">SCHEMA</a>
+                  </div>
+                  <div class="ui bottom attached active tab segment" data-tab="body">
+                    <pre style="white-space: inherit">
+                      <code class="language-json">[
+  {
+    &quot;id&quot;: 1,
+    &quot;message&quot;: &quot;Hello World!&quot;
+  },
+  {
+    &quot;id&quot;: 2,
+    &quot;message&quot;: &quot;Time is an illusion. Lunchtime doubly so.&quot;
+  },
+  {
+    &quot;id&quot;: 3,
+    &quot;message&quot;: &quot;So long, and thanks for all the fish.&quot;
+  }
+]</code>
+                    </pre>
+                  </div>
+                  <div class="ui bottom attached tab segment" data-tab="schema">
+                    <pre style="white-space: inherit">
+                      <code class="language-json"></code>
+                    </pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+    <div class="ui stacked segments">
+      <div class="ui basic segment resource">
+        <div class="ui purple huge ribbon label">
           My Message
         </div>
         <div class="ui header">
@@ -169,7 +302,12 @@ also set its example value to <code>1</code> and declare it of an arbitrary 'num
           <h3 class="ui block center aligned header" id="messages-my-message-retrieve-a-message">
             Retrieve a Message
           </h3>
-          <div class="description"></div>
+          <div class="description"><p>Here we have added the message <code>id</code> parameter as an
+<a href="http://tools.ietf.org/html/rfc6570">URI Template variable</a> in the Message
+resource's URI. Note the parameter name <code>id</code> is enclosed in curly brackets. We
+will discuss this parameter in the <code>Parameters</code> section below, where we will
+also set its example value to <code>1</code> and declare it of an arbitrary 'number' type.</p>
+</div>
 
             <h4 class="ui horizontal divider">
               REQUEST Plain Text Message
@@ -184,6 +322,32 @@ also set its example value to <code>1</code> and declare it of an arbitrary 'num
               </a>
             </div>
 
+              <table class="ui celled definition table">
+                <thead>
+                  <tr>
+                    <th colspan="4">Parameters</th>
+                  </tr>
+                <thead>
+                <tbody>
+                        <tr>
+      <td class="center aligned one wide">
+        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
+      </td>
+      <td><code>id</code></td>
+      <td class="center aligned">
+        <code>id</code>
+        <code class="ui label">1</code>
+        
+        
+      </td>
+      <td class="eight wide">
+        <p>An unique identifier of the message.</p>
+
+      </td>
+    </tr>
+
+                </tbody>
+              </table>
 
             <table class="ui celled definition table">
   <thead>
@@ -261,6 +425,32 @@ also set its example value to <code>1</code> and declare it of an arbitrary 'num
               </a>
             </div>
 
+              <table class="ui celled definition table">
+                <thead>
+                  <tr>
+                    <th colspan="4">Parameters</th>
+                  </tr>
+                <thead>
+                <tbody>
+                        <tr>
+      <td class="center aligned one wide">
+        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
+      </td>
+      <td><code>id</code></td>
+      <td class="center aligned">
+        <code>id</code>
+        <code class="ui label">1</code>
+        
+        
+      </td>
+      <td class="eight wide">
+        <p>An unique identifier of the message.</p>
+
+      </td>
+    </tr>
+
+                </tbody>
+              </table>
 
             <table class="ui celled definition table">
   <thead>
@@ -316,8 +506,7 @@ also set its example value to <code>1</code> and declare it of an arbitrary 'num
                       <code class="language-json">{
   &quot;id&quot;: 1,
   &quot;message&quot;: &quot;Hello World!&quot;
-}
-</code>
+}</code>
                     </pre>
                   </div>
                   <div class="ui bottom attached tab segment" data-tab="schema">
@@ -338,7 +527,12 @@ also set its example value to <code>1</code> and declare it of an arbitrary 'num
           <h3 class="ui block center aligned header" id="messages-my-message-update-a-message">
             Update a Message
           </h3>
-          <div class="description"></div>
+          <div class="description"><p>Here we have added the message <code>id</code> parameter as an
+<a href="http://tools.ietf.org/html/rfc6570">URI Template variable</a> in the Message
+resource's URI. Note the parameter name <code>id</code> is enclosed in curly brackets. We
+will discuss this parameter in the <code>Parameters</code> section below, where we will
+also set its example value to <code>1</code> and declare it of an arbitrary 'number' type.</p>
+</div>
 
             <h4 class="ui horizontal divider">
               REQUEST Update Plain Text Message
@@ -353,6 +547,32 @@ also set its example value to <code>1</code> and declare it of an arbitrary 'num
               </a>
             </div>
 
+              <table class="ui celled definition table">
+                <thead>
+                  <tr>
+                    <th colspan="4">Parameters</th>
+                  </tr>
+                <thead>
+                <tbody>
+                        <tr>
+      <td class="center aligned one wide">
+        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
+      </td>
+      <td><code>id</code></td>
+      <td class="center aligned">
+        <code>id</code>
+        <code class="ui label">1</code>
+        
+        
+      </td>
+      <td class="eight wide">
+        <p>An unique identifier of the message.</p>
+
+      </td>
+    </tr>
+
+                </tbody>
+              </table>
 
             <table class="ui celled definition table">
   <thead>
@@ -436,6 +656,32 @@ also set its example value to <code>1</code> and declare it of an arbitrary 'num
               </a>
             </div>
 
+              <table class="ui celled definition table">
+                <thead>
+                  <tr>
+                    <th colspan="4">Parameters</th>
+                  </tr>
+                <thead>
+                <tbody>
+                        <tr>
+      <td class="center aligned one wide">
+        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
+      </td>
+      <td><code>id</code></td>
+      <td class="center aligned">
+        <code>id</code>
+        <code class="ui label">1</code>
+        
+        
+      </td>
+      <td class="eight wide">
+        <p>An unique identifier of the message.</p>
+
+      </td>
+    </tr>
+
+                </tbody>
+              </table>
 
             <table class="ui celled definition table">
   <thead>
@@ -464,8 +710,9 @@ also set its example value to <code>1</code> and declare it of an arbitrary 'num
                     </div>
                     <div class="ui bottom attached active tab segment" data-tab="body">
                       <pre style="white-space: inherit">
-                        <code class="language-json">{ &quot;message&quot;: &quot;All your base are belong to us.&quot; }
-</code>
+                        <code class="language-json">{
+  &quot;message&quot;: &quot;All your base are belong to us.&quot;
+}</code>
                       </pre>
                     </div>
                     <div class="ui bottom attached tab segment" data-tab="schema">
@@ -496,135 +743,6 @@ also set its example value to <code>1</code> and declare it of an arbitrary 'num
                   <div class="ui bottom attached active tab segment" data-tab="body">
                     <pre style="white-space: inherit">
                       <code class="language-"></code>
-                    </pre>
-                  </div>
-                  <div class="ui bottom attached tab segment" data-tab="schema">
-                    <pre style="white-space: inherit">
-                      <code class="language-json"></code>
-                    </pre>
-                  </div>
-                </div>
-              </div>
-            </div>
-        </div>
-    </div>
-    <div class="ui stacked segments">
-      <div class="ui basic segment resource">
-        <div class="ui purple huge ribbon label">
-          All My Messages
-        </div>
-        <div class="ui header">
-          <div class="ui sub header">
-            <p>A resource representing all of my messages in the system.</p>
-<p>We have added the query URI template parameter - <code>limit</code>. This parameter is
-used for limiting the number of results returned by some actions on this
-resource. It does not affect every possible action of this resource, therefore
-we will discuss it only at the particular action level below.</p>
-
-          </div>
-        </div>
-      </div>
-
-        <div class="ui grey horizontal small divider header">
-  <i class="ui grey micro circular label"></i>
-  <i class="ui pink micro circular label"></i>
-  <i class="ui grey micro circular label"></i>
-</div>
-        <div class="ui basic segment">
-          <h3 class="ui block center aligned header" id="messages-all-my-messages-retrieve-all-messages">
-            Retrieve all Messages
-          </h3>
-          <div class="description"></div>
-
-            <h4 class="ui horizontal divider">
-              REQUEST
-            </h4>
-            <div class="description"></div>
-            <div class="fluid ui large labeled button">
-              <div class="ui green large button">
-                <h3>GET</h3>
-              </div>
-              <a class="ui basic fluid request-url green label">
-                <code>/messages{?limit}</code>
-              </a>
-            </div>
-
-              <table class="ui celled definition table">
-                <thead>
-                  <tr>
-                    <th colspan="4">Parameters</th>
-                  </tr>
-                <thead>
-                <tbody>
-                        <tr>
-      <td class="center aligned one wide">
-        <i class="ui empty circular label grey" data-content="optional" data-position="top center"></i>
-      </td>
-      <td><code>limit</code></td>
-      <td class="center aligned">
-        <code>number</code>
-        
-        
-        
-      </td>
-      <td class="eight wide">
-        <p>The maximum number of results to return.</p>
-
-      </td>
-    </tr>
-
-                </tbody>
-              </table>
-
-            
-
-
-            <h4 class="ui horizontal divider">RESPONSE</h4>
-            <div class="description"></div>
-            <table class="ui celled definition table">
-  <thead>
-    <tr>
-      <th colspan="2">Headers</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td class="four wide">Content-Type</td>
-      <td><code>application/json</code></td>
-    </tr>
-  </tbody>
-</table>
-
-            <div class="ui stacked blue segment">
-              <div class="ui fluid transaction accordion">
-                <div class="title center aligned">
-                  <a class="ui blue circular label">
-                    200
-                  </a>
-                  <code>application/json</code>
-                </div>
-                <div class="content tabbed">
-                  <div class="ui top attached tabular menu">
-                    <a data-tab="body" class="active item">BODY</a>
-                    <a data-tab="schema" class="item">SCHEMA</a>
-                  </div>
-                  <div class="ui bottom attached active tab segment" data-tab="body">
-                    <pre style="white-space: inherit">
-                      <code class="language-json">[
-  {
-    &quot;id&quot;: 1,
-    &quot;message&quot;: &quot;Hello World!&quot;
-  },
-  {
-    &quot;id&quot;: 2,
-    &quot;message&quot;: &quot;Time is an illusion. Lunchtime doubly so.&quot;
-  },
-  {
-    &quot;id&quot;: 3,
-    &quot;message&quot;: &quot;So long, and thanks for all the fish.&quot;
-  }
-]
-</code>
                     </pre>
                   </div>
                   <div class="ui bottom attached tab segment" data-tab="schema">

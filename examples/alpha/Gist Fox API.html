@@ -79,10 +79,10 @@
   <a href="#gist">Gist</a>
 </div>
 <div class="ui accordion fluid">
-    <div class="title active">
-      <i class="dropdown icon"></i>
+      <div class="title active">
+        <i class="dropdown icon"></i>
         <strong>Gist</strong>
-    </div>
+      </div>
     <div class="content active">
       <div class="ui fluid secondary vertical menu">
         <a class="item green" href="#gist-gist-retrieve-a-single-gist">
@@ -99,10 +99,10 @@
         </a>
       </div>
     </div>
-    <div class="title ">
-      <i class="dropdown icon"></i>
+      <div class="title ">
+        <i class="dropdown icon"></i>
         <strong>Gists Collection</strong>
-    </div>
+      </div>
     <div class="content ">
       <div class="ui fluid secondary vertical menu">
         <a class="item green" href="#gist-gists-collection-list-all-gists">
@@ -115,10 +115,10 @@
         </a>
       </div>
     </div>
-    <div class="title ">
-      <i class="dropdown icon"></i>
+      <div class="title ">
+        <i class="dropdown icon"></i>
         <strong>Star</strong>
-    </div>
+      </div>
     <div class="content ">
       <div class="ui fluid secondary vertical menu">
         <a class="item teal" href="#gist-star-star-a-gist">
@@ -132,6 +132,20 @@
         <a class="item green" href="#gist-star-check-if-a-gist-is-starred">
           <i class="ui green empty circular label"></i>
             <span>Check if a Gist is Starred</span>
+        </a>
+      </div>
+    </div>
+</div>
+<div class="ui accordion fluid">
+      <div class="title active">
+        <i class="dropdown icon"></i>
+        <strong>Gist Fox API Root</strong>
+      </div>
+    <div class="content active">
+      <div class="ui fluid secondary vertical menu">
+        <a class="item green" href="#gist-fox-api-root-retrieve-the-entry-point">
+          <i class="ui green empty circular label"></i>
+            <span>Retrieve the Entry Point</span>
         </a>
       </div>
     </div>
@@ -201,7 +215,24 @@
           <h3 class="ui block center aligned header" id="gist-gist-retrieve-a-single-gist">
             Retrieve a Single Gist
           </h3>
-          <div class="description"></div>
+          <div class="description"><p>A single Gist object. The Gist resource is the central resource in the Gist Fox API. It represents one paste - a single text note.</p>
+<p>The Gist resource has the following attributes:</p>
+<ul>
+<li>
+<p>id</p>
+</li>
+<li>
+<p>created_at</p>
+</li>
+<li>
+<p>description</p>
+</li>
+<li>
+<p>content</p>
+</li>
+</ul>
+<p>The states <em>id</em> and <em>created_at</em> are assigned by the Gist Fox API at the moment of creation.</p>
+</div>
 
             <h4 class="ui horizontal divider">
               REQUEST
@@ -216,6 +247,32 @@
               </a>
             </div>
 
+              <table class="ui celled definition table">
+                <thead>
+                  <tr>
+                    <th colspan="4">Parameters</th>
+                  </tr>
+                <thead>
+                <tbody>
+                        <tr>
+      <td class="center aligned one wide">
+        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
+      </td>
+      <td><code>id</code></td>
+      <td class="center aligned">
+        <code>id</code>
+        
+        
+        
+      </td>
+      <td class="eight wide">
+        <p>ID of the Gist in the form of a hash.</p>
+
+      </td>
+    </tr>
+
+                </tbody>
+              </table>
 
             
 
@@ -257,16 +314,19 @@
                   <div class="ui bottom attached active tab segment" data-tab="body">
                     <pre style="white-space: inherit">
                       <code class="language-json">{
-    &quot;_links&quot;: {
-        &quot;self&quot;: { &quot;href&quot;: &quot;/gists/42&quot; },
-        &quot;star&quot;: { &quot;href&quot;: &quot;/gists/42/star&quot; }
+  &quot;_links&quot;: {
+    &quot;self&quot;: {
+      &quot;href&quot;: &quot;/gists/42&quot;
     },
-    &quot;id&quot;: &quot;42&quot;,
-    &quot;created_at&quot;: &quot;2014-04-14T02:15:15Z&quot;,
-    &quot;description&quot;: &quot;Description of Gist&quot;,
-    &quot;content&quot;: &quot;String contents&quot;
-}
-</code>
+    &quot;star&quot;: {
+      &quot;href&quot;: &quot;/gists/42/star&quot;
+    }
+  },
+  &quot;id&quot;: &quot;42&quot;,
+  &quot;created_at&quot;: &quot;2014-04-14T02:15:15Z&quot;,
+  &quot;description&quot;: &quot;Description of Gist&quot;,
+  &quot;content&quot;: &quot;String contents&quot;
+}</code>
                     </pre>
                   </div>
                   <div class="ui bottom attached tab segment" data-tab="schema">
@@ -287,7 +347,24 @@
           <h3 class="ui block center aligned header" id="gist-gist-edit-a-gist">
             Edit a Gist
           </h3>
-          <div class="description"><p>To update a Gist send a JSON with updated value for one or more of the Gist resource attributes. All attributes values (states) from the previous version of this Gist are carried over by default if not included in the hash.</p>
+          <div class="description"><p>A single Gist object. The Gist resource is the central resource in the Gist Fox API. It represents one paste - a single text note.</p>
+<p>The Gist resource has the following attributes:</p>
+<ul>
+<li>
+<p>id</p>
+</li>
+<li>
+<p>created_at</p>
+</li>
+<li>
+<p>description</p>
+</li>
+<li>
+<p>content</p>
+</li>
+</ul>
+<p>The states <em>id</em> and <em>created_at</em> are assigned by the Gist Fox API at the moment of creation.
+To update a Gist send a JSON with updated value for one or more of the Gist resource attributes. All attributes values (states) from the previous version of this Gist are carried over by default if not included in the hash.</p>
 </div>
 
             <h4 class="ui horizontal divider">
@@ -303,6 +380,32 @@
               </a>
             </div>
 
+              <table class="ui celled definition table">
+                <thead>
+                  <tr>
+                    <th colspan="4">Parameters</th>
+                  </tr>
+                <thead>
+                <tbody>
+                        <tr>
+      <td class="center aligned one wide">
+        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
+      </td>
+      <td><code>id</code></td>
+      <td class="center aligned">
+        <code>id</code>
+        
+        
+        
+      </td>
+      <td class="eight wide">
+        <p>ID of the Gist in the form of a hash.</p>
+
+      </td>
+    </tr>
+
+                </tbody>
+              </table>
 
             <table class="ui celled definition table">
   <thead>
@@ -332,9 +435,8 @@
                     <div class="ui bottom attached active tab segment" data-tab="body">
                       <pre style="white-space: inherit">
                         <code class="language-json">{
-    &quot;content&quot;: &quot;Updated file contents&quot;
-}
-</code>
+  &quot;content&quot;: &quot;Updated file contents&quot;
+}</code>
                       </pre>
                     </div>
                     <div class="ui bottom attached tab segment" data-tab="schema">
@@ -383,16 +485,19 @@
                   <div class="ui bottom attached active tab segment" data-tab="body">
                     <pre style="white-space: inherit">
                       <code class="language-json">{
-    &quot;_links&quot;: {
-        &quot;self&quot;: { &quot;href&quot;: &quot;/gists/42&quot; },
-        &quot;star&quot;: { &quot;href&quot;: &quot;/gists/42/star&quot; }
+  &quot;_links&quot;: {
+    &quot;self&quot;: {
+      &quot;href&quot;: &quot;/gists/42&quot;
     },
-    &quot;id&quot;: &quot;42&quot;,
-    &quot;created_at&quot;: &quot;2014-04-14T02:15:15Z&quot;,
-    &quot;description&quot;: &quot;Description of Gist&quot;,
-    &quot;content&quot;: &quot;String contents&quot;
-}
-</code>
+    &quot;star&quot;: {
+      &quot;href&quot;: &quot;/gists/42/star&quot;
+    }
+  },
+  &quot;id&quot;: &quot;42&quot;,
+  &quot;created_at&quot;: &quot;2014-04-14T02:15:15Z&quot;,
+  &quot;description&quot;: &quot;Description of Gist&quot;,
+  &quot;content&quot;: &quot;String contents&quot;
+}</code>
                     </pre>
                   </div>
                   <div class="ui bottom attached tab segment" data-tab="schema">
@@ -413,7 +518,24 @@
           <h3 class="ui block center aligned header" id="gist-gist-delete-a-gist">
             Delete a Gist
           </h3>
-          <div class="description"></div>
+          <div class="description"><p>A single Gist object. The Gist resource is the central resource in the Gist Fox API. It represents one paste - a single text note.</p>
+<p>The Gist resource has the following attributes:</p>
+<ul>
+<li>
+<p>id</p>
+</li>
+<li>
+<p>created_at</p>
+</li>
+<li>
+<p>description</p>
+</li>
+<li>
+<p>content</p>
+</li>
+</ul>
+<p>The states <em>id</em> and <em>created_at</em> are assigned by the Gist Fox API at the moment of creation.</p>
+</div>
 
             <h4 class="ui horizontal divider">
               REQUEST
@@ -428,6 +550,32 @@
               </a>
             </div>
 
+              <table class="ui celled definition table">
+                <thead>
+                  <tr>
+                    <th colspan="4">Parameters</th>
+                  </tr>
+                <thead>
+                <tbody>
+                        <tr>
+      <td class="center aligned one wide">
+        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
+      </td>
+      <td><code>id</code></td>
+      <td class="center aligned">
+        <code>id</code>
+        
+        
+        
+      </td>
+      <td class="eight wide">
+        <p>ID of the Gist in the form of a hash.</p>
+
+      </td>
+    </tr>
+
+                </tbody>
+              </table>
 
             
 
@@ -490,7 +638,13 @@
           <h3 class="ui block center aligned header" id="gist-gists-collection-list-all-gists">
             List All Gists
           </h3>
-          <div class="description"></div>
+          <div class="description"><p>Collection of all Gists.</p>
+<p>The Gist Collection resource has the following attribute:</p>
+<ul>
+<li>total</li>
+</ul>
+<p>In addition it <strong>embeds</strong> <em>Gist Resources</em> in the Gist Fox API.</p>
+</div>
 
             <h4 class="ui horizontal divider">
               REQUEST
@@ -501,7 +655,7 @@
                 <h3>GET</h3>
               </div>
               <a class="ui basic fluid request-url green label">
-                <code>/gists{?since}</code>
+                <code>/gists</code>
               </a>
             </div>
 
@@ -518,7 +672,7 @@
       </td>
       <td><code>since</code></td>
       <td class="center aligned">
-        <code>string</code>
+        <code>since</code>
         
         
         
@@ -572,24 +726,27 @@
                   <div class="ui bottom attached active tab segment" data-tab="body">
                     <pre style="white-space: inherit">
                       <code class="language-json">{
-    &quot;_links&quot;: {
-        &quot;self&quot;: { &quot;href&quot;: &quot;/gists&quot; }
-    },
-    &quot;_embedded&quot;: {
-        &quot;gists&quot;: [
-            {
-                &quot;_links&quot; : {
-                    &quot;self&quot;: { &quot;href&quot;: &quot;/gists/42&quot; }
-                },
-                &quot;id&quot;: &quot;42&quot;,
-                &quot;created_at&quot;: &quot;2014-04-14T02:15:15Z&quot;,
-                &quot;description&quot;: &quot;Description of Gist&quot;
-            }
-        ]
-    },
-    &quot;total&quot;: 1
-}
-</code>
+  &quot;_links&quot;: {
+    &quot;self&quot;: {
+      &quot;href&quot;: &quot;/gists&quot;
+    }
+  },
+  &quot;_embedded&quot;: {
+    &quot;gists&quot;: [
+      {
+        &quot;_links&quot;: {
+          &quot;self&quot;: {
+            &quot;href&quot;: &quot;/gists/42&quot;
+          }
+        },
+        &quot;id&quot;: &quot;42&quot;,
+        &quot;created_at&quot;: &quot;2014-04-14T02:15:15Z&quot;,
+        &quot;description&quot;: &quot;Description of Gist&quot;
+      }
+    ]
+  },
+  &quot;total&quot;: 1
+}</code>
                     </pre>
                   </div>
                   <div class="ui bottom attached tab segment" data-tab="schema">
@@ -610,7 +767,13 @@
           <h3 class="ui block center aligned header" id="gist-gists-collection-create-a-gist">
             Create a Gist
           </h3>
-          <div class="description"><p>To create a new Gist simply provide a JSON hash of the <em>description</em> and <em>content</em> attributes for the new Gist.</p>
+          <div class="description"><p>Collection of all Gists.</p>
+<p>The Gist Collection resource has the following attribute:</p>
+<ul>
+<li>total</li>
+</ul>
+<p>In addition it <strong>embeds</strong> <em>Gist Resources</em> in the Gist Fox API.
+To create a new Gist simply provide a JSON hash of the <em>description</em> and <em>content</em> attributes for the new Gist.</p>
 </div>
 
             <h4 class="ui horizontal divider">
@@ -622,7 +785,7 @@
                 <h3>POST</h3>
               </div>
               <a class="ui basic fluid request-url blue label">
-                <code>/gists{?since}</code>
+                <code>/gists</code>
               </a>
             </div>
 
@@ -655,10 +818,9 @@
                     <div class="ui bottom attached active tab segment" data-tab="body">
                       <pre style="white-space: inherit">
                         <code class="language-json">{
-    &quot;description&quot;: &quot;Description of Gist&quot;,
-    &quot;content&quot;: &quot;String content&quot;
-}
-</code>
+  &quot;description&quot;: &quot;Description of Gist&quot;,
+  &quot;content&quot;: &quot;String content&quot;
+}</code>
                       </pre>
                     </div>
                     <div class="ui bottom attached tab segment" data-tab="schema">
@@ -707,16 +869,19 @@
                   <div class="ui bottom attached active tab segment" data-tab="body">
                     <pre style="white-space: inherit">
                       <code class="language-json">{
-    &quot;_links&quot;: {
-        &quot;self&quot;: { &quot;href&quot;: &quot;/gists/42&quot; },
-        &quot;star&quot;: { &quot;href&quot;: &quot;/gists/42/star&quot; }
+  &quot;_links&quot;: {
+    &quot;self&quot;: {
+      &quot;href&quot;: &quot;/gists/42&quot;
     },
-    &quot;id&quot;: &quot;42&quot;,
-    &quot;created_at&quot;: &quot;2014-04-14T02:15:15Z&quot;,
-    &quot;description&quot;: &quot;Description of Gist&quot;,
-    &quot;content&quot;: &quot;String contents&quot;
-}
-</code>
+    &quot;star&quot;: {
+      &quot;href&quot;: &quot;/gists/42/star&quot;
+    }
+  },
+  &quot;id&quot;: &quot;42&quot;,
+  &quot;created_at&quot;: &quot;2014-04-14T02:15:15Z&quot;,
+  &quot;description&quot;: &quot;Description of Gist&quot;,
+  &quot;content&quot;: &quot;String contents&quot;
+}</code>
                     </pre>
                   </div>
                   <div class="ui bottom attached tab segment" data-tab="schema">
@@ -755,7 +920,12 @@
           <h3 class="ui block center aligned header" id="gist-star-star-a-gist">
             Star a Gist
           </h3>
-          <div class="description"></div>
+          <div class="description"><p>Star resource represents a Gist starred status.</p>
+<p>The Star resource has the following attribute:</p>
+<ul>
+<li>starred</li>
+</ul>
+</div>
 
             <h4 class="ui horizontal divider">
               REQUEST
@@ -770,6 +940,32 @@
               </a>
             </div>
 
+              <table class="ui celled definition table">
+                <thead>
+                  <tr>
+                    <th colspan="4">Parameters</th>
+                  </tr>
+                <thead>
+                <tbody>
+                        <tr>
+      <td class="center aligned one wide">
+        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
+      </td>
+      <td><code>id</code></td>
+      <td class="center aligned">
+        <code>id</code>
+        
+        
+        
+      </td>
+      <td class="eight wide">
+        <p>ID of the gist in the form of a hash</p>
+
+      </td>
+    </tr>
+
+                </tbody>
+              </table>
 
             
 
@@ -813,7 +1009,12 @@
           <h3 class="ui block center aligned header" id="gist-star-unstar-a-gist">
             Unstar a Gist
           </h3>
-          <div class="description"></div>
+          <div class="description"><p>Star resource represents a Gist starred status.</p>
+<p>The Star resource has the following attribute:</p>
+<ul>
+<li>starred</li>
+</ul>
+</div>
 
             <h4 class="ui horizontal divider">
               REQUEST
@@ -828,6 +1029,32 @@
               </a>
             </div>
 
+              <table class="ui celled definition table">
+                <thead>
+                  <tr>
+                    <th colspan="4">Parameters</th>
+                  </tr>
+                <thead>
+                <tbody>
+                        <tr>
+      <td class="center aligned one wide">
+        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
+      </td>
+      <td><code>id</code></td>
+      <td class="center aligned">
+        <code>id</code>
+        
+        
+        
+      </td>
+      <td class="eight wide">
+        <p>ID of the gist in the form of a hash</p>
+
+      </td>
+    </tr>
+
+                </tbody>
+              </table>
 
             
 
@@ -871,7 +1098,12 @@
           <h3 class="ui block center aligned header" id="gist-star-check-if-a-gist-is-starred">
             Check if a Gist is Starred
           </h3>
-          <div class="description"></div>
+          <div class="description"><p>Star resource represents a Gist starred status.</p>
+<p>The Star resource has the following attribute:</p>
+<ul>
+<li>starred</li>
+</ul>
+</div>
 
             <h4 class="ui horizontal divider">
               REQUEST
@@ -886,6 +1118,32 @@
               </a>
             </div>
 
+              <table class="ui celled definition table">
+                <thead>
+                  <tr>
+                    <th colspan="4">Parameters</th>
+                  </tr>
+                <thead>
+                <tbody>
+                        <tr>
+      <td class="center aligned one wide">
+        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
+      </td>
+      <td><code>id</code></td>
+      <td class="center aligned">
+        <code>id</code>
+        
+        
+        
+      </td>
+      <td class="eight wide">
+        <p>ID of the gist in the form of a hash</p>
+
+      </td>
+    </tr>
+
+                </tbody>
+              </table>
 
             
 
@@ -927,12 +1185,127 @@
                   <div class="ui bottom attached active tab segment" data-tab="body">
                     <pre style="white-space: inherit">
                       <code class="language-json">{
-    &quot;_links&quot;: {
-        &quot;self&quot;: { &quot;href&quot;: &quot;/gists/42/star&quot; }
+  &quot;_links&quot;: {
+    &quot;self&quot;: {
+      &quot;href&quot;: &quot;/gists/42/star&quot;
+    }
+  },
+  &quot;starred&quot;: true
+}</code>
+                    </pre>
+                  </div>
+                  <div class="ui bottom attached tab segment" data-tab="schema">
+                    <pre style="white-space: inherit">
+                      <code class="language-json"></code>
+                    </pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+  <div class="ui horizontal divider" >
+    
+  </div>
+  <div class="ui header center aligned">
+    <div class="ui header">
+      <div class="sub header">
+        
+      </div>
+    </div>
+  </div>
+    <div class="ui stacked segments">
+      <div class="ui basic segment resource">
+        <div class="ui purple huge ribbon label">
+          Gist Fox API Root
+        </div>
+        <div class="ui header">
+          <div class="ui sub header">
+            <p>Gist Fox API entry point.</p>
+<p>This resource does not have any attributes. Instead it offers the initial API affordances in the form of the HTTP Link header and
+HAL links.</p>
+
+          </div>
+        </div>
+      </div>
+
+        <div class="ui grey horizontal small divider header">
+  <i class="ui grey micro circular label"></i>
+  <i class="ui pink micro circular label"></i>
+  <i class="ui grey micro circular label"></i>
+</div>
+        <div class="ui basic segment">
+          <h3 class="ui block center aligned header" id="gist-fox-api-root-retrieve-the-entry-point">
+            Retrieve the Entry Point
+          </h3>
+          <div class="description"><p>Gist Fox API entry point.</p>
+<p>This resource does not have any attributes. Instead it offers the initial API affordances in the form of the HTTP Link header and
+HAL links.</p>
+</div>
+
+            <h4 class="ui horizontal divider">
+              REQUEST
+            </h4>
+            <div class="description"></div>
+            <div class="fluid ui large labeled button">
+              <div class="ui green large button">
+                <h3>GET</h3>
+              </div>
+              <a class="ui basic fluid request-url green label">
+                <code>/</code>
+              </a>
+            </div>
+
+
+            
+
+
+            <h4 class="ui horizontal divider">RESPONSE</h4>
+            <div class="description"></div>
+            <table class="ui celled definition table">
+  <thead>
+    <tr>
+      <th colspan="2">Headers</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="four wide">Content-Type</td>
+      <td><code>application/hal+json</code></td>
+    </tr>
+    <tr>
+      <td class="four wide">Link</td>
+      <td><code>&lt;http:/api.gistfox.com/&gt;;rel&#x3D;&quot;self&quot;,&lt;http:/api.gistfox.com/gists&gt;;rel&#x3D;&quot;gists&quot;</code></td>
+    </tr>
+  </tbody>
+</table>
+
+            <div class="ui stacked blue segment">
+              <div class="ui fluid transaction accordion">
+                <div class="title center aligned">
+                  <a class="ui blue circular label">
+                    200
+                  </a>
+                  <code>application/hal+json</code>
+                </div>
+                <div class="content tabbed">
+                  <div class="ui top attached tabular menu">
+                    <a data-tab="body" class="active item">BODY</a>
+                    <a data-tab="schema" class="item">SCHEMA</a>
+                  </div>
+                  <div class="ui bottom attached active tab segment" data-tab="body">
+                    <pre style="white-space: inherit">
+                      <code class="language-json">{
+  &quot;_links&quot;: {
+    &quot;self&quot;: {
+      &quot;href&quot;: &quot;/&quot;
     },
-    &quot;starred&quot;: true
-}
-</code>
+    &quot;gists&quot;: {
+      &quot;href&quot;: &quot;/gists?{since}&quot;,
+      &quot;templated&quot;: true
+    }
+  }
+}</code>
                     </pre>
                   </div>
                   <div class="ui bottom attached tab segment" data-tab="schema">

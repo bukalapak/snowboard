@@ -79,10 +79,10 @@
   <a href="#posts">Posts</a>
 </div>
 <div class="ui accordion fluid">
-    <div class="title active">
-      <i class="dropdown icon"></i>
+      <div class="title active">
+        <i class="dropdown icon"></i>
         <strong>Post</strong>
-    </div>
+      </div>
     <div class="content active">
       <div class="ui fluid secondary vertical menu">
         <a class="item green" href="#posts-post-retrieve-a-post">
@@ -95,10 +95,10 @@
         </a>
       </div>
     </div>
-    <div class="title ">
-      <i class="dropdown icon"></i>
+      <div class="title ">
+        <i class="dropdown icon"></i>
         <strong>Posts Collection</strong>
-    </div>
+      </div>
     <div class="content ">
       <div class="ui fluid secondary vertical menu">
         <a class="item blue" href="#posts-posts-collection-create-a-post">
@@ -111,10 +111,10 @@
         </a>
       </div>
     </div>
-    <div class="title ">
-      <i class="dropdown icon"></i>
+      <div class="title ">
+        <i class="dropdown icon"></i>
         <strong>Stars</strong>
-    </div>
+      </div>
     <div class="content ">
       <div class="ui fluid secondary vertical menu">
         <a class="item blue" href="#posts-stars-star-a-post">
@@ -174,7 +174,10 @@ their feed. Posts are closely tied to the follow graph...</p>
           <h3 class="ui block center aligned header" id="posts-post-retrieve-a-post">
             Retrieve a Post
           </h3>
-          <div class="description"><p>Returns a specific Post.</p>
+          <div class="description"><p>A Post is the other central object utilized by the App.net Stream API. It has
+rich text and annotations which comprise all of the content a users sees in
+their feed. Posts are closely tied to the follow graph...
+Returns a specific Post.</p>
 </div>
 
             <h4 class="ui horizontal divider">
@@ -190,6 +193,32 @@ their feed. Posts are closely tied to the follow graph...</p>
               </a>
             </div>
 
+              <table class="ui celled definition table">
+                <thead>
+                  <tr>
+                    <th colspan="4">Parameters</th>
+                  </tr>
+                <thead>
+                <tbody>
+                        <tr>
+      <td class="center aligned one wide">
+        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
+      </td>
+      <td><code>post_id</code></td>
+      <td class="center aligned">
+        <code>post_id</code>
+        <code class="ui label">1</code>
+        
+        
+      </td>
+      <td class="eight wide">
+        <p>The id of the Post.</p>
+
+      </td>
+    </tr>
+
+                </tbody>
+              </table>
 
             
 
@@ -292,7 +321,10 @@ their feed. Posts are closely tied to the follow graph...</p>
           <h3 class="ui block center aligned header" id="posts-post-delete-a-post">
             Delete a Post
           </h3>
-          <div class="description"><p>Delete a Post. The current user must be the same user who created the Post. It
+          <div class="description"><p>A Post is the other central object utilized by the App.net Stream API. It has
+rich text and annotations which comprise all of the content a users sees in
+their feed. Posts are closely tied to the follow graph...
+Delete a Post. The current user must be the same user who created the Post. It
 returns the deleted Post on success.</p>
 </div>
 
@@ -309,6 +341,32 @@ returns the deleted Post on success.</p>
               </a>
             </div>
 
+              <table class="ui celled definition table">
+                <thead>
+                  <tr>
+                    <th colspan="4">Parameters</th>
+                  </tr>
+                <thead>
+                <tbody>
+                        <tr>
+      <td class="center aligned one wide">
+        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
+      </td>
+      <td><code>post_id</code></td>
+      <td class="center aligned">
+        <code>post_id</code>
+        <code class="ui label">1</code>
+        
+        
+      </td>
+      <td class="eight wide">
+        <p>The id of the Post.</p>
+
+      </td>
+    </tr>
+
+                </tbody>
+              </table>
 
             
 
@@ -366,7 +424,8 @@ returns the deleted Post on success.</p>
           <h3 class="ui block center aligned header" id="posts-posts-collection-create-a-post">
             Create a Post
           </h3>
-          <div class="description"><p>Create a new Post object. Mentions and hashtags will be parsed out of the post
+          <div class="description"><p>A Collection of posts.
+Create a new Post object. Mentions and hashtags will be parsed out of the post
 text, as will bare URLs...</p>
 </div>
 
@@ -567,7 +626,8 @@ text, as will bare URLs...</p>
           <h3 class="ui block center aligned header" id="posts-posts-collection-retrieve-all-posts">
             Retrieve all Posts
           </h3>
-          <div class="description"><p>Retrieves all posts.</p>
+          <div class="description"><p>A Collection of posts.
+Retrieves all posts.</p>
 </div>
 
             <h4 class="ui horizontal divider">
@@ -673,7 +733,9 @@ your followers’ streams.</p>
           <h3 class="ui block center aligned header" id="posts-stars-star-a-post">
             Star a Post
           </h3>
-          <div class="description"><p>Save a given Post to the current User’s stars. This is just a “save” action,
+          <div class="description"><p>A User’s stars are visible to others, but they are not automatically added to
+your followers’ streams.
+Save a given Post to the current User’s stars. This is just a “save” action,
 not a sharing action.</p>
 <p><em>Note: A repost cannot be starred. Please star the parent Post.</em></p>
 </div>
@@ -691,6 +753,32 @@ not a sharing action.</p>
               </a>
             </div>
 
+              <table class="ui celled definition table">
+                <thead>
+                  <tr>
+                    <th colspan="4">Parameters</th>
+                  </tr>
+                <thead>
+                <tbody>
+                        <tr>
+      <td class="center aligned one wide">
+        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
+      </td>
+      <td><code>post_id</code></td>
+      <td class="center aligned">
+        <code>post_id</code>
+        <code class="ui label">1</code>
+        
+        
+      </td>
+      <td class="eight wide">
+        <p>The id of the Post.</p>
+
+      </td>
+    </tr>
+
+                </tbody>
+              </table>
 
             
 
@@ -793,7 +881,9 @@ not a sharing action.</p>
           <h3 class="ui block center aligned header" id="posts-stars-unstar-a-post">
             Unstar a Post
           </h3>
-          <div class="description"><p>Remove a Star from a Post.</p>
+          <div class="description"><p>A User’s stars are visible to others, but they are not automatically added to
+your followers’ streams.
+Remove a Star from a Post.</p>
 </div>
 
             <h4 class="ui horizontal divider">
@@ -809,6 +899,32 @@ not a sharing action.</p>
               </a>
             </div>
 
+              <table class="ui celled definition table">
+                <thead>
+                  <tr>
+                    <th colspan="4">Parameters</th>
+                  </tr>
+                <thead>
+                <tbody>
+                        <tr>
+      <td class="center aligned one wide">
+        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
+      </td>
+      <td><code>post_id</code></td>
+      <td class="center aligned">
+        <code>post_id</code>
+        <code class="ui label">1</code>
+        
+        
+      </td>
+      <td class="eight wide">
+        <p>The id of the Post.</p>
+
+      </td>
+    </tr>
+
+                </tbody>
+              </table>
 
             
 

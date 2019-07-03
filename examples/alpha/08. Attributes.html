@@ -79,10 +79,10 @@
   <a href="#coupons">Coupons</a>
 </div>
 <div class="ui accordion fluid">
-    <div class="title active">
-      <i class="dropdown icon"></i>
+      <div class="title active">
+        <i class="dropdown icon"></i>
         <strong>Coupon</strong>
-    </div>
+      </div>
     <div class="content active">
       <div class="ui fluid secondary vertical menu">
         <a class="item green" href="#coupons-coupon-retrieve-a-coupon">
@@ -151,7 +151,9 @@ might want to apply to a customer.</p>
           <h3 class="ui block center aligned header" id="coupons-coupon-retrieve-a-coupon">
             Retrieve a Coupon
           </h3>
-          <div class="description"><p>Retrieves the coupon with the given ID.</p>
+          <div class="description"><p>A coupon contains information about a percent-off or amount-off discount you
+might want to apply to a customer.
+Retrieves the coupon with the given ID.</p>
 </div>
 
             <h4 class="ui horizontal divider">
@@ -203,12 +205,11 @@ might want to apply to a customer.</p>
                   <div class="ui bottom attached active tab segment" data-tab="body">
                     <pre style="white-space: inherit">
                       <code class="language-json">{
-    &quot;id&quot;: &quot;250FF&quot;,
-    &quot;created&quot;: 1415203908,
-    &quot;percent_off&quot;: 25,
-    &quot;redeem_by&quot;: null
-}
-</code>
+  &quot;id&quot;: &quot;250FF&quot;,
+  &quot;created&quot;: 1415203908,
+  &quot;percent_off&quot;: 25,
+  &quot;redeem_by&quot;: null
+}</code>
                     </pre>
                   </div>
                   <div class="ui bottom attached tab segment" data-tab="schema">

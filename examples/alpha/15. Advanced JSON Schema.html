@@ -75,6 +75,24 @@
 <div class="ui fluid secondary vertical menu">
   <a class="item" href="#introduction">Advanced JSON Schema</a>
 </div>
+<div class="ui accordion fluid">
+      <div class="title active">
+        <i class="dropdown icon"></i>
+        <strong>Notes</strong>
+      </div>
+    <div class="content active">
+      <div class="ui fluid secondary vertical menu">
+        <a class="item green" href="#notes-get-a-note">
+          <i class="ui green empty circular label"></i>
+            <span>Get a note</span>
+        </a>
+        <a class="item violet" href="#notes-update-a-note">
+          <i class="ui violet empty circular label"></i>
+            <span>Update a note</span>
+        </a>
+      </div>
+    </div>
+</div>
         </div>
       </div>
       <div class="eleven wide computer ten wide tablet sixteen wide mobile column">
@@ -96,7 +114,300 @@ below.</p>
 </ul>
 </div>
         <div class="ui hidden divider"></div>
+          <div class="ui horizontal divider" >
+    
+  </div>
+  <div class="ui header center aligned">
+    <div class="ui header">
+      <div class="sub header">
+        
+      </div>
+    </div>
+  </div>
+    <div class="ui stacked segments">
+      <div class="ui basic segment resource">
+        <div class="ui purple huge ribbon label">
+          Notes
+        </div>
+        <div class="ui header">
+          <div class="ui sub header">
+            
+          </div>
+        </div>
+      </div>
+
+        <div class="ui grey horizontal small divider header">
+  <i class="ui grey micro circular label"></i>
+  <i class="ui pink micro circular label"></i>
+  <i class="ui grey micro circular label"></i>
+</div>
+        <div class="ui basic segment">
+          <h3 class="ui block center aligned header" id="notes-get-a-note">
+            Get a note
+          </h3>
+          <div class="description"><p>Gets a single note by its unique identifier.</p>
+</div>
+
+            <h4 class="ui horizontal divider">
+              REQUEST
+            </h4>
+            <div class="description"></div>
+            <div class="fluid ui large labeled button">
+              <div class="ui green large button">
+                <h3>GET</h3>
               </div>
+              <a class="ui basic fluid request-url green label">
+                <code>/notes/{id}</code>
+              </a>
+            </div>
+
+              <table class="ui celled definition table">
+                <thead>
+                  <tr>
+                    <th colspan="4">Parameters</th>
+                  </tr>
+                <thead>
+                <tbody>
+                        <tr>
+      <td class="center aligned one wide">
+        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
+      </td>
+      <td><code>id</code></td>
+      <td class="center aligned">
+        <code>id</code>
+        <code class="ui label">abc123</code>
+        
+        
+      </td>
+      <td class="eight wide">
+        <p>Unique identifier for a note</p>
+
+      </td>
+    </tr>
+
+                </tbody>
+              </table>
+
+            
+
+
+            <h4 class="ui horizontal divider">RESPONSE</h4>
+            <div class="description"></div>
+            <table class="ui celled definition table">
+  <thead>
+    <tr>
+      <th colspan="2">Headers</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="four wide">Content-Type</td>
+      <td><code>application/json</code></td>
+    </tr>
+  </tbody>
+</table>
+
+            <div class="ui stacked blue segment">
+              <div class="ui fluid transaction accordion">
+                <div class="title center aligned">
+                  <a class="ui blue circular label">
+                    200
+                  </a>
+                  <code>application/json</code>
+                </div>
+                <div class="content tabbed">
+                  <div class="ui top attached tabular menu">
+                    <a data-tab="body" class="active item">BODY</a>
+                    <a data-tab="schema" class="item">SCHEMA</a>
+                  </div>
+                  <div class="ui bottom attached active tab segment" data-tab="body">
+                    <pre style="white-space: inherit">
+                      <code class="language-json">{
+  &quot;id&quot;: &quot;abc123&quot;,
+  &quot;title&quot;: &quot;This is a note&quot;,
+  &quot;content&quot;: &quot;This is the note content.&quot;,
+  &quot;tags&quot;: [
+    &quot;todo&quot;,
+    &quot;home&quot;
+  ]
+}</code>
+                    </pre>
+                  </div>
+                  <div class="ui bottom attached tab segment" data-tab="schema">
+                    <pre style="white-space: inherit">
+                      <code class="language-json">{
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-04/schema#&quot;,
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;id&quot;: {
+      &quot;type&quot;: &quot;string&quot;
+    },
+    &quot;title&quot;: {
+      &quot;type&quot;: &quot;string&quot;
+    },
+    &quot;content&quot;: {
+      &quot;type&quot;: &quot;string&quot;
+    },
+    &quot;tags&quot;: {
+      &quot;type&quot;: &quot;array&quot;
+    }
+  }
+}</code>
+                    </pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="ui grey horizontal small divider header">
+  <i class="ui grey micro circular label"></i>
+  <i class="ui pink micro circular label"></i>
+  <i class="ui grey micro circular label"></i>
+</div>
+        <div class="ui basic segment">
+          <h3 class="ui block center aligned header" id="notes-update-a-note">
+            Update a note
+          </h3>
+          <div class="description"><p>Modify a note's data using its unique identifier. You can edit the <code>title</code>,
+<code>content</code>, and <code>tags</code>.</p>
+</div>
+
+            <h4 class="ui horizontal divider">
+              REQUEST
+            </h4>
+            <div class="description"></div>
+            <div class="fluid ui large labeled button">
+              <div class="ui violet large button">
+                <h3>PATCH</h3>
+              </div>
+              <a class="ui basic fluid request-url violet label">
+                <code>/notes/{id}</code>
+              </a>
+            </div>
+
+              <table class="ui celled definition table">
+                <thead>
+                  <tr>
+                    <th colspan="4">Parameters</th>
+                  </tr>
+                <thead>
+                <tbody>
+                        <tr>
+      <td class="center aligned one wide">
+        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
+      </td>
+      <td><code>id</code></td>
+      <td class="center aligned">
+        <code>id</code>
+        <code class="ui label">abc123</code>
+        
+        
+      </td>
+      <td class="eight wide">
+        <p>Unique identifier for a note</p>
+
+      </td>
+    </tr>
+
+                </tbody>
+              </table>
+
+            <table class="ui celled definition table">
+  <thead>
+    <tr>
+      <th colspan="2">Headers</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="four wide">Content-Type</td>
+      <td><code>application/json</code></td>
+    </tr>
+  </tbody>
+</table>
+
+
+              <div class="ui stacked segment">
+                <div class="ui fluid transaction accordion">
+                  <div class="title">
+                    <code>application/json</code>
+                  </div>
+                  <div class="content tabbed">
+                    <div class="ui top attached tabular menu">
+                      <a data-tab="body" class="active item">BODY</a>
+                      <a data-tab="schema" class="item">SCHEMA</a>
+                    </div>
+                    <div class="ui bottom attached active tab segment" data-tab="body">
+                      <pre style="white-space: inherit">
+                        <code class="language-json">{
+  &quot;title&quot;: &quot;This is another note&quot;,
+  &quot;content&quot;: &quot;&quot;,
+  &quot;tags&quot;: [
+    &quot;todo&quot;,
+    &quot;work&quot;
+  ]
+}</code>
+                      </pre>
+                    </div>
+                    <div class="ui bottom attached tab segment" data-tab="schema">
+                      <pre style="white-space: inherit">
+                        <code class="language-json">{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;description&quot;: &quot;This is a custom schema!&quot;,
+  &quot;properties&quot;: {
+    &quot;title&quot;: {
+      &quot;type&quot;: &quot;string&quot;
+    },
+    &quot;content&quot;: {
+      &quot;type&quot;: &quot;string&quot;
+    },
+    &quot;tags&quot;: {
+      &quot;type&quot;: &quot;array&quot;,
+      &quot;items&quot;: {
+        &quot;type&quot;: &quot;string&quot;
+      }
+    }
+  },
+  &quot;additionalProperties&quot;: false
+}</code>
+                      </pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            <h4 class="ui horizontal divider">RESPONSE</h4>
+            <div class="description"></div>
+            
+            <div class="ui stacked blue segment">
+              <div class="ui fluid transaction accordion">
+                <div class="title center aligned">
+                  <a class="ui blue circular label">
+                    204
+                  </a>
+                  <code></code>
+                </div>
+                <div class="content tabbed">
+                  <div class="ui top attached tabular menu">
+                    <a data-tab="body" class="active item">BODY</a>
+                    <a data-tab="schema" class="item">SCHEMA</a>
+                  </div>
+                  <div class="ui bottom attached active tab segment" data-tab="body">
+                    <pre style="white-space: inherit">
+                      <code class="language-"></code>
+                    </pre>
+                  </div>
+                  <div class="ui bottom attached tab segment" data-tab="schema">
+                    <pre style="white-space: inherit">
+                      <code class="language-json"></code>
+                    </pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+      </div>
     </div>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/components/accordion.min.js"></script>

@@ -79,10 +79,10 @@
   <a href="#coupons">Coupons</a>
 </div>
 <div class="ui accordion fluid">
-    <div class="title active">
-      <i class="dropdown icon"></i>
+      <div class="title active">
+        <i class="dropdown icon"></i>
         <strong>Coupon</strong>
-    </div>
+      </div>
     <div class="content active">
       <div class="ui fluid secondary vertical menu">
         <a class="item green" href="#coupons-coupon-retrieve-a-coupon">
@@ -91,10 +91,10 @@
         </a>
       </div>
     </div>
-    <div class="title ">
-      <i class="dropdown icon"></i>
+      <div class="title ">
+        <i class="dropdown icon"></i>
         <strong>Coupons</strong>
-    </div>
+      </div>
     <div class="content ">
       <div class="ui fluid secondary vertical menu">
         <a class="item green" href="#coupons-coupons-list-all-coupons">
@@ -168,7 +168,9 @@ might want to apply to a customer.</p>
           <h3 class="ui block center aligned header" id="coupons-coupon-retrieve-a-coupon">
             Retrieve a Coupon
           </h3>
-          <div class="description"><p>Retrieves the coupon with the given ID.</p>
+          <div class="description"><p>A coupon contains information about a percent-off or amount-off discount you
+might want to apply to a customer.
+Retrieves the coupon with the given ID.</p>
 </div>
 
             <h4 class="ui horizontal divider">
@@ -184,6 +186,32 @@ might want to apply to a customer.</p>
               </a>
             </div>
 
+              <table class="ui celled definition table">
+                <thead>
+                  <tr>
+                    <th colspan="4">Parameters</th>
+                  </tr>
+                <thead>
+                <tbody>
+                        <tr>
+      <td class="center aligned one wide">
+        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
+      </td>
+      <td><code>id</code></td>
+      <td class="center aligned">
+        <code>id</code>
+        
+        
+        
+      </td>
+      <td class="eight wide">
+        <p>The ID of the desired coupon.</p>
+
+      </td>
+    </tr>
+
+                </tbody>
+              </table>
 
             
 
@@ -290,7 +318,7 @@ might want to apply to a customer.</p>
                 <h3>GET</h3>
               </div>
               <a class="ui basic fluid request-url green label">
-                <code>/coupons{?limit}</code>
+                <code>/coupons</code>
               </a>
             </div>
 
@@ -307,7 +335,7 @@ might want to apply to a customer.</p>
       </td>
       <td><code>limit</code></td>
       <td class="center aligned">
-        <code>number</code>
+        <code>limit</code>
         
         
         
@@ -399,7 +427,7 @@ between 1 and 100 items.</p>
                 <h3>POST</h3>
               </div>
               <a class="ui basic fluid request-url blue label">
-                <code>/coupons{?limit}</code>
+                <code>/coupons</code>
               </a>
             </div>
 

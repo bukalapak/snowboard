@@ -79,27 +79,27 @@
   <a href="#quick-start">Quick start</a>
 </div>
 <div class="ui accordion fluid">
-    <div class="title active">
-      <i class="dropdown icon"></i>
-        <strong>Create message</strong>
-    </div>
-    <div class="content active">
-      <div class="ui fluid secondary vertical menu">
-        <a class="item blue" href="#quick-start-create-message-create-message">
-          <i class="ui blue empty circular label"></i>
-            <span>Create message</span>
-        </a>
-      </div>
-    </div>
-    <div class="title ">
-      <i class="dropdown icon"></i>
+      <div class="title active">
+        <i class="dropdown icon"></i>
         <strong>Create a new task</strong>
-    </div>
-    <div class="content ">
+      </div>
+    <div class="content active">
       <div class="ui fluid secondary vertical menu">
         <a class="item blue" href="#quick-start-create-a-new-task-create-a-new-task">
           <i class="ui blue empty circular label"></i>
             <span>Create a new task</span>
+        </a>
+      </div>
+    </div>
+      <div class="title ">
+        <i class="dropdown icon"></i>
+        <strong>Create message</strong>
+      </div>
+    <div class="content ">
+      <div class="ui fluid secondary vertical menu">
+        <a class="item blue" href="#quick-start-create-message-create-message">
+          <i class="ui blue empty circular label"></i>
+            <span>Create message</span>
         </a>
       </div>
     </div>
@@ -135,128 +135,6 @@
       </div>
     </div>
   </div>
-    <div class="ui stacked segments">
-      <div class="ui basic segment resource">
-        <div class="ui purple huge ribbon label">
-          Create message
-        </div>
-        <div class="ui header">
-          <div class="ui sub header">
-            
-          </div>
-        </div>
-      </div>
-
-        <div class="ui grey horizontal small divider header">
-  <i class="ui grey micro circular label"></i>
-  <i class="ui pink micro circular label"></i>
-  <i class="ui grey micro circular label"></i>
-</div>
-        <div class="ui basic segment">
-          <h3 class="ui block center aligned header" id="quick-start-create-message-create-message">
-            Create message
-          </h3>
-          <div class="description"><p>Start out by creating a message for the world to see.</p>
-</div>
-
-            <h4 class="ui horizontal divider">
-              REQUEST
-            </h4>
-            <div class="description"></div>
-            <div class="fluid ui large labeled button">
-              <div class="ui blue large button">
-                <h3>POST</h3>
-              </div>
-              <a class="ui basic fluid request-url blue label">
-                <code>/messages</code>
-              </a>
-            </div>
-
-
-            <table class="ui celled definition table">
-  <thead>
-    <tr>
-      <th colspan="2">Headers</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td class="four wide">Content-Type</td>
-      <td><code>application/json</code></td>
-    </tr>
-  </tbody>
-</table>
-
-
-              <div class="ui stacked segment">
-                <div class="ui fluid transaction accordion">
-                  <div class="title">
-                    <code>application/json</code>
-                  </div>
-                  <div class="content tabbed">
-                    <div class="ui top attached tabular menu">
-                      <a data-tab="body" class="active item">BODY</a>
-                      <a data-tab="schema" class="item">SCHEMA</a>
-                    </div>
-                    <div class="ui bottom attached active tab segment" data-tab="body">
-                      <pre style="white-space: inherit">
-                        <code class="language-json">{ &quot;message&quot;: &quot;Hello World!&quot; }
-</code>
-                      </pre>
-                    </div>
-                    <div class="ui bottom attached tab segment" data-tab="schema">
-                      <pre style="white-space: inherit">
-                        <code class="language-json"></code>
-                      </pre>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-            <h4 class="ui horizontal divider">RESPONSE</h4>
-            <div class="description"></div>
-            <table class="ui celled definition table">
-  <thead>
-    <tr>
-      <th colspan="2">Headers</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td class="four wide">Location</td>
-      <td><code>/messages/1337</code></td>
-    </tr>
-  </tbody>
-</table>
-
-            <div class="ui stacked blue segment">
-              <div class="ui fluid transaction accordion">
-                <div class="title center aligned">
-                  <a class="ui blue circular label">
-                    201
-                  </a>
-                  <code></code>
-                </div>
-                <div class="content tabbed">
-                  <div class="ui top attached tabular menu">
-                    <a data-tab="body" class="active item">BODY</a>
-                    <a data-tab="schema" class="item">SCHEMA</a>
-                  </div>
-                  <div class="ui bottom attached active tab segment" data-tab="body">
-                    <pre style="white-space: inherit">
-                      <code class="language-"></code>
-                    </pre>
-                  </div>
-                  <div class="ui bottom attached tab segment" data-tab="schema">
-                    <pre style="white-space: inherit">
-                      <code class="language-json"></code>
-                    </pre>
-                  </div>
-                </div>
-              </div>
-            </div>
-        </div>
-    </div>
     <div class="ui stacked segments">
       <div class="ui basic segment resource">
         <div class="ui purple huge ribbon label">
@@ -323,11 +201,10 @@
                     <div class="ui bottom attached active tab segment" data-tab="body">
                       <pre style="white-space: inherit">
                         <code class="language-json">{
-    &quot;name&quot;: &quot;Exercise in gym&quot;,
-    &quot;done&quot;: false,
-    &quot;type&quot;: &quot;task&quot;
-}
-</code>
+  &quot;name&quot;: &quot;Exercise in gym&quot;,
+  &quot;done&quot;: false,
+  &quot;type&quot;: &quot;task&quot;
+}</code>
                       </pre>
                     </div>
                     <div class="ui bottom attached tab segment" data-tab="schema">
@@ -351,6 +228,129 @@
     <tr>
       <td class="four wide">Location</td>
       <td><code>/tasks/1992</code></td>
+    </tr>
+  </tbody>
+</table>
+
+            <div class="ui stacked blue segment">
+              <div class="ui fluid transaction accordion">
+                <div class="title center aligned">
+                  <a class="ui blue circular label">
+                    201
+                  </a>
+                  <code></code>
+                </div>
+                <div class="content tabbed">
+                  <div class="ui top attached tabular menu">
+                    <a data-tab="body" class="active item">BODY</a>
+                    <a data-tab="schema" class="item">SCHEMA</a>
+                  </div>
+                  <div class="ui bottom attached active tab segment" data-tab="body">
+                    <pre style="white-space: inherit">
+                      <code class="language-"></code>
+                    </pre>
+                  </div>
+                  <div class="ui bottom attached tab segment" data-tab="schema">
+                    <pre style="white-space: inherit">
+                      <code class="language-json"></code>
+                    </pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+    <div class="ui stacked segments">
+      <div class="ui basic segment resource">
+        <div class="ui purple huge ribbon label">
+          Create message
+        </div>
+        <div class="ui header">
+          <div class="ui sub header">
+            
+          </div>
+        </div>
+      </div>
+
+        <div class="ui grey horizontal small divider header">
+  <i class="ui grey micro circular label"></i>
+  <i class="ui pink micro circular label"></i>
+  <i class="ui grey micro circular label"></i>
+</div>
+        <div class="ui basic segment">
+          <h3 class="ui block center aligned header" id="quick-start-create-message-create-message">
+            Create message
+          </h3>
+          <div class="description"><p>Start out by creating a message for the world to see.</p>
+</div>
+
+            <h4 class="ui horizontal divider">
+              REQUEST
+            </h4>
+            <div class="description"></div>
+            <div class="fluid ui large labeled button">
+              <div class="ui blue large button">
+                <h3>POST</h3>
+              </div>
+              <a class="ui basic fluid request-url blue label">
+                <code>/messages</code>
+              </a>
+            </div>
+
+
+            <table class="ui celled definition table">
+  <thead>
+    <tr>
+      <th colspan="2">Headers</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="four wide">Content-Type</td>
+      <td><code>application/json</code></td>
+    </tr>
+  </tbody>
+</table>
+
+
+              <div class="ui stacked segment">
+                <div class="ui fluid transaction accordion">
+                  <div class="title">
+                    <code>application/json</code>
+                  </div>
+                  <div class="content tabbed">
+                    <div class="ui top attached tabular menu">
+                      <a data-tab="body" class="active item">BODY</a>
+                      <a data-tab="schema" class="item">SCHEMA</a>
+                    </div>
+                    <div class="ui bottom attached active tab segment" data-tab="body">
+                      <pre style="white-space: inherit">
+                        <code class="language-json">{
+  &quot;message&quot;: &quot;Hello World!&quot;
+}</code>
+                      </pre>
+                    </div>
+                    <div class="ui bottom attached tab segment" data-tab="schema">
+                      <pre style="white-space: inherit">
+                        <code class="language-json"></code>
+                      </pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            <h4 class="ui horizontal divider">RESPONSE</h4>
+            <div class="description"></div>
+            <table class="ui celled definition table">
+  <thead>
+    <tr>
+      <th colspan="2">Headers</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="four wide">Location</td>
+      <td><code>/messages/1337</code></td>
     </tr>
   </tbody>
 </table>
