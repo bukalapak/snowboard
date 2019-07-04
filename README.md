@@ -152,6 +152,22 @@ Our friendly username is {{.official.username}}.
 
 Multiple seeds are also supported.
 
+## Auto-regeneration
+
+To enable auto-regeneration input files updates, you can add global flag `--watch`
+
+```
+$ snowboard html --watch -o output.html -t awesome-template.html -s API.apib
+```
+
+Optionally, you can also use `--watch-interval` to enable polling interval.
+
+```
+$ snowboard html --watch --watch-interval 100ms -o output.html -t awesome-template.html -s API.apib
+```
+
+This watcher works on all subcommands.
+
 ## API Element JSON
 
 In case you need to get API element JSON output for further processing, you can use:
@@ -180,6 +196,8 @@ API blueprint toolkit
 
 Options:
   -v, --version                       output the version number
+  -w, --watch                         watch for the files changes
+  -n, --watch-interval <value>        set watch interval. This activates polling watcher. Accepted format: 100ms, 1s, etc
   -h, --help                          output usage information
 
 Commands:
