@@ -9,10 +9,17 @@ cache: yarn
 before_deploy:
 - ./tools/travis/prepare-release.sh
 deploy:
-  provider: releases
-  api_key:
-    secure: sVl6vPGO+XCJfftM/bzNin83BWK0CYoV6ERqt1gO+ORDLL/pkm1KOQu4AqJQlqGSNImINfe6sv4g1EgzaIzik0Ib3//MJqB/onRS4MKdXU6FgFf9Kb+ovH9xp2yc6hXAayrjv6BlTDiW1vX1Dm3o/DUi5neXuacat5HveNZpdPyb8llV16A/LrmqOLDFtxv1vdDzkEQa3gaVTwNBxsy7TvUBBCG69f3hJcdfouCxQPNukHkislbFtog0UVa1JGVG4UL3gS1fy9rROCvp2HA9qghQ6cBZSNL+knS3SMpFhGqz7Nt8IK4KiCczFnesAwg5WX8Cz1z8tOzMU9GHk0V3SqRWwI88LyF0noI5kIJFj/+UNhu3vbqz2pxgyQt49HS+iGW+sIYZJPiW3X/iT7NK2IZgGo+MYaEgdJJIY9gqCiBuRmTZCgXoEmQDdZCeFFulugJJUxHplgi22NM+YpP7f7F2PJlnE5FaFuIARAAg/qXlSINPwDlnL+y53Os22CZqRm3eXMJh6avFysmW5/3RBRpHPLzA3VTj2EBuF3tDQ9zSMkqyvJbjy5kdlHGEDxeFkmlNn8OiEhBB+2KEvTCNarvubMdIW5GUMeMryC6rWbu5DWn5g3cquodZRunAEp0Cu8vgTRCyeLLULLevLVWcX8xZ93LPgTpcCWnNTrlaY2g=
-  file: snowboard-$TRAVIS_TAG.${TRAVIS_OS_NAME/osx/darwin}-amd64.tar.gz
-  skip_cleanup: true
-  on:
-    tags: true
+  - provider: releases
+    api_key:
+      secure: sVl6vPGO+XCJfftM/bzNin83BWK0CYoV6ERqt1gO+ORDLL/pkm1KOQu4AqJQlqGSNImINfe6sv4g1EgzaIzik0Ib3//MJqB/onRS4MKdXU6FgFf9Kb+ovH9xp2yc6hXAayrjv6BlTDiW1vX1Dm3o/DUi5neXuacat5HveNZpdPyb8llV16A/LrmqOLDFtxv1vdDzkEQa3gaVTwNBxsy7TvUBBCG69f3hJcdfouCxQPNukHkislbFtog0UVa1JGVG4UL3gS1fy9rROCvp2HA9qghQ6cBZSNL+knS3SMpFhGqz7Nt8IK4KiCczFnesAwg5WX8Cz1z8tOzMU9GHk0V3SqRWwI88LyF0noI5kIJFj/+UNhu3vbqz2pxgyQt49HS+iGW+sIYZJPiW3X/iT7NK2IZgGo+MYaEgdJJIY9gqCiBuRmTZCgXoEmQDdZCeFFulugJJUxHplgi22NM+YpP7f7F2PJlnE5FaFuIARAAg/qXlSINPwDlnL+y53Os22CZqRm3eXMJh6avFysmW5/3RBRpHPLzA3VTj2EBuF3tDQ9zSMkqyvJbjy5kdlHGEDxeFkmlNn8OiEhBB+2KEvTCNarvubMdIW5GUMeMryC6rWbu5DWn5g3cquodZRunAEp0Cu8vgTRCyeLLULLevLVWcX8xZ93LPgTpcCWnNTrlaY2g=
+    file: snowboard-$TRAVIS_TAG.${TRAVIS_OS_NAME/osx/darwin}-amd64.tar.gz
+    skip_cleanup: true
+    on:
+      tags: true
+  - provider: npm
+    email: subosito@gmail.com
+    api_key:
+      secure: Lnlnf7yY5ZeQL87InCLPknyVDHhAaESssIiVtQv18C6UX7vcg8Jgm+ke4Y17wFD2wOt5x3CL3WMyAy/QRiZ3GR56Im57dw0NM0VhbqLokg3QjAGRCN2Wu5basTAcHqcgZtu+3CBlNpkiY3YgcZfcVv4AutQNAl9LHkZ89F1m2D5OzXj9JomUrjR8YAG38dJLxf1gbxiP9glPiKOKKY1kjJRA6ZuWQ4M/S6MP6MvXVwIbCFvlJ8gRtngveCPVDKon+jvSHVuZUdFfRROdD4sxX7YGjNULmJ7sv4a5oN67Kqp109OtY2Fg11FOFpZ6kUzkfNtAnLtNWogUihT7M0lnEvWmUr4FhZiqgQ9JN7iVGdyxA6zTZ871qScRVgkh3UnF0MHZdyprTdBCtFQ6s9l1Hj3L9Q9whvD+cc5xUYt9b+pnqRpkcC2/4iI7NEBROS2i7tkkIlp8O5BT7rwU8rqnmi81SSsb3MqZqYZ6y6P7IaEq5ctTwrDd1VbjroZV8ueKHoIM1NTnyB07vm/fnVxMpD5AQzAZXjEcjqDaqWbJ5jqSDe04tTo/tWzo+HbNcoriBc1bqlWQUTnANDK6EbTJkZLxgONLNSUKT3Acl8tmVnu9Odt64Su79mr69/imf0FhDlFPz9+5TSHIWZu5f2FG7aCae5P+AVWV73YGjMOEKy0=
+    on:
+      tags: true
+      repo: bukalapak/snowboard
