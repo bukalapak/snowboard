@@ -9,18 +9,14 @@
   "bin": "lib/main.js",
   "scripts": {
     "fmt": "prettier --write README.md 'lib/**/*.js' 'test/**/*.js'",
-    "test": "tape 'test/**/*.js'",
-    "examples": "./examples/generate.sh ./test/fixtures/api-blueprint/examples ./examples"
+    "test": "tape 'test/**/*.js'"
   },
   "dependencies": {
     "chokidar": "^3.0.1",
     "commander": "^2.19.0",
     "express": "^4.16.4",
-    "glob": "^7.1.3",
-    "handlebars": "^4.1.0",
-    "highlight.js": "^9.15.6",
+    "handlebars": "^4.1.2",
     "lodash": "^4.17.11",
-    "markdown-it": "^8.4.2",
     "marked": "^0.7.0",
     "mkdirp": "^0.5.1",
     "morgan": "^1.9.1",
@@ -34,15 +30,14 @@
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-svelte": "^5.1.0",
     "rollup-plugin-terser": "^5.1.1",
-    "slugify": "^1.3.4",
     "speakingurl": "^14.0.1",
     "svelte": "^3.6.5",
     "table": "^5.2.3",
     "tmp": "^0.1.0"
   },
   "devDependencies": {
-    "eslint": "^5.15.1",
-    "eslint-config-prettier": "^4.1.0",
+    "eslint": "^6.0.1",
+    "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-prettier": "^3.0.1",
     "prettier": "^1.16.4",
     "tape": "^4.10.1"
