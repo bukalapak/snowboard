@@ -1338,10 +1338,10 @@ os-tmpdir@~1.0.2:
   resolved "https://registry.yarnpkg.com/os-tmpdir/-/os-tmpdir-1.0.2.tgz#bbe67406c79aa85c5cfec766fe5734555dfa1274"
   integrity sha1-u+Z0BseaqFxc/sdm/lc0VV36EnQ=
 
-outboard@^2.7.0:
-  version "2.7.0"
-  resolved "https://registry.yarnpkg.com/outboard/-/outboard-2.7.0.tgz#e56ebbfbd223180b6835408bd2906ee64a346066"
-  integrity sha512-yeIHwcAbVKLySqxn/HqrvUBFiuyY4KnMLKFUhonbbXXrzWuqkt4nWqEYFW604EEIlrO2Bge0Dfm0qdUkYJfagw==
+outboard@^2.7.1:
+  version "2.7.1"
+  resolved "https://registry.yarnpkg.com/outboard/-/outboard-2.7.1.tgz#960da25bb149d046f4286e7b01ddd5a3b4f1f458"
+  integrity sha512-IF5J0tPR4MawarEHmwbNzRd0HYeAnd5GjGlMNVXONtWe5n9tXs7DEBNFDDRFharIBZPguQvH+Q2vwAMvMKen+w==
   dependencies:
     deckardcain "^0.4.1"
     drafter "^2.0.0-pre.1"
