@@ -16,7 +16,7 @@
 <div class="card">
   <header class="card-header">
     {#if title}
-      <p class="card-header-title">{title}</p>
+      <p class="card-header-title">Request {title}</p>
     {:else}
       <p class="card-header-title">Request</p>
     {/if}
@@ -34,4 +34,5 @@
       schema={schema} />
   </div>
 </div>
+<hr />
 {/if}

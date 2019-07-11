@@ -141,12 +141,12 @@
 
       <div class="tags has-addons are-large">
         <code class="tag {colorize(currentAction.method)}">{upcase(currentAction.method)}</code>
-        <code class="tag">{currentAction.path}</code>
+        <code class="tag ">{currentAction.path}</code>
       </div>
 
       <div class="content">{@html marked(currentAction.description)}</div>
 
-      {#each currentAction.transactions as { request, response }}
+      {#each currentAction.transactions as { request, response }, index}
         <div class="box box-wrapper has-background-white-bis">
           <RequestPanel title={request.title}
             description={request.description}
@@ -167,6 +167,10 @@
             colorize={colorize}
             />
         </div>
+
+        {#if (index !== (currentAction.transactions.length - 1))}
+          <hr />
+        {/if}
       {/each}
       {/if}
     </div>

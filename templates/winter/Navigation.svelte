@@ -22,7 +22,7 @@
       <ul>
         {#each tagHeaders as header}
         {#if header.level === 0}
-        <li><a href="#{slugify(header.text)}">{header.text}</a></li>
+        <li><a href="javascript:void(0)">{header.text}</a></li>
         {/if}
         {/each}
       </ul>

@@ -16,10 +16,15 @@
 <div class="card">
   <header class="card-header">
     {#if title}
-      <p class="card-header-title">{title}</p>
+      <p class="card-header-title">Response {title}</p>
     {:else}
       <p class="card-header-title">Response</p>
     {/if}
+
+    <a href="javascript:void(0)" class="card-header-icon is-family-code">
+      <span class="tag is-medium is-white">{contentType || ''}</span>
+      <code class="tag is-medium {colorize(statusCode)}">{statusCode}</code>
+    </a>
   </header>
   <div class="card-content">
     {#if description}
@@ -27,19 +32,6 @@
     {/if}
 
     <Header headers={headers} />
-
-    <div class="notification is-white">
-      {#if contentType}
-        <div class="buttons has-addons are-medium is-family-code is-centered">
-          <span class="button is-rounded {colorize(statusCode)}">{statusCode}</span>
-          <span class="button is-rounded is-light">{contentType || ''}</span>
-        </div>
-      {:else}
-        <div class="buttons are-medium is-family-code is-centered">
-          <span class="button is-rounded {colorize(statusCode)}">{statusCode}</span>
-        </div>
-      {/if}
-    </div>
 
     <CodePanel
       contentType={contentType}
