@@ -13,7 +13,18 @@
   }
 </script>
 
-<aside class="menu is-pinned">
+<style>
+@media only screen and (min-width: 768px) {
+  aside {
+    width: 30%;
+    position: fixed !important;
+    height: 100% !important;
+    overflow-y: auto !important;
+  }
+}
+</style>
+
+<aside class="menu">
   <p class="menu-label">API</p>
   <ul class="menu-list">
     <li><a href="#introduction" on:click={handleClick}>Introduction</a></li>

@@ -9,6 +9,7 @@
   import Code from './winter/Code.svelte';
   import RequestPanel from './winter/RequestPanel.svelte';
   import ResponsePanel from './winter/ResponsePanel.svelte';
+  import Parameter from './winter/Parameter.svelte';
 
 	onMount(() => {
     Prism.languages.json = {
@@ -145,6 +146,8 @@
       </div>
 
       <div class="content">{@html marked(currentAction.description)}</div>
+
+      <Parameter parameters={currentAction.parameters} />
 
       {#each currentAction.transactions as { request, response }, index}
         <div class="box box-wrapper has-background-white-bis">
