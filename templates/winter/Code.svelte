@@ -1,24 +1,24 @@
 <script>
-  import Prism from 'prismjs';
+  import Prism from "prismjs";
 
   export let type;
   export let body;
 
-  export const alias = (str) => {
+  export const alias = str => {
     return str && str.match("json") ? "json" : "none";
-  }
+  };
 
-  export const stringify = (obj) => {
+  export const stringify = obj => {
     if (obj) {
-      return JSON.stringify(obj, null, '  ');
+      return JSON.stringify(obj, null, "  ");
     }
 
     return "";
-  }
+  };
 
-  export const highlight = (code) => {
-    return Prism.highlight(code, Prism.languages.json, 'json');
-  }
+  export const highlight = code => {
+    return Prism.highlight(code, Prism.languages.json, "json");
+  };
 </script>
 
 <style>
@@ -43,7 +43,9 @@
 </style>
 
 {#if body}
-<pre class="language-{alias(type)}">
-  <code class="language-{alias(type)}">{@html highlight(stringify(body))}</code>
-</pre>
+  <pre class="language-{alias(type)}">
+    <code class="language-{alias(type)}">
+      {@html highlight(stringify(body))}
+    </code>
+  </pre>
 {/if}

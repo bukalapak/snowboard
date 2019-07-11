@@ -1,6 +1,6 @@
 <script>
-  import Header from './Header.svelte';
-  import CodePanel from './CodePanel.svelte';
+  import Header from "./Header.svelte";
+  import CodePanel from "./CodePanel.svelte";
 
   export let title;
   export let description;
@@ -31,11 +31,8 @@
       <div class="content">{description}</div>
     {/if}
 
-    <Header headers={headers} />
+    <Header {headers} />
 
-    <CodePanel
-      contentType={contentType}
-      example={example}
-      schema={schema} />
+    <CodePanel {contentType} {example} {schema} />
   </div>
 </div>

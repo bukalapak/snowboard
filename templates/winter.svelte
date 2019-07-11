@@ -1,34 +1,34 @@
 <script>
-  import { onMount } from 'svelte';
-  import marked from 'marked';
-  import Prism from 'prismjs';
+  import { onMount } from "svelte";
+  import marked from "marked";
+  import Prism from "prismjs";
 
-  import Navigation from './winter/Navigation.svelte';
-  import Header from './winter/Header.svelte';
-  import CodePanel from './winter/CodePanel.svelte';
-  import Code from './winter/Code.svelte';
-  import RequestPanel from './winter/RequestPanel.svelte';
-  import ResponsePanel from './winter/ResponsePanel.svelte';
-  import Parameter from './winter/Parameter.svelte';
+  import Navigation from "./winter/Navigation.svelte";
+  import Header from "./winter/Header.svelte";
+  import CodePanel from "./winter/CodePanel.svelte";
+  import Code from "./winter/Code.svelte";
+  import RequestPanel from "./winter/RequestPanel.svelte";
+  import ResponsePanel from "./winter/ResponsePanel.svelte";
+  import Parameter from "./winter/Parameter.svelte";
 
-	onMount(() => {
+  onMount(() => {
     Prism.languages.json = {
-      'property': {
+      property: {
         pattern: /"(?:\\.|[^\\"\r\n])*"(?=\s*:)/,
         greedy: true
       },
-      'string': {
+      string: {
         pattern: /"(?:\\.|[^\\"\r\n])*"(?!\s*:)/,
         greedy: true
       },
-      'comment': /\/\/.*|\/\*[\s\S]*?(?:\*\/|$)/,
-      'number': /-?\d+\.?\d*(e[+-]?\d+)?/i,
-      'punctuation': /[{}[\],]/,
-      'operator': /:/,
-      'boolean': /\b(?:true|false)\b/,
-      'null': {
+      comment: /\/\/.*|\/\*[\s\S]*?(?:\*\/|$)/,
+      number: /-?\d+\.?\d*(e[+-]?\d+)?/i,
+      punctuation: /[{}[\],]/,
+      operator: /:/,
+      boolean: /\b(?:true|false)\b/,
+      null: {
         pattern: /\bnull\b/,
-        alias: 'keyword'
+        alias: "keyword"
       }
     };
   });
@@ -48,7 +48,7 @@
 
   function handleClick(event) {
     const slug = event.target.dataset["slug"];
-    index = actions.findIndex((el) => el.slug === slug);
+    index = actions.findIndex(el => el.slug === slug);
   }
 
   function toc(source) {
@@ -101,7 +101,7 @@
   }
 
   .breadcrumb-right {
-    margin-top: .30em;
+    margin-top: 0.3em;
   }
 
   .box-wrapper {
@@ -113,68 +113,77 @@
   <div class="columns">
     <div class="column is-one-third">
       <Navigation
-        tagActions={tagActions}
+        {tagActions}
         tagHeaders={toc(description)}
         currentSlug={currentAction && currentAction.slug}
-        colorize={colorize}
-        handleClick={handleClick} />
+        {colorize}
+        {handleClick} />
     </div>
 
     <div class="column is-two-thirds">
       {#if index === -1}
         <h1 class="title">{title}</h1>
-        <hr>
-        <div class="content">{@html marked(description)}</div>
+        <hr />
+        <div class="content">
+          {@html marked(description)}
+        </div>
       {/if}
 
       {#if currentAction}
-      <nav class="breadcrumb breadcrumb-right is-pulled-right" aria-label="breadcrumbs">
-        <ul>
-          {#each currentAction.tags as tag}
-            <li><a href="javascript:void(0)">{tag}</a></li>
-          {/each}
-        </ul>
-      </nav>
+        <nav
+          class="breadcrumb breadcrumb-right is-pulled-right"
+          aria-label="breadcrumbs">
+          <ul>
+            {#each currentAction.tags as tag}
+              <li>
+                <a href="javascript:void(0)">{tag}</a>
+              </li>
+            {/each}
+          </ul>
+        </nav>
 
-      <h1 class="title">{currentAction.title}</h1>
+        <h1 class="title">{currentAction.title}</h1>
 
-      <hr>
+        <hr />
 
-      <div class="tags has-addons are-large">
-        <code class="tag {colorize(currentAction.method)}">{upcase(currentAction.method)}</code>
-        <code class="tag ">{currentAction.path}</code>
-      </div>
-
-      <div class="content">{@html marked(currentAction.description)}</div>
-
-      <Parameter parameters={currentAction.parameters} />
-
-      {#each currentAction.transactions as { request, response }, index}
-        <div class="box box-wrapper has-background-white-bis">
-          <RequestPanel title={request.title}
-            description={request.description}
-            headers={request.headers}
-            contentType={request.contentType}
-            example={request.example}
-            schema={request.schema}
-            />
-
-          <ResponsePanel
-            title={response.title}
-            description={response.description}
-            statusCode={response.statusCode}
-            headers={response.headers}
-            contentType={response.contentType}
-            example={response.example}
-            schema={response.schema}
-            colorize={colorize}
-            />
+        <div class="tags has-addons are-large">
+          <code class="tag {colorize(currentAction.method)}">
+            {upcase(currentAction.method)}
+          </code>
+          <code class="tag ">{currentAction.path}</code>
         </div>
 
-        {#if (index !== (currentAction.transactions.length - 1))}
-          <hr />
-        {/if}
-      {/each}
+        <div class="content">
+          {@html marked(currentAction.description)}
+        </div>
+
+        <Parameter parameters={currentAction.parameters} />
+
+        {#each currentAction.transactions as { request, response }, index}
+          <div class="box box-wrapper has-background-white-bis">
+            <RequestPanel
+              title={request.title}
+              description={request.description}
+              headers={request.headers}
+              contentType={request.contentType}
+              example={request.example}
+              schema={request.schema} />
+
+            <ResponsePanel
+              title={response.title}
+              description={response.description}
+              statusCode={response.statusCode}
+              headers={response.headers}
+              contentType={response.contentType}
+              example={response.example}
+              schema={response.schema}
+              {colorize} />
+          </div>
+
+          {#if index !== currentAction.transactions.length - 1}
+            <hr />
+          {/if}
+        {/each}
       {/if}
     </div>
   </div>
