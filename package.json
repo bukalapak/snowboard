@@ -8,7 +8,7 @@
   "main": "lib/snowboard.js",
   "bin": "lib/main.js",
   "scripts": {
-    "fmt": "prettier --write README.md 'lib/**/*.js' 'test/**/*.js'",
+    "fmt": "prettier --write README.md 'lib/**/*.js' 'test/**/*.js' 'templates/**/*.svelte'",
     "examples": "./tools/examples.sh ./test/fixtures/api-blueprint/examples ./examples",
     "test": "tape 'test/**/*.js'"
   },
@@ -40,7 +40,8 @@
     "eslint": "^6.0.1",
     "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-prettier": "^3.0.1",
-    "prettier": "^1.16.4",
+    "prettier": "^1.18.2",
+    "prettier-plugin-svelte": "^0.6.0",
     "tape": "^4.10.1"
   },
   "keywords": [
