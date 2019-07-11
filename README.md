@@ -34,7 +34,7 @@ To generate HTML documentation we can do:
 $ snowboard html -o output.html API.apib
 ```
 
-Above command will generate `ouput.html` using `snowboard` default template (called `alpha`).
+Above command will generate `ouput.html` using `snowboard` default template (called `winter`).
 
 ### Using Custom Template
 
@@ -44,15 +44,7 @@ If you want to use custom template, you can use flag `-t` for that:
 $ snowboard html -o output.html -t awesome-template.html API.apib
 ```
 
-To see how the template looks like, you can see `snowboard` default template located in [templates/alpha.html.hbs](templates/alpha.html.hbs).
-
-### Multi Pages HTML
-
-When your API blueprints large enough to be served as single HTML file, you can pass `-o` flag with value without `.html` extension to let snowboard generate multi pages documentation:
-
-```
-$ snowboard html -o output-dir API-LARGE.apib
-```
+To see how the template looks like, you can see `snowboard` default template located in [templates/winter.html](templates/winter.html).
 
 ### Serve HTML Documentation
 
@@ -65,8 +57,6 @@ $ snowboard http -t awesome-template.html API.apib
 With this flag, You can access HTML documentation on `localhost:8088`.
 
 If you need to customize binding address, you can use flag `-b`.
-
-You can also use multi pages feature as above, just pass `-o` flag without `.html` extension.
 
 ### Generate formatted API blueprint
 
