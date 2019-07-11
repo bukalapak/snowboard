@@ -9,6 +9,7 @@
   "bin": "lib/main.js",
   "scripts": {
     "fmt": "prettier --write README.md 'lib/**/*.js' 'test/**/*.js'",
+    "examples": "./tools/examples.sh ./test/fixtures/api-blueprint/examples ./examples",
     "test": "tape 'test/**/*.js'"
   },
   "dependencies": {
