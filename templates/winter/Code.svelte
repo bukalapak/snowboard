@@ -22,10 +22,6 @@
 </script>
 
 <style>
-  :global(pre[class*="language-"]) {
-    white-space: inherit;
-  }
-
   :global(code[class*="language-"], pre[class*="language-"]) {
     font-family: monospace;
   }
