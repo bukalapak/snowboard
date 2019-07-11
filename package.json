@@ -1,6 +1,6 @@
 {
   "name": "snowboard",
-  "version": "2.0.7",
+  "version": "3.0.0-rc.1",
   "description": "API blueprint toolkit",
   "author": "Alif Rachmawadi <subosito@bukalapak.com>",
   "license": "MIT",
