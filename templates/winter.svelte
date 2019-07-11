@@ -8,6 +8,7 @@
   import CodePanel from './winter/CodePanel.svelte';
   import Code from './winter/Code.svelte';
   import RequestPanel from './winter/RequestPanel.svelte';
+  import ResponsePanel from './winter/ResponsePanel.svelte';
 
 	onMount(() => {
     Prism.languages.json = {
@@ -101,6 +102,10 @@
   .breadcrumb-right {
     margin-top: .30em;
   }
+
+  .box-wrapper {
+    border-radius: 0;
+  }
 </style>
 
 <section class="main-section">
@@ -141,44 +146,26 @@
 
       <div class="content">{@html marked(currentAction.description)}</div>
 
-      <hr>
-
       {#each currentAction.transactions as { request, response }}
-        <div class="box">
+        <div class="box box-wrapper has-background-white-bis">
+          <RequestPanel title={request.title}
+            description={request.description}
+            headers={request.headers}
+            contentType={request.contentType}
+            example={request.example}
+            schema={request.schema}
+            />
 
-        <RequestPanel title={request.title}
-          description={request.description}
-          headers={request.headers}
-          contentType={request.contentType}
-          example={request.example}
-          schema={request.schema}
-          />
-
-        <div class="content">
-          {#if response.title}
-            <p class="title is-5">{response.title}</p>
-          {:else}
-            <p class="title is-5">Response</p>
-          {/if}
-
-          {#if response.description}
-            <div>{response.description}</div>
-          {/if}
-        </div>
-
-        <Header headers={response.headers} />
-
-        <div class="notification">
-          <div class="buttons is-family-code is-centered">
-            <span class="button is-rounded {colorize(response.statusCode)}">{response.statusCode}</span>
-            <span class="button is-light">{response.contentType || ''}</span>
-          </div>
-        </div>
-
-        <CodePanel
-          contentType={response.contentType}
-          example={response.example}
-          schema={response.schema} />
+          <ResponsePanel
+            title={response.title}
+            description={response.description}
+            statusCode={response.statusCode}
+            headers={response.headers}
+            contentType={response.contentType}
+            example={response.example}
+            schema={response.schema}
+            colorize={colorize}
+            />
         </div>
       {/each}
       {/if}
