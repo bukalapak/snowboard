@@ -28,17 +28,17 @@ There are some scenarios we can perform:
 
 ### Generate HTML Documentation
 
-To generate HTML documentation we can do:
+To generate HTML documentation, we can do:
 
 ```
 $ snowboard html -o output.html API.apib
 ```
 
-Above command will generate `ouput.html` using `snowboard` default template (called `winter`).
+Above command will generate `output.html` using `snowboard` default template (called `winter`).
 
 ### Using Custom Template
 
-If you want to use custom template, you can use flag `-t` for that:
+If you want to use a custom template, you can use flag `-t` for that:
 
 ```
 $ snowboard html -o output.html -t awesome-template.html API.apib
@@ -48,7 +48,7 @@ To see how the template looks like, you can see `snowboard` default template loc
 
 ### Serve HTML Documentation
 
-If you want to access HTML documentation via HTTP, especially on local development, you can use `http` subcommand:
+If you want to access HTML documentation via HTTP, especially on local development, you can use `http` sub-command:
 
 ```
 $ snowboard http -t awesome-template.html API.apib
@@ -60,15 +60,15 @@ If you need to customize binding address, you can use flag `-b`.
 
 ### Generate formatted API blueprint
 
-When you have documentation splitted across files, you can use `apib` subcommand to allow `snowboard` to produce single formatted API blueprint.
+When you have documentation split across files, you can use `apib` sub-command to allow `snowboard` to produce single formatted API blueprint.
 
 ```
-$ snowboard apib -o API.apib project/splitted.apib
+$ snowboard apib -o API.apib project/split.apib
 ```
 
 ### Validate API blueprint
 
-Besides render to HTML, snowboard also support validates API blueprint document. You can use `lint` subcommand.
+Besides rendering to HTML, snowboard also support validates API blueprint document. You can use `lint` sub-command.
 
 ```
 $ snowboard lint API.apib
@@ -76,7 +76,7 @@ $ snowboard lint API.apib
 
 ### Mock server from API blueprint
 
-Another snowboard useful feature is having mock server. You can use `mock` subcommand for that.
+Another snowboard useful feature is having mock server. You can use `mock` sub-command for that.
 
 ```
 $ snowboard mock API.apib
@@ -84,13 +84,13 @@ $ snowboard mock API.apib
 
 Then you can use `localhost:8087` for accessing mock server. You can customize the address by passing flag `-b`.
 
-For multiple responses, you can set `Prefer` header to select specific response:
+For multiple responses, you can set `Prefer` header to select a specific response:
 
 ```
 Prefer: status=200
 ```
 
-You can also supply multiple inputs for `mock` subcommand:
+You can also supply multiple inputs for `mock` sub-command:
 
 ```
 $ snowboard mock API.apib OTHER.apib
@@ -118,7 +118,7 @@ or
 
 ## Seed Files
 
-As your API blueprint document become large, you might move some value to separate file for easier organization and modification. Snowboard supports this as well.
+As your API blueprint document become large, you might move some value to a separate file for an easier organization and modification. Snowboard supports this.
 
 Just place your values into a json file, say, `seed.json`:
 
@@ -140,7 +140,7 @@ Then on your API blueprint document you can use `seed` comment helper:
 Our friendly username is {{.official.username}}.
 ```
 
-Multiple seeds are also supported.
+It also supports multiple seeds.
 
 ## Auto-regeneration
 
@@ -156,7 +156,7 @@ Optionally, you can also use `--watch-interval` to enable polling interval.
 $ snowboard html --watch --watch-interval 100ms -o output.html -t awesome-template.html -s API.apib
 ```
 
-This watcher works on all subcommands.
+This watcher works on all sub-commands.
 
 ## API Element JSON
 
@@ -166,9 +166,9 @@ In case you need to get API element JSON output for further processing, you can 
 $ snowboard json API.apib
 ```
 
-## List Available Routes
+## List Routes
 
-If you need to list all available routes for current API blueprints you can do:
+If you need to list all available routes for current API blueprints, you can do:
 
 ```
 $ snowboard list API.apib ANOTHER.apib
@@ -197,5 +197,5 @@ Commands:
   apib [options] <input>              render API blueprint
   json [options] <input>              render API elements json
   mock [options] <input> [inputs...]  run mock server
-  list <input> [inputs...]            list available routes
+  list <input> [inputs...]            list routes
 ```
