@@ -8,6 +8,7 @@
   export let contentType;
   export let example;
   export let schema;
+  export let markdown;
 
   $: showRequest = !!(
     title != "" ||
@@ -28,7 +29,9 @@
     </header>
     <div class="card-content">
       {#if description}
-        <div class="content">{description}</div>
+        <div class="content">
+          {@html markdown(description)}
+        </div>
       {/if}
 
       <Header {headers} />

@@ -1,7 +1,6 @@
 <script>
-  import marked from "marked";
-
   export let parameters = [];
+  export let markdown;
 </script>
 
 {#if parameters.length > 0}
@@ -30,7 +29,7 @@
           <td>
             <div class="content">
               {#if description}
-                {@html marked(description)}
+                {@html markdown(description)}
               {:else}
                 <p>-</p>
               {/if}

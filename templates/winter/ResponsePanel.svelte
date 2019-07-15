@@ -11,6 +11,7 @@
   export let schema;
 
   export let colorize;
+  export let markdown;
 </script>
 
 <div class="card">
@@ -28,7 +29,9 @@
   </header>
   <div class="card-content">
     {#if description}
-      <div class="content">{description}</div>
+      <div class="content">
+        {@html markdown(description)}
+      </div>
     {/if}
 
     <Header {headers} />

@@ -51,7 +51,15 @@
     index = actions.findIndex(el => el.slug === slug);
   }
 
+  function markdown(source) {
+    return source ? marked(source) : "";
+  }
+
   function toc(source) {
+    if (!source) {
+      return [];
+    }
+
     const tokens = marked.lexer(source);
     const headings = tokens.filter(elem => elem.type === "heading");
     const depths = headings.map(head => head.depth);
@@ -89,10 +97,6 @@
         return "is-danger";
     }
   }
-
-  function upcase(str) {
-    return str && str.toUpperCase();
-  }
 </script>
 
 <style>
@@ -125,7 +129,7 @@
         <h1 class="title">{title}</h1>
         <hr />
         <div class="content">
-          {@html marked(description)}
+          {@html markdown(description)}
         </div>
       {/if}
 
@@ -147,17 +151,17 @@
         <hr />
 
         <div class="tags has-addons are-large">
-          <code class="tag {colorize(currentAction.method)}">
-            {upcase(currentAction.method)}
+          <code class="tag is-uppercase {colorize(currentAction.method)}">
+            {currentAction.method}
           </code>
           <code class="tag ">{currentAction.path}</code>
         </div>
 
         <div class="content">
-          {@html marked(currentAction.description)}
+          {@html markdown(currentAction.description)}
         </div>
 
-        <Parameter parameters={currentAction.parameters} />
+        <Parameter parameters={currentAction.parameters} {markdown} />
 
         {#each currentAction.transactions as { request, response }, index}
           <div class="box box-wrapper has-background-white-bis">
@@ -167,7 +171,8 @@
               headers={request.headers}
               contentType={request.contentType}
               example={request.example}
-              schema={request.schema} />
+              schema={request.schema}
+              {markdown} />
 
             <ResponsePanel
               title={response.title}
@@ -177,6 +182,7 @@
               contentType={response.contentType}
               example={response.example}
               schema={response.schema}
+              {markdown}
               {colorize} />
           </div>
 

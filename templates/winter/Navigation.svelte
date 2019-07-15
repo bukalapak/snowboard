@@ -1,5 +1,4 @@
 <script>
-  import marked from "marked";
   import getSlug from "speakingurl";
 
   export let tagActions = [];
@@ -46,13 +45,17 @@
   </ul>
 
   {#each tagActions as tag}
-    <p class="menu-label">{tag.title || ''}</p>
+    {#if tag.title}
+      <p class="menu-label">{tag.title}</p>
+    {/if}
 
     <ul class="menu-list">
       {#each tag.children as child}
-        <li>
-          <a href="javascript:void(0)">{child.title}</a>
-        </li>
+        {#if child.title}
+          <li>
+            <a href="javascript:void(0)">{child.title}</a>
+          </li>
+        {/if}
         <li>
           <ul>
             {#each child.actions as action}
