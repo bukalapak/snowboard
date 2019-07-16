@@ -16,6 +16,8 @@
     const index = event.target.dataset["index"];
     tabIndex = parseInt(index, 10);
   };
+
+  export let highlight;
 </script>
 
 <style>
@@ -46,10 +48,10 @@
     </div>
     <div>
       <section class="tab-content {activeBody}">
-        <Code type={contentType} body={example} />
+        <Code type={contentType} body={example} {highlight} />
       </section>
       <section class="tab-content {activeSchema}">
-        <Code type="application/json" body={schema} />
+        <Code type="application/json" body={schema} {highlight} />
       </section>
     </div>
   </div>

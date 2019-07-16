@@ -11,6 +11,26 @@
   import ResponsePanel from "./winter/ResponsePanel.svelte";
   import Parameter from "./winter/Parameter.svelte";
 
+  const renderer = new marked.Renderer();
+
+  const highlight = function(code, lang) {
+    const supported = [
+      "markup",
+      "html",
+      "xml",
+      "css",
+      "javascript",
+      "js",
+      "json"
+    ];
+
+    if (!supported.includes(lang)) {
+      lang = "markup";
+    }
+
+    return Prism.highlight(code, Prism.languages[lang], lang);
+  };
+
   onMount(() => {
     Prism.languages.json = {
       property: {
@@ -30,6 +50,16 @@
         pattern: /\bnull\b/,
         alias: "keyword"
       }
+    };
+
+    marked.setOptions({
+      highlight
+    });
+
+    renderer.pre = renderer.code;
+    renderer.code = function(code, infostring, escaped) {
+      const out = this.pre(code, infostring, escaped);
+      return out.replace("<pre>", `<pre class="language-${infostring}">`);
     };
   });
 
@@ -52,7 +82,7 @@
   }
 
   function markdown(source) {
-    return source ? marked(source) : "";
+    return source ? marked(source, { renderer: renderer }) : "";
   }
 
   function toc(source) {
@@ -110,6 +140,25 @@
 
   .box-wrapper {
     border-radius: 0;
+  }
+
+  :global(code[class*="language-"], pre[class*="language-"]) {
+    font-family: monospace;
+  }
+
+  /* fix prism.js and bulma conflict */
+  :global(.token.number, .token.tag) {
+    display: inline;
+    padding: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    text-align: inherit;
+    vertical-align: inherit;
+    border-radius: inherit;
+    font-weight: inherit;
+    white-space: inherit;
+    background: inherit;
+    margin: inherit;
   }
 </style>
 
@@ -172,7 +221,8 @@
               contentType={request.contentType}
               example={request.example}
               schema={request.schema}
-              {markdown} />
+              {markdown}
+              {highlight} />
 
             <ResponsePanel
               title={response.title}
@@ -183,6 +233,7 @@
               example={response.example}
               schema={response.schema}
               {markdown}
+              {highlight}
               {colorize} />
           </div>
 

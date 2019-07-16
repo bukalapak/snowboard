@@ -9,6 +9,7 @@
   export let example;
   export let schema;
   export let markdown;
+  export let highlight;
 
   $: showRequest = !!(
     title != "" ||
@@ -36,7 +37,7 @@
 
       <Header {headers} />
 
-      <CodePanel {contentType} {example} {schema} />
+      <CodePanel {contentType} {example} {schema} {highlight} />
     </div>
   </div>
   <hr />

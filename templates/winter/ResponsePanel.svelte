@@ -12,6 +12,7 @@
 
   export let colorize;
   export let markdown;
+  export let highlight;
 </script>
 
 <div class="card">
@@ -36,6 +37,6 @@
 
     <Header {headers} />
 
-    <CodePanel {contentType} {example} {schema} />
+    <CodePanel {contentType} {example} {schema} {highlight} />
   </div>
 </div>
