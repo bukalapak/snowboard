@@ -44,7 +44,7 @@ If you want to use a custom template, you can use flag `-t` for that:
 $ snowboard html -o output.html -t awesome-template.html API.apib
 ```
 
-To see how the template looks like, you can see `snowboard` default template located in [templates/winter.html](templates/winter.html).
+To see how the template looks like, you can see `snowboard` default template in [templates/winter.html](templates/winter.html).
 
 ### Serve HTML Documentation
 
