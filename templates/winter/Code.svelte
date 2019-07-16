@@ -6,7 +6,7 @@
   export let highlight;
 
   export const alias = str => {
-    return str && str.match("json") ? "json" : "none";
+    return str && str.match("json") ? "json" : "markup";
   };
 
   export const stringify = obj => {
@@ -21,7 +21,7 @@
 {#if body}
   <pre class="language-{alias(type)}">
     <code class="language-{alias(type)}">
-      {@html highlight(stringify(body), 'json')}
+      {@html highlight(stringify(body), alias(type))}
     </code>
   </pre>
 {/if}
