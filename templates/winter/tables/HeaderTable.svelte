@@ -3,7 +3,7 @@
 </script>
 
 {#if headers.length > 0}
-  <table class="table table-bordered is-bordered is-fullwidth">
+  <table class="table is-stripped is-fullwidth">
     <thead>
       <tr>
         <th colspan="2">Headers</th>

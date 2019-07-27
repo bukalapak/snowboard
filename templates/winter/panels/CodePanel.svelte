@@ -1,13 +1,14 @@
 <script>
-  import Code from "./Code.svelte";
+  import CodeBlock from "../components/CodeBlock.svelte";
 
   export let contentType;
   export let example;
   export let schema;
+  export let asToggle;
 
-  export let activeBody = "is-active";
-  export let activeSchema = "";
-  export let tabIndex = 0;
+  let activeBody = "is-active";
+  let activeSchema = "";
+  let tabIndex = 0;
 
   $: activeBody = tabIndex === 0 ? "is-active" : "";
   $: activeSchema = tabIndex === 1 ? "is-active" : "";
@@ -16,8 +17,6 @@
     const index = event.target.dataset["index"];
     tabIndex = parseInt(index, 10);
   };
-
-  export let highlight;
 </script>
 
 <style>
@@ -32,14 +31,14 @@
 
 {#if example || schema}
   <div class="tabs-with-content">
-    <div class="tabs is-fullwidth">
+    <div class="tabs is-fullwidth" class:is-toggle={asToggle}>
       <ul>
-        <li class={activeBody}>
+        <li class:is-active={tabIndex === 0}>
           <a data-index="0" href="javascript:void(0)" on:click={tabSelect}>
             Body
           </a>
         </li>
-        <li class={activeSchema}>
+        <li class:is-active={tabIndex === 1}>
           <a data-index="1" href="javascript:void(0)" on:click={tabSelect}>
             Schema
           </a>
@@ -48,10 +47,10 @@
     </div>
     <div>
       <section class="tab-content {activeBody}">
-        <Code type={contentType} body={example} {highlight} />
+        <CodeBlock type={contentType} body={example} />
       </section>
       <section class="tab-content {activeSchema}">
-        <Code type="application/json" body={schema} {highlight} />
+        <CodeBlock type="application/json" body={schema} />
       </section>
     </div>
   </div>

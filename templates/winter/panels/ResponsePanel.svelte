@@ -1,6 +1,8 @@
 <script>
-  import Header from "./Header.svelte";
+  import HeaderTable from "../tables/HeaderTable.svelte";
   import CodePanel from "./CodePanel.svelte";
+
+  import { colorize, markdown } from "../util.js";
 
   export let title;
   export let description;
@@ -9,19 +11,14 @@
   export let contentType;
   export let example;
   export let schema;
-
-  export let colorize;
-  export let markdown;
-  export let highlight;
 </script>
 
 <div class="card">
   <header class="card-header">
-    {#if title}
-      <p class="card-header-title">Response {title}</p>
-    {:else}
-      <p class="card-header-title">Response</p>
-    {/if}
+    <p class="card-header-title">
+      Response
+      {#if title}{title}{/if}
+    </p>
 
     <a href="javascript:void(0)" class="card-header-icon is-family-code">
       <span class="tag is-medium is-white">{contentType || ''}</span>
@@ -35,8 +32,8 @@
       </div>
     {/if}
 
-    <Header {headers} />
+    <HeaderTable {headers} />
 
-    <CodePanel {contentType} {example} {schema} {highlight} />
+    <CodePanel {contentType} {example} {schema} />
   </div>
 </div>
