@@ -1,8 +1,8 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 TEMPLATES=('winter');
 
-for template in $TEMPLATES; do
+for template in "${TEMPLATES[@]}"; do
   output_dir="$2/${template}"
   mkdir -p "${output_dir}"
 
@@ -10,7 +10,7 @@ for template in $TEMPLATES; do
     fname="${example##*/}"
     fname_html="${fname/md/html}"
 
-    if [ "${fname}" == "README.md" ]; then
+    if [[ "${fname}" == "README.md" ]]; then
       continue
     fi
 
