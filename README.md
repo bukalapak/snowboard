@@ -55,9 +55,19 @@ Let's say we have API Blueprint document called `API.apib`, like:
         Hello World!
 ```
 
-There are some scenarios we can perform:
+There are some scenarios we can perform, like:
 
-### HTML Documentation
+```
+# generate HTML documentation
+$ snowboard html -o index.html API.apib
+
+# run mock server
+$ snowboard mock API.apib
+
+# and more, see sections below
+```
+
+## HTML Documentation
 
 To generate HTML documentation, we can do:
 
@@ -71,9 +81,9 @@ Flag `-o` has two different behaviors depending on the value passed:
 
 - When you pass directory name, like `-o outputDir`, snowboard will create 3 files for HTML, javascript, and CSS into the `outputDir`.
 
-- When you pass file name, like `-o output.html`, snowboard will only generate a single HTML file with javascript and CSS embedded. It's also applies when you don't specify flag `-o`.  
+- When you pass file name, like `-o output.html`, snowboard will only generate a single HTML file with javascript and CSS embedded. It also applies when you don't specify flag `-o`.  
 
-#### Using Custom Template
+### Custom Template
 
 If you want to use a custom template, you can use flag `-t` for that:
 
@@ -83,9 +93,9 @@ $ snowboard html -o output.html -t awesome-template.html API.apib
 
 To see how the template looks like, you can see `snowboard` default template in [templates/winter.html](templates/winter.html).
 
-#### Custom Base Path
+### Custom Base Path
 
-By default base path for produced HTML documentation is `/`. If you need to serve documentation on sub directory like, `https://doc.example.com/super-project`, you can customize base path using configuration file:
+By default base path for produced HTML documentation is `/`. If you need to serve documentation on subdirectory like, `https://doc.example.com/super-project`, you can customize base path using a configuration file:
 
 ```yaml
 html:
@@ -98,9 +108,9 @@ Then, you can pass the configuration using flag `-c`:
 $ snowboard html -o outputDir -c config.yaml API.apib
 ```
 
-#### Serve HTML Documentation
+### HTTP Server
 
-If you want to access HTML documentation via HTTP, especially on local development, you can use `http` sub-command:
+If you want to access HTML documentation via HTTP, you can use `http` sub-command:
 
 ```
 $ snowboard http -t awesome-template.html API.apib
@@ -110,7 +120,7 @@ With this flag, you can access HTML documentation on `localhost:8088`.
 
 If you need to customize binding address, you can use flag `-b`.
 
-#### API Playground
+### API Playground
 
 You can activate the playground feature to let your users interact with your staging or even production API.
 
@@ -118,7 +128,7 @@ The Playground can be activate using flag `--playground` or using a configuratio
 
 Playground requires a configuration contains supported environments and the name of the default environment. On each environment, you can set an authentication option.
 
-Here's the example of playground configuration along with different authentication combination supported:
+Here's the example of playground configuration along with the different authentication combination supported:
 
 ```yaml
 html:
@@ -152,7 +162,16 @@ html:
             clientSecret: <client-secret>
 ```
 
-### Mock Server
+Once you have a configuration file, you can do:
+
+```
+$ snowboard html -o outputDir -c config.yaml API.apib
+
+# http sub-command works too
+$ snowboard http -c config.yaml API.apib
+```
+
+## Mock Server
 
 Another snowboard useful feature is having a mock server. You can use `mock` sub-command for that.
 
@@ -174,9 +193,9 @@ You can also supply multiple inputs for `mock` sub-command:
 $ snowboard mock API.apib OTHER.apib
 ```
 
-#### Mock Server Authentication
+### Mock Server Authentication
 
-Mock server supports various authentication, you can enable that by passing a configuration file using flag `-c`, like:
+The mock server supports various authentication, you can enable that by passing a configuration file using flag `-c`, like:
 
 ```
 $ snowboard mock -c config.yaml API.apib
@@ -206,15 +225,7 @@ mock:
       password: <password>
 ```
 
-### Validate API blueprint
-
-Besides rendering to HTML, snowboard also support validates API blueprint document. You can use `lint` sub-command.
-
-```
-$ snowboard lint API.apib
-```
-
-### Render API blueprint
+## Split API Blueprint
 
 When you have documentation split across files, you can use `apib` sub-command to allow `snowboard` to produce single formatted API blueprint.
 
@@ -222,27 +233,7 @@ When you have documentation split across files, you can use `apib` sub-command t
 $ snowboard apib -o API.apib project/split.apib
 ```
 
-You can use syntaxes from [Split feature](#user-content-split-feature) section below.
-
-### Render API Element JSON
-
-In case you need to get API element JSON output for further processing, you can use:
-
-```
-$ snowboard json API.apib
-```
-
-### List Routes
-
-If you need to list all available routes for current API blueprints, you can do:
-
-```
-$ snowboard list API.apib ANOTHER.apib
-```
-
-## Split Feature
-
-To let you split your documentation as several files, snowboard provides some neat feature you can use. Please remember to use `apib` subcommand to produce the combined version.
+To let you split your documentation as several files, snowboard provides some neat feature you can use:
 
 ### External Files
 
@@ -278,7 +269,7 @@ Just place your values into a json file, say, `seed.json`:
 }
 ```
 
-Then on your API blueprint document you can use `seed` comment helper:
+Then on your API blueprint document, you can use `seed` comment helper:
 
 ```apib
 # API
@@ -290,7 +281,35 @@ Our friendly username is {{.official.username}}.
 
 It also supports multiple seeds.
 
-## Watch Feature
+## Other Features
+
+Besides the above features, snowboard also has several useful features for working with API blueprint:
+
+### Validate API blueprint
+
+Besides rendering to HTML, snowboard also support validates API blueprint document. You can use `lint` sub-command.
+
+```
+$ snowboard lint API.apib
+```
+
+### Render API Element JSON
+
+In case you need to get API element JSON output for further processing, you can use:
+
+```
+$ snowboard json API.apib
+```
+
+### List Routes
+
+If you need to list all available routes for current API blueprints, you can do:
+
+```
+$ snowboard list API.apib ANOTHER.apib
+```
+
+## Watcher Support
 
 To enable auto-regeneration on input files updates, you can add global flag `--watch`
 
