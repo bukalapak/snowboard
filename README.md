@@ -293,6 +293,8 @@ Besides rendering to HTML, snowboard also support validates API blueprint docume
 $ snowboard lint API.apib
 ```
 
+Using flag `--json`, you will receive output as JSON format.
+
 ### Render API Element JSON
 
 In case you need to get API element JSON output for further processing, you can use:
@@ -308,6 +310,8 @@ If you need to list all available routes for current API blueprints, you can do:
 ```
 $ snowboard list API.apib ANOTHER.apib
 ```
+
+Using flag `--json`, you will receive output as JSON format.
 
 ## Watcher Support
 
