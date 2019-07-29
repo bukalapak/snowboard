@@ -87,7 +87,7 @@ To see how the template looks like, you can see `snowboard` default template in 
 
 By default base path for produced HTML documentation is `/`. If you need to serve documentation on sub directory like, `https://doc.example.com/super-project`, you can customize base path using configuration file:
 
-```
+```yaml
 html:
   basePath: /super-project
 ```
