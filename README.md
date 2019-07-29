@@ -81,7 +81,7 @@ Flag `-o` has two different behaviors depending on the value passed:
 
 - When you pass directory name, like `-o outputDir`, snowboard will create 3 files for HTML, javascript, and CSS into the `outputDir`.
 
-- When you pass file name, like `-o output.html`, snowboard will only generate a single HTML file with javascript and CSS embedded. It also applies when you don't specify flag `-o`.  
+- When you pass file name, like `-o output.html`, snowboard will only generate a single HTML file with javascript and CSS embedded. It also applies when you don't specify flag `-o`.
 
 ### Custom Template
 
@@ -342,11 +342,11 @@ Options:
   -h, --help                          output usage information
 
 Commands:
-  lint <input>                        validate API blueprint
+  lint [options] <input>              validate API blueprint
   html [options] <input>              render HTML documentation
   http [options] <input>              HTML documentation via HTTP server
   apib [options] <input>              render API blueprint
   json [options] <input>              render API elements json
   mock [options] <input> [inputs...]  run mock server
-  list <input> [inputs...]            list routes
+  list [options] <input> [inputs...]  list routes
 ```
