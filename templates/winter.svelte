@@ -58,7 +58,7 @@
   }
 
   $: currentAction = actions[index];
-  $: environment = config && config.playground.environments[$env];
+  $: environment = config.playground.enabled && config.playground.environments[$env];
 
   if (config.playground.enabled) {
     const savedEnv = getEnv();
