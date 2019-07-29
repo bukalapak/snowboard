@@ -9,9 +9,14 @@ if [[ "$TRAVIS_TEST_RESULT" == "0" ]]; then
   pkg .
 
   cp node_modules/protagonist/build/Release/protagonist.node .
-  cp node_modules/fsevents/fsevents.node .
   cp snowboard-${TRAVIS_OS_NAME/osx/macos} snowboard
 
-  tar -czf $TRAVIS_ARCHIVE_FILE snowboard protagonist.node
+  if [ "$TRAVIS_OS_NAME" == "macos"]; then
+    cp node_modules/fsevents/fsevents.node .
+    tar -czf $TRAVIS_ARCHIVE_FILE snowboard protagonist.node fsevents.node
+  else
+    tar -czf $TRAVIS_ARCHIVE_FILE snowboard protagonist.node
+  fi
+
   shasum -a 256 -b $TRAVIS_ARCHIVE_FILE
 fi
