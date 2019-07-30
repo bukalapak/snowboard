@@ -6,7 +6,8 @@
   $: authorizeParams = qs.stringify(
     {
       client_id: authOptions.clientId,
-      redirect_uri: authOptions.callbackUrl
+      redirect_uri: authOptions.callbackUrl,
+      scope: authOptions.scopes || ""
     },
     true
   );

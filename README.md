@@ -160,6 +160,7 @@ html:
             callbackUrl: https://www.example.com
             clientId: <client-id>
             clientSecret: <client-secret>
+            scopes: <scope-names>
 ```
 
 Once you have a configuration file, you can do:
