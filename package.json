@@ -26,7 +26,7 @@
     "marked": "^0.7.0",
     "mkdirp": "^0.5.1",
     "morgan": "^1.9.1",
-    "outboard": "^2.8.0",
+    "outboard": "^2.9.0",
     "parse-duration": "^0.1.1",
     "parse-prefer-header": "^1.0.0",
     "prismjs": "^1.16.0",

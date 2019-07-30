@@ -467,19 +467,10 @@ doctrine@^3.0.0:
   dependencies:
     esutils "^2.0.2"
 
-drafter.js@^3.0.0-pre.2:
+drafter.js@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/drafter.js/-/drafter.js-3.0.0.tgz#2381e3d2980ac95214b6a7d270bc05da8a291de0"
   integrity sha512-MRvKtpn6UlY4k79TuWNSpPfmelFmV6HvaRQjbP0HBiO0pIUjrHPfTxIQHdJEZ5wewZswGD0px5FlU5gUjnoA1w==
-
-drafter@^2.0.0-pre.1:
-  version "2.0.0-pre.1"
-  resolved "https://registry.yarnpkg.com/drafter/-/drafter-2.0.0-pre.1.tgz#757e213feb5295b345c92b64c7eb437c507c4e70"
-  integrity sha512-6iiQwW7vZy5WDtWtg77JnPYyUn02DoaOyApLk1FkQWmuG9zRO44skWIfvRqe6CSoj7lI8s1h8HIvdz4XsEsZlA==
-  dependencies:
-    drafter.js "^3.0.0-pre.2"
-  optionalDependencies:
-    protagonist "^2.0.0-pre.2"
 
 ee-first@1.1.1:
   version "1.1.1"
@@ -1458,19 +1449,21 @@ os-tmpdir@~1.0.2:
   resolved "https://registry.yarnpkg.com/os-tmpdir/-/os-tmpdir-1.0.2.tgz#bbe67406c79aa85c5cfec766fe5734555dfa1274"
   integrity sha1-u+Z0BseaqFxc/sdm/lc0VV36EnQ=
 
-outboard@^2.8.0:
-  version "2.8.0"
-  resolved "https://registry.yarnpkg.com/outboard/-/outboard-2.8.0.tgz#562bbc4ae01be6048b98901f92fa7af2e0db3a2e"
-  integrity sha512-e+nlXRmuFkjt3d2FlIDZAvhn7Oicqepw+oefyV82Lv4vMDKOXjPcI0FKVMPbN00RC7cMY1+ZgaN5EVeFhe90CA==
+outboard@^2.9.0:
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/outboard/-/outboard-2.9.0.tgz#8b2ef94eb88876d12b236fc5982bd01f1a811663"
+  integrity sha512-28AI7l+hMK5vQx9RfwPuYj7CMAadDb4uSEYrVTC9dl45eCoOjlFPL5BbdZyJGBWyQv9gzF9xCwQbqQbN0FmopQ==
   dependencies:
     deckardcain "^0.4.1"
-    drafter "^2.0.0-pre.1"
+    drafter.js "^3.0.0"
     lodash "^4.17.11"
     minim "^0.23.2"
     minim-api-description "^0.9.1"
     minim-parse-result "^0.11.1"
     speakingurl "^14.0.1"
     uritemplate "^0.3.4"
+  optionalDependencies:
+    protagonist "^2.0.0"
 
 parent-module@^1.0.0:
   version "1.0.1"
@@ -1587,7 +1580,7 @@ progress@^2.0.0:
   resolved "https://registry.yarnpkg.com/progress/-/progress-2.0.3.tgz#7e8cf8d8f5b8f239c1bc68beb4eb78567d572ef8"
   integrity sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==
 
-protagonist@^2.0.0-pre.2:
+protagonist@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/protagonist/-/protagonist-2.0.0.tgz#a1fe1f7d359545b7f91a7f9b70f8b49478b89c1f"
   integrity sha512-2DKJjC1DOcHBMnOie8f9ETTG29WswyaQFfiuvcFqhlcf+zvayRI+ChrI7yixNWwPrp7j+Z9cpp4XlXpVy1VGgg==
