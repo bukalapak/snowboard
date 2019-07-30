@@ -39,6 +39,7 @@
     "rollup-plugin-terser": "^5.1.1",
     "speakingurl": "^14.0.1",
     "store2": "^2.8.0",
+    "strip-dirs": "^3.0.0",
     "svelte": "^3.6.5",
     "table": "^5.2.3",
     "tmp": "^0.1.0",
