@@ -210,8 +210,8 @@
     </div>
 
     {#await response}
-      <div class="small-section">
-        <span class="icon is-medium">
+      <div class="section has-text-centered">
+        <span class="icon is-medium has-text-danger">
           <i class="fas fa-2x fa-spinner fa-pulse" />
         </span>
       </div>
