@@ -7,6 +7,7 @@
     {
       client_id: authOptions.clientId,
       redirect_uri: authOptions.callbackUrl,
+      response_type: "code",
       scope: authOptions.scopes || ""
     },
     true
