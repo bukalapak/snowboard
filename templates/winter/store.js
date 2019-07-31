@@ -9,8 +9,18 @@ env.subscribe(val => {
   }
 });
 
+function unique(value, index, self) {
+  return self.indexOf(value) === index;
+}
+
 function add(data, val) {
-  return [data, val].filter(String).join(";");
+  const arr = data.split(";");
+  arr.push(val);
+
+  return arr
+    .filter(unique)
+    .filter(String)
+    .join(";");
 }
 
 function remove(data, val) {
