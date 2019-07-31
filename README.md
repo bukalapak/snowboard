@@ -172,6 +172,21 @@ $ snowboard html -o outputDir -c config.yaml API.apib
 $ snowboard http -c config.yaml API.apib
 ```
 
+To disable playground on particular environment, you can add `playground: false` under environment configuration, like:
+
+```yaml
+html:
+  playground:
+    enabled: true
+    env: development
+    environments:
+      development:
+        url: http://localhost:8087/
+        playground: false
+      staging:
+        url: https://staging.example.com/
+```
+
 ## Mock Server
 
 Another snowboard useful feature is having a mock server. You can use `mock` sub-command for that.

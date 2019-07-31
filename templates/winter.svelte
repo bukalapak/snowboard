@@ -290,13 +290,15 @@
       </div>
 
       {#if config.playground.enabled}
-        <PlaygroundPanel
-          {currentAction}
-          environments={config.playground.environments}
-          currentSample={sample(currentAction)}
-          requestHeaders={headersMap(currentAction)}
-          requestParameters={parametersMap(currentAction)}
-          requestBody={bodyMap(currentAction)} />
+        {#if environment.playground !== false}
+          <PlaygroundPanel
+            {currentAction}
+            environments={config.playground.environments}
+            currentSample={sample(currentAction)}
+            requestHeaders={headersMap(currentAction)}
+            requestParameters={parametersMap(currentAction)}
+            requestBody={bodyMap(currentAction)} />
+        {/if}
       {/if}
 
       <ParameterPanel parameters={currentAction.parameters} />
