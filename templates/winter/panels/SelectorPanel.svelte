@@ -3,7 +3,7 @@
   import LogoutButton from "../components/LogoutButton.svelte";
 
   import { env, auth } from "../store.js";
-  import { isAuth } from "../util.js";
+  import { isAuth, getToken } from "../util.js";
 
   export let environments;
   export let authenticating;
@@ -14,7 +14,15 @@
 
   function handleClick(event) {
     show = false;
-    env.set(event.target.dataset["name"]);
+    const envName = event.target.dataset["name"];
+
+    env.set(envName);
+
+    const authToken = getToken($env);
+
+    if (authToken) {
+      auth.add(envName);
+    }
   }
 
   function toggleClick() {
