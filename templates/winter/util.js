@@ -175,8 +175,12 @@ const exchangeToken = async (code, options) => {
     code: code
   });
 
-  const authReq = await authRequest();
-  const authCode = qs.parse(authReq);
+  const authCode = await authRequest();
+
+  if (typeof authCode === "string") {
+    const authParsed = qs.parse(authCode);
+    return { accessToken: authParsed.access_token };
+  }
 
   return { accessToken: authCode.access_token };
 };
