@@ -2,6 +2,7 @@
   import qs from "querystringify";
 
   export let authOptions;
+  export let fullWidth;
 
   $: authorizeParams = qs.stringify(
     {
@@ -16,7 +17,10 @@
   $: authorizeUrl = `${authOptions.authorizeUrl}${authorizeParams}`;
 </script>
 
-<a href={authorizeUrl} class="button is-dark is-rounded">
+<a
+  href={authorizeUrl}
+  class="button is-dark is-rounded"
+  class:is-fullwidth={fullWidth}>
   <span class="icon">
     <i class="fas fa-sign-in-alt" aria-hidden="true" />
   </span>

@@ -5,6 +5,7 @@
   import FieldDisabled from "../components/FieldDisabled.svelte";
   import FieldSwitch from "../components/FieldSwitch.svelte";
   import CodeBlock from "../components/CodeBlock.svelte";
+  import LoginButton from "../components/LoginButton.svelte";
 
   import {
     urlParse,
@@ -111,12 +112,18 @@
         </button>
       </div>
       <div class="column is-one-fifth">
-        <button class="button is-success is-fullwidth" on:click={handleClick}>
-          <span class="icon">
-            <i class="fas fa-paper-plane" />
-          </span>
-          <span>Send</span>
-        </button>
+        {#if isAuth(environment, 'oauth2') && !$auth.includes($env)}
+          <LoginButton
+            authOptions={environment.auth.options}
+            fullWidth={true} />
+        {:else}
+          <button class="button is-success is-fullwidth" on:click={handleClick}>
+            <span class="icon">
+              <i class="fas fa-paper-plane" />
+            </span>
+            <span>Send</span>
+          </button>
+        {/if}
       </div>
     </div>
 
