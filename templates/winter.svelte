@@ -78,6 +78,7 @@
   }
 
   let showMenu = true;
+  let authenticating = false;
 
   function burgerClick() {
     showMenu = !showMenu;
@@ -122,6 +123,10 @@
       const authParam = qs.parse(location.search);
 
       if (authParam.code) {
+        authenticating = true;
+
+        pushHistory(basePath(config));
+
         const { accessToken } = await exchangeToken(
           authParam.code,
           environment.auth.options
@@ -132,7 +137,7 @@
           auth.add($env);
         }
 
-        pushHistory(basePath(config));
+        authenticating = false;
       }
     }
 
@@ -221,7 +226,9 @@
   <div class="navbar-menu">
     <div class="navbar-end">
       {#if config.playground.enabled}
-        <SelectorPanel environments={config.playground.environments} />
+        <SelectorPanel
+          environments={config.playground.environments}
+          {authenticating} />
       {/if}
     </div>
   </div>

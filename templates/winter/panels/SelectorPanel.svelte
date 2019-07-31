@@ -6,6 +6,7 @@
   import { isAuth } from "../util.js";
 
   export let environments;
+  export let authenticating;
 
   let show = false;
 
@@ -32,7 +33,13 @@
 </style>
 
 {#if isAuth(environment, 'oauth2')}
-  {#if $auth.includes($env)}
+  {#if authenticating}
+    <div class="navbar-item">
+      <span class="icon is-medium has-text-danger">
+        <i class="fas fa-2x fa-spinner fa-pulse" />
+      </span>
+    </div>
+  {:else if $auth.includes($env)}
     <div class="navbar-item">
       <div class="field is-grouped">
         <p class="control">
