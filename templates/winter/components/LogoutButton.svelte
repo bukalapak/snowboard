@@ -1,10 +1,11 @@
 <script>
   import { env, auth } from "../store.js";
-  import { removeToken } from "../util.js";
+  import { removeToken, removeRefreshToken } from "../util.js";
 
   function handleClick() {
     auth.remove($env);
     removeToken($env);
+    removeRefreshToken($env);
   }
 </script>
 

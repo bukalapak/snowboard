@@ -2,7 +2,7 @@
   import LoginButton from "../components/LoginButton.svelte";
   import LogoutButton from "../components/LogoutButton.svelte";
 
-  import { env, auth } from "../store.js";
+  import { env, auth, token } from "../store.js";
   import { isAuth, getToken } from "../util.js";
 
   export let environments;
@@ -22,6 +22,7 @@
 
     if (authToken) {
       auth.add(envName);
+      token.set(authToken);
     }
   }
 

@@ -17,6 +17,7 @@
     stringify,
     colorize,
     setToken,
+    setRefreshToken,
     getToken,
     exchangeToken,
     isAuth,
@@ -25,7 +26,7 @@
     getEnv
   } from "./winter/util.js";
 
-  import { env, auth } from "./winter/store.js";
+  import { env, auth, token } from "./winter/store.js";
 
   export let title;
   export let description;
@@ -74,6 +75,7 @@
 
     if (authToken) {
       auth.add($env);
+      token.set(authToken);
     }
   }
 
@@ -127,7 +129,7 @@
 
         pushHistory(basePath(config));
 
-        const { accessToken } = await exchangeToken(
+        const { accessToken, refreshToken } = await exchangeToken(
           authParam.code,
           environment.auth.options
         );
@@ -135,6 +137,10 @@
         if (accessToken) {
           setToken($env, accessToken);
           auth.add($env);
+
+          if (refreshToken) {
+            setRefreshToken($env, refreshToken);
+          }
         }
 
         authenticating = false;

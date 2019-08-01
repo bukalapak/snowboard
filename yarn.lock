@@ -132,12 +132,27 @@ astral-regex@^1.0.0:
   resolved "https://registry.yarnpkg.com/astral-regex/-/astral-regex-1.0.0.tgz#6c8c3fb827dd43ee3918f27b82782ab7658a6fd9"
   integrity sha512-+Ryf6g3BKoRc7jfp7ad8tM4TtMiaWvbF/1/sQcZPkkS7ag3D5nMBCe2UfOTONtAkaG0tO0ij3C5Lwmf1EiyjHg==
 
+axios-auth-refresh@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/axios-auth-refresh/-/axios-auth-refresh-1.0.7.tgz#b9f39131ef39190c753d386746e9aa6e7114212b"
+  integrity sha512-TQl1tF+MY+iDG93WpiqcnwGb1lvdJLKzi0IN/7hBkYFlpOC6xv4S+cW3QHZOBjKpFWRWqHg9fXd/PDsCvJ3uLA==
+  dependencies:
+    axios "^0.18.0"
+
 axios-oauth-client@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/axios-oauth-client/-/axios-oauth-client-1.1.1.tgz#8b0adb1c919eecdbf9774df2e16ea0df771f917a"
   integrity sha512-n+mVV/GnUPJGOoXo2tVj0k84kde8Lx4RDZ/ba6Yt2Ad7VwxgB0y7DLnn1Ya1qcxHXwAdiswUVpn6AMogP5wvOg==
   dependencies:
     qs "^6.5.2"
+
+axios@^0.18.0:
+  version "0.18.1"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.18.1.tgz#ff3f0de2e7b5d180e757ad98000f1081b87bcea3"
+  integrity sha512-0BfJq4NSfQXd+SkFdrvFbG7addhYSBA2mQwISr46pD6E5iqkWg02RAs8vyTT/j0RTnoYmeXauBuSv1qKwR179g==
+  dependencies:
+    follow-redirects "1.5.10"
+    is-buffer "^2.0.2"
 
 axios@^0.19.0:
   version "0.19.0"

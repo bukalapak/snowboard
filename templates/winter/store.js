@@ -2,6 +2,7 @@ import { writable } from "svelte/store";
 import store from "store2";
 
 const env = writable("");
+const token = writable("");
 
 env.subscribe(val => {
   if (val != "") {
@@ -42,4 +43,4 @@ function createAuth() {
 
 const auth = createAuth();
 
-export { env, auth };
+export { env, auth, token };

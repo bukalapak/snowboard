@@ -18,7 +18,7 @@
     sendRequest
   } from "../util.js";
 
-  import { env, auth } from "../store.js";
+  import { env, auth, token } from "../store.js";
 
   export let show = true;
   export let environments;
@@ -31,19 +31,27 @@
 
   let response = {};
   let requestTab = 0;
+  let error;
 
   $: environment = environments[$env];
   $: currentUrl = urlParse(urlJoin(environment.url, currentAction.path));
+  $: {
+    error = currentUrl && undefined;
+  }
 
   afterUpdate(() => {
     response = {};
   });
 
   function handleClick() {
+    error = undefined;
     response = sendRequest($env, environment, currentAction, {
       headers: requestHeaders,
       parameters: requestParameters,
       body: requestBody
+    }).catch(function(err) {
+      error = err;
+      return Promise.reject(err);
     });
   }
 
@@ -53,6 +61,11 @@
 
   function basicAuth(username, password) {
     return btoa(`${username}:${password}`);
+  }
+
+  function handleTab(index) {
+    error = undefined;
+    requestTab = index;
   }
 </script>
 
@@ -130,19 +143,15 @@
     <div class="tabs is-boxed">
       <ul>
         <li class:is-active={requestTab === 0}>
-          <a href="javascript:void(0)" on:click={() => (requestTab = 0)}>
-            Headers
-          </a>
+          <a href="javascript:void(0)" on:click={() => handleTab(0)}>Headers</a>
         </li>
         <li class:is-active={requestTab === 1}>
-          <a href="javascript:void(0)" on:click={() => (requestTab = 1)}>
+          <a href="javascript:void(0)" on:click={() => handleTab(1)}>
             Parameters
           </a>
         </li>
         <li class:is-active={requestTab === 2}>
-          <a href="javascript:void(0)" on:click={() => (requestTab = 2)}>
-            Body
-          </a>
+          <a href="javascript:void(0)" on:click={() => handleTab(2)}>Body</a>
         </li>
       </ul>
     </div>
@@ -182,7 +191,7 @@
           <FieldDisabled
             name="authorization"
             placeholder="Authorization"
-            value="Bearer {getToken($env)}" />
+            value="Bearer {$token}" />
         {/if}
       {/if}
     </div>
@@ -249,7 +258,9 @@
           {/if}
         </div>
       {/if}
-    {:catch error}
+    {/await}
+
+    {#if error}
       <div class="small-section">
         <section class="hero is-danger">
           <section class="hero-body">
@@ -259,6 +270,6 @@
           </section>
         </section>
       </div>
-    {/await}
+    {/if}
   </div>
 </CollapsiblePanel>

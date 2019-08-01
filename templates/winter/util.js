@@ -8,6 +8,8 @@ import axios from "axios";
 import oauth from "axios-oauth-client";
 import qs from "querystringify";
 import urlParse from "url-parse";
+import createAuthRefreshInterceptor from "axios-auth-refresh";
+import { token } from "./store";
 
 Prism.languages.json = {
   property: {
@@ -159,14 +161,38 @@ const setToken = (env, token) => store.session.set(tokenName(env), token);
 const getToken = env => store.session.get(tokenName(env));
 const removeToken = env => store.session.remove(tokenName(env));
 
+const refreshTokenName = env => `refresh-token:${env}`;
+const setRefreshToken = (env, token) =>
+  store.session.set(refreshTokenName(env), token);
+const getRefreshToken = env => store.session.get(refreshTokenName(env));
+const removeRefreshToken = env => store.session.remove(refreshTokenName(env));
+
 const isAuth = (environment, name) => {
   return environment.auth && environment.auth.name === name;
 };
 
 const pushHistory = href => history.pushState(history.state, "", href);
 
+const requestToken = async (client, options) => {
+  const authRequest = oauth.client(client, options);
+  const authCode = await authRequest();
+
+  if (typeof authCode === "string") {
+    const authParsed = qs.parse(authCode);
+    return {
+      accessToken: authParsed.access_token,
+      refreshToken: authParsed.refresh_token
+    };
+  }
+
+  return {
+    accessToken: authCode.access_token,
+    refreshToken: authCode.refresh_token
+  };
+};
+
 const exchangeToken = async (code, options) => {
-  const authRequest = oauth.client(axios.create(), {
+  return requestToken(axios.create(), {
     url: options.tokenUrl,
     grant_type: "authorization_code",
     client_id: options.clientId,
@@ -174,15 +200,6 @@ const exchangeToken = async (code, options) => {
     redirect_uri: options.callbackUrl,
     code: code
   });
-
-  const authCode = await authRequest();
-
-  if (typeof authCode === "string") {
-    const authParsed = qs.parse(authCode);
-    return { accessToken: authParsed.access_token };
-  }
-
-  return { accessToken: authCode.access_token };
 };
 
 const populate = arr => {
@@ -196,6 +213,36 @@ const populate = arr => {
 
 const allowBody = action => {
   return ["put", "post", "patch"].includes(action.method);
+};
+
+const refreshInterceptor = (env, options) => {
+  const refreshToken = getRefreshToken(env);
+
+  return async failedRequest => {
+    const {
+      accessToken: newAccessToken,
+      refreshToken: newRefreshToken
+    } = await requestToken(axios, {
+      url: options.tokenUrl,
+      grant_type: "refresh_token",
+      client_id: options.clientId,
+      client_secret: options.clientSecret,
+      refresh_token: refreshToken
+    });
+
+    if (newAccessToken) {
+      token.set(newAccessToken);
+      setToken(env, newAccessToken);
+    }
+
+    if (newRefreshToken) {
+      setRefreshToken(env, newRefreshToken);
+    }
+
+    failedRequest.response.config.headers[
+      "Authorization"
+    ] = `Bearer ${newAccessToken}`;
+  };
 };
 
 const sendRequest = (
@@ -234,7 +281,16 @@ const sendRequest = (
     options.data = body;
   }
 
-  return axios(destUrl.pathname, options);
+  const client = axios.create(options);
+  createAuthRefreshInterceptor(
+    client,
+    refreshInterceptor(env, environment.auth.options),
+    { statusCodes: [401, 422] }
+  );
+
+  return client.request({
+    url: destUrl.pathname
+  });
 };
 
 const getEnv = () => store.get("env");
@@ -260,5 +316,8 @@ export {
   stringify,
   toc,
   urlJoin,
-  urlParse
+  urlParse,
+  setRefreshToken,
+  getRefreshToken,
+  removeRefreshToken
 };
