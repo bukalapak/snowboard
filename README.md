@@ -341,7 +341,7 @@ $ snowboard http -S -C cert.pem -K key.pem API.apib
 $ snowboard mock -S -C cert.pem -K key.pem API.apib
 ```
 
-For example, for local development, you can utilize [mkcert](https://github.com/FiloSottile/mkcert) to create your local development certificates and use them with snowboard:
+For example, for local development, you can utilize [mkcert](https://github.com/FiloSottile/mkcert) to create your local development certificate and use it with snowboard:
 
 ```
 # generate localhost certificate
