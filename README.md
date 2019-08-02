@@ -329,6 +329,31 @@ $ snowboard list API.apib ANOTHER.apib
 
 Using flag `--json`, you will receive output as JSON format.
 
+## SSL Support
+
+To enable HTTPS server, both `http`, and `mock` subcommand supports SSL configuration. You can do:
+
+```
+# http server
+$ snowboard http -S -C cert.pem -K key.pem API.apib
+
+# mock server
+$ snowboard mock -S -C cert.pem -K key.pem API.apib
+```
+
+For example, for local development, you can utilize [mkcert](https://github.com/FiloSottile/mkcert) to create your local development certificates and use them with snowboard:
+
+```
+# generate localhost certificate
+$ mkcert -install
+$ mkcert localhost
+
+# use the generated certificate with snowboard http or mock subcommand
+$ snowboard http -S -C localhost.pem -K localhost-key.pem API.apib
+
+# you can now access using https://localhost:8088/
+```
+
 ## Watcher Support
 
 To enable auto-regeneration on input files updates, you can add global flag `--watch`
