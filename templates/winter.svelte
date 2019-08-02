@@ -137,6 +137,7 @@
         if (accessToken) {
           setToken($env, accessToken);
           auth.add($env);
+          token.set(accessToken);
 
           if (refreshToken) {
             setRefreshToken($env, refreshToken);
