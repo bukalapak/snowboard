@@ -284,8 +284,7 @@ const sendRequest = (
   const client = axios.create(options);
   createAuthRefreshInterceptor(
     client,
-    refreshInterceptor(env, environment.auth.options),
-    { statusCodes: [401, 422] }
+    refreshInterceptor(env, environment.auth.options)
   );
 
   return client.request({
