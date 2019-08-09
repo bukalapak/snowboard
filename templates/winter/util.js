@@ -282,10 +282,13 @@ const sendRequest = (
   }
 
   const client = axios.create(options);
-  createAuthRefreshInterceptor(
-    client,
-    refreshInterceptor(env, environment.auth.options)
-  );
+
+  if (isAuth(environment, "oauth2")) {
+    createAuthRefreshInterceptor(
+      client,
+      refreshInterceptor(env, environment.auth.options)
+    );
+  }
 
   return client.request({
     url: destUrl.pathname
