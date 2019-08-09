@@ -65,10 +65,13 @@
   if (config.playground.enabled) {
     const savedEnv = getEnv();
 
-    if (!savedEnv) {
-      env.set(config.playground.env);
-    } else {
+    if (
+      savedEnv &&
+      Object.keys(config.playground.environments).includes(savedEnv)
+    ) {
       env.set(savedEnv);
+    } else {
+      env.set(config.playground.env);
     }
 
     const authToken = getToken($env);
