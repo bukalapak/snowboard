@@ -251,8 +251,11 @@ const sendRequest = (
   action,
   { headers, parameters, body }
 ) => {
+  const client = axios.create({
+    baseURL: environment.url
+  });
+
   const options = {
-    baseURL: environment.url,
     method: action.method,
     headers: populate(headers)
   };
@@ -276,12 +279,11 @@ const sendRequest = (
   const destUrl = urlParse(expandedUrl, true);
 
   options.params = destUrl.query;
+  options.url = destUrl.pathname;
 
   if (allowBody(action)) {
     options.data = body;
   }
-
-  const client = axios.create(options);
 
   if (isAuth(environment, "oauth2")) {
     createAuthRefreshInterceptor(
@@ -290,9 +292,7 @@ const sendRequest = (
     );
   }
 
-  return client.request({
-    url: destUrl.pathname
-  });
+  return client.request(options);
 };
 
 const getEnv = () => store.get("env");
