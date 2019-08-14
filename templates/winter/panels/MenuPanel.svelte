@@ -63,6 +63,7 @@
       overflow: -moz-scrollbars-none;
       -ms-overflow-style: none;
       overflow-x: hidden;
+      overflow-y: auto;
     }
   }
 </style>
