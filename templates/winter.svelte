@@ -45,6 +45,8 @@
 
     const slug = target.dataset["slug"];
     index = actions.findIndex(el => el.slug === slug);
+
+    document.body.scrollTop = document.documentElement.scrollTop = 0;
   }
 
   function tocClick(event) {
