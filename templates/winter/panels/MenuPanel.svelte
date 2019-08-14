@@ -42,7 +42,6 @@
   @media screen and (min-width: 768px) {
     .hero {
       position: fixed;
-      top: 54px;
       width: -moz-calc(33.3333% - 3.5rem);
       width: -webkit-calc(33.3333% - 3.5rem);
       width: -o-calc(33.3333% - 3.5rem);
