@@ -32,7 +32,38 @@
   }
 
   .hero-body {
-    padding: 1.5rem;
+    padding: 1.5rem 0;
+  }
+
+  .menu-wrapper::-webkit-scrollbar {
+    display: none;
+  }
+
+  @media screen and (min-width: 768px) {
+    .hero {
+      position: fixed;
+      width: -moz-calc(33.3333% - 3.5rem);
+      width: -webkit-calc(33.3333% - 3.5rem);
+      width: -o-calc(33.3333% - 3.5rem);
+      width: calc(33.3333% - 3.5rem);
+    }
+    .menu-wrapper {
+      position: fixed;
+      top: 140px;
+      padding: 1.5rem 1.5rem 1.5rem 0;
+      width: -moz-calc(33.3333% - 2rem);
+      width: -webkit-calc(33.3333% - 2rem);
+      width: -o-calc(33.3333% - 2rem);
+      width: calc(33.3333% - 2rem);
+      height: -moz-calc(100% - 140px);
+      height: -webkit-calc(100% - 140px);
+      height: -o-calc(100% - 140px);
+      height: calc(100% - 140px);
+      overflow: -moz-scrollbars-none;
+      -ms-overflow-style: none;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
   }
 </style>
 
@@ -53,44 +84,46 @@
     </div>
   </section>
 
-  <p class="menu-label">API</p>
-  <ul class="menu-list">
-    <li>
-      <a href={basePath(config)} on:click|preventDefault={tocClick}>
-        Introduction
-      </a>
-    </li>
-    {#if tagHeaders}
-      <li>
-        <ul>
-          {#each tagHeaders as header}
-            {#if header.level === 0}
-              <li>
-                <a href="#{headerLink(header.text)}" on:click={tocClick}>
-                  {header.text}
-                </a>
-              </li>
-            {/if}
-          {/each}
-        </ul>
-      </li>
-    {/if}
-  </ul>
-
-  {#each filteredActions as tag}
-    {#if tag.title}
-      <p class="menu-label">{tag.title}</p>
-    {/if}
-
+  <div class="menu-wrapper">
+    <p class="menu-label">API</p>
     <ul class="menu-list">
-      {#each tag.children as child}
-        <MenuItem
-          title={child.title}
-          actions={child.actions}
-          hidden={actionsCount > 50}
-          {currentSlug}
-          {handleClick} />
-      {/each}
+      <li>
+        <a href={basePath(config)} on:click|preventDefault={tocClick}>
+          Introduction
+        </a>
+      </li>
+      {#if tagHeaders}
+        <li>
+          <ul>
+            {#each tagHeaders as header}
+              {#if header.level === 0}
+                <li>
+                  <a href="#{headerLink(header.text)}" on:click={tocClick}>
+                    {header.text}
+                  </a>
+                </li>
+              {/if}
+            {/each}
+          </ul>
+        </li>
+      {/if}
     </ul>
-  {/each}
+
+    {#each filteredActions as tag}
+      {#if tag.title}
+        <p class="menu-label">{tag.title}</p>
+      {/if}
+
+      <ul class="menu-list">
+        {#each tag.children as child}
+          <MenuItem
+            title={child.title}
+            actions={child.actions}
+            hidden={actionsCount > 50}
+            {currentSlug}
+            {handleClick} />
+        {/each}
+      </ul>
+    {/each}
+  </div>
 </aside>
