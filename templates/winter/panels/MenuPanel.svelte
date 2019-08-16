@@ -23,16 +23,20 @@
 </script>
 
 <style>
+  .hero, .menu-wrapper {
+    padding: 0 2.75rem 0 2rem;
+  }
+
   .hero {
     position: sticky;
     top: 54px;
     background-color: #fafafa;
-    box-shadow: 0 2px 0 0 #f5f5f5;
     margin-bottom: 1.5rem;
   }
 
   .hero-body {
     padding: 1.5rem 0;
+    box-shadow: 0 2px 0 0 #f5f5f5;
   }
 
   .menu-wrapper::-webkit-scrollbar {
@@ -40,21 +44,22 @@
   }
 
   @media screen and (min-width: 768px) {
+    .hero, .menu-wrapper {
+      width: -moz-calc(25% - .5rem);
+      width: -webkit-calc(25% - .5rem);
+      width: -o-calc(25% - .5rem);
+      width: calc(25% - .5rem);
+    }
+
     .hero {
       position: fixed;
-      width: -moz-calc(33.3333% - 3.5rem);
-      width: -webkit-calc(33.3333% - 3.5rem);
-      width: -o-calc(33.3333% - 3.5rem);
-      width: calc(33.3333% - 3.5rem);
+      padding: 0 1.25rem;
     }
+
     .menu-wrapper {
       position: fixed;
       top: 140px;
-      padding: 1.5rem 1.5rem 1.5rem 0;
-      width: -moz-calc(33.3333% - 2rem);
-      width: -webkit-calc(33.3333% - 2rem);
-      width: -o-calc(33.3333% - 2rem);
-      width: calc(33.3333% - 2rem);
+      padding: 1.5rem 1.25rem;
       height: -moz-calc(100% - 140px);
       height: -webkit-calc(100% - 140px);
       height: -o-calc(100% - 140px);

@@ -165,7 +165,7 @@
 
 <style>
   .sidenav {
-    padding: 1rem 2rem;
+    padding: 1rem 0 1rem .75rem;
   }
 
   .main {
@@ -248,7 +248,7 @@
 
 <div class="columns">
   <div
-    class="column is-one-third sidenav"
+    class="column is-one-quarter sidenav"
     class:is-hidden-mobile={showMenu}
     id="mainnav">
     <MenuPanel
@@ -261,7 +261,7 @@
       {tocClick} />
   </div>
 
-  <div class="column is-two-thirds main">
+  <div class="column is-three-quarters main">
     {#if index === -1}
       <div class="content">
         {@html markdown(description)}
@@ -327,7 +327,7 @@
   </div>
 </div>
 <footer class="footer">
-  <div class="content has-text-centered">
+  <div class="content column is-offset-one-quarter is-paddingless has-text-centered">
     <p>
       <strong>{title}</strong>
       powered by
