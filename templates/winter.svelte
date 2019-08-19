@@ -207,6 +207,35 @@
   .icon-brand {
     margin-right: 0.5rem;
   }
+
+  .menu-collapsible {
+    display: none;
+  }
+
+  @media screen and (min-width: 768px) {
+    .menu-collapsible {
+      display: block;
+      position: fixed;
+      border-top: 1px solid #eee;
+      width: calc(25% - .5rem);
+      height: calc(2.5rem + 10px);
+      left: 0;
+      bottom: 0;
+      font-size: 1.33333em;
+      line-height: calc(2.5rem + 10px);
+      text-align: center;
+      color: #b5b5b5;
+      font-weight: 300;
+      box-shadow: 2px 0 0 #f5f5f5;
+      cursor: pointer;
+    }
+
+    .menu-collapsible:hover {
+      background: rgba(0,0,0,.05);
+      box-shadow: 2px 0 0 #eee;
+      border-color: #e8e8e8;
+    }
+  }
 </style>
 
 <nav
@@ -259,6 +288,10 @@
       {config}
       {handleClick}
       {tocClick} />
+    <div class="menu-collapsible">
+      <span class="icon">&laquo;</span>
+      <span class="fa-xs">Collapse sidebar</span>
+    </div>
   </div>
 
   <div class="column is-three-quarters main">

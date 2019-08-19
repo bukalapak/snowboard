@@ -59,11 +59,11 @@
     .menu-wrapper {
       position: fixed;
       top: 140px;
-      padding: 1.5rem 1.25rem;
-      height: -moz-calc(100% - 140px);
-      height: -webkit-calc(100% - 140px);
-      height: -o-calc(100% - 140px);
-      height: calc(100% - 140px);
+      padding: 1.5rem 1.25rem 1.25rem;
+      height: -moz-calc(100% - 150px - 2.5rem);
+      height: -webkit-calc(100% - 150px - 2.5rem);
+      height: -o-calc(100% - 150px - 2.5rem);
+      height: calc(100% - 150px - 2.5rem);
       overflow: -moz-scrollbars-none;
       -ms-overflow-style: none;
       overflow-x: hidden;
