@@ -8,11 +8,11 @@
   export let tagHeaders = [];
   export let currentSlug;
   export let actionsCount;
-
   export let isCollapsed;
 
   export let handleClick;
   export let tocClick;
+  export let collapseToggle;
 
   let query = "";
 
@@ -129,7 +129,7 @@
             class="input is-rounded"
             bind:value={query}
             placeholder="Filter by path, method, and title..." />
-          <span class="icon is-right icon-input-search">
+          <span class="icon is-right icon-input-search" on:click={collapseToggle}>
             <i class="fas fa-search" />
           </span>
         </p>

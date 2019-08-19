@@ -85,11 +85,15 @@
   }
 
   let showMenu = true;
-  let collapsed = true;
+  let collapsed = false;
   let authenticating = false;
 
   function burgerClick() {
     showMenu = !showMenu;
+  }
+
+  function collapseToggle() {
+    collapsed = !collapsed;
   }
 
   function sample(action) {
@@ -301,10 +305,16 @@
       isCollapsed={collapsed}
       {config}
       {handleClick}
-      {tocClick} />
-    <div class="menu-collapsible">
-      <span class="icon">&raquo;</span>
-      <span class="fa-xs">Collapse sidebar</span>
+      {tocClick}
+      {collapseToggle} />
+    <div class="menu-collapsible" on:click={collapseToggle}>
+      {#if collapsed}
+        <span class="icon">&raquo;</span>
+      {/if}
+      {#if !collapsed}
+        <span class="icon">&laquo;</span>
+        <span class="fa-xs">Collapse sidebar</span>
+      {/if}
     </div>
   </div>
 
