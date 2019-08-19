@@ -223,6 +223,10 @@
     display: none;
   }
 
+  .footer .content {
+    transition: margin 0.3s;
+  }
+
   @media screen and (min-width: 768px) {
     .menu-collapsible {
       display: block;
@@ -394,7 +398,7 @@
   </div>
 </div>
 <footer class="footer">
-  <div class="content column is-offset-one-quarter is-paddingless has-text-centered">
+  <div class="content column is-paddingless has-text-centered" class:is-offset-one-quarter={!collapsed}>
     <p>
       <strong>{title}</strong>
       powered by
