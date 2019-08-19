@@ -166,6 +166,12 @@
       index = actions.findIndex(el => el.slug === slug);
     }
   });
+
+  document.onkeyup = function(e) {
+    if ((e.which || e.keyCode) == 219) {
+      collapseToggle();
+    }
+  };
 </script>
 
 <style>
@@ -313,7 +319,7 @@
       {collapseToggle} />
     <div class="menu-collapsible" on:click={collapseToggle}>
       {#if collapsed}
-        <span class="icon">&raquo;</span>
+        <span class="icon" title="Expand [">&raquo;</span>
       {/if}
       {#if !collapsed}
         <span class="icon">&laquo;</span>
