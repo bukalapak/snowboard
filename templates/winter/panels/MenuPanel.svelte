@@ -70,6 +70,7 @@
       -ms-overflow-style: none;
       overflow-x: hidden;
       overflow-y: auto;
+      transition: opacity 0.3s, left 0.3s;
     }
 
     .menu.is-collapsed {

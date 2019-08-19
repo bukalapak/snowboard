@@ -242,7 +242,7 @@
     }
 
     .is-collapsed .sidenav {
-      width: auto;
+      width: 3.75rem;
     }
 
     .is-collapsed .main {
@@ -251,6 +251,10 @@
 
     .is-collapsed .menu-collapsible {
       width: calc(3rem - 2px);
+    }
+
+    .menu-collapsible, .sidenav, .main {
+      transition: width 0.3s;
     }
   }
 </style>
