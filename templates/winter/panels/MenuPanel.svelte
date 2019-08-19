@@ -9,6 +9,8 @@
   export let currentSlug;
   export let actionsCount;
 
+  export let isCollapsed;
+
   export let handleClick;
   export let tocClick;
 
@@ -69,10 +71,56 @@
       overflow-x: hidden;
       overflow-y: auto;
     }
+
+    .menu.is-collapsed {
+      width: 3rem;
+    }
+
+    .is-collapsed .hero,
+    .is-collapsed .hero-body {
+      width: calc(3rem - 2px);
+    }
+
+    .is-collapsed .hero {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .is-collapsed .hero-body {
+      padding-left: .3175rem;
+      padding-right: .3175rem;
+      box-shadow: none;
+    }
+
+    .is-collapsed .input.is-rounded {
+      padding-left: 0;
+      padding-right: 0;
+      opacity: 0;
+    }
+
+    .is-collapsed .icon-input-search {
+      color: #b5b5b5;
+      background-color: #eee;
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%;
+      border-radius: 50%;
+      cursor: pointer;
+      pointer-events: auto;
+    }
+
+    .is-collapsed .icon-input-search:hover {
+      color: #999;
+      background-color: #e0e0e0;
+    }
+
+    .is-collapsed .menu-wrapper {
+      left: -30%;
+      opacity: 0;
+    }
   }
 </style>
 
-<aside class="menu">
+<aside class="menu" class:is-collapsed={isCollapsed}>
   <section class="hero is-sticky">
     <div class="hero-body">
       <div class="field">
@@ -81,7 +129,7 @@
             class="input is-rounded"
             bind:value={query}
             placeholder="Filter by path, method, and title..." />
-          <span class="icon is-right">
+          <span class="icon is-right icon-input-search">
             <i class="fas fa-search" />
           </span>
         </p>

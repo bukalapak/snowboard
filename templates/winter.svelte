@@ -85,6 +85,7 @@
   }
 
   let showMenu = true;
+  let collapsed = true;
   let authenticating = false;
 
   function burgerClick() {
@@ -235,6 +236,18 @@
       box-shadow: 2px 0 0 #eee;
       border-color: #e8e8e8;
     }
+
+    .is-collapsed .sidenav {
+      width: auto;
+    }
+
+    .is-collapsed .main {
+      width: calc(100% - 4.5rem);
+    }
+
+    .is-collapsed .menu-collapsible {
+      width: calc(3rem - 2px);
+    }
   }
 </style>
 
@@ -275,7 +288,7 @@
   </div>
 </nav>
 
-<div class="columns">
+<div class="columns" class:is-collapsed={collapsed}>
   <div
     class="column is-one-quarter sidenav"
     class:is-hidden-mobile={showMenu}
@@ -285,11 +298,12 @@
       tagHeaders={toc(description)}
       currentSlug={currentAction && currentAction.slug}
       actionsCount={actions.length}
+      isCollapsed={collapsed}
       {config}
       {handleClick}
       {tocClick} />
     <div class="menu-collapsible">
-      <span class="icon">&laquo;</span>
+      <span class="icon">&raquo;</span>
       <span class="fa-xs">Collapse sidebar</span>
     </div>
   </div>
