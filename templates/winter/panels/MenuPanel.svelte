@@ -14,7 +14,11 @@
 
   let query = "";
 
-  $: regex = new RegExp(query, "gi");
+  function escape(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+  }
+
+  $: regex = new RegExp(escape(query), "gi");
   $: filteredActions = filterActions(tagActions, regex);
 
   function headerLink(text) {
