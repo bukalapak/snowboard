@@ -246,7 +246,7 @@
       left: 0;
       bottom: 0;
       font-size: 1.33333em;
-      line-height: calc(2.5rem + 10px);
+      line-height: calc(2.5rem + 5px);
       text-align: center;
       color: #b5b5b5;
       font-weight: 300;
@@ -335,8 +335,7 @@
         <span class="icon" title="Expand [">&raquo;</span>
       {/if}
       {#if !collapsed}
-        <span class="icon">&laquo;</span>
-        <span class="fa-xs">Collapse sidebar</span>
+        <span class="icon">&laquo;</span><span class="fa-xs">Collapse sidebar</span>
       {/if}
     </div>
   </div>
