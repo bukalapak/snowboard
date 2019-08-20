@@ -12,7 +12,7 @@
 
   export let handleClick;
   export let tocClick;
-  export let collapseToggle;
+  export let searchClick;
 
   let query = "";
 
@@ -127,10 +127,11 @@
       <div class="field">
         <p class="control has-icons-right">
           <input
+            id="search-input-text"
             class="input is-rounded"
             bind:value={query}
             placeholder="Filter by path, method, and title..." />
-          <span class="icon is-right icon-input-search" on:click={collapseToggle}>
+          <span class="icon is-right icon-input-search" on:click={searchClick}>
             <i class="fas fa-search" />
           </span>
         </p>

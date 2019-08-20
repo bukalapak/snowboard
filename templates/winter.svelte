@@ -96,6 +96,15 @@
     collapsed = !collapsed;
   }
 
+  function searchClick() {
+    collapseToggle();
+
+    const searchInput = document.getElementById("search-input-text");
+    if (searchInput) {
+      searchInput.focus();
+    }
+  }
+
   function sample(action) {
     return action.transactions[0].request;
   }
@@ -320,7 +329,7 @@
       {config}
       {handleClick}
       {tocClick}
-      {collapseToggle} />
+      {searchClick} />
     <div class="menu-collapsible" on:click={collapseToggle}>
       {#if collapsed}
         <span class="icon" title="Expand [">&raquo;</span>
