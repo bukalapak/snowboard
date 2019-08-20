@@ -114,7 +114,9 @@
   <div slot="body">
     <div class="columns">
       <div class="column">
-        <button
+        <a
+          href="{currentUrl.origin}{currentUrl.pathname}"
+          target="_blank"
           class="button button-left is-warning is-family-code is-fullwidth">
           <span class="is-uppercase has-text-weight-bold">
             {currentAction.method}
@@ -122,7 +124,7 @@
           &nbsp;
           <span>{currentUrl.origin}</span>
           <span class="has-text-weight-bold">{currentUrl.pathname}</span>
-        </button>
+        </a>
       </div>
       <div class="column is-one-fifth">
         {#if isAuth(environment, 'oauth2') && !$auth.includes($env)}
