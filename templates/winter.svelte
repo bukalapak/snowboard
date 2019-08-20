@@ -85,10 +85,24 @@
   }
 
   let showMenu = true;
+  let collapsed = false;
   let authenticating = false;
 
   function burgerClick() {
     showMenu = !showMenu;
+  }
+
+  function collapseToggle() {
+    collapsed = !collapsed;
+  }
+
+  function searchClick() {
+    collapseToggle();
+
+    const searchInput = document.getElementById("search-input-text");
+    if (searchInput) {
+      searchInput.focus();
+    }
   }
 
   function sample(action) {
@@ -161,11 +175,17 @@
       index = actions.findIndex(el => el.slug === slug);
     }
   });
+
+  document.onkeyup = function(e) {
+    if ((e.which || e.keyCode) == 219) {
+      collapseToggle();
+    }
+  };
 </script>
 
 <style>
   .sidenav {
-    padding: 1rem 2rem;
+    padding: 1rem 0 1rem .75rem;
   }
 
   .main {
@@ -207,6 +227,55 @@
   .icon-brand {
     margin-right: 0.5rem;
   }
+
+  .menu-collapsible {
+    display: none;
+  }
+
+  .footer .content {
+    transition: margin 0.3s;
+  }
+
+  @media screen and (min-width: 768px) {
+    .menu-collapsible {
+      display: block;
+      position: fixed;
+      border-top: 1px solid #eee;
+      width: calc(25% - .5rem);
+      height: calc(2.5rem + 10px);
+      left: 0;
+      bottom: 0;
+      font-size: 1.33333em;
+      line-height: calc(2.5rem + 5px);
+      text-align: center;
+      color: #b5b5b5;
+      font-weight: 300;
+      box-shadow: 2px 0 0 #f5f5f5;
+      cursor: pointer;
+    }
+
+    .menu-collapsible:hover {
+      background: rgba(0,0,0,.05);
+      box-shadow: 2px 0 0 #eee;
+      border-color: #e8e8e8;
+    }
+
+    .is-collapsed .sidenav {
+      width: 3.75rem;
+    }
+
+    .is-collapsed .main {
+      width: calc(100% - 4.5rem);
+    }
+
+    .is-collapsed .menu-collapsible {
+      width: calc(3rem - 2px);
+    }
+
+    .menu-collapsible, .sidenav, .main {
+      transition: width 0.3s;
+    }
+  }
 </style>
 
 <nav
@@ -246,9 +315,9 @@
   </div>
 </nav>
 
-<div class="columns">
+<div class="columns" class:is-collapsed={collapsed}>
   <div
-    class="column is-one-third sidenav"
+    class="column is-one-quarter sidenav"
     class:is-hidden-mobile={showMenu}
     id="mainnav">
     <MenuPanel
@@ -256,12 +325,22 @@
       tagHeaders={toc(description)}
       currentSlug={currentAction && currentAction.slug}
       actionsCount={actions.length}
+      isCollapsed={collapsed}
       {config}
       {handleClick}
-      {tocClick} />
+      {tocClick}
+      {searchClick} />
+    <div class="menu-collapsible" on:click={collapseToggle}>
+      {#if collapsed}
+        <span class="icon" title="Expand [">&raquo;</span>
+      {/if}
+      {#if !collapsed}
+        <span class="icon">&laquo;</span><span class="fa-xs">Collapse sidebar</span>
+      {/if}
+    </div>
   </div>
 
-  <div class="column is-two-thirds main">
+  <div class="column is-three-quarters main">
     {#if index === -1}
       <div class="content">
         {@html markdown(description)}
@@ -327,7 +406,7 @@
   </div>
 </div>
 <footer class="footer">
-  <div class="content has-text-centered">
+  <div class="content column is-paddingless has-text-centered" class:is-offset-one-quarter={!collapsed}>
     <p>
       <strong>{title}</strong>
       powered by

@@ -8,9 +8,11 @@
   export let tagHeaders = [];
   export let currentSlug;
   export let actionsCount;
+  export let isCollapsed;
 
   export let handleClick;
   export let tocClick;
+  export let searchClick;
 
   let query = "";
 
@@ -27,16 +29,20 @@
 </script>
 
 <style>
+  .hero, .menu-wrapper {
+    padding: 0 2.75rem 0 2rem;
+  }
+
   .hero {
     position: sticky;
     top: 54px;
     background-color: #fafafa;
-    box-shadow: 0 2px 0 0 #f5f5f5;
     margin-bottom: 1.5rem;
   }
 
   .hero-body {
     padding: 1.5rem 0;
+    box-shadow: 0 2px 0 0 #f5f5f5;
   }
 
   .menu-wrapper::-webkit-scrollbar {
@@ -44,43 +50,92 @@
   }
 
   @media screen and (min-width: 768px) {
+    .hero, .menu-wrapper {
+      width: -moz-calc(25% - .5rem);
+      width: -webkit-calc(25% - .5rem);
+      width: -o-calc(25% - .5rem);
+      width: calc(25% - .5rem);
+    }
+
     .hero {
       position: fixed;
-      width: -moz-calc(33.3333% - 3.5rem);
-      width: -webkit-calc(33.3333% - 3.5rem);
-      width: -o-calc(33.3333% - 3.5rem);
-      width: calc(33.3333% - 3.5rem);
+      padding: 0 1.25rem;
     }
+
     .menu-wrapper {
       position: fixed;
       top: 140px;
-      padding: 1.5rem 1.5rem 1.5rem 0;
-      width: -moz-calc(33.3333% - 2rem);
-      width: -webkit-calc(33.3333% - 2rem);
-      width: -o-calc(33.3333% - 2rem);
-      width: calc(33.3333% - 2rem);
-      height: -moz-calc(100% - 140px);
-      height: -webkit-calc(100% - 140px);
-      height: -o-calc(100% - 140px);
-      height: calc(100% - 140px);
+      padding: 1.5rem 1.25rem 1.25rem;
+      height: -moz-calc(100% - 150px - 2.5rem);
+      height: -webkit-calc(100% - 150px - 2.5rem);
+      height: -o-calc(100% - 150px - 2.5rem);
+      height: calc(100% - 150px - 2.5rem);
       overflow: -moz-scrollbars-none;
       -ms-overflow-style: none;
       overflow-x: hidden;
       overflow-y: auto;
+      transition: opacity 0.3s, left 0.3s;
+    }
+
+    .menu.is-collapsed {
+      width: 3rem;
+    }
+
+    .is-collapsed .hero,
+    .is-collapsed .hero-body {
+      width: calc(3rem - 2px);
+    }
+
+    .is-collapsed .hero {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .is-collapsed .hero-body {
+      padding-left: .3175rem;
+      padding-right: .3175rem;
+      box-shadow: none;
+    }
+
+    .is-collapsed .input.is-rounded {
+      padding-left: 0;
+      padding-right: 0;
+      opacity: 0;
+    }
+
+    .is-collapsed .icon-input-search {
+      color: #b5b5b5;
+      background-color: #eee;
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%;
+      border-radius: 50%;
+      cursor: pointer;
+      pointer-events: auto;
+    }
+
+    .is-collapsed .icon-input-search:hover {
+      color: #999;
+      background-color: #e0e0e0;
+    }
+
+    .is-collapsed .menu-wrapper {
+      left: -30%;
+      opacity: 0;
     }
   }
 </style>
 
-<aside class="menu">
+<aside class="menu" class:is-collapsed={isCollapsed}>
   <section class="hero is-sticky">
     <div class="hero-body">
       <div class="field">
         <p class="control has-icons-right">
           <input
+            id="search-input-text"
             class="input is-rounded"
             bind:value={query}
             placeholder="Filter by path, method, and title..." />
-          <span class="icon is-right">
+          <span class="icon is-right icon-input-search" on:click={searchClick}>
             <i class="fas fa-search" />
           </span>
         </p>
