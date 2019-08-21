@@ -29,7 +29,8 @@
 </script>
 
 <style>
-  .hero, .menu-wrapper {
+  .hero,
+  .menu-wrapper {
     padding: 0 2.75rem 0 2rem;
   }
 
@@ -50,11 +51,12 @@
   }
 
   @media screen and (min-width: 768px) {
-    .hero, .menu-wrapper {
-      width: -moz-calc(25% - .5rem);
-      width: -webkit-calc(25% - .5rem);
-      width: -o-calc(25% - .5rem);
-      width: calc(25% - .5rem);
+    .hero,
+    .menu-wrapper {
+      width: -moz-calc(25% - 0.5rem);
+      width: -webkit-calc(25% - 0.5rem);
+      width: -o-calc(25% - 0.5rem);
+      width: calc(25% - 0.5rem);
     }
 
     .hero {
@@ -92,8 +94,8 @@
     }
 
     .is-collapsed .hero-body {
-      padding-left: .3175rem;
-      padding-right: .3175rem;
+      padding-left: 0.3175rem;
+      padding-right: 0.3175rem;
       box-shadow: none;
     }
 

@@ -258,6 +258,8 @@
           {/if}
         </div>
       {/if}
+    {:catch}
+      <div>&nbsp;</div>
     {/await}
 
     {#if error}

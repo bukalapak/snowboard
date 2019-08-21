@@ -185,7 +185,7 @@
 
 <style>
   .sidenav {
-    padding: 1rem 0 1rem .75rem;
+    padding: 1rem 0 1rem 0.75rem;
   }
 
   .main {
@@ -241,7 +241,7 @@
       display: block;
       position: fixed;
       border-top: 1px solid #eee;
-      width: calc(25% - .5rem);
+      width: calc(25% - 0.5rem);
       height: calc(2.5rem + 10px);
       left: 0;
       bottom: 0;
@@ -255,7 +255,7 @@
     }
 
     .menu-collapsible:hover {
-      background: rgba(0,0,0,.05);
+      background: rgba(0, 0, 0, 0.05);
       box-shadow: 2px 0 0 #eee;
       border-color: #e8e8e8;
     }
@@ -272,7 +272,9 @@
       width: calc(3rem - 2px);
     }
 
-    .menu-collapsible, .sidenav, .main {
+    .menu-collapsible,
+    .sidenav,
+    .main {
       transition: width 0.3s;
     }
   }
@@ -335,7 +337,8 @@
         <span class="icon" title="Expand [">&raquo;</span>
       {/if}
       {#if !collapsed}
-        <span class="icon">&laquo;</span><span class="fa-xs">Collapse sidebar</span>
+        <span class="icon">&laquo;</span>
+        <span class="fa-xs">Collapse sidebar</span>
       {/if}
     </div>
   </div>
@@ -406,7 +409,9 @@
   </div>
 </div>
 <footer class="footer">
-  <div class="content column is-paddingless has-text-centered" class:is-offset-one-quarter={!collapsed}>
+  <div
+    class="content column is-paddingless has-text-centered"
+    class:is-offset-one-quarter={!collapsed}>
     <p>
       <strong>{title}</strong>
       powered by
