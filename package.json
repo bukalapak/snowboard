@@ -29,6 +29,7 @@
     "marked": "^0.7.0",
     "mkdirp": "^0.5.1",
     "morgan": "^1.9.1",
+    "ora": "^3.4.0",
     "outboard": "^2.9.0",
     "parse-duration": "^0.1.1",
     "parse-prefer-header": "^1.0.0",
