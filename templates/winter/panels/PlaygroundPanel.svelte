@@ -15,7 +15,8 @@
     getToken,
     isAuth,
     allowBody,
-    sendRequest
+    sendRequest,
+    copyUrl
   } from "../util.js";
 
   import { env, auth, token } from "../store.js";
@@ -32,6 +33,7 @@
   let response = {};
   let requestTab = 0;
   let error;
+  let copying = false;
 
   $: environment = environments[$env];
   $: currentUrl = urlParse(urlJoin(environment.url, currentAction.path));
@@ -66,6 +68,16 @@
   function handleTab(index) {
     error = undefined;
     requestTab = index;
+  }
+
+  function handleCopy() {
+    copying = true;
+
+    setTimeout(() => {
+      copying = false;
+    }, 2000);
+
+    copyUrl(currentAction, requestParameters);
   }
 </script>
 
@@ -114,17 +126,24 @@
   <div slot="body">
     <div class="columns">
       <div class="column">
-        <a
-          href="{currentUrl.origin}{currentUrl.pathname}"
-          target="_blank"
-          class="button button-left is-warning is-family-code is-fullwidth">
-          <span class="is-uppercase has-text-weight-bold">
-            {currentAction.method}
-          </span>
-          &nbsp;
-          <span>{currentUrl.origin}</span>
-          <span class="has-text-weight-bold">{currentUrl.pathname}</span>
-        </a>
+        {#if copying}
+          <button
+            class="button button-left is-warning is-family-code is-fullwidth">
+            <span>URL has been copied to clipboard.</span>
+          </button>
+        {:else}
+          <a
+            href="javascript:void(0)"
+            on:click={handleCopy}
+            class="button button-left is-warning is-family-code is-fullwidth">
+            <span class="is-uppercase has-text-weight-bold">
+              {currentAction.method}
+            </span>
+            &nbsp;
+            <span>{currentUrl.origin}</span>
+            <span class="has-text-weight-bold">{currentUrl.pathname}</span>
+          </a>
+        {/if}
       </div>
       <div class="column is-one-fifth">
         {#if isAuth(environment, 'oauth2') && !$auth.includes($env)}
