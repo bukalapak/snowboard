@@ -9,6 +9,7 @@ import oauth from "axios-oauth-client";
 import qs from "querystringify";
 import urlParse from "url-parse";
 import createAuthRefreshInterceptor from "axios-auth-refresh";
+import copy from "clipboard-copy";
 import { token } from "./store";
 
 Prism.languages.json = {
@@ -295,6 +296,13 @@ const sendRequest = (
   return client.request(options);
 };
 
+const copyUrl = (action, parameters) => {
+  const expandedUrl = expandUrl(action.pathTemplate, populate(parameters));
+  const destUrl = urlParse(expandedUrl, true);
+
+  copy(destUrl.origin + destUrl.pathname);
+};
+
 const getEnv = () => store.get("env");
 
 export {
@@ -321,5 +329,6 @@ export {
   urlParse,
   setRefreshToken,
   getRefreshToken,
-  removeRefreshToken
+  removeRefreshToken,
+  copyUrl
 };
