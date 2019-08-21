@@ -18,6 +18,7 @@
     "axios-auth-refresh": "^1.0.7",
     "axios-oauth-client": "^1.1.1",
     "chokidar": "^3.0.1",
+    "clipboard-copy": "^3.1.0",
     "commander": "^2.19.0",
     "cors": "^2.8.5",
     "cosmiconfig": "^5.2.1",
