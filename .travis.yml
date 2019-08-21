@@ -6,6 +6,9 @@ os:
 node_js:
 - "10"
 cache: yarn
+script:
+- yarn lint
+- yarn test
 before_deploy:
 - ./tools/travis/prepare-release.sh
 deploy:
