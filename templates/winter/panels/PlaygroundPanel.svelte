@@ -77,7 +77,7 @@
       copying = false;
     }, 2000);
 
-    copyUrl(currentAction, requestParameters);
+    copyUrl(currentUrl, requestParameters);
   }
 </script>
 

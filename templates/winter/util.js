@@ -296,11 +296,10 @@ const sendRequest = (
   return client.request(options);
 };
 
-const copyUrl = (action, parameters) => {
-  const expandedUrl = expandUrl(action.pathTemplate, populate(parameters));
-  const destUrl = urlParse(expandedUrl, true);
+const copyUrl = (url, parameters) => {
+  const expandedUrl = expandUrl(url.pathname, populate(parameters));
 
-  copy(destUrl.origin + destUrl.pathname);
+  copy(url.origin + expandedUrl);
 };
 
 const getEnv = () => store.get("env");
