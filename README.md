@@ -108,6 +108,17 @@ Then, you can pass the configuration using flag `-c`:
 $ snowboard html -o outputDir -c config.yaml API.apib
 ```
 
+### Custom CSS
+
+Snowboard let you add external CSS for small customization. You can add it under `html` config:
+
+```yaml
+html:
+  stylesheets:
+    - custom-design.css
+    - another-custom.css
+```
+
 ### HTTP Server
 
 If you want to access HTML documentation via HTTP, you can use `http` sub-command:
