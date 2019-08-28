@@ -115,8 +115,8 @@ Snowboard let you add external CSS for small customization. You can add it under
 ```yaml
 html:
   stylesheets:
-    - custom-design.css
-    - another-custom.css
+    - custom.css
+    - path/to/another-custom.css
 ```
 
 ### HTTP Server
