@@ -235,7 +235,7 @@
   .footer .content {
     transition: margin 0.3s;
   }
-  
+
   .code-scrollable {
     overflow-x: auto;
   }
