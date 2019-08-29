@@ -235,6 +235,10 @@
   .footer .content {
     transition: margin 0.3s;
   }
+  
+  .code-scrollable {
+    overflow-x: auto;
+  }
 
   @media screen and (min-width: 768px) {
     .menu-collapsible {
@@ -376,7 +380,9 @@
         <code class="tag is-uppercase {colorize(currentAction.method)}">
           {currentAction.method}
         </code>
-        <code class="tag ">{currentAction.pathTemplate}</code>
+        <div class="code-scrollable">
+          <code class="tag is-marginless">{currentAction.pathTemplate}</code>
+        </div>
       </div>
 
       <div class="content">
