@@ -9,7 +9,9 @@
   "bin": "lib/main.js",
   "scripts": {
     "fmt": "prettier --write README.md 'lib/**/*.js' 'test/**/*.js' 'templates/**/*.{js,svelte}'",
-    "lint": "prettier -l README.md 'lib/**/*.js' 'test/**/*.js' 'templates/**/*.{js,svelte}'",
+    "lint-fmt": "prettier -l README.md 'lib/**/*.js' 'test/**/*.js' 'templates/**/*.{js,svelte}'",
+    "lint-eslint": "eslint .",
+    "lint": "run-p lint-fmt lint-eslint",
     "examples": "./tools/examples.sh ./test/fixtures/api-blueprint/examples ./examples",
     "test": "tape 'test/**/*.js'"
   },
@@ -56,6 +58,7 @@
     "eslint": "^6.0.1",
     "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-prettier": "^3.0.1",
+    "npm-run-all": "^4.1.5",
     "prettier": "^1.18.2",
     "prettier-plugin-svelte": "^0.6.0",
     "tape": "^4.10.1"
