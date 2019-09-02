@@ -162,6 +162,14 @@ anymatch@^3.0.1:
     normalize-path "^3.0.0"
     picomatch "^2.0.4"
 
+api-elements@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/api-elements/-/api-elements-0.2.2.tgz#eca6fc55429b9987b9680ba903b0563102ca1916"
+  integrity sha512-9hWa0HOnaqpiR+wzSPX/qz7UGs8u73hCkYutRL8SPlqxcVeBQ1oapQ6YK4bK3hyOumofA6CWv+h5k0U+QXNGng==
+  dependencies:
+    minim "^0.23.5"
+    ramda "^0.26.1"
+
 argparse@^1.0.7:
   version "1.0.10"
   resolved "https://registry.yarnpkg.com/argparse/-/argparse-1.0.10.tgz#bcd6791ea5ae09725e17e5ad988134cd40b3d911"
@@ -1462,19 +1470,7 @@ mimic-fn@^1.0.0:
   resolved "https://registry.yarnpkg.com/mimic-fn/-/mimic-fn-1.2.0.tgz#820c86a39334640e99516928bd03fca88057d022"
   integrity sha512-jf84uxzwiuiIVKiOLpfYk7N46TSy8ubTonmneY9vrpHNAnp0QBt2BxWV9dO3/j+BoVAb+a5G6YDPW3M5HOdMWQ==
 
-minim-api-description@^0.9.1:
-  version "0.9.1"
-  resolved "https://registry.yarnpkg.com/minim-api-description/-/minim-api-description-0.9.1.tgz#3d9f202dd36851e715cca7662b9ff803404e2a88"
-  integrity sha512-quwtvcbd5X75Z60GYwgLOcSlKZyr+cnwzusCMXHmSInn0mHBwTBB63Vfk753wLs6g/yR+mt8/WYgiTVMzpA+XA==
-
-minim-parse-result@^0.11.1:
-  version "0.11.1"
-  resolved "https://registry.yarnpkg.com/minim-parse-result/-/minim-parse-result-0.11.1.tgz#694133aa05ce1263c1ab04c218a1f813ce3956f7"
-  integrity sha512-M2OcK3kAncIEoL7dHpWH6ICjVbgVQJjU45Wf35/8xExlRhUXOMgw9cg8BPSA4/DSk5KAntMpfM+HOqQsYp/OeA==
-  dependencies:
-    minim-api-description "^0.9.1"
-
-minim@^0.23.2:
+minim@^0.23.5:
   version "0.23.5"
   resolved "https://registry.yarnpkg.com/minim/-/minim-0.23.5.tgz#3724d4448a4247209921e38e73631a6e1543e663"
   integrity sha512-OIdemwR6621loY0hgStoecAgZghgWpFSVutXct8+dkVw6xZpltvpvU4yhCtitfNEDvu1AD0yoIrXVrQFVJ9M8w==
@@ -1674,17 +1670,15 @@ os-tmpdir@~1.0.2:
   resolved "https://registry.yarnpkg.com/os-tmpdir/-/os-tmpdir-1.0.2.tgz#bbe67406c79aa85c5cfec766fe5734555dfa1274"
   integrity sha1-u+Z0BseaqFxc/sdm/lc0VV36EnQ=
 
-outboard@^2.9.0:
-  version "2.9.0"
-  resolved "https://registry.yarnpkg.com/outboard/-/outboard-2.9.0.tgz#8b2ef94eb88876d12b236fc5982bd01f1a811663"
-  integrity sha512-28AI7l+hMK5vQx9RfwPuYj7CMAadDb4uSEYrVTC9dl45eCoOjlFPL5BbdZyJGBWyQv9gzF9xCwQbqQbN0FmopQ==
+outboard@^2.9.1:
+  version "2.9.1"
+  resolved "https://registry.yarnpkg.com/outboard/-/outboard-2.9.1.tgz#a1d033cf16452e9288389aac7994b48428923621"
+  integrity sha512-8Cp8hrJR8fxoc8vIb+RbTH50G9QIT7eE0DH0ed4f5WhdlN7cNbZqtCjqv/FCYj9vTQRes907/6dGqClO0+Y4uA==
   dependencies:
+    api-elements "^0.2.2"
     deckardcain "^0.4.1"
     drafter.js "^3.0.0"
     lodash "^4.17.11"
-    minim "^0.23.2"
-    minim-api-description "^0.9.1"
-    minim-parse-result "^0.11.1"
     speakingurl "^14.0.1"
     uritemplate "^0.3.4"
   optionalDependencies:
@@ -1851,6 +1845,11 @@ querystringify@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/querystringify/-/querystringify-2.1.1.tgz#60e5a5fd64a7f8bfa4d2ab2ed6fdf4c85bad154e"
   integrity sha512-w7fLxIRCRT7U8Qu53jQnJyPkYZIaR4n5151KMfcJlO/A9397Wxb1amJvROTK6TOnp7PfoAmg/qXiNHI+08jRfA==
+
+ramda@^0.26.1:
+  version "0.26.1"
+  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.26.1.tgz#8d41351eb8111c55353617fc3bbffad8e4d35d06"
+  integrity sha512-hLWjpy7EnsDBb0p+Z3B7rPi3GDeRG5ZtiI33kJhTt+ORCd38AbAIjB/9zRIUoeTbE/AVX5ZkU7m6bznsvrf8eQ==
 
 range-parser@~1.2.1:
   version "1.2.1"
