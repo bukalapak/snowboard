@@ -110,6 +110,10 @@ const alias = str => {
 };
 
 const stringify = obj => {
+  if (typeof obj === "string") {
+    return obj;
+  }
+
   if (obj) {
     return JSON.stringify(obj, null, "  ");
   }
