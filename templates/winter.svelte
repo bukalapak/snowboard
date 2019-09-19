@@ -138,6 +138,27 @@
     return stringify(example);
   }
 
+  const darkMode = {
+    enable: true,
+    store: window.localStorage,
+    wrapper: window.document.getElementsByTagName('html')[0],
+    toggle: 'dark-mode-toggle',
+    klass: 'dark-mode',
+    mode: ['LIGHT', 'DARK'],
+    active: false
+  }
+
+  if (darkMode.store.getItem(darkMode.toggle) === darkMode.mode[1]) {
+    darkMode.wrapper.classList.add(darkMode.klass);
+    darkMode.active = true;
+  }
+
+  function darkToggle() {
+    darkMode.wrapper.classList.toggle(darkMode.klass);
+    darkMode.active = darkMode.wrapper.classList.contains(darkMode.klass);
+    darkMode.store.setItem(darkMode.toggle, darkMode.mode[Number(darkMode.active)]);
+  }
+
   onMount(async () => {
     // handle oauth2 callback
     if (isAuth(environment, "oauth2")) {
@@ -312,6 +333,23 @@
         <SelectorPanel
           environments={config.playground.environments}
           {authenticating} />
+      {/if}
+      {#if darkMode.enable}
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a
+            href="javascript:void(0)"
+            on:click={darkToggle}
+            class="navbar-link is-arrowless">
+            <span class="icon is-medium has-text-grey-light">
+              {#if darkMode.active}
+                <i class="fas fa-lg fa-moon" />
+              {/if}
+              {#if !darkMode.active}
+                <i class="fas fa-lg fa-sun" />
+              {/if}
+            </span>
+          </a>
+        </div>
       {/if}
     </div>
   </div>
