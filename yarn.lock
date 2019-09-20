@@ -1382,7 +1382,7 @@ lodash.camelcase@^4.3.0:
   resolved "https://registry.yarnpkg.com/lodash.camelcase/-/lodash.camelcase-4.3.0.tgz#b28aa6288a2b9fc651035c7711f65ab6190331a6"
   integrity sha1-soqmKIorn8ZRA1x3EfZathkDMaY=
 
-lodash@^4.15.0, lodash@^4.17.11, lodash@^4.17.12, lodash@^4.17.14:
+lodash@^4.15.0, lodash@^4.17.11, lodash@^4.17.12, lodash@^4.17.14, lodash@^4.17.15:
   version "4.17.15"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
   integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
@@ -1688,17 +1688,17 @@ os-tmpdir@~1.0.2:
   resolved "https://registry.yarnpkg.com/os-tmpdir/-/os-tmpdir-1.0.2.tgz#bbe67406c79aa85c5cfec766fe5734555dfa1274"
   integrity sha1-u+Z0BseaqFxc/sdm/lc0VV36EnQ=
 
-outboard@^2.11.1:
-  version "2.11.1"
-  resolved "https://registry.yarnpkg.com/outboard/-/outboard-2.11.1.tgz#b0ad1ab9bd5b6feea996a7f4d27afe6351114759"
-  integrity sha512-qXnGhTf2UpMGG/a9GVTe6MVdrHaCiMwGfHTHz3yuIXLI0M3FGl2+CJskDUvPpaRHDzXVhgWXuNWw97OI4zoaFg==
+outboard@^2.12.1:
+  version "2.12.1"
+  resolved "https://registry.yarnpkg.com/outboard/-/outboard-2.12.1.tgz#828ddb0a40ca70af93ff51c373e26ba5d3f95ba1"
+  integrity sha512-djm+Msg7MhkP6ICeJ4nPAl034w4lPznUDxQuyKu9eSVmn0bOPtNChZ2RCfSLW28uGhGI3/s1r4l4TP77LMfMGQ==
   dependencies:
     "@babel/polyfill" "^7.6.0"
     api-elements "^0.2.2"
     core-js "^3.2.1"
     deckardcain "^0.4.1"
     drafter.js "^3.0.0"
-    lodash "^4.17.11"
+    lodash "^4.17.15"
     speakingurl "^14.0.1"
     uritemplate "^0.3.4"
   optionalDependencies:
