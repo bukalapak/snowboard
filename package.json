@@ -1,6 +1,6 @@
 {
   "name": "snowboard",
-  "version": "3.4.0",
+  "version": "3.4.1",
   "description": "API blueprint toolkit",
   "author": "Alif Rachmawadi <subosito@bukalapak.com>",
   "license": "MIT",
@@ -32,7 +32,7 @@
     "mkdirp": "^0.5.1",
     "morgan": "^1.9.1",
     "ora": "^3.4.0",
-    "outboard": "^2.11.1",
+    "outboard": "^2.12.1",
     "parse-duration": "^0.1.1",
     "parse-prefer-header": "^1.0.0",
     "prismjs": "^1.16.0",
