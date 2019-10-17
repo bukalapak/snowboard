@@ -19,6 +19,14 @@
   .panel-dark {
     border: 1px solid #363636;
   }
+
+  :global(.dark-mode .panel-section) {
+    border-color: #333;
+  }
+
+  :global(.dark-mode .panel-section.has-background-white) {
+    background-color: #222 !important;
+  }
 </style>
 
 <div class="panel">
