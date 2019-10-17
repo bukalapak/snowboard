@@ -144,18 +144,27 @@
     wrapper: window.document.getElementsByTagName('html')[0],
     toggle: 'dark-mode-toggle',
     klass: 'dark-mode',
-    mode: ['LIGHT', 'DARK'],
+    mode: ['light', 'dark'],
     active: false
   }
 
+  function applyTheme(old, nue) {
+    document.getElementById(`theme-${old}`).media = 'none';
+    document.getElementById(`theme-${nue}`).media = '';
+  }
+
   if (darkMode.store.getItem(darkMode.toggle) === darkMode.mode[1]) {
-    darkMode.wrapper.classList.add(darkMode.klass);
+    if (!darkMode.wrapper.classList.contains(darkMode.klass)) {
+      darkMode.wrapper.classList.add(darkMode.klass);
+    }
+    applyTheme(0, 1);
     darkMode.active = true;
   }
 
   function darkToggle() {
+    darkMode.active = !darkMode.active;
     darkMode.wrapper.classList.toggle(darkMode.klass);
-    darkMode.active = darkMode.wrapper.classList.contains(darkMode.klass);
+    applyTheme(Number(!darkMode.active), Number(darkMode.active));
     darkMode.store.setItem(darkMode.toggle, darkMode.mode[Number(darkMode.active)]);
   }
 
@@ -227,6 +236,14 @@
     background-color: #fafafa;
   }
 
+  :global(.dark-mode body, .dark-mode .main, .dark-mode .footer) {
+    background-color: #000;
+  }
+
+  :global(.dark-mode .main) {
+    box-shadow: 0 2px 0 2px #363636;
+  }
+
   :global(code[class*="language-"], pre[class*="language-"]) {
     font-family: monospace;
   }
@@ -251,6 +268,36 @@
 
   .menu-collapsible {
     display: none;
+    position: fixed;
+    width: calc(25% - 0.5rem);
+    height: calc(2.5rem + 10px);
+    left: 0;
+    bottom: 0;
+    font-size: 1.33333em;
+    line-height: calc(2.5rem + 5px);
+    text-align: center;
+    color: #b5b5b5;
+    font-weight: 300;
+    border-top: 1px solid #eee;
+    box-shadow: 2px 0 0 #f5f5f5;
+    cursor: pointer;
+  }
+
+  .menu-collapsible:hover {
+    background: rgba(0, 0, 0, 0.05);
+    box-shadow: 2px 0 0 #eee;
+    border-color: #e8e8e8;
+  }
+
+  :global(.dark-mode .menu-collapsible) {
+    border-color: #363636;
+    box-shadow: 2px 0 0 #363636;
+  }
+
+  :global(.dark-mode .menu-collapsible:hover) {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: #363636;
+    box-shadow: 2px 0 0 #363636;
   }
 
   .footer .content {
@@ -260,25 +307,6 @@
   @media screen and (min-width: 768px) {
     .menu-collapsible {
       display: block;
-      position: fixed;
-      border-top: 1px solid #eee;
-      width: calc(25% - 0.5rem);
-      height: calc(2.5rem + 10px);
-      left: 0;
-      bottom: 0;
-      font-size: 1.33333em;
-      line-height: calc(2.5rem + 5px);
-      text-align: center;
-      color: #b5b5b5;
-      font-weight: 300;
-      box-shadow: 2px 0 0 #f5f5f5;
-      cursor: pointer;
-    }
-
-    .menu-collapsible:hover {
-      background: rgba(0, 0, 0, 0.05);
-      box-shadow: 2px 0 0 #eee;
-      border-color: #e8e8e8;
     }
 
     .is-collapsed .sidenav {
@@ -339,6 +367,7 @@
           <a
             href="javascript:void(0)"
             on:click={darkToggle}
+            title="Dark Mode"
             class="navbar-link is-arrowless">
             <span class="icon is-medium has-text-grey-light">
               {#if darkMode.active}

@@ -41,9 +41,17 @@
     margin-bottom: 1.5rem;
   }
 
+  :global(.dark-mode .hero) {
+    background-color: #000;
+  }
+
   .hero-body {
     padding: 1.5rem 0;
     box-shadow: 0 2px 0 0 #f5f5f5;
+  }
+
+  :global(.dark-mode .hero-body) {
+    box-shadow: 0 2px 0 0 #363636;
   }
 
   .menu-wrapper::-webkit-scrollbar {
