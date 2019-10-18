@@ -373,7 +373,10 @@
             title="Dark Mode"
             class="navbar-link is-arrowless">
             <span class="icon is-medium has-text-grey-light">
-              <i class="fas fa-lg" class:fa-moon={darkMode.active} class:fa-sun={!darkMode.active} />
+              <i
+                class="fas fa-lg"
+                class:fa-moon={darkMode.active}
+                class:fa-sun={!darkMode.active} />
             </span>
           </a>
         </div>
