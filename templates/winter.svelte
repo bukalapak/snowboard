@@ -149,8 +149,8 @@
   };
 
   function applyTheme(old, nue) {
-    document.getElementById(`theme-${old}`).media = "none";
-    document.getElementById(`theme-${nue}`).media = "";
+    document.getElementById(`bulma-theme-${darkMode.mode[old]}`).media = "none";
+    document.getElementById(`bulma-theme-${darkMode.mode[nue]}`).media = "";
   }
 
   if (darkMode.store.getItem(darkMode.toggle) === darkMode.mode[1]) {
