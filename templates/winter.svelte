@@ -141,16 +141,16 @@
   const darkMode = {
     enable: true,
     store: window.localStorage,
-    wrapper: window.document.getElementsByTagName('html')[0],
-    toggle: 'dark-mode-toggle',
-    klass: 'dark-mode',
-    mode: ['light', 'dark'],
+    wrapper: window.document.getElementsByTagName("html")[0],
+    toggle: "dark-mode-toggle",
+    klass: "dark-mode",
+    mode: ["light", "dark"],
     active: false
-  }
+  };
 
   function applyTheme(old, nue) {
-    document.getElementById(`theme-${old}`).media = 'none';
-    document.getElementById(`theme-${nue}`).media = '';
+    document.getElementById(`theme-${old}`).media = "none";
+    document.getElementById(`theme-${nue}`).media = "";
   }
 
   if (darkMode.store.getItem(darkMode.toggle) === darkMode.mode[1]) {
@@ -165,7 +165,10 @@
     darkMode.active = !darkMode.active;
     darkMode.wrapper.classList.toggle(darkMode.klass);
     applyTheme(Number(!darkMode.active), Number(darkMode.active));
-    darkMode.store.setItem(darkMode.toggle, darkMode.mode[Number(darkMode.active)]);
+    darkMode.store.setItem(
+      darkMode.toggle,
+      darkMode.mode[Number(darkMode.active)]
+    );
   }
 
   onMount(async () => {
