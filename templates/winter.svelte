@@ -147,15 +147,17 @@
   };
 
   function darkToggle() {
-    const state = !darkMode.active;
+    darkMode.active = !darkMode.active;
     document.getElementById(
-      `bulma-theme-${darkMode.mode[Number(!state)]}`
+      `bulma-theme-${darkMode.mode[Number(!darkMode.active)]}`
     ).media = "none";
     document.getElementById(
-      `bulma-theme-${darkMode.mode[Number(state)]}`
+      `bulma-theme-${darkMode.mode[Number(darkMode.active)]}`
     ).media = "";
-    darkMode.active = state;
-    darkMode.store.setItem(darkMode.toggle, darkMode.mode[Number(state)]);
+    darkMode.store.setItem(
+      darkMode.toggle,
+      darkMode.mode[Number(darkMode.active)]
+    );
   }
 
   if (darkMode.store.getItem(darkMode.toggle) === darkMode.mode[1]) {
