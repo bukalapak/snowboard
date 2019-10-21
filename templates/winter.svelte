@@ -141,29 +141,25 @@
   const darkMode = {
     enable: true,
     store: window.localStorage,
-    toggle: "dark-mode-toggle",
+    toggle: "darkmode-toggle",
     mode: ["light", "dark"],
     active: false
   };
 
-  function applyTheme(old, nue) {
-    document.getElementById(`bulma-theme-${darkMode.mode[Number(old)]}`).media =
-      "none";
-    document.getElementById(`bulma-theme-${darkMode.mode[Number(nue)]}`).media =
-      "";
-    darkMode.active = nue;
-  }
-
   function darkToggle() {
-    applyTheme(darkMode.active, !darkMode.active);
-    darkMode.store.setItem(
-      darkMode.toggle,
-      darkMode.mode[Number(darkMode.active)]
-    );
+    const state = !darkMode.active;
+    document.getElementById(
+      `bulma-theme-${darkMode.mode[Number(!state)]}`
+    ).media = "none";
+    document.getElementById(
+      `bulma-theme-${darkMode.mode[Number(state)]}`
+    ).media = "";
+    darkMode.active = state;
+    darkMode.store.setItem(darkMode.toggle, darkMode.mode[Number(state)]);
   }
 
   if (darkMode.store.getItem(darkMode.toggle) === darkMode.mode[1]) {
-    applyTheme(false, true);
+    darkToggle();
   }
 
   onMount(async () => {
