@@ -12,6 +12,7 @@
   export let index;
   export let request;
   export let response;
+  export let isDarkmode;
 
   function title(index) {
     if (request.title) {
@@ -26,7 +27,7 @@
   }
 </script>
 
-<CollapsiblePanel {show}>
+<CollapsiblePanel {isDarkmode} {show}>
   <span slot="heading">{title(index)}</span>
   <div slot="body">
     <RequestPanel

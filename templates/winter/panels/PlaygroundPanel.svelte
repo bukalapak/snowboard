@@ -22,6 +22,7 @@
   import { env, auth, token } from "../store.js";
 
   export let show = true;
+  export let isDarkmode;
   export let environments;
   export let currentAction;
   export let currentSample;
@@ -121,7 +122,7 @@
   }
 </style>
 
-<CollapsiblePanel dark={true} {show}>
+<CollapsiblePanel dark={true} {isDarkmode} {show}>
   <span slot="heading">Playground</span>
   <div slot="body">
     <div class="columns">
