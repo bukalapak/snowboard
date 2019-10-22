@@ -9,6 +9,7 @@
   export let currentSlug;
   export let actionsCount;
   export let isCollapsed;
+  export let isDarkmode;
 
   export let handleClick;
   export let tocClick;
@@ -41,9 +42,17 @@
     margin-bottom: 1.5rem;
   }
 
+  .hero.is-darkmode {
+    background-color: #000;
+  }
+
   .hero-body {
     padding: 1.5rem 0;
     box-shadow: 0 2px 0 0 #f5f5f5;
+  }
+
+  .hero-body.is-darkmode {
+    box-shadow: 0 2px 0 0 #363636;
   }
 
   .menu-wrapper::-webkit-scrollbar {
@@ -128,8 +137,8 @@
 </style>
 
 <aside class="menu" class:is-collapsed={isCollapsed}>
-  <section class="hero is-sticky">
-    <div class="hero-body">
+  <section class="hero is-sticky" class:is-darkmode={isDarkmode}>
+    <div class="hero-body" class:is-darkmode={isDarkmode}>
       <div class="field">
         <p class="control has-icons-right">
           <input

@@ -138,6 +138,32 @@
     return stringify(example);
   }
 
+  const darkMode = {
+    enable: true,
+    store: window.localStorage,
+    toggle: "darkmode-toggle",
+    mode: ["light", "dark"],
+    active: false
+  };
+
+  function darkToggle() {
+    darkMode.active = !darkMode.active;
+    document.getElementById(
+      `bulma-theme-${darkMode.mode[Number(!darkMode.active)]}`
+    ).media = "none";
+    document.getElementById(
+      `bulma-theme-${darkMode.mode[Number(darkMode.active)]}`
+    ).media = "";
+    darkMode.store.setItem(
+      darkMode.toggle,
+      darkMode.mode[Number(darkMode.active)]
+    );
+  }
+
+  if (darkMode.store.getItem(darkMode.toggle) === darkMode.mode[1]) {
+    darkToggle();
+  }
+
   onMount(async () => {
     // handle oauth2 callback
     if (isAuth(environment, "oauth2")) {
@@ -194,6 +220,11 @@
     box-shadow: 0 2px 0 2px #f5f5f5;
   }
 
+  .main.is-darkmode {
+    background-color: #000;
+    box-shadow: 0 2px 0 2px #363636;
+  }
+
   .breadcrumb-right {
     margin-top: 0.3em;
   }
@@ -202,8 +233,12 @@
     border-radius: 0;
   }
 
-  :global(body) {
+  .body-inner {
     background-color: #fafafa;
+  }
+
+  .body-inner.is-darkmode {
+    background-color: #000;
   }
 
   :global(code[class*="language-"], pre[class*="language-"]) {
@@ -230,6 +265,40 @@
 
   .menu-collapsible {
     display: none;
+    position: fixed;
+    width: calc(25% - 0.5rem);
+    height: calc(2.5rem + 10px);
+    left: 0;
+    bottom: 0;
+    font-size: 1.33333em;
+    line-height: calc(2.5rem + 5px);
+    text-align: center;
+    color: #b5b5b5;
+    font-weight: 300;
+    border-top: 1px solid #eee;
+    box-shadow: 2px 0 0 #f5f5f5;
+    cursor: pointer;
+  }
+
+  .menu-collapsible:hover {
+    background: rgba(0, 0, 0, 0.05);
+    box-shadow: 2px 0 0 #eee;
+    border-color: #e8e8e8;
+  }
+
+  .menu-collapsible.is-darkmode {
+    border-color: #363636;
+    box-shadow: 2px 0 0 #363636;
+  }
+
+  .menu-collapsible.is-darkmode:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: #363636;
+    box-shadow: 2px 0 0 #363636;
+  }
+
+  .footer.is-darkmode {
+    background-color: #000;
   }
 
   .footer .content {
@@ -239,25 +308,6 @@
   @media screen and (min-width: 768px) {
     .menu-collapsible {
       display: block;
-      position: fixed;
-      border-top: 1px solid #eee;
-      width: calc(25% - 0.5rem);
-      height: calc(2.5rem + 10px);
-      left: 0;
-      bottom: 0;
-      font-size: 1.33333em;
-      line-height: calc(2.5rem + 5px);
-      text-align: center;
-      color: #b5b5b5;
-      font-weight: 300;
-      box-shadow: 2px 0 0 #f5f5f5;
-      cursor: pointer;
-    }
-
-    .menu-collapsible:hover {
-      background: rgba(0, 0, 0, 0.05);
-      box-shadow: 2px 0 0 #eee;
-      border-color: #e8e8e8;
     }
 
     .is-collapsed .sidenav {
@@ -280,144 +330,170 @@
   }
 </style>
 
-<nav
-  class="navbar is-fixed-top has-shadow"
-  role="navigation"
-  aria-label="main navigation">
-  <div class="navbar-brand">
-    <a href="javascript:void(0)" class="navbar-item">
-      <span class="icon icon-brand is-medium has-text-grey-light">
-        <i class="fas fa-lg fa-chalkboard" />
-      </span>
-      <span class="title is-4">{title}</span>
-    </a>
-
-    <a
-      href="javascript:void(0)"
-      on:click={burgerClick}
-      role="button"
-      class="navbar-burger"
-      aria-label="menu"
-      aria-expanded="false"
-      data-target="mainnav">
-      <span aria-hidden="true" />
-      <span aria-hidden="true" />
-      <span aria-hidden="true" />
-    </a>
-  </div>
-
-  <div class="navbar-menu">
-    <div class="navbar-end">
-      {#if config.playground.enabled}
-        <SelectorPanel
-          environments={config.playground.environments}
-          {authenticating} />
-      {/if}
-    </div>
-  </div>
-</nav>
-
-<div class="columns" class:is-collapsed={collapsed}>
-  <div
-    class="column is-one-quarter sidenav"
-    class:is-hidden-mobile={showMenu}
-    id="mainnav">
-    <MenuPanel
-      {tagActions}
-      tagHeaders={toc(description)}
-      currentSlug={currentAction && currentAction.slug}
-      actionsCount={actions.length}
-      isCollapsed={collapsed}
-      {config}
-      {handleClick}
-      {tocClick}
-      {searchClick} />
-    <div class="menu-collapsible" on:click={collapseToggle}>
-      {#if collapsed}
-        <span class="icon" title="Expand [">&raquo;</span>
-      {/if}
-      {#if !collapsed}
-        <span class="icon">&laquo;</span>
-        <span class="fa-xs">Collapse sidebar</span>
-      {/if}
-    </div>
-  </div>
-
-  <div class="column is-three-quarters main">
-    {#if index === -1}
-      <div class="content">
-        {@html markdown(description)}
-      </div>
-    {/if}
-
-    {#if currentAction}
-      <div class="columns">
-        <div class="column">
-          <h1 class="title is-4">{currentAction.title}</h1>
-        </div>
-        <div class="column">
-          <nav
-            class="breadcrumb breadcrumb-right is-pulled-right"
-            aria-label="breadcrumbs">
-            <ul>
-              {#each currentAction.tags as tag}
-                <li>
-                  <a href="javascript:void(0)">{tag}</a>
-                </li>
-              {/each}
-            </ul>
-          </nav>
-        </div>
-      </div>
-
-      <hr />
-
-      <div class="tags has-addons are-large">
-        <code class="tag is-uppercase {colorize(currentAction.method)}">
-          {currentAction.method}
-        </code>
-        <code class="tag ">{currentAction.pathTemplate}</code>
-      </div>
-
-      <div class="content">
-        {@html markdown(currentAction.description)}
-      </div>
-
-      {#if config.playground.enabled}
-        {#if environment.playground !== false}
-          <PlaygroundPanel
-            {currentAction}
-            environments={config.playground.environments}
-            currentSample={sample(currentAction)}
-            requestHeaders={headersMap(currentAction)}
-            requestParameters={parametersMap(currentAction)}
-            requestBody={bodyMap(currentAction)} />
-        {/if}
-      {/if}
-
-      <ParameterPanel parameters={currentAction.parameters} />
-
-      {#each currentAction.transactions as { request, response }, index}
-        <ScenarioPanel
-          show={index === 0}
-          {request}
-          {response}
-          {index}
-          count={currentAction.transactions.length} />
-      {/each}
-    {/if}
-  </div>
-</div>
-<footer class="footer">
-  <div
-    class="content column is-paddingless has-text-centered"
-    class:is-offset-one-quarter={!collapsed}>
-    <p>
-      <strong>{title}</strong>
-      powered by
-      <a href="https://github.com/bukalapak/snowboard" target="_blank">
-        <strong>Snowboard.</strong>
+<div class="body-inner" class:is-darkmode={darkMode.active}>
+  <nav
+    class="navbar is-fixed-top has-shadow"
+    role="navigation"
+    aria-label="main navigation">
+    <div class="navbar-brand">
+      <a href="javascript:void(0)" class="navbar-item">
+        <span class="icon icon-brand is-medium has-text-grey-light">
+          <i class="fas fa-lg fa-chalkboard" />
+        </span>
+        <span class="title is-4">{title}</span>
       </a>
-    </p>
+
+      <a
+        href="javascript:void(0)"
+        on:click={burgerClick}
+        role="button"
+        class="navbar-burger"
+        aria-label="menu"
+        aria-expanded="false"
+        data-target="mainnav">
+        <span aria-hidden="true" />
+        <span aria-hidden="true" />
+        <span aria-hidden="true" />
+      </a>
+    </div>
+
+    <div class="navbar-menu">
+      <div class="navbar-end">
+        {#if config.playground.enabled}
+          <SelectorPanel
+            environments={config.playground.environments}
+            {authenticating} />
+        {/if}
+        {#if darkMode.enable}
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a
+              href="javascript:void(0)"
+              on:click={darkToggle}
+              title="Dark Mode"
+              class="navbar-link is-arrowless">
+              <span class="icon is-medium has-text-grey-light">
+                <i
+                  class="fas fa-lg"
+                  class:fa-moon={darkMode.active}
+                  class:fa-sun={!darkMode.active} />
+              </span>
+            </a>
+          </div>
+        {/if}
+      </div>
+    </div>
+  </nav>
+
+  <div class="columns" class:is-collapsed={collapsed}>
+    <div
+      class="column is-one-quarter sidenav"
+      class:is-hidden-mobile={showMenu}
+      id="mainnav">
+      <MenuPanel
+        {tagActions}
+        tagHeaders={toc(description)}
+        currentSlug={currentAction && currentAction.slug}
+        actionsCount={actions.length}
+        isCollapsed={collapsed}
+        isDarkmode={darkMode.active}
+        {config}
+        {handleClick}
+        {tocClick}
+        {searchClick} />
+      <div
+        class="menu-collapsible"
+        class:is-darkmode={darkMode.active}
+        on:click={collapseToggle}>
+        {#if collapsed}
+          <span class="icon" title="Expand [">&raquo;</span>
+        {/if}
+        {#if !collapsed}
+          <span class="icon">&laquo;</span>
+          <span class="fa-xs">Collapse sidebar</span>
+        {/if}
+      </div>
+    </div>
+
+    <div
+      class="column is-three-quarters main"
+      class:is-darkmode={darkMode.active}>
+      {#if index === -1}
+        <div class="content">
+          {@html markdown(description)}
+        </div>
+      {/if}
+
+      {#if currentAction}
+        <div class="columns">
+          <div class="column">
+            <h1 class="title is-4">{currentAction.title}</h1>
+          </div>
+          <div class="column">
+            <nav
+              class="breadcrumb breadcrumb-right is-pulled-right"
+              aria-label="breadcrumbs">
+              <ul>
+                {#each currentAction.tags as tag}
+                  <li>
+                    <a href="javascript:void(0)">{tag}</a>
+                  </li>
+                {/each}
+              </ul>
+            </nav>
+          </div>
+        </div>
+
+        <hr />
+
+        <div class="tags has-addons are-large">
+          <code class="tag is-uppercase {colorize(currentAction.method)}">
+            {currentAction.method}
+          </code>
+          <code class="tag ">{currentAction.pathTemplate}</code>
+        </div>
+
+        <div class="content">
+          {@html markdown(currentAction.description)}
+        </div>
+
+        {#if config.playground.enabled}
+          {#if environment.playground !== false}
+            <PlaygroundPanel
+              {currentAction}
+              environments={config.playground.environments}
+              currentSample={sample(currentAction)}
+              requestHeaders={headersMap(currentAction)}
+              requestParameters={parametersMap(currentAction)}
+              requestBody={bodyMap(currentAction)}
+              isDarkmode={darkMode.active} />
+          {/if}
+        {/if}
+
+        <ParameterPanel parameters={currentAction.parameters} />
+
+        {#each currentAction.transactions as { request, response }, index}
+          <ScenarioPanel
+            show={index === 0}
+            isDarkmode={darkMode.active}
+            {request}
+            {response}
+            {index}
+            count={currentAction.transactions.length} />
+        {/each}
+      {/if}
+    </div>
   </div>
-</footer>
+  <footer class="footer" class:is-darkmode={darkMode.active}>
+    <div
+      class="content column is-paddingless has-text-centered"
+      class:is-offset-one-quarter={!collapsed}>
+      <p>
+        <strong>{title}</strong>
+        powered by
+        <a href="https://github.com/bukalapak/snowboard" target="_blank">
+          <strong>Snowboard.</strong>
+        </a>
+      </p>
+    </div>
+  </footer>
+</div>

@@ -3,6 +3,7 @@
 
   export let dark = false;
   export let show = false;
+  export let isDarkmode;
 </script>
 
 <style>
@@ -18,6 +19,11 @@
 
   .panel-dark {
     border: 1px solid #363636;
+  }
+
+  .panel-section.is-darkmode {
+    background-color: #222 !important;
+    border-color: #333;
   }
 </style>
 
@@ -35,7 +41,10 @@
       additionalClass="is-pulled-right"
       handleClick={() => (show = !show)} />
   </div>
-  <div class="panel-section has-background-white" class:is-hidden={!show}>
+  <div
+    class="panel-section has-background-white"
+    class:is-hidden={!show}
+    class:is-darkmode={isDarkmode}>
     <slot name="body" />
   </div>
 </div>
