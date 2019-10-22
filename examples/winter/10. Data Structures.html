@@ -5,7 +5,8 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css" integrity="sha256-vK3UTo/8wHbaUn+dTQD0X6dzidqc5l7gczvH+Bnowwk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css" integrity="sha256-vK3UTo/8wHbaUn+dTQD0X6dzidqc5l7gczvH+Bnowwk=" crossorigin="anonymous" id="bulma-theme-light" />
+    <link rel="stylesheet" href="https://jenil.github.io/bulmaswatch/cyborg/bulmaswatch.min.css" crossorigin="anonymous" media="none" id="bulma-theme-dark" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/fontawesome.min.css" integrity="sha256-AaQqnjfGDRZd/lUp0Dvy7URGOyRsh8g9JdWUkyYxNfI=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/solid.min.css" integrity="sha256-3FfMfpeajSEpxWZTFowWZPTv7k3GEu7w4rQv49EWsEY=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prism-themes@1.1.0/themes/prism-a11y-dark.css" integrity="sha256-d2qy226pP+oHAtEQPujaiXPslYW1Rmtla3Ivu1fFYxU=" crossorigin="anonymous">
@@ -10768,8 +10769,8 @@
 
     function add_css$1() {
     	var style = element("style");
-    	style.id = 'svelte-1xl6iim-style';
-    	style.textContent = ".hero.svelte-1xl6iim,.menu-wrapper.svelte-1xl6iim{padding:0 2.75rem 0 2rem}.hero.svelte-1xl6iim{position:sticky;top:54px;background-color:#fafafa;margin-bottom:1.5rem}.hero-body.svelte-1xl6iim{padding:1.5rem 0;box-shadow:0 2px 0 0 #f5f5f5}.menu-wrapper.svelte-1xl6iim::-webkit-scrollbar{display:none}@media screen and (min-width: 768px){.hero.svelte-1xl6iim,.menu-wrapper.svelte-1xl6iim{width:-moz-calc(25% - 0.5rem);width:-webkit-calc(25% - 0.5rem);width:-o-calc(25% - 0.5rem);width:calc(25% - 0.5rem)}.hero.svelte-1xl6iim{position:fixed;padding:0 1.25rem}.menu-wrapper.svelte-1xl6iim{position:fixed;top:140px;padding:1.5rem 1.25rem 1.25rem;height:-moz-calc(100% - 150px - 2.5rem);height:-webkit-calc(100% - 150px - 2.5rem);height:-o-calc(100% - 150px - 2.5rem);height:calc(100% - 150px - 2.5rem);overflow:-moz-scrollbars-none;-ms-overflow-style:none;overflow-x:hidden;overflow-y:auto;transition:opacity 0.3s, left 0.3s}.menu.is-collapsed.svelte-1xl6iim{width:3rem}.is-collapsed.svelte-1xl6iim .hero.svelte-1xl6iim,.is-collapsed.svelte-1xl6iim .hero-body.svelte-1xl6iim{width:calc(3rem - 2px)}.is-collapsed.svelte-1xl6iim .hero.svelte-1xl6iim{padding-left:0;padding-right:0}.is-collapsed.svelte-1xl6iim .hero-body.svelte-1xl6iim{padding-left:0.3175rem;padding-right:0.3175rem;box-shadow:none}.is-collapsed.svelte-1xl6iim .input.is-rounded.svelte-1xl6iim{padding-left:0;padding-right:0;opacity:0}.is-collapsed.svelte-1xl6iim .icon-input-search.svelte-1xl6iim{color:#b5b5b5;background-color:#eee;-webkit-border-radius:50%;-moz-border-radius:50%;border-radius:50%;cursor:pointer;pointer-events:auto}.is-collapsed.svelte-1xl6iim .icon-input-search.svelte-1xl6iim:hover{color:#999;background-color:#e0e0e0}.is-collapsed.svelte-1xl6iim .menu-wrapper.svelte-1xl6iim{left:-30%;opacity:0}}";
+    	style.id = 'svelte-1qs7hk-style';
+    	style.textContent = ".hero.svelte-1qs7hk,.menu-wrapper.svelte-1qs7hk{padding:0 2.75rem 0 2rem}.hero.svelte-1qs7hk{position:sticky;top:54px;background-color:#fafafa;margin-bottom:1.5rem}.hero.is-darkmode.svelte-1qs7hk{background-color:#000}.hero-body.svelte-1qs7hk{padding:1.5rem 0;box-shadow:0 2px 0 0 #f5f5f5}.hero-body.is-darkmode.svelte-1qs7hk{box-shadow:0 2px 0 0 #363636}.menu-wrapper.svelte-1qs7hk::-webkit-scrollbar{display:none}@media screen and (min-width: 768px){.hero.svelte-1qs7hk,.menu-wrapper.svelte-1qs7hk{width:-moz-calc(25% - 0.5rem);width:-webkit-calc(25% - 0.5rem);width:-o-calc(25% - 0.5rem);width:calc(25% - 0.5rem)}.hero.svelte-1qs7hk{position:fixed;padding:0 1.25rem}.menu-wrapper.svelte-1qs7hk{position:fixed;top:140px;padding:1.5rem 1.25rem 1.25rem;height:-moz-calc(100% - 150px - 2.5rem);height:-webkit-calc(100% - 150px - 2.5rem);height:-o-calc(100% - 150px - 2.5rem);height:calc(100% - 150px - 2.5rem);overflow:-moz-scrollbars-none;-ms-overflow-style:none;overflow-x:hidden;overflow-y:auto;transition:opacity 0.3s, left 0.3s}.menu.is-collapsed.svelte-1qs7hk{width:3rem}.is-collapsed.svelte-1qs7hk .hero.svelte-1qs7hk,.is-collapsed.svelte-1qs7hk .hero-body.svelte-1qs7hk{width:calc(3rem - 2px)}.is-collapsed.svelte-1qs7hk .hero.svelte-1qs7hk{padding-left:0;padding-right:0}.is-collapsed.svelte-1qs7hk .hero-body.svelte-1qs7hk{padding-left:0.3175rem;padding-right:0.3175rem;box-shadow:none}.is-collapsed.svelte-1qs7hk .input.is-rounded.svelte-1qs7hk{padding-left:0;padding-right:0;opacity:0}.is-collapsed.svelte-1qs7hk .icon-input-search.svelte-1qs7hk{color:#b5b5b5;background-color:#eee;-webkit-border-radius:50%;-moz-border-radius:50%;border-radius:50%;cursor:pointer;pointer-events:auto}.is-collapsed.svelte-1qs7hk .icon-input-search.svelte-1qs7hk:hover{color:#999;background-color:#e0e0e0}.is-collapsed.svelte-1qs7hk .menu-wrapper.svelte-1qs7hk{left:-30%;opacity:0}}";
     	append(document.head, style);
     }
 
@@ -10791,7 +10792,7 @@
     	return child_ctx;
     }
 
-    // (156:6) {#if tagHeaders}
+    // (165:6) {#if tagHeaders}
     function create_if_block_1$1(ctx) {
     	var li, ul;
 
@@ -10855,7 +10856,7 @@
     	};
     }
 
-    // (160:14) {#if header.level === 0}
+    // (169:14) {#if header.level === 0}
     function create_if_block_2(ctx) {
     	var li, a, t0_value = ctx.header.text + "", t0, a_href_value, t1, dispose;
 
@@ -10896,7 +10897,7 @@
     	};
     }
 
-    // (159:12) {#each tagHeaders as header}
+    // (168:12) {#each tagHeaders as header}
     function create_each_block_2(ctx) {
     	var if_block_anchor;
 
@@ -10938,7 +10939,7 @@
     	};
     }
 
-    // (174:6) {#if tag.title}
+    // (183:6) {#if tag.title}
     function create_if_block$1(ctx) {
     	var p, t_value = ctx.tag.title + "", t;
 
@@ -10968,7 +10969,7 @@
     	};
     }
 
-    // (179:8) {#each tag.children as child}
+    // (188:8) {#each tag.children as child}
     function create_each_block_1(ctx) {
     	var current;
 
@@ -11020,7 +11021,7 @@
     	};
     }
 
-    // (173:4) {#each filteredActions as tag}
+    // (182:4) {#each filteredActions as tag}
     function create_each_block$1(ctx) {
     	var t0, ul, t1, current;
 
@@ -11174,18 +11175,20 @@
     				each_blocks[i_1].c();
     			}
     			attr(input, "id", "search-input-text");
-    			attr(input, "class", "input is-rounded svelte-1xl6iim");
+    			attr(input, "class", "input is-rounded svelte-1qs7hk");
     			attr(input, "placeholder", "Filter by path, method, and title...");
-    			attr(span, "class", "icon is-right icon-input-search svelte-1xl6iim");
+    			attr(span, "class", "icon is-right icon-input-search svelte-1qs7hk");
     			attr(p0, "class", "control has-icons-right");
     			attr(div0, "class", "field");
-    			attr(div1, "class", "hero-body svelte-1xl6iim");
-    			attr(section, "class", "hero is-sticky svelte-1xl6iim");
+    			attr(div1, "class", "hero-body svelte-1qs7hk");
+    			toggle_class(div1, "is-darkmode", ctx.isDarkmode);
+    			attr(section, "class", "hero is-sticky svelte-1qs7hk");
+    			toggle_class(section, "is-darkmode", ctx.isDarkmode);
     			attr(p1, "class", "menu-label");
     			attr(a, "href", a_href_value = basePath(ctx.config));
     			attr(ul, "class", "menu-list");
-    			attr(div2, "class", "menu-wrapper svelte-1xl6iim");
-    			attr(aside, "class", "menu svelte-1xl6iim");
+    			attr(div2, "class", "menu-wrapper svelte-1qs7hk");
+    			attr(aside, "class", "menu svelte-1qs7hk");
     			toggle_class(aside, "is-collapsed", ctx.isCollapsed);
 
     			dispose = [
@@ -11228,6 +11231,11 @@
 
     		p(changed, ctx) {
     			if (changed.query && (input.value !== ctx.query)) set_input_value(input, ctx.query);
+
+    			if (changed.isDarkmode) {
+    				toggle_class(div1, "is-darkmode", ctx.isDarkmode);
+    				toggle_class(section, "is-darkmode", ctx.isDarkmode);
+    			}
 
     			if ((!current || changed.config) && a_href_value !== (a_href_value = basePath(ctx.config))) {
     				attr(a, "href", a_href_value);
@@ -11312,7 +11320,7 @@
     function instance$1($$self, $$props, $$invalidate) {
     	
 
-      let { config = {}, tagActions = [], tagHeaders = [], currentSlug, actionsCount, isCollapsed, handleClick, tocClick, searchClick } = $$props;
+      let { config = {}, tagActions = [], tagHeaders = [], currentSlug, actionsCount, isCollapsed, isDarkmode, handleClick, tocClick, searchClick } = $$props;
 
       let query = "";
 
@@ -11328,6 +11336,7 @@
     		if ('currentSlug' in $$props) $$invalidate('currentSlug', currentSlug = $$props.currentSlug);
     		if ('actionsCount' in $$props) $$invalidate('actionsCount', actionsCount = $$props.actionsCount);
     		if ('isCollapsed' in $$props) $$invalidate('isCollapsed', isCollapsed = $$props.isCollapsed);
+    		if ('isDarkmode' in $$props) $$invalidate('isDarkmode', isDarkmode = $$props.isDarkmode);
     		if ('handleClick' in $$props) $$invalidate('handleClick', handleClick = $$props.handleClick);
     		if ('tocClick' in $$props) $$invalidate('tocClick', tocClick = $$props.tocClick);
     		if ('searchClick' in $$props) $$invalidate('searchClick', searchClick = $$props.searchClick);
@@ -11347,6 +11356,7 @@
     		currentSlug,
     		actionsCount,
     		isCollapsed,
+    		isDarkmode,
     		handleClick,
     		tocClick,
     		searchClick,
@@ -11359,8 +11369,8 @@
     class MenuPanel extends SvelteComponent {
     	constructor(options) {
     		super();
-    		if (!document.getElementById("svelte-1xl6iim-style")) add_css$1();
-    		init(this, options, instance$1, create_fragment$1, safe_not_equal, ["config", "tagActions", "tagHeaders", "currentSlug", "actionsCount", "isCollapsed", "handleClick", "tocClick", "searchClick"]);
+    		if (!document.getElementById("svelte-1qs7hk-style")) add_css$1();
+    		init(this, options, instance$1, create_fragment$1, safe_not_equal, ["config", "tagActions", "tagHeaders", "currentSlug", "actionsCount", "isCollapsed", "isDarkmode", "handleClick", "tocClick", "searchClick"]);
     	}
     }
 
@@ -13733,8 +13743,8 @@
 
     function add_css$5() {
     	var style = element("style");
-    	style.id = 'svelte-ymjevm-style';
-    	style.textContent = ".panel-section.svelte-ymjevm{padding:1em;border:1px solid #dbdbdb;border-top:none}.panel-button.svelte-ymjevm{border-radius:4px}.panel-dark.svelte-ymjevm{border:1px solid #363636}";
+    	style.id = 'svelte-1hkyt70-style';
+    	style.textContent = ".panel-section.svelte-1hkyt70{padding:1em;border:1px solid #dbdbdb;border-top:none}.panel-button.svelte-1hkyt70{border-radius:4px}.panel-dark.svelte-1hkyt70{border:1px solid #363636}.panel-section.is-darkmode.svelte-1hkyt70{background-color:#222 !important;border-color:#333}";
     	append(document.head, style);
     }
 
@@ -13775,14 +13785,15 @@
 
     			if (body_slot) body_slot.c();
 
-    			attr(div0, "class", "panel-heading svelte-ymjevm");
+    			attr(div0, "class", "panel-heading svelte-1hkyt70");
     			toggle_class(div0, "has-background-dark", ctx.dark);
     			toggle_class(div0, "has-text-white", ctx.dark);
     			toggle_class(div0, "panel-dark", ctx.dark);
     			toggle_class(div0, "panel-button", !ctx.show);
 
-    			attr(div1, "class", "panel-section has-background-white svelte-ymjevm");
+    			attr(div1, "class", "panel-section has-background-white svelte-1hkyt70");
     			toggle_class(div1, "is-hidden", !ctx.show);
+    			toggle_class(div1, "is-darkmode", ctx.isDarkmode);
     			attr(div2, "class", "panel");
     		},
 
@@ -13846,6 +13857,10 @@
     			if (changed.show) {
     				toggle_class(div1, "is-hidden", !ctx.show);
     			}
+
+    			if (changed.isDarkmode) {
+    				toggle_class(div1, "is-darkmode", ctx.isDarkmode);
+    			}
     		},
 
     		i(local) {
@@ -13880,7 +13895,7 @@
     }
 
     function instance$d($$self, $$props, $$invalidate) {
-    	let { dark = false, show = false } = $$props;
+    	let { dark = false, show = false, isDarkmode } = $$props;
 
     	let { $$slots = {}, $$scope } = $$props;
 
@@ -13893,17 +13908,25 @@
     	$$self.$set = $$props => {
     		if ('dark' in $$props) $$invalidate('dark', dark = $$props.dark);
     		if ('show' in $$props) $$invalidate('show', show = $$props.show);
+    		if ('isDarkmode' in $$props) $$invalidate('isDarkmode', isDarkmode = $$props.isDarkmode);
     		if ('$$scope' in $$props) $$invalidate('$$scope', $$scope = $$props.$$scope);
     	};
 
-    	return { dark, show, func, $$slots, $$scope };
+    	return {
+    		dark,
+    		show,
+    		isDarkmode,
+    		func,
+    		$$slots,
+    		$$scope
+    	};
     }
 
     class CollapsiblePanel extends SvelteComponent {
     	constructor(options) {
     		super();
-    		if (!document.getElementById("svelte-ymjevm-style")) add_css$5();
-    		init(this, options, instance$d, create_fragment$d, safe_not_equal, ["dark", "show"]);
+    		if (!document.getElementById("svelte-1hkyt70-style")) add_css$5();
+    		init(this, options, instance$d, create_fragment$d, safe_not_equal, ["dark", "show", "isDarkmode"]);
     	}
     }
 
@@ -14193,7 +14216,7 @@
     	return child_ctx;
     }
 
-    // (125:2) <span slot="heading">
+    // (126:2) <span slot="heading">
     function create_heading_slot(ctx) {
     	var span;
 
@@ -14216,7 +14239,7 @@
     	};
     }
 
-    // (134:8) {:else}
+    // (135:8) {:else}
     function create_else_block_4(ctx) {
     	var a, span0, t0_value = ctx.currentAction.method + "", t0, t1, span1, t2_value = ctx.currentUrl.origin + "", t2, t3, span2, t4_value = ctx.currentUrl.pathname + "", t4, dispose;
 
@@ -14274,7 +14297,7 @@
     	};
     }
 
-    // (129:8) {#if copying}
+    // (130:8) {#if copying}
     function create_if_block_11(ctx) {
     	var button;
 
@@ -14299,7 +14322,7 @@
     	};
     }
 
-    // (153:8) {:else}
+    // (154:8) {:else}
     function create_else_block_3(ctx) {
     	var button, dispose;
 
@@ -14329,7 +14352,7 @@
     	};
     }
 
-    // (149:8) {#if isAuth(environment, 'oauth2') && !$auth.includes($env)}
+    // (150:8) {#if isAuth(environment, 'oauth2') && !$auth.includes($env)}
     function create_if_block_10(ctx) {
     	var current;
 
@@ -14374,7 +14397,7 @@
     	};
     }
 
-    // (185:6) {:else}
+    // (186:6) {:else}
     function create_else_block_2(ctx) {
     	var each_1_anchor, current;
 
@@ -14456,7 +14479,7 @@
     	};
     }
 
-    // (181:6) {#if requestHeaders.length === 0 && !environment.auth}
+    // (182:6) {#if requestHeaders.length === 0 && !environment.auth}
     function create_if_block_9(ctx) {
     	var p;
 
@@ -14482,7 +14505,7 @@
     	};
     }
 
-    // (186:8) {#each requestHeaders as header}
+    // (187:8) {#each requestHeaders as header}
     function create_each_block_2$1(ctx) {
     	var updating_used, updating_value, current;
 
@@ -14556,7 +14579,7 @@
     	};
     }
 
-    // (196:6) {#if isAuth(environment, 'basic')}
+    // (197:6) {#if isAuth(environment, 'basic')}
     function create_if_block_8(ctx) {
     	var current;
 
@@ -14602,7 +14625,7 @@
     	};
     }
 
-    // (203:6) {#if isAuth(environment, 'apikey')}
+    // (204:6) {#if isAuth(environment, 'apikey')}
     function create_if_block_7(ctx) {
     	var current;
 
@@ -14649,7 +14672,7 @@
     	};
     }
 
-    // (210:6) {#if isAuth(environment, 'oauth2')}
+    // (211:6) {#if isAuth(environment, 'oauth2')}
     function create_if_block_5(ctx) {
     	var show_if = ctx.$auth.includes(ctx.$env), if_block_anchor, current;
 
@@ -14710,7 +14733,7 @@
     	};
     }
 
-    // (211:8) {#if $auth.includes($env)}
+    // (212:8) {#if $auth.includes($env)}
     function create_if_block_6(ctx) {
     	var current;
 
@@ -14756,7 +14779,7 @@
     	};
     }
 
-    // (225:6) {:else}
+    // (226:6) {:else}
     function create_else_block_1$1(ctx) {
     	var each_1_anchor, current;
 
@@ -14838,7 +14861,7 @@
     	};
     }
 
-    // (221:6) {#if requestParameters.length === 0}
+    // (222:6) {#if requestParameters.length === 0}
     function create_if_block_4(ctx) {
     	var p;
 
@@ -14864,7 +14887,7 @@
     	};
     }
 
-    // (226:8) {#each requestParameters as param}
+    // (227:8) {#each requestParameters as param}
     function create_each_block_1$1(ctx) {
     	var updating_used, updating_value, current;
 
@@ -14937,7 +14960,7 @@
     	};
     }
 
-    // (242:6) {:else}
+    // (243:6) {:else}
     function create_else_block$2(ctx) {
     	var p;
 
@@ -14961,7 +14984,7 @@
     	};
     }
 
-    // (237:6) {#if allowBody(currentAction)}
+    // (238:6) {#if allowBody(currentAction)}
     function create_if_block_3$1(ctx) {
     	var textarea, dispose;
 
@@ -14993,7 +15016,7 @@
     	};
     }
 
-    // (282:4) {:catch}
+    // (283:4) {:catch}
     function create_catch_block(ctx) {
     	var div;
 
@@ -15019,7 +15042,7 @@
     	};
     }
 
-    // (255:4) {:then value}
+    // (256:4) {:then value}
     function create_then_block(ctx) {
     	var show_if = Object.keys(ctx.value).length > 0, if_block_anchor, current;
 
@@ -15080,7 +15103,7 @@
     	};
     }
 
-    // (256:6) {#if Object.keys(value).length > 0}
+    // (257:6) {#if Object.keys(value).length > 0}
     function create_if_block_1$7(ctx) {
     	var div1, section1, section0, div0, h1, t0_value = ctx.value.status + "", t0, t1, t2_value = ctx.value.statusText + "", t2, section1_class_value, t3, show_if = Object.keys(ctx.value.headers).length > 0, current;
 
@@ -15174,7 +15197,7 @@
     	};
     }
 
-    // (266:10) {#if Object.keys(value.headers).length > 0}
+    // (267:10) {#if Object.keys(value.headers).length > 0}
     function create_if_block_2$3(ctx) {
     	var div1, div0, t, current;
 
@@ -15270,7 +15293,7 @@
     	};
     }
 
-    // (269:16) {#each Object.entries(value.headers) as [key, val]}
+    // (270:16) {#each Object.entries(value.headers) as [key, val]}
     function create_each_block$5(ctx) {
     	var p, span, t0_value = ctx.key + "", t0, t1, t2_value = ctx.val + "", t2, t3;
 
@@ -15313,7 +15336,7 @@
     	};
     }
 
-    // (249:21)        <div class="section has-text-centered">         <span class="icon is-medium has-text-danger">           <i class="fas fa-2x fa-spinner fa-pulse" />         </span>       </div>     {:then value}
+    // (250:21)        <div class="section has-text-centered">         <span class="icon is-medium has-text-danger">           <i class="fas fa-2x fa-spinner fa-pulse" />         </span>       </div>     {:then value}
     function create_pending_block(ctx) {
     	var div;
 
@@ -15340,7 +15363,7 @@
     	};
     }
 
-    // (286:4) {#if error}
+    // (287:4) {#if error}
     function create_if_block$a(ctx) {
     	var div1, section1, section0, div0, p, t;
 
@@ -15382,7 +15405,7 @@
     	};
     }
 
-    // (126:2) <div slot="body">
+    // (127:2) <div slot="body">
     function create_body_slot(ctx) {
     	var div0, div3, div1, t0, div2, show_if_4, current_block_type_index, if_block1, t1, div4, ul, li0, a0, t3, li1, a1, t5, li2, a2, t7, div5, current_block_type_index_1, if_block2, t8, show_if_3 = isAuth(ctx.environment, 'basic'), t9, show_if_2 = isAuth(ctx.environment, 'apikey'), t10, show_if_1 = isAuth(ctx.environment, 'oauth2'), t11, div6, current_block_type_index_2, if_block6, t12, div7, show_if, t13, promise, t14, current, dispose;
 
@@ -15821,7 +15844,7 @@
     	};
     }
 
-    // (124:0) <CollapsiblePanel dark={true} {show}>
+    // (125:0) <CollapsiblePanel dark={true} {isDarkmode} {show}>
     function create_default_slot(ctx) {
     	var t, current;
 
@@ -15852,6 +15875,7 @@
     	var collapsiblepanel = new CollapsiblePanel({
     		props: {
     		dark: true,
+    		isDarkmode: ctx.isDarkmode,
     		show: ctx.show,
     		$$slots: {
     		default: [create_default_slot],
@@ -15874,6 +15898,7 @@
 
     		p(changed, ctx) {
     			var collapsiblepanel_changes = {};
+    			if (changed.isDarkmode) collapsiblepanel_changes.isDarkmode = ctx.isDarkmode;
     			if (changed.show) collapsiblepanel_changes.show = ctx.show;
     			if (changed.$$scope || changed.error || changed.response || changed.requestTab || changed.currentAction || changed.requestBody || changed.requestParameters || changed.environment || changed.$auth || changed.$env || changed.$token || changed.requestHeaders || changed.copying || changed.currentUrl) collapsiblepanel_changes.$$scope = { changed, ctx };
     			collapsiblepanel.$set(collapsiblepanel_changes);
@@ -15914,7 +15939,7 @@
 
     	
 
-      let { show = true, environments, currentAction, currentSample, requestHeaders, requestParameters, requestBody } = $$props;
+      let { show = true, isDarkmode, environments, currentAction, currentSample, requestHeaders, requestParameters, requestBody } = $$props;
 
       let response = {};
       let requestTab = 0;
@@ -15991,6 +16016,7 @@
 
     	$$self.$set = $$props => {
     		if ('show' in $$props) $$invalidate('show', show = $$props.show);
+    		if ('isDarkmode' in $$props) $$invalidate('isDarkmode', isDarkmode = $$props.isDarkmode);
     		if ('environments' in $$props) $$invalidate('environments', environments = $$props.environments);
     		if ('currentAction' in $$props) $$invalidate('currentAction', currentAction = $$props.currentAction);
     		if ('currentSample' in $$props) $$invalidate('currentSample', currentSample = $$props.currentSample);
@@ -16011,6 +16037,7 @@
 
     	return {
     		show,
+    		isDarkmode,
     		environments,
     		currentAction,
     		currentSample,
@@ -16044,13 +16071,13 @@
     	constructor(options) {
     		super();
     		if (!document.getElementById("svelte-c3oocm-style")) add_css$8();
-    		init(this, options, instance$g, create_fragment$g, safe_not_equal, ["show", "environments", "currentAction", "currentSample", "requestHeaders", "requestParameters", "requestBody"]);
+    		init(this, options, instance$g, create_fragment$g, safe_not_equal, ["show", "isDarkmode", "environments", "currentAction", "currentSample", "requestHeaders", "requestParameters", "requestBody"]);
     	}
     }
 
     /* templates/winter/panels/ScenarioPanel.svelte generated by Svelte v3.9.1 */
 
-    // (30:2) <span slot="heading">
+    // (31:2) <span slot="heading">
     function create_heading_slot$1(ctx) {
     	var span, t_value = ctx.title(ctx.index) + "", t;
 
@@ -16080,7 +16107,7 @@
     	};
     }
 
-    // (31:2) <div slot="body">
+    // (32:2) <div slot="body">
     function create_body_slot$1(ctx) {
     	var div, t, current;
 
@@ -16170,7 +16197,7 @@
     	};
     }
 
-    // (29:0) <CollapsiblePanel {show}>
+    // (30:0) <CollapsiblePanel {isDarkmode} {show}>
     function create_default_slot$1(ctx) {
     	var t, current;
 
@@ -16200,6 +16227,7 @@
 
     	var collapsiblepanel = new CollapsiblePanel({
     		props: {
+    		isDarkmode: ctx.isDarkmode,
     		show: ctx.show,
     		$$slots: {
     		default: [create_default_slot$1],
@@ -16222,6 +16250,7 @@
 
     		p(changed, ctx) {
     			var collapsiblepanel_changes = {};
+    			if (changed.isDarkmode) collapsiblepanel_changes.isDarkmode = ctx.isDarkmode;
     			if (changed.show) collapsiblepanel_changes.show = ctx.show;
     			if (changed.$$scope || changed.response || changed.request || changed.index) collapsiblepanel_changes.$$scope = { changed, ctx };
     			collapsiblepanel.$set(collapsiblepanel_changes);
@@ -16248,7 +16277,7 @@
     function instance$h($$self, $$props, $$invalidate) {
     	
 
-      let { show, count, index, request, response } = $$props;
+      let { show, count, index, request, response, isDarkmode } = $$props;
 
       function title(index) {
         if (request.title) {
@@ -16268,6 +16297,7 @@
     		if ('index' in $$props) $$invalidate('index', index = $$props.index);
     		if ('request' in $$props) $$invalidate('request', request = $$props.request);
     		if ('response' in $$props) $$invalidate('response', response = $$props.response);
+    		if ('isDarkmode' in $$props) $$invalidate('isDarkmode', isDarkmode = $$props.isDarkmode);
     	};
 
     	return {
@@ -16276,6 +16306,7 @@
     		index,
     		request,
     		response,
+    		isDarkmode,
     		title
     	};
     }
@@ -16283,7 +16314,7 @@
     class ScenarioPanel extends SvelteComponent {
     	constructor(options) {
     		super();
-    		init(this, options, instance$h, create_fragment$h, safe_not_equal, ["show", "count", "index", "request", "response"]);
+    		init(this, options, instance$h, create_fragment$h, safe_not_equal, ["show", "count", "index", "request", "response", "isDarkmode"]);
     	}
     }
 
@@ -16292,8 +16323,8 @@
 
     function add_css$9() {
     	var style = element("style");
-    	style.id = 'svelte-t5bxdu-style';
-    	style.textContent = ".sidenav.svelte-t5bxdu{padding:1rem 0 1rem 0.75rem}.main.svelte-t5bxdu{padding:3rem;background-color:#fff;box-shadow:0 2px 0 2px #f5f5f5}.breadcrumb-right.svelte-t5bxdu{margin-top:0.3em}.box-wrapper.svelte-t5bxdu{border-radius:0}body{background-color:#fafafa}code[class*=\"language-\"], pre[class*=\"language-\"]{font-family:monospace}.token.number, .token.tag{display:inline;padding:inherit;font-size:inherit;line-height:inherit;text-align:inherit;vertical-align:inherit;border-radius:inherit;font-weight:inherit;white-space:inherit;background:inherit;margin:inherit}.icon-brand.svelte-t5bxdu{margin-right:0.5rem}.menu-collapsible.svelte-t5bxdu{display:none}.footer.svelte-t5bxdu .content.svelte-t5bxdu{transition:margin 0.3s}@media screen and (min-width: 768px){.menu-collapsible.svelte-t5bxdu{display:block;position:fixed;border-top:1px solid #eee;width:calc(25% - 0.5rem);height:calc(2.5rem + 10px);left:0;bottom:0;font-size:1.33333em;line-height:calc(2.5rem + 5px);text-align:center;color:#b5b5b5;font-weight:300;box-shadow:2px 0 0 #f5f5f5;cursor:pointer}.menu-collapsible.svelte-t5bxdu:hover{background:rgba(0, 0, 0, 0.05);box-shadow:2px 0 0 #eee;border-color:#e8e8e8}.is-collapsed.svelte-t5bxdu .sidenav.svelte-t5bxdu{width:3.75rem}.is-collapsed.svelte-t5bxdu .main.svelte-t5bxdu{width:calc(100% - 4.5rem)}.is-collapsed.svelte-t5bxdu .menu-collapsible.svelte-t5bxdu{width:calc(3rem - 2px)}.menu-collapsible.svelte-t5bxdu,.sidenav.svelte-t5bxdu,.main.svelte-t5bxdu{transition:width 0.3s}}";
+    	style.id = 'svelte-lfb85j-style';
+    	style.textContent = ".sidenav.svelte-lfb85j{padding:1rem 0 1rem 0.75rem}.main.svelte-lfb85j{padding:3rem;background-color:#fff;box-shadow:0 2px 0 2px #f5f5f5}.main.is-darkmode.svelte-lfb85j{background-color:#000;box-shadow:0 2px 0 2px #363636}.breadcrumb-right.svelte-lfb85j{margin-top:0.3em}.box-wrapper.svelte-lfb85j{border-radius:0}.body-inner.svelte-lfb85j{background-color:#fafafa}.body-inner.is-darkmode.svelte-lfb85j{background-color:#000}code[class*=\"language-\"], pre[class*=\"language-\"]{font-family:monospace}.token.number, .token.tag{display:inline;padding:inherit;font-size:inherit;line-height:inherit;text-align:inherit;vertical-align:inherit;border-radius:inherit;font-weight:inherit;white-space:inherit;background:inherit;margin:inherit}.icon-brand.svelte-lfb85j{margin-right:0.5rem}.menu-collapsible.svelte-lfb85j{display:none;position:fixed;width:calc(25% - 0.5rem);height:calc(2.5rem + 10px);left:0;bottom:0;font-size:1.33333em;line-height:calc(2.5rem + 5px);text-align:center;color:#b5b5b5;font-weight:300;border-top:1px solid #eee;box-shadow:2px 0 0 #f5f5f5;cursor:pointer}.menu-collapsible.svelte-lfb85j:hover{background:rgba(0, 0, 0, 0.05);box-shadow:2px 0 0 #eee;border-color:#e8e8e8}.menu-collapsible.is-darkmode.svelte-lfb85j{border-color:#363636;box-shadow:2px 0 0 #363636}.menu-collapsible.is-darkmode.svelte-lfb85j:hover{background:rgba(255, 255, 255, 0.2);border-color:#363636;box-shadow:2px 0 0 #363636}.footer.is-darkmode.svelte-lfb85j{background-color:#000}.footer.svelte-lfb85j .content.svelte-lfb85j{transition:margin 0.3s}@media screen and (min-width: 768px){.menu-collapsible.svelte-lfb85j{display:block}.is-collapsed.svelte-lfb85j .sidenav.svelte-lfb85j{width:3.75rem}.is-collapsed.svelte-lfb85j .main.svelte-lfb85j{width:calc(100% - 4.5rem)}.is-collapsed.svelte-lfb85j .menu-collapsible.svelte-lfb85j{width:calc(3rem - 2px)}.menu-collapsible.svelte-lfb85j,.sidenav.svelte-lfb85j,.main.svelte-lfb85j{transition:width 0.3s}}";
     	append(document_1.head, style);
     }
 
@@ -16311,8 +16342,8 @@
     	return child_ctx;
     }
 
-    // (311:6) {#if config.playground.enabled}
-    function create_if_block_6$1(ctx) {
+    // (362:8) {#if config.playground.enabled}
+    function create_if_block_7$1(ctx) {
     	var current;
 
     	var selectorpanel = new SelectorPanel({
@@ -16357,7 +16388,52 @@
     	};
     }
 
-    // (336:6) {#if collapsed}
+    // (367:8) {#if darkMode.enable}
+    function create_if_block_6$1(ctx) {
+    	var div, a, span, i, dispose;
+
+    	return {
+    		c() {
+    			div = element("div");
+    			a = element("a");
+    			span = element("span");
+    			i = element("i");
+    			attr(i, "class", "fas fa-lg");
+    			toggle_class(i, "fa-moon", ctx.darkMode.active);
+    			toggle_class(i, "fa-sun", !ctx.darkMode.active);
+    			attr(span, "class", "icon is-medium has-text-grey-light");
+    			attr(a, "href", "javascript:void(0)");
+    			attr(a, "title", "Dark Mode");
+    			attr(a, "class", "navbar-link is-arrowless");
+    			attr(div, "class", "navbar-item has-dropdown is-hoverable");
+    			dispose = listen(a, "click", ctx.darkToggle);
+    		},
+
+    		m(target, anchor) {
+    			insert(target, div, anchor);
+    			append(div, a);
+    			append(a, span);
+    			append(span, i);
+    		},
+
+    		p(changed, ctx) {
+    			if (changed.darkMode) {
+    				toggle_class(i, "fa-moon", ctx.darkMode.active);
+    				toggle_class(i, "fa-sun", !ctx.darkMode.active);
+    			}
+    		},
+
+    		d(detaching) {
+    			if (detaching) {
+    				detach(div);
+    			}
+
+    			dispose();
+    		}
+    	};
+    }
+
+    // (407:8) {#if collapsed}
     function create_if_block_5$1(ctx) {
     	var span;
 
@@ -16381,7 +16457,7 @@
     	};
     }
 
-    // (339:6) {#if !collapsed}
+    // (410:8) {#if !collapsed}
     function create_if_block_4$1(ctx) {
     	var span0, t_1, span1;
 
@@ -16412,7 +16488,7 @@
     	};
     }
 
-    // (347:4) {#if index === -1}
+    // (420:6) {#if index === -1}
     function create_if_block_3$2(ctx) {
     	var div, raw_value = markdown(ctx.description) + "";
 
@@ -16441,7 +16517,7 @@
     	};
     }
 
-    // (353:4) {#if currentAction}
+    // (426:6) {#if currentAction}
     function create_if_block$b(ctx) {
     	var div2, div0, h1, t0_value = ctx.currentAction.title + "", t0, t1, div1, nav, ul, t2, hr, t3, div3, code0, t4_value = ctx.currentAction.method + "", t4, code0_class_value, t5, code1, t6_value = ctx.currentAction.pathTemplate + "", t6, t7, div4, raw_value = markdown(ctx.currentAction.description) + "", t8, t9, t10, each1_anchor, current;
 
@@ -16508,11 +16584,11 @@
     			each1_anchor = empty();
     			attr(h1, "class", "title is-4");
     			attr(div0, "class", "column");
-    			attr(nav, "class", "breadcrumb breadcrumb-right is-pulled-right svelte-t5bxdu");
+    			attr(nav, "class", "breadcrumb breadcrumb-right is-pulled-right svelte-lfb85j");
     			attr(nav, "aria-label", "breadcrumbs");
     			attr(div1, "class", "column");
     			attr(div2, "class", "columns");
-    			attr(code0, "class", code0_class_value = "tag is-uppercase " + colorize(ctx.currentAction.method) + " svelte-t5bxdu");
+    			attr(code0, "class", code0_class_value = "tag is-uppercase " + colorize(ctx.currentAction.method) + " svelte-lfb85j");
     			attr(code1, "class", "tag ");
     			attr(div3, "class", "tags has-addons are-large");
     			attr(div4, "class", "content");
@@ -16588,7 +16664,7 @@
     				set_data(t4, t4_value);
     			}
 
-    			if ((!current || changed.currentAction) && code0_class_value !== (code0_class_value = "tag is-uppercase " + colorize(ctx.currentAction.method) + " svelte-t5bxdu")) {
+    			if ((!current || changed.currentAction) && code0_class_value !== (code0_class_value = "tag is-uppercase " + colorize(ctx.currentAction.method) + " svelte-lfb85j")) {
     				attr(code0, "class", code0_class_value);
     			}
 
@@ -16622,7 +16698,7 @@
     			if (changed.currentAction) parameterpanel_changes.parameters = ctx.currentAction.parameters;
     			parameterpanel.$set(parameterpanel_changes);
 
-    			if (changed.currentAction) {
+    			if (changed.darkMode || changed.currentAction) {
     				each_value = ctx.currentAction.transactions;
 
     				for (var i = 0; i < each_value.length; i += 1) {
@@ -16704,7 +16780,7 @@
     	};
     }
 
-    // (363:14) {#each currentAction.tags as tag}
+    // (436:16) {#each currentAction.tags as tag}
     function create_each_block_1$2(ctx) {
     	var li, a, t0_value = ctx.tag + "", t0, t1;
 
@@ -16738,7 +16814,7 @@
     	};
     }
 
-    // (386:6) {#if config.playground.enabled}
+    // (459:8) {#if config.playground.enabled}
     function create_if_block_1$8(ctx) {
     	var if_block_anchor, current;
 
@@ -16797,7 +16873,7 @@
     	};
     }
 
-    // (387:8) {#if environment.playground !== false}
+    // (460:10) {#if environment.playground !== false}
     function create_if_block_2$4(ctx) {
     	var current;
 
@@ -16808,7 +16884,8 @@
     		currentSample: sample(ctx.currentAction),
     		requestHeaders: headersMap(ctx.currentAction),
     		requestParameters: parametersMap(ctx.currentAction),
-    		requestBody: bodyMap(ctx.currentAction)
+    		requestBody: bodyMap(ctx.currentAction),
+    		isDarkmode: ctx.darkMode.active
     	}
     	});
 
@@ -16830,6 +16907,7 @@
     			if (changed.headersMap || changed.currentAction) playgroundpanel_changes.requestHeaders = headersMap(ctx.currentAction);
     			if (changed.parametersMap || changed.currentAction) playgroundpanel_changes.requestParameters = parametersMap(ctx.currentAction);
     			if (changed.bodyMap || changed.currentAction) playgroundpanel_changes.requestBody = bodyMap(ctx.currentAction);
+    			if (changed.darkMode) playgroundpanel_changes.isDarkmode = ctx.darkMode.active;
     			playgroundpanel.$set(playgroundpanel_changes);
     		},
 
@@ -16851,13 +16929,14 @@
     	};
     }
 
-    // (400:6) {#each currentAction.transactions as { request, response }
+    // (474:8) {#each currentAction.transactions as { request, response }
     function create_each_block$6(ctx) {
     	var current;
 
     	var scenariopanel = new ScenarioPanel({
     		props: {
     		show: ctx.index === 0,
+    		isDarkmode: ctx.darkMode.active,
     		request: ctx.request,
     		response: ctx.response,
     		index: ctx.index,
@@ -16877,6 +16956,7 @@
 
     		p(changed, ctx) {
     			var scenariopanel_changes = {};
+    			if (changed.darkMode) scenariopanel_changes.isDarkmode = ctx.darkMode.active;
     			if (changed.currentAction) scenariopanel_changes.request = ctx.request;
     			if (changed.currentAction) scenariopanel_changes.response = ctx.response;
     			if (changed.currentAction) scenariopanel_changes.count = ctx.currentAction.transactions.length;
@@ -16902,9 +16982,11 @@
     }
 
     function create_fragment$i(ctx) {
-    	var nav, div0, a0, span0, t0, span1, t1, t2, a1, t5, div2, div1, t6, div6, div4, t7, div3, t8, t9, div5, t10, t11, footer, div7, p, strong, t12, t13, a2, current, dispose;
+    	var div8, nav, div0, a0, span0, t0, span1, t1, t2, a1, t5, div2, div1, t6, t7, div6, div4, t8, div3, t9, t10, div5, t11, t12, footer, div7, p, strong, t13, t14, a2, current, dispose;
 
-    	var if_block0 = (ctx.config.playground.enabled) && create_if_block_6$1(ctx);
+    	var if_block0 = (ctx.config.playground.enabled) && create_if_block_7$1(ctx);
+
+    	var if_block1 = (ctx.darkMode.enable) && create_if_block_6$1(ctx);
 
     	var menupanel = new MenuPanel({
     		props: {
@@ -16913,6 +16995,7 @@
     		currentSlug: ctx.currentAction && ctx.currentAction.slug,
     		actionsCount: ctx.actions.length,
     		isCollapsed: ctx.collapsed,
+    		isDarkmode: ctx.darkMode.active,
     		config: ctx.config,
     		handleClick: ctx.handleClick,
     		tocClick: ctx.tocClick,
@@ -16920,16 +17003,17 @@
     	}
     	});
 
-    	var if_block1 = (ctx.collapsed) && create_if_block_5$1(ctx);
+    	var if_block2 = (ctx.collapsed) && create_if_block_5$1(ctx);
 
-    	var if_block2 = (!ctx.collapsed) && create_if_block_4$1(ctx);
+    	var if_block3 = (!ctx.collapsed) && create_if_block_4$1(ctx);
 
-    	var if_block3 = (ctx.index === -1) && create_if_block_3$2(ctx);
+    	var if_block4 = (ctx.index === -1) && create_if_block_3$2(ctx);
 
-    	var if_block4 = (ctx.currentAction) && create_if_block$b(ctx);
+    	var if_block5 = (ctx.currentAction) && create_if_block$b(ctx);
 
     	return {
     		c() {
+    			div8 = element("div");
     			nav = element("nav");
     			div0 = element("div");
     			a0 = element("a");
@@ -16946,29 +17030,31 @@
     			div1 = element("div");
     			if (if_block0) if_block0.c();
     			t6 = space();
+    			if (if_block1) if_block1.c();
+    			t7 = space();
     			div6 = element("div");
     			div4 = element("div");
     			menupanel.$$.fragment.c();
-    			t7 = space();
-    			div3 = element("div");
-    			if (if_block1) if_block1.c();
     			t8 = space();
+    			div3 = element("div");
     			if (if_block2) if_block2.c();
     			t9 = space();
-    			div5 = element("div");
     			if (if_block3) if_block3.c();
     			t10 = space();
+    			div5 = element("div");
     			if (if_block4) if_block4.c();
     			t11 = space();
+    			if (if_block5) if_block5.c();
+    			t12 = space();
     			footer = element("footer");
     			div7 = element("div");
     			p = element("p");
     			strong = element("strong");
-    			t12 = text(ctx.title);
-    			t13 = text("\n      powered by\n      ");
+    			t13 = text(ctx.title);
+    			t14 = text("\n        powered by\n        ");
     			a2 = element("a");
     			a2.innerHTML = `<strong>Snowboard.</strong>`;
-    			attr(span0, "class", "icon icon-brand is-medium has-text-grey-light svelte-t5bxdu");
+    			attr(span0, "class", "icon icon-brand is-medium has-text-grey-light svelte-lfb85j");
     			attr(span1, "class", "title is-4");
     			attr(a0, "href", "javascript:void(0)");
     			attr(a0, "class", "navbar-item");
@@ -16984,18 +17070,23 @@
     			attr(nav, "class", "navbar is-fixed-top has-shadow");
     			attr(nav, "role", "navigation");
     			attr(nav, "aria-label", "main navigation");
-    			attr(div3, "class", "menu-collapsible svelte-t5bxdu");
-    			attr(div4, "class", "column is-one-quarter sidenav svelte-t5bxdu");
+    			attr(div3, "class", "menu-collapsible svelte-lfb85j");
+    			toggle_class(div3, "is-darkmode", ctx.darkMode.active);
+    			attr(div4, "class", "column is-one-quarter sidenav svelte-lfb85j");
     			attr(div4, "id", "mainnav");
     			toggle_class(div4, "is-hidden-mobile", ctx.showMenu);
-    			attr(div5, "class", "column is-three-quarters main svelte-t5bxdu");
-    			attr(div6, "class", "columns svelte-t5bxdu");
+    			attr(div5, "class", "column is-three-quarters main svelte-lfb85j");
+    			toggle_class(div5, "is-darkmode", ctx.darkMode.active);
+    			attr(div6, "class", "columns svelte-lfb85j");
     			toggle_class(div6, "is-collapsed", ctx.collapsed);
     			attr(a2, "href", "https://github.com/bukalapak/snowboard");
     			attr(a2, "target", "_blank");
-    			attr(div7, "class", "content column is-paddingless has-text-centered svelte-t5bxdu");
+    			attr(div7, "class", "content column is-paddingless has-text-centered svelte-lfb85j");
     			toggle_class(div7, "is-offset-one-quarter", !ctx.collapsed);
-    			attr(footer, "class", "footer svelte-t5bxdu");
+    			attr(footer, "class", "footer svelte-lfb85j");
+    			toggle_class(footer, "is-darkmode", ctx.darkMode.active);
+    			attr(div8, "class", "body-inner svelte-lfb85j");
+    			toggle_class(div8, "is-darkmode", ctx.darkMode.active);
 
     			dispose = [
     				listen(a1, "click", ctx.burgerClick),
@@ -17004,7 +17095,8 @@
     		},
 
     		m(target, anchor) {
-    			insert(target, nav, anchor);
+    			insert(target, div8, anchor);
+    			append(div8, nav);
     			append(nav, div0);
     			append(div0, a0);
     			append(a0, span0);
@@ -17017,27 +17109,29 @@
     			append(nav, div2);
     			append(div2, div1);
     			if (if_block0) if_block0.m(div1, null);
-    			insert(target, t6, anchor);
-    			insert(target, div6, anchor);
+    			append(div1, t6);
+    			if (if_block1) if_block1.m(div1, null);
+    			append(div8, t7);
+    			append(div8, div6);
     			append(div6, div4);
     			mount_component(menupanel, div4, null);
-    			append(div4, t7);
+    			append(div4, t8);
     			append(div4, div3);
-    			if (if_block1) if_block1.m(div3, null);
-    			append(div3, t8);
     			if (if_block2) if_block2.m(div3, null);
-    			append(div6, t9);
+    			append(div3, t9);
+    			if (if_block3) if_block3.m(div3, null);
+    			append(div6, t10);
     			append(div6, div5);
-    			if (if_block3) if_block3.m(div5, null);
-    			append(div5, t10);
     			if (if_block4) if_block4.m(div5, null);
-    			insert(target, t11, anchor);
-    			insert(target, footer, anchor);
+    			append(div5, t11);
+    			if (if_block5) if_block5.m(div5, null);
+    			append(div8, t12);
+    			append(div8, footer);
     			append(footer, div7);
     			append(div7, p);
     			append(p, strong);
-    			append(strong, t12);
-    			append(p, t13);
+    			append(strong, t13);
+    			append(p, t14);
     			append(p, a2);
     			current = true;
     		},
@@ -17052,10 +17146,10 @@
     					if_block0.p(changed, ctx);
     					transition_in(if_block0, 1);
     				} else {
-    					if_block0 = create_if_block_6$1(ctx);
+    					if_block0 = create_if_block_7$1(ctx);
     					if_block0.c();
     					transition_in(if_block0, 1);
-    					if_block0.m(div1, null);
+    					if_block0.m(div1, t6);
     				}
     			} else if (if_block0) {
     				group_outros();
@@ -17065,12 +17159,26 @@
     				check_outros();
     			}
 
+    			if (ctx.darkMode.enable) {
+    				if (if_block1) {
+    					if_block1.p(changed, ctx);
+    				} else {
+    					if_block1 = create_if_block_6$1(ctx);
+    					if_block1.c();
+    					if_block1.m(div1, null);
+    				}
+    			} else if (if_block1) {
+    				if_block1.d(1);
+    				if_block1 = null;
+    			}
+
     			var menupanel_changes = {};
     			if (changed.tagActions) menupanel_changes.tagActions = ctx.tagActions;
     			if (changed.toc || changed.description) menupanel_changes.tagHeaders = toc(ctx.description);
     			if (changed.currentAction) menupanel_changes.currentSlug = ctx.currentAction && ctx.currentAction.slug;
     			if (changed.actions) menupanel_changes.actionsCount = ctx.actions.length;
     			if (changed.collapsed) menupanel_changes.isCollapsed = ctx.collapsed;
+    			if (changed.darkMode) menupanel_changes.isDarkmode = ctx.darkMode.active;
     			if (changed.config) menupanel_changes.config = ctx.config;
     			if (changed.handleClick) menupanel_changes.handleClick = ctx.handleClick;
     			if (changed.tocClick) menupanel_changes.tocClick = ctx.tocClick;
@@ -17078,25 +17186,29 @@
     			menupanel.$set(menupanel_changes);
 
     			if (ctx.collapsed) {
-    				if (!if_block1) {
-    					if_block1 = create_if_block_5$1(ctx);
-    					if_block1.c();
-    					if_block1.m(div3, t8);
-    				}
-    			} else if (if_block1) {
-    				if_block1.d(1);
-    				if_block1 = null;
-    			}
-
-    			if (!ctx.collapsed) {
     				if (!if_block2) {
-    					if_block2 = create_if_block_4$1(ctx);
+    					if_block2 = create_if_block_5$1(ctx);
     					if_block2.c();
-    					if_block2.m(div3, null);
+    					if_block2.m(div3, t9);
     				}
     			} else if (if_block2) {
     				if_block2.d(1);
     				if_block2 = null;
+    			}
+
+    			if (!ctx.collapsed) {
+    				if (!if_block3) {
+    					if_block3 = create_if_block_4$1(ctx);
+    					if_block3.c();
+    					if_block3.m(div3, null);
+    				}
+    			} else if (if_block3) {
+    				if_block3.d(1);
+    				if_block3 = null;
+    			}
+
+    			if (changed.darkMode) {
+    				toggle_class(div3, "is-darkmode", ctx.darkMode.active);
     			}
 
     			if (changed.showMenu) {
@@ -17104,34 +17216,38 @@
     			}
 
     			if (ctx.index === -1) {
-    				if (if_block3) {
-    					if_block3.p(changed, ctx);
+    				if (if_block4) {
+    					if_block4.p(changed, ctx);
     				} else {
-    					if_block3 = create_if_block_3$2(ctx);
-    					if_block3.c();
-    					if_block3.m(div5, t10);
+    					if_block4 = create_if_block_3$2(ctx);
+    					if_block4.c();
+    					if_block4.m(div5, t11);
     				}
-    			} else if (if_block3) {
-    				if_block3.d(1);
-    				if_block3 = null;
+    			} else if (if_block4) {
+    				if_block4.d(1);
+    				if_block4 = null;
     			}
 
     			if (ctx.currentAction) {
-    				if (if_block4) {
-    					if_block4.p(changed, ctx);
-    					transition_in(if_block4, 1);
+    				if (if_block5) {
+    					if_block5.p(changed, ctx);
+    					transition_in(if_block5, 1);
     				} else {
-    					if_block4 = create_if_block$b(ctx);
-    					if_block4.c();
-    					transition_in(if_block4, 1);
-    					if_block4.m(div5, null);
+    					if_block5 = create_if_block$b(ctx);
+    					if_block5.c();
+    					transition_in(if_block5, 1);
+    					if_block5.m(div5, null);
     				}
-    			} else if (if_block4) {
+    			} else if (if_block5) {
     				group_outros();
-    				transition_out(if_block4, 1, 1, () => {
-    					if_block4 = null;
+    				transition_out(if_block5, 1, 1, () => {
+    					if_block5 = null;
     				});
     				check_outros();
+    			}
+
+    			if (changed.darkMode) {
+    				toggle_class(div5, "is-darkmode", ctx.darkMode.active);
     			}
 
     			if (changed.collapsed) {
@@ -17139,11 +17255,16 @@
     			}
 
     			if (!current || changed.title) {
-    				set_data(t12, ctx.title);
+    				set_data(t13, ctx.title);
     			}
 
     			if (changed.collapsed) {
     				toggle_class(div7, "is-offset-one-quarter", !ctx.collapsed);
+    			}
+
+    			if (changed.darkMode) {
+    				toggle_class(footer, "is-darkmode", ctx.darkMode.active);
+    				toggle_class(div8, "is-darkmode", ctx.darkMode.active);
     			}
     		},
 
@@ -17153,41 +17274,31 @@
 
     			transition_in(menupanel.$$.fragment, local);
 
-    			transition_in(if_block4);
+    			transition_in(if_block5);
     			current = true;
     		},
 
     		o(local) {
     			transition_out(if_block0);
     			transition_out(menupanel.$$.fragment, local);
-    			transition_out(if_block4);
+    			transition_out(if_block5);
     			current = false;
     		},
 
     		d(detaching) {
     			if (detaching) {
-    				detach(nav);
+    				detach(div8);
     			}
 
     			if (if_block0) if_block0.d();
-
-    			if (detaching) {
-    				detach(t6);
-    				detach(div6);
-    			}
+    			if (if_block1) if_block1.d();
 
     			destroy_component(menupanel);
 
-    			if (if_block1) if_block1.d();
     			if (if_block2) if_block2.d();
     			if (if_block3) if_block3.d();
     			if (if_block4) if_block4.d();
-
-    			if (detaching) {
-    				detach(t11);
-    				detach(footer);
-    			}
-
+    			if (if_block5) if_block5.d();
     			run_all(dispose);
     		}
     	};
@@ -17297,6 +17408,32 @@
         }
       }
 
+      const darkMode = {
+        enable: true,
+        store: window.localStorage,
+        toggle: "darkmode-toggle",
+        mode: ["light", "dark"],
+        active: false
+      };
+
+      function darkToggle() {
+        darkMode.active = !darkMode.active; $$invalidate('darkMode', darkMode);
+        document.getElementById(
+          `bulma-theme-${darkMode.mode[Number(!darkMode.active)]}`
+        ).media = "none";
+        document.getElementById(
+          `bulma-theme-${darkMode.mode[Number(darkMode.active)]}`
+        ).media = "";
+        darkMode.store.setItem(
+          darkMode.toggle,
+          darkMode.mode[Number(darkMode.active)]
+        );
+      }
+
+      if (darkMode.store.getItem(darkMode.toggle) === darkMode.mode[1]) {
+        darkToggle();
+      }
+
       onMount(async () => {
         // handle oauth2 callback
         if (isAuth(environment, "oauth2")) {
@@ -17376,6 +17513,8 @@
     		burgerClick,
     		collapseToggle,
     		searchClick,
+    		darkMode,
+    		darkToggle,
     		currentAction,
     		environment
     	};
@@ -17384,14 +17523,14 @@
     class Winter extends SvelteComponent {
     	constructor(options) {
     		super();
-    		if (!document_1.getElementById("svelte-t5bxdu-style")) add_css$9();
+    		if (!document_1.getElementById("svelte-lfb85j-style")) add_css$9();
     		init(this, options, instance$i, create_fragment$i, safe_not_equal, ["title", "description", "actions", "tagActions", "config"]);
     	}
     }
 
     const app = new Winter({
       target: document.body,
-      props: {"title":"Data Structures API","description":"Following [Advanced Attributes](09.%20Advanced%20Attributes.md), this example\ndemonstrates defining arbitrary data structure to be reused by various\nattribute descriptions.\n\nSince a portion of the `Coupon` data structure is shared between the `Coupon`\ndefinition itself and the `Create a Coupon` action, it was separated into a\n`Coupon Base` data structure in the `Data Structures` API Blueprint Section.\nDoing so enables us to reuse it as a base-type of other attribute definitions.\n\n## API Blueprint\n\n+ [Previous: Advanced Attributes](09.%20Advanced%20Attributes.md)\n\n+ [This: Raw API Blueprint](https://raw.github.com/apiaryio/api-blueprint/master/examples/10.%20Data%20Structures.md)\n\n+ [Next: Resource Model](11.%20Resource%20Model.md)","version":"","servers":[],"tags":[{"title":"Coupons","description":"","children":[{"title":"Coupon","description":"A coupon contains information about a percent-off or amount-off discount you\nmight want to apply to a customer.","children":[]},{"title":"Coupons","description":"","children":[]}]}],"actions":[{"title":"Retrieve a Coupon","path":"/coupons/{id}","pathTemplate":"/coupons/{id}","slug":"get~coupons~id","method":"get","description":"A coupon contains information about a percent-off or amount-off discount you\nmight want to apply to a customer.\nRetrieves the coupon with the given ID.","parameters":[{"location":"path","name":"id","description":"The ID of the desired coupon.","required":true,"schema":{"type":"string"}}],"transactions":[{"request":{"title":"","description":"","headers":[],"example":"","schema":""},"response":{"statusCode":200,"title":"","description":"","contentType":"application/json","headers":[{"name":"Content-Type","example":"application/json","required":false,"schema":{"type":"string"}}],"example":"{\n  \"percent_off\": 25,\n  \"redeem_by\": 0,\n  \"id\": \"250FF\",\n  \"created\": 1415203908\n}","schema":"{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"percent_off\": {\n      \"type\": \"number\"\n    },\n    \"redeem_by\": {\n      \"type\": \"number\"\n    },\n    \"id\": {\n      \"type\": \"string\"\n    },\n    \"created\": {\n      \"type\": \"number\"\n    }\n  },\n  \"required\": [\n    \"id\"\n  ]\n}"}}],"tags":["Coupons","Coupon"]},{"title":"List all Coupons","path":"/coupons","pathTemplate":"/coupons{?limit}","slug":"get~coupons","method":"get","description":"\nReturns a list of your coupons.","parameters":[{"location":"query","name":"limit","description":"A limit on the number of objects to be returned. Limit can range\nbetween 1 and 100 items.","required":false,"schema":{"type":"number"}}],"transactions":[{"request":{"title":"","description":"","headers":[],"example":"","schema":""},"response":{"statusCode":200,"title":"","description":"","contentType":"application/json","headers":[{"name":"Content-Type","example":"application/json","required":false,"schema":{"type":"string"}}],"example":"[\n  {\n    \"percent_off\": 25,\n    \"redeem_by\": 0,\n    \"id\": \"250FF\",\n    \"created\": 1415203908\n  }\n]","schema":"{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"type\": \"array\"\n}"}}],"tags":["Coupons","Coupons"]},{"title":"Create a Coupon","path":"/coupons","pathTemplate":"/coupons{?limit}","slug":"post~coupons","method":"post","description":"\nCreates a new Coupon.","parameters":[],"transactions":[{"request":{"title":"","description":"","contentType":"application/json","headers":[{"name":"Content-Type","example":"application/json","required":false,"schema":{"type":"string"}}],"example":"{\n  \"percent_off\": 25,\n  \"redeem_by\": 0\n}","schema":""},"response":{"statusCode":200,"title":"","description":"","contentType":"application/json","headers":[{"name":"Content-Type","example":"application/json","required":false,"schema":{"type":"string"}}],"example":"{\n  \"percent_off\": 25,\n  \"redeem_by\": 0,\n  \"id\": \"250FF\",\n  \"created\": 1415203908\n}","schema":"{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"percent_off\": {\n      \"type\": \"number\"\n    },\n    \"redeem_by\": {\n      \"type\": \"number\"\n    },\n    \"id\": {\n      \"type\": \"string\"\n    },\n    \"created\": {\n      \"type\": \"number\"\n    }\n  },\n  \"required\": [\n    \"id\"\n  ]\n}"}}],"tags":["Coupons","Coupons"]}],"tagActions":[{"title":"Coupons","children":[{"title":"Coupon","actions":[{"title":"Retrieve a Coupon","method":"get","path":"/coupons/{id}","slug":"get~coupons~id"}]},{"title":"Coupons","actions":[{"title":"List all Coupons","method":"get","path":"/coupons","slug":"get~coupons"},{"title":"Create a Coupon","method":"post","path":"/coupons","slug":"post~coupons"}]}]}],"config":{"playground":{"enabled":false},"optimized":false,"stylesheets":[],"basePath":"/"}}
+      props: {"title":"Data Structures API","description":"Following [Advanced Attributes](09.%20Advanced%20Attributes.md), this example\ndemonstrates defining arbitrary data structure to be reused by various\nattribute descriptions.\n\nSince a portion of the `Coupon` data structure is shared between the `Coupon`\ndefinition itself and the `Create a Coupon` action, it was separated into a\n`Coupon Base` data structure in the `Data Structures` API Blueprint Section.\nDoing so enables us to reuse it as a base-type of other attribute definitions.\n\n## API Blueprint\n\n+ [Previous: Advanced Attributes](09.%20Advanced%20Attributes.md)\n\n+ [This: Raw API Blueprint](https://raw.github.com/apiaryio/api-blueprint/master/examples/10.%20Data%20Structures.md)\n\n+ [Next: Resource Model](11.%20Resource%20Model.md)","version":"","servers":[],"tags":[{"title":"Coupons","description":"","children":[{"title":"Coupon","description":"A coupon contains information about a percent-off or amount-off discount you\nmight want to apply to a customer.","children":[]},{"title":"Coupons","description":"","children":[]}]}],"actions":[{"title":"Retrieve a Coupon","path":"/coupons/{id}","pathTemplate":"/coupons/{id}","slug":"get~coupons~id","method":"get","description":"A coupon contains information about a percent-off or amount-off discount you\nmight want to apply to a customer.\nRetrieves the coupon with the given ID.","parameters":[{"location":"path","name":"id","description":"The ID of the desired coupon.","required":true,"schema":{"type":"string"}}],"transactions":[{"request":{"title":"","description":"","headers":[],"example":"","schema":""},"response":{"statusCode":200,"title":"","description":"","contentType":"application/json","headers":[{"name":"Content-Type","example":"application/json","required":false,"schema":{"type":"string"}}],"structure":{"schema":{"type":"Coupon"}},"example":"{\n  \"percent_off\": 25,\n  \"redeem_by\": 0,\n  \"id\": \"250FF\",\n  \"created\": 1415203908\n}","schema":"{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"percent_off\": {\n      \"type\": \"number\"\n    },\n    \"redeem_by\": {\n      \"type\": \"number\"\n    },\n    \"id\": {\n      \"type\": \"string\"\n    },\n    \"created\": {\n      \"type\": \"number\"\n    }\n  },\n  \"required\": [\n    \"id\"\n  ]\n}"}}],"tags":["Coupons","Coupon"]},{"title":"List all Coupons","path":"/coupons","pathTemplate":"/coupons{?limit}","slug":"get~coupons","method":"get","description":"\nReturns a list of your coupons.","parameters":[{"location":"query","name":"limit","description":"A limit on the number of objects to be returned. Limit can range\nbetween 1 and 100 items.","required":false,"schema":{"type":"number"}}],"transactions":[{"request":{"title":"","description":"","headers":[],"example":"","schema":""},"response":{"statusCode":200,"title":"","description":"","contentType":"application/json","headers":[{"name":"Content-Type","example":"application/json","required":false,"schema":{"type":"string"}}],"structure":{"schema":{"type":"Coupons"}},"example":"[\n  {\n    \"percent_off\": 25,\n    \"redeem_by\": 0,\n    \"id\": \"250FF\",\n    \"created\": 1415203908\n  }\n]","schema":"{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"type\": \"array\"\n}"}}],"tags":["Coupons","Coupons"]},{"title":"Create a Coupon","path":"/coupons","pathTemplate":"/coupons{?limit}","slug":"post~coupons","method":"post","description":"\nCreates a new Coupon.","parameters":[],"transactions":[{"request":{"title":"","description":"","contentType":"application/json","headers":[{"name":"Content-Type","example":"application/json","required":false,"schema":{"type":"string"}}],"example":"{\n  \"percent_off\": 25,\n  \"redeem_by\": 0\n}","schema":""},"response":{"statusCode":200,"title":"","description":"","contentType":"application/json","headers":[{"name":"Content-Type","example":"application/json","required":false,"schema":{"type":"string"}}],"structure":{"schema":{"type":"Coupon"}},"example":"{\n  \"percent_off\": 25,\n  \"redeem_by\": 0,\n  \"id\": \"250FF\",\n  \"created\": 1415203908\n}","schema":"{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"percent_off\": {\n      \"type\": \"number\"\n    },\n    \"redeem_by\": {\n      \"type\": \"number\"\n    },\n    \"id\": {\n      \"type\": \"string\"\n    },\n    \"created\": {\n      \"type\": \"number\"\n    }\n  },\n  \"required\": [\n    \"id\"\n  ]\n}"}}],"tags":["Coupons","Coupons"]}],"tagActions":[{"title":"Coupons","children":[{"title":"Coupon","actions":[{"title":"Retrieve a Coupon","method":"get","path":"/coupons/{id}","slug":"get~coupons~id"}]},{"title":"Coupons","actions":[{"title":"List all Coupons","method":"get","path":"/coupons","slug":"get~coupons"},{"title":"Create a Coupon","method":"post","path":"/coupons","slug":"post~coupons"}]}]}],"config":{"playground":{"enabled":false},"optimized":false,"stylesheets":[],"basePath":"/"}}
     });
 
     return app;
