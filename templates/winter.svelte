@@ -241,6 +241,34 @@
     background-color: #000;
   }
 
+  :global(.is-darkmode .input, .is-darkmode .select select, .is-darkmode
+      .textarea) {
+    background-color: #484848;
+    border-color: #484848;
+    color: #fff;
+  }
+
+  :global(.is-darkmode .input:hover, .is-darkmode
+      .is-hovered.input, .is-darkmode .is-hovered.textarea, .is-darkmode
+      .select
+      select.is-hovered, .is-darkmode .select select:hover, .is-darkmode
+      .textarea:hover) {
+    border-color: #666;
+  }
+
+  :global(.is-darkmode .select select.is-focused, .is-darkmode
+      .select
+      select:active, .is-darkmode .select select:focus, .is-darkmode
+      .textarea:active, .is-darkmode .textarea:focus) {
+    border-color: #888;
+  }
+
+  :global(.is-darkmode .input::placeholder, .is-darkmode
+      .select
+      select::placeholder, .is-darkmode .textarea::placeholder) {
+    color: #ccc;
+  }
+
   :global(code[class*="language-"], pre[class*="language-"]) {
     font-family: monospace;
   }
