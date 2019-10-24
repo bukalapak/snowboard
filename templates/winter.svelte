@@ -210,6 +210,14 @@
 </script>
 
 <style>
+  :global(html) {
+    height: 100%;
+  }
+
+  :global(body) {
+    min-height: 100%;
+  }
+
   .sidenav {
     padding: 1rem 0 1rem 0.75rem;
   }
@@ -234,6 +242,7 @@
   }
 
   .body-inner {
+    min-height: 100vh;
     background-color: #fafafa;
   }
 
