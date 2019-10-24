@@ -129,6 +129,16 @@
       background-color: #e0e0e0;
     }
 
+    .is-collapsed .is-darkmode .icon-input-search {
+      color: #ccc;
+      background-color: #484848;
+    }
+
+    .is-collapsed .is-darkmode .icon-input-search:hover {
+      color: #fff;
+      background-color: #484848;
+    }
+
     .is-collapsed .menu-wrapper {
       left: -30%;
       opacity: 0;
