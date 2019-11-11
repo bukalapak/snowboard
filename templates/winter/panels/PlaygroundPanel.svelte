@@ -15,9 +15,10 @@
     getToken,
     isAuth,
     allowBody,
-    sendRequest,
     copyUrl
   } from "../util.js";
+
+  import { sendRequest } from "../http.js";
 
   import { env, auth, token } from "../store.js";
 

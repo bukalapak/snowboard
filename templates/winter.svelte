@@ -19,12 +19,13 @@
     setToken,
     setRefreshToken,
     getToken,
-    exchangeToken,
     isAuth,
     pushHistory,
     basePath,
     getEnv
   } from "./winter/util.js";
+
+  import { exchangeToken } from "./winter/http.js";
 
   import { env, auth, token } from "./winter/store.js";
 

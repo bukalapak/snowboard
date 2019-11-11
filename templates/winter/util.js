@@ -4,13 +4,8 @@ import getSlug from "speakingurl";
 import urlJoin from "url-join";
 import uriTemplate from "uritemplate";
 import store from "store2";
-import axios from "axios";
-import oauth from "axios-oauth-client";
-import qs from "querystringify";
 import urlParse from "url-parse";
-import createAuthRefreshInterceptor from "axios-auth-refresh";
 import copy from "clipboard-copy";
-import { token } from "./store";
 
 Prism.languages.json = {
   property: {
@@ -178,35 +173,6 @@ const isAuth = (environment, name) => {
 
 const pushHistory = href => history.pushState(history.state, "", href);
 
-const requestToken = async (client, options) => {
-  const authRequest = oauth.client(client, options);
-  const authCode = await authRequest();
-
-  if (typeof authCode === "string") {
-    const authParsed = qs.parse(authCode);
-    return {
-      accessToken: authParsed.access_token,
-      refreshToken: authParsed.refresh_token
-    };
-  }
-
-  return {
-    accessToken: authCode.access_token,
-    refreshToken: authCode.refresh_token
-  };
-};
-
-const exchangeToken = async (code, options) => {
-  return requestToken(axios.create(), {
-    url: options.tokenUrl,
-    grant_type: "authorization_code",
-    client_id: options.clientId,
-    client_secret: options.clientSecret,
-    redirect_uri: options.callbackUrl,
-    code: code
-  });
-};
-
 const populate = arr => {
   return arr
     .filter(obj => obj.used)
@@ -218,86 +184,6 @@ const populate = arr => {
 
 const allowBody = action => {
   return ["put", "post", "patch"].includes(action.method);
-};
-
-const refreshInterceptor = (env, options) => {
-  const refreshToken = getRefreshToken(env);
-
-  return async failedRequest => {
-    const {
-      accessToken: newAccessToken,
-      refreshToken: newRefreshToken
-    } = await requestToken(axios, {
-      url: options.tokenUrl,
-      grant_type: "refresh_token",
-      client_id: options.clientId,
-      client_secret: options.clientSecret,
-      refresh_token: refreshToken
-    });
-
-    if (newAccessToken) {
-      token.set(newAccessToken);
-      setToken(env, newAccessToken);
-    }
-
-    if (newRefreshToken) {
-      setRefreshToken(env, newRefreshToken);
-    }
-
-    failedRequest.response.config.headers[
-      "Authorization"
-    ] = `Bearer ${newAccessToken}`;
-  };
-};
-
-const sendRequest = (
-  env,
-  environment,
-  action,
-  { headers, parameters, body }
-) => {
-  const client = axios.create({
-    baseURL: environment.url
-  });
-
-  const options = {
-    method: action.method,
-    headers: populate(headers)
-  };
-
-  if (environment.auth) {
-    switch (environment.auth.name) {
-      case "basic":
-        options.auth = environment.auth.options;
-        break;
-      case "apikey":
-        options.headers[environment.auth.options.header] =
-          environment.auth.options.key;
-        break;
-      case "oauth2":
-        options.headers["Authorization"] = `Bearer ${getToken(env)}`;
-        break;
-    }
-  }
-
-  const expandedUrl = expandUrl(action.pathTemplate, populate(parameters));
-  const destUrl = urlParse(expandedUrl, true);
-
-  options.params = destUrl.query;
-  options.url = destUrl.pathname;
-
-  if (allowBody(action)) {
-    options.data = body;
-  }
-
-  if (isAuth(environment, "oauth2")) {
-    createAuthRefreshInterceptor(
-      client,
-      refreshInterceptor(env, environment.auth.options)
-    );
-  }
-
-  return client.request(options);
 };
 
 const copyUrl = (url, parameters) => {
@@ -313,7 +199,6 @@ export {
   allowBody,
   basePath,
   colorize,
-  exchangeToken,
   expandUrl,
   filterActions,
   getEnv,
@@ -321,9 +206,9 @@ export {
   highlight,
   isAuth,
   markdown,
+  populate,
   pushHistory,
   removeToken,
-  sendRequest,
   setToken,
   slugify,
   stringify,
