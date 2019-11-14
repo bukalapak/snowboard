@@ -23,7 +23,8 @@
     isAuth,
     pushHistory,
     basePath,
-    getEnv
+    getEnv,
+    slugify
   } from "./winter/util.js";
 
   import { env, auth, token } from "./winter/store.js";
@@ -47,6 +48,31 @@
     index = actions.findIndex(el => el.slug === slug);
 
     document.body.scrollTop = document.documentElement.scrollTop = 0;
+  }
+
+  function handleGroupClick(event) {
+    const groupSlug = event.target.dataset["slug"];
+    const firstAction = firstGroupAction(groupSlug);
+
+    if (firstAction) {
+      const slug = firstAction.slug;
+      index = actions.findIndex(el => el.slug === slug);
+      document.body.scrollTop = document.documentElement.scrollTop = 0;
+    }
+  }
+
+  function firstGroupAction(groupSlug) {
+    let matches = [];
+
+    tagActions.forEach(tag => {
+      matches = matches.concat(
+        tag.children.filter(child => slugify(child.title) === groupSlug)
+      );
+    });
+
+    if (matches.length > 0) {
+      return matches[0].actions[0];
+    }
   }
 
   function tocClick(event) {
@@ -197,7 +223,17 @@
     const hash = location.hash;
 
     if (hash.match("#/")) {
-      const slug = hash.replace("#/", "");
+      let slug = hash.replace("#/", "");
+
+      if (slug.startsWith("g~")) {
+        const groupSlug = slug.substr(2);
+        const firstAction = firstGroupAction(groupSlug);
+
+        if (firstAction) {
+          slug = firstAction.slug;
+        }
+      }
+
       index = actions.findIndex(el => el.slug === slug);
     }
   });
@@ -435,6 +471,7 @@
         isDarkmode={darkMode.active}
         {config}
         {handleClick}
+        {handleGroupClick}
         {tocClick}
         {searchClick} />
       <div
@@ -470,9 +507,18 @@
               class="breadcrumb breadcrumb-right is-pulled-right"
               aria-label="breadcrumbs">
               <ul>
-                {#each currentAction.tags as tag}
+                {#each currentAction.tags as tag, index}
                   <li>
-                    <a href="javascript:void(0)">{tag}</a>
+                    {#if index === 0}
+                      <a href="javascript:void(0)">{tag}</a>
+                    {:else}
+                      <a
+                        data-slug={slugify(tag)}
+                        href="#/g~{slugify(tag)}"
+                        on:click={handleGroupClick}>
+                        {tag}
+                      </a>
+                    {/if}
                   </li>
                 {/each}
               </ul>
