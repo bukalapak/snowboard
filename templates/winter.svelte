@@ -57,6 +57,7 @@
     if (firstAction) {
       const slug = firstAction.slug;
       index = actions.findIndex(el => el.slug === slug);
+      query = `g:${groupSlug}`;
       document.body.scrollTop = document.documentElement.scrollTop = 0;
     }
   }
@@ -113,6 +114,7 @@
   let showMenu = true;
   let collapsed = false;
   let authenticating = false;
+  let query = "";
 
   function burgerClick() {
     showMenu = !showMenu;
@@ -231,6 +233,7 @@
 
         if (firstAction) {
           slug = firstAction.slug;
+          query = `g:${groupSlug}`;
         }
       }
 
@@ -469,6 +472,7 @@
         actionsCount={actions.length}
         isCollapsed={collapsed}
         isDarkmode={darkMode.active}
+        {query}
         {config}
         {handleClick}
         {handleGroupClick}

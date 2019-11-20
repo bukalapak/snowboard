@@ -15,15 +15,9 @@
   export let handleGroupClick;
   export let tocClick;
   export let searchClick;
+  export let query;
 
-  let query = "";
-
-  function escape(text) {
-    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
-  }
-
-  $: regex = new RegExp(escape(query), "gi");
-  $: filteredActions = filterActions(tagActions, regex);
+  $: filteredActions = filterActions(tagActions, query);
 
   function headerLink(text) {
     return text.toLowerCase().replace(/\s/g, "-");
@@ -157,6 +151,7 @@
             class="input is-rounded"
             bind:value={query}
             placeholder="Filter by path, method, and title..." />
+
           <span class="icon is-right icon-input-search" on:click={searchClick}>
             <i class="fas fa-search" />
           </span>
