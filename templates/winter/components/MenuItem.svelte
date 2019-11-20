@@ -1,5 +1,5 @@
 <script>
-  import { colorize } from "../util.js";
+  import { colorize, slugify } from "../util.js";
 
   export let title;
   export let actions;
@@ -7,6 +7,7 @@
   export let hidden = false;
 
   export let handleClick;
+  export let handleGroupClick;
 </script>
 
 <style>
@@ -28,14 +29,23 @@
 
 {#if title}
   <li>
-    <a href="javascript:void(0)" on:click={() => (hidden = !hidden)}>
-      <span class="icon has-text-grey-light">
+    <a
+      data-slug={slugify(title)}
+      href="#/g~{slugify(title)}"
+      class="is-inline-block"
+      on:click={handleGroupClick}>
+      {title}
+    </a>
+    <a
+      href="javascript:void(0)"
+      class="is-inline-block is-pulled-right"
+      on:click={() => (hidden = !hidden)}>
+      <span class="icon is-small has-text-grey-light">
         <i
           class="fas"
           class:fa-chevron-right={hidden}
           class:fa-chevron-down={!hidden} />
       </span>
-      {title}
     </a>
   </li>
 {/if}

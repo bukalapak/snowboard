@@ -140,7 +140,25 @@ const filteredItem = (title, key, items) => {
   return { title: title, [key]: items };
 };
 
-const filterActions = (tagActions, regex) => {
+function escape(text) {
+  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+}
+
+const filterActions = (tagActions, query) => {
+  if (query.startsWith("g:")) {
+    return tagActions
+      .map(tag => {
+        const children = tag.children.filter(child => {
+          return slugify(child.title) === query.substr(2);
+        });
+
+        return filteredItem(tag.title, "children", children.filter(Boolean));
+      })
+      .filter(Boolean);
+  }
+
+  const regex = new RegExp(escape(query), "gi");
+
   return tagActions
     .map(tag => {
       const children = tag.children.map(child => {

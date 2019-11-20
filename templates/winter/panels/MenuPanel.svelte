@@ -12,17 +12,12 @@
   export let isDarkmode;
 
   export let handleClick;
+  export let handleGroupClick;
   export let tocClick;
   export let searchClick;
+  export let query;
 
-  let query = "";
-
-  function escape(text) {
-    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
-  }
-
-  $: regex = new RegExp(escape(query), "gi");
-  $: filteredActions = filterActions(tagActions, regex);
+  $: filteredActions = filterActions(tagActions, query);
 
   function headerLink(text) {
     return text.toLowerCase().replace(/\s/g, "-");
@@ -156,6 +151,7 @@
             class="input is-rounded"
             bind:value={query}
             placeholder="Filter by path, method, and title..." />
+
           <span class="icon is-right icon-input-search" on:click={searchClick}>
             <i class="fas fa-search" />
           </span>
@@ -166,28 +162,30 @@
 
   <div class="menu-wrapper">
     <p class="menu-label">API</p>
-    <ul class="menu-list">
-      <li>
-        <a href={basePath(config)} on:click|preventDefault={tocClick}>
-          Introduction
-        </a>
-      </li>
-      {#if tagHeaders}
+    {#if query === ''}
+      <ul class="menu-list">
         <li>
-          <ul>
-            {#each tagHeaders as header}
-              {#if header.level === 0}
-                <li>
-                  <a href="#{headerLink(header.text)}" on:click={tocClick}>
-                    {header.text}
-                  </a>
-                </li>
-              {/if}
-            {/each}
-          </ul>
+          <a href={basePath(config)} on:click|preventDefault={tocClick}>
+            Introduction
+          </a>
         </li>
-      {/if}
-    </ul>
+        {#if tagHeaders}
+          <li>
+            <ul>
+              {#each tagHeaders as header}
+                {#if header.level === 0}
+                  <li>
+                    <a href="#{headerLink(header.text)}" on:click={tocClick}>
+                      {header.text}
+                    </a>
+                  </li>
+                {/if}
+              {/each}
+            </ul>
+          </li>
+        {/if}
+      </ul>
+    {/if}
 
     {#each filteredActions as tag}
       {#if tag.title}
@@ -201,7 +199,8 @@
             actions={child.actions}
             hidden={actionsCount > 50}
             {currentSlug}
-            {handleClick} />
+            {handleClick}
+            {handleGroupClick} />
         {/each}
       </ul>
     {/each}
