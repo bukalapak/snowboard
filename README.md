@@ -119,6 +119,16 @@ html:
     - path/to/another-custom.css
 ```
 
+### Sidebar Group Order
+
+Snowboard let you to sort sidebar group alphabetically (`name`) or as written (`auto`):
+
+```yaml
+html:
+  sidebar:
+    groupOrder: "name" # default: "auto"
+```
+
 ### HTTP Server
 
 If you want to access HTML documentation via HTTP, you can use `http` sub-command:

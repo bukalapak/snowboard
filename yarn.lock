@@ -1717,10 +1717,10 @@ os-tmpdir@~1.0.2:
   resolved "https://registry.yarnpkg.com/os-tmpdir/-/os-tmpdir-1.0.2.tgz#bbe67406c79aa85c5cfec766fe5734555dfa1274"
   integrity sha1-u+Z0BseaqFxc/sdm/lc0VV36EnQ=
 
-outboard@^2.12.1:
-  version "2.12.1"
-  resolved "https://registry.yarnpkg.com/outboard/-/outboard-2.12.1.tgz#828ddb0a40ca70af93ff51c373e26ba5d3f95ba1"
-  integrity sha512-djm+Msg7MhkP6ICeJ4nPAl034w4lPznUDxQuyKu9eSVmn0bOPtNChZ2RCfSLW28uGhGI3/s1r4l4TP77LMfMGQ==
+outboard@^2.12.2:
+  version "2.12.2"
+  resolved "https://registry.yarnpkg.com/outboard/-/outboard-2.12.2.tgz#73abbc32c5c194631bae525886fd893fc869fc5e"
+  integrity sha512-SASE4JnU+MReLn8k8EecYFlcWZ/EiX4UjZR3M4a+L97kAoba3z95J/fHiLYndZRAdQZ/RXNvgmRmt/qr82179Q==
   dependencies:
     "@babel/polyfill" "^7.6.0"
     api-elements "^0.2.2"
