@@ -16,12 +16,13 @@
 <div class="card">
   <header class="card-header">
     <p class="card-header-title">
-      Response
-      {#if title}{title}{/if}
+      {#if title}Response {title}{:else}{contentType || 'Response'}{/if}
     </p>
 
     <a href="javascript:void(0)" class="card-header-icon is-family-code">
-      <span class="tag is-medium is-white">{contentType || ''}</span>
+      {#if title !== ''}
+        <span class="tag is-medium is-white">{contentType || ''}</span>
+      {/if}
       <code class="tag is-medium {colorize(statusCode)}">{statusCode}</code>
     </a>
   </header>

@@ -27,23 +27,34 @@
   }
 </script>
 
-<CollapsiblePanel {isDarkmode} {show}>
-  <span slot="heading">{title(index)}</span>
-  <div slot="body">
-    <RequestPanel
-      description={request.description}
-      headers={request.headers}
-      contentType={request.contentType}
-      example={request.example}
-      schema={request.schema} />
+{#if request.title === ''}
+  <ResponsePanel
+    title={response.title}
+    description={response.description}
+    statusCode={response.statusCode}
+    headers={response.headers}
+    contentType={response.contentType}
+    example={response.example}
+    schema={response.schema} />
+{:else}
+  <CollapsiblePanel {isDarkmode} {show}>
+    <span slot="heading">{title(index)}</span>
+    <div slot="body">
+      <RequestPanel
+        description={request.description}
+        headers={request.headers}
+        contentType={request.contentType}
+        example={request.example}
+        schema={request.schema} />
 
-    <ResponsePanel
-      title={response.title}
-      description={response.description}
-      statusCode={response.statusCode}
-      headers={response.headers}
-      contentType={response.contentType}
-      example={response.example}
-      schema={response.schema} />
-  </div>
-</CollapsiblePanel>
+      <ResponsePanel
+        title={response.title}
+        description={response.description}
+        statusCode={response.statusCode}
+        headers={response.headers}
+        contentType={response.contentType}
+        example={response.example}
+        schema={response.schema} />
+    </div>
+  </CollapsiblePanel>
+{/if}
