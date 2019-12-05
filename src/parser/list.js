@@ -1,3 +1,4 @@
+import { uniq } from 'lodash';
 import { toValue, transformPath } from "../internal/util";
 
 export default function list(element) {
@@ -22,9 +23,9 @@ function listExtract(resource) {
   resource.transitions.forEach(transition => {
     data.push({
       method: toValue(transition.method),
-      statusCode: transition.transactions.map(({ response }) =>
+      statusCode: uniq(transition.transactions.map(({ response }) =>
         toValue(response.statusCode)
-      ),
+      )),
       path: transformPath(toValue(resource.href || transition.computedHref))
     });
   });

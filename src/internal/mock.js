@@ -1,5 +1,6 @@
 import express from "express";
 import preferHeader from "parse-prefer-header";
+import { uniq } from 'lodash';
 import { toValue, transformPath } from "./util";
 import mockMap from "../parser/mock";
 
@@ -16,7 +17,7 @@ export function router(elements) {
       console.log(
         [
           method.toUpperCase(),
-          action.responses.map(res => res.statusCode),
+          uniq(action.responses.map(res => res.statusCode)),
           action.path
         ].join("\t")
       );
