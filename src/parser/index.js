@@ -8,8 +8,4 @@ const load = async (source, options = {}) => {
   return namespace.fromRefract(refract);
 };
 
-export {
-  load,
-  parse,
-  validate
-}
+export { load, parse, validate };
