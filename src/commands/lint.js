@@ -1,6 +1,5 @@
 import { table, getBorderCharacters } from "table";
-import { read } from "../internal/input";
-import { load } from "../parser";
+import { readAsElement } from "../internal/util";
 import lint from "../parser/lint";
 
 const tableConfig = {
@@ -8,8 +7,7 @@ const tableConfig = {
 };
 
 async function lintCmd(input, { quiet, json }) {
-  const source = read(input);
-  const element = await load(source);
+  const element = await readAsElement(input);
   const result = await lint(element);
 
   if (!result) {

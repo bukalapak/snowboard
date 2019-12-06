@@ -1,9 +1,9 @@
 import { flatten } from "lodash";
-import { loadRead } from "../internal/util";
+import { readMultiAsElement } from "../internal/util";
 import list from "../parser/list";
 
 async function listCmd(inputs, { json }) {
-  const items = await Promise.all(inputs.map(val => loadRead(val)));
+  const items = await readMultiAsElement(inputs);
   const listed = flatten(items.map(item => list(item)));
 
   if (json) {

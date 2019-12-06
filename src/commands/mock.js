@@ -2,13 +2,13 @@ import express from "express";
 import morgan from "morgan";
 import cors from "cors";
 import expressBasicAuth from "express-basic-auth";
-import { loadRead } from "../internal/util";
+import { readMultiAsElement } from "../internal/util";
 import { router as mockRouter } from "../internal/mock";
 import loadConfig from "../internal/config";
 
 async function mockCmd(inputs, cmd) {
   const config = await loadConfig(cmd.config);
-  const items = await Promise.all(inputs.map(val => loadRead(val)));
+  const items = await readMultiAsElement(inputs);
 
   const app = express();
 
