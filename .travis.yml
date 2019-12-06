@@ -10,7 +10,7 @@ script:
 - yarn lint
 - yarn test
 before_deploy:
-- ./tools/travis/prepare-release.sh
+- ./scripts/travis-ci/prepare-release.sh
 deploy:
   - provider: releases
     api_key:
