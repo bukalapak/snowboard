@@ -1,7 +1,7 @@
 import chokidar from "chokidar";
 import { flatten, flattenDeep } from "lodash";
 import parseDuration from "parse-duration";
-import { readPaths } from "../internal/input";
+import { readPaths } from "../../internal/input";
 
 export function watchBuilder(input, options) {
   const opts = {
