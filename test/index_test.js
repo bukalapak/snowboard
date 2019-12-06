@@ -1,20 +1,11 @@
 import test from "tape";
 import { readFileSync } from "fs";
-import { resolve } from "path";
-import degit from "degit";
 import { read } from "../src";
+import { fixturePath, setupFixtures } from "./helper";
 
-const emitter = degit("github:apiaryio/api-blueprint", {
-  force: true
-});
-
-emitter.clone("test/fixtures/api-blueprint").then(() => {
-  console.log("# fixtures\nok api-blueprint");
-});
-
-const fixturePath = input => {
-  return resolve(__dirname, `fixtures/${input}`);
-};
+(async () => {
+  await setupFixtures();
+})();
 
 test("read", async t => {
   const source = read(fixturePath("blueprint.apib"));
