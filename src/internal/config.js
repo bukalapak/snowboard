@@ -15,6 +15,6 @@ async function autoload(file) {
 }
 
 export default async function(file) {
-  const { config = {} } = await autoload(file);
+  const { config = {} } = (await autoload(file)) || {};
   return config;
 }
