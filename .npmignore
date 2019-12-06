@@ -1,4 +1,5 @@
 tools/
 test/
-examples/
+src/
+dist/
 .idea/
