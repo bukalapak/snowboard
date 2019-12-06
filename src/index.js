@@ -1,2 +1,2 @@
-export { parse, validate, load, lint } from "./parser";
+export { parse, validate, fromRefract } from "./parser";
 export { read } from "./internal/input";
