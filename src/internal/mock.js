@@ -14,14 +14,6 @@ export function router(elements) {
       const method = action.method.toLowerCase();
       const pathName = normalizePath(action.path);
 
-      console.log(
-        [
-          method.toUpperCase(),
-          uniq(action.responses.map(res => res.statusCode)),
-          action.path
-        ].join("\t")
-      );
-
       router[method](pathName, (req, res) => handler(action, req, res));
     });
   });
