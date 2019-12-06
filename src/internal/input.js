@@ -169,7 +169,7 @@ export function read(input) {
   return rewriteInput(source, inputDir);
 }
 
-export function readChildren(input) {
+export function readPaths(input) {
   const children = [];
 
   if (input !== "-") {
