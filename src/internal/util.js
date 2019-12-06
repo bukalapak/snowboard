@@ -1,7 +1,7 @@
 import { writeFileSync } from "fs";
 import uriTpl from "uritemplate";
 import { read } from "./input";
-import { load } from "../parser";
+import { parse, fromRefract } from "../parser";
 
 export function writeOutput(output, data) {
   if (output) {
@@ -11,10 +11,14 @@ export function writeOutput(output, data) {
   }
 }
 
-export async function loadRead(input) {
+export async function readAsElement(input) {
   const source = await read(input);
-  const result = await load(source);
-  return result;
+  const result = await parse(source);
+  return fromRefract(result);
+}
+
+export async function readMultiAsElement(inputs) {
+  return Promise.all(inputs.map(v => readAsElement(v)));
 }
 
 export function transformPath(href) {
@@ -34,6 +38,15 @@ export function transformPath(href) {
   }
 
   return decodeURIComponent(uriTemplate.expand(params));
+}
+
+export function normalizePath(pathName) {
+  if (pathName) {
+    const str = pathName.replace(/{/g, ":").replace(/}/g, "");
+    return str === "" ? "/" : str;
+  }
+
+  return pathName;
 }
 
 export function toValue(data) {
