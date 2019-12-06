@@ -1,6 +1,7 @@
 import chokidar from "chokidar";
 import { flatten, flattenDeep } from "lodash";
 import parseDuration from "parse-duration";
+import { readPaths } from "../internal/input";
 
 export function watchBuilder(input, options) {
   const opts = {
@@ -15,9 +16,9 @@ export function watchBuilder(input, options) {
   let files;
 
   if (Array.isArray(input)) {
-    files = flattenDeep(Array.from(input).map(input => readChildren(input)));
+    files = flattenDeep(Array.from(input).map(input => readPaths(input)));
   } else {
-    files = readChildren(input);
+    files = readPaths(input);
   }
 
   return chokidar.watch(files, opts);
