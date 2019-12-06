@@ -1,6 +1,8 @@
 node_modules/
 test/fixtures/api-blueprint/
 lib/
+dist/
+.cache/
 yarn-error.log
 snowboard
 snowboard-*
