@@ -1,7 +1,7 @@
 import express from "express";
 import preferHeader from "parse-prefer-header";
-import { uniq } from 'lodash';
-import { toValue, transformPath } from "./util";
+import { uniq } from "lodash";
+import { toValue, transformPath, normalizePath } from "./util";
 import mockMap from "../parser/mock";
 
 export function router(elements) {
@@ -54,13 +54,4 @@ function handler(action, req, res) {
   });
 
   res.status(response.statusCode).format(formats);
-}
-
-function normalizePath(pathName) {
-  if (pathName) {
-    const str = pathName.replace(/{/g, ":").replace(/}/g, "");
-    return str === "" ? "/" : str;
-  }
-
-  return pathName;
 }
