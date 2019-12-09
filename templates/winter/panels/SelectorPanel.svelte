@@ -7,6 +7,7 @@
 
   export let environments;
   export let authenticating;
+  export let pkceChallenge;
 
   let show = false;
 
@@ -60,7 +61,10 @@
     <div class="navbar-item">
       <div class="field is-grouped">
         <p class="control">
-          <LoginButton authOptions={environment.auth.options} />
+          <LoginButton
+            authOptions={environment.auth.options}
+            isPKCE={isAuth(environment, 'oauth2-pkce')}
+            {pkceChallenge} />
         </p>
       </div>
     </div>

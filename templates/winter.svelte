@@ -1,6 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import qs from "querystringify";
+  import pkceChallenge from "pkce-challenge";
 
   import MenuPanel from "./winter/panels/MenuPanel.svelte";
   import RequestPanel from "./winter/panels/RequestPanel.svelte";
@@ -36,6 +37,7 @@
   export let config;
 
   let index = -1;
+  let challengePair = pkceChallenge();
 
   function handleClick(event) {
     let target = event.target;
@@ -194,7 +196,7 @@
 
   onMount(async () => {
     // handle oauth2 callback
-    if (isAuth(environment, "oauth2")) {
+    if (isAuth(environment, "oauth2") || isAuth(environment, "oauth2-pkce")) {
       const authParam = qs.parse(location.search);
 
       if (authParam.code) {
@@ -204,7 +206,9 @@
 
         const { accessToken, refreshToken } = await exchangeToken(
           authParam.code,
-          environment.auth.options
+          environment.auth.options,
+          isAuth(environment, "oauth2-pkce"),
+          challengePair
         );
 
         if (accessToken) {
@@ -438,6 +442,7 @@
         {#if config.playground.enabled}
           <SelectorPanel
             environments={config.playground.environments}
+            pkceChallenge={challengePair}
             {authenticating} />
         {/if}
         {#if darkMode.enable}
@@ -547,6 +552,7 @@
           {#if environment.playground !== false}
             <PlaygroundPanel
               {currentAction}
+              pkceChallenge={challengePair}
               environments={config.playground.environments}
               currentSample={sample(currentAction)}
               requestHeaders={headersMap(currentAction)}

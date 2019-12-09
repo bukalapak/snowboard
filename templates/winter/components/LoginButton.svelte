@@ -3,16 +3,30 @@
 
   export let authOptions;
   export let fullWidth;
+  export let pkceChallenge;
+  export let isPKCE;
 
-  $: authorizeParams = qs.stringify(
-    {
-      client_id: authOptions.clientId,
-      redirect_uri: authOptions.callbackUrl,
-      response_type: "code",
-      scope: authOptions.scopes || ""
-    },
-    true
-  );
+  $: authorizeParams = isPKCE
+    ? qs.stringify(
+        {
+          client_id: authOptions.clientId,
+          redirect_uri: authOptions.callbackUrl,
+          response_type: "code",
+          scope: authOptions.scopes || "",
+          code_challenge: pkceChallenge.code_challenge,
+          code_challenge_method: "S256"
+        },
+        true
+      )
+    : qs.stringify(
+        {
+          client_id: authOptions.clientId,
+          redirect_uri: authOptions.callbackUrl,
+          response_type: "code",
+          scope: authOptions.scopes || ""
+        },
+        true
+      );
 
   $: authorizeUrl = `${authOptions.authorizeUrl}${authorizeParams}`;
 </script>

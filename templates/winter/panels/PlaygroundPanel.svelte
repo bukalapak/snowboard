@@ -31,6 +31,8 @@
   export let requestParameters;
   export let requestBody;
 
+  export let pkceChallenge;
+
   let response = {};
   let requestTab = 0;
   let error;
@@ -147,9 +149,11 @@
         {/if}
       </div>
       <div class="column is-one-fifth">
-        {#if isAuth(environment, 'oauth2') && !$auth.includes($env)}
+        {#if (isAuth(environment, 'oauth2') || isAuth(environment, 'oauth2-pkce')) && !$auth.includes($env)}
           <LoginButton
             authOptions={environment.auth.options}
+            isPKCE={isAuth(environment, 'oauth2-pkce')}
+            {pkceChallenge}
             fullWidth={true} />
         {:else}
           <button class="button is-success is-fullwidth" on:click={handleClick}>
@@ -208,7 +212,7 @@
           value={environment.auth.options.key} />
       {/if}
 
-      {#if isAuth(environment, 'oauth2')}
+      {#if isAuth(environment, 'oauth2') || isAuth(environment, 'oauth2-pkce')}
         {#if $auth.includes($env)}
           <FieldDisabled
             name="authorization"
