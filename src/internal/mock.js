@@ -1,7 +1,7 @@
 import express from "express";
 import preferHeader from "parse-prefer-header";
 import { uniq } from "lodash";
-import { toValue, transformPath, normalizePath } from "./util";
+import { transformPath, normalizePath } from "../parser/util";
 import mockMap from "../parser/mock";
 
 export function router(elements) {

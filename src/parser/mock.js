@@ -1,4 +1,4 @@
-import { toValue, transformPath } from "../internal/util";
+import { toValue, transformPath, transitionPath } from "./util";
 
 export default function mock(element) {
   const actions = [];
@@ -20,9 +20,11 @@ function mockExtract(resource) {
   const data = [];
 
   resource.transitions.forEach(transition => {
+    const path = transitionPath(transition, resource);
+
     data.push({
       method: toValue(transition.method),
-      path: transformPath(toValue(resource.href || transition.computedHref)),
+      path: transformPath(path),
       requests: transition.transactions.map(({ request }) => {
         return {
           title: toValue(request.title),
