@@ -1,7 +1,15 @@
-import { writeFileSync } from "fs";
-import uriTpl from "uritemplate";
+import { writeFileSync, writeFile } from "fs";
+import { promisify } from "util";
 import { read } from "./input";
 import { parse, fromRefract } from "../parser";
+import tmp from "tmp";
+import getSlug from "speakingurl";
+import xxhash from "xxhashjs";
+
+export { mkdirp, copy as copyFiles } from "fs-extra";
+
+export const writeFileAsync = promisify(writeFile);
+export const tmpDir = promisify(tmp.dir);
 
 export function writeOutput(output, data) {
   if (output) {
@@ -21,38 +29,18 @@ export async function readMultiAsElement(inputs) {
   return Promise.all(inputs.map(v => readAsElement(v)));
 }
 
-export function transformPath(href) {
-  const params = {};
-  const uriTemplate = uriTpl.parse(href);
-
-  for (let i = 0; i < uriTemplate.expressions.length; i++) {
-    const exp = uriTemplate.expressions[i];
-
-    if (!exp.varspecs) continue;
-    if (exp.operator.symbol === "?") continue;
-
-    for (let j = 0; j < exp.varspecs.length; j++) {
-      const spec = exp.varspecs[j];
-      params[spec.varname] = `{${spec.varname}}`;
-    }
-  }
-
-  return decodeURIComponent(uriTemplate.expand(params));
+export function toSlug(str) {
+  return getSlug(str, {
+    separator: "~",
+    custom: { _: "~" }
+  });
 }
 
-export function normalizePath(pathName) {
-  if (pathName) {
-    const str = pathName.replace(/{/g, ":").replace(/}/g, "");
-    return str === "" ? "/" : str;
-  }
-
-  return pathName;
+export function shortHash(str) {
+  return xxhash.h32(str, 0xad1fc).toString(16);
 }
 
-export function toValue(data) {
-  try {
-    return data && data.toValue();
-  } catch (_) {
-    return undefined;
-  }
+export function jsonStringify(data, { optimized = true }) {
+  if (optimized) return JSON.stringify(data);
+  return JSON.stringify(data, null, "  ");
 }
