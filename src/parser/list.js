@@ -1,34 +1,36 @@
 import { uniq } from "lodash";
-import { toValue, transformPath } from "../internal/util";
+import { toValue, transitionPath, transformPath } from "./util";
 
 export default function list(element) {
-  const actions = [];
+  const data = [];
 
   element.api.resourceGroups.forEach(group => {
     group.resources.forEach(resource => {
-      actions.push(...listExtract(resource));
+      data.push(...listExtract(resource));
     });
   });
 
   element.api.resources.forEach(resource => {
-    actions.push(...listExtract(resource));
+    data.push(...listExtract(resource));
   });
 
-  return actions;
+  return data;
 }
 
 function listExtract(resource) {
   const data = [];
 
   resource.transitions.forEach(transition => {
+    const path = transitionPath(transition, resource);
+
     data.push({
       method: toValue(transition.method),
+      path: transformPath(path),
       statusCode: uniq(
         transition.transactions.map(({ response }) =>
           toValue(response.statusCode)
         )
-      ),
-      path: transformPath(toValue(resource.href || transition.computedHref))
+      )
     });
   });
 

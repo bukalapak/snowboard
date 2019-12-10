@@ -1,5 +1,5 @@
 import { flatten } from "lodash";
-import { readMultiAsElement } from "../internal/util";
+import { readMultiAsElement, jsonStringify } from "../internal/util";
 import list from "../parser/list";
 
 async function listCmd(inputs, { json }) {
@@ -7,7 +7,7 @@ async function listCmd(inputs, { json }) {
   const listed = flatten(items.map(item => list(item)));
 
   if (json) {
-    console.log(JSON.stringify(listed, null, "  "));
+    console.log(jsonStringify(listed, { optimized: false }));
     return;
   }
 
