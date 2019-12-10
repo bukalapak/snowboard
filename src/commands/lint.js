@@ -1,5 +1,5 @@
 import { table, getBorderCharacters } from "table";
-import { readAsElement } from "../internal/util";
+import { readAsElement, jsonStringify } from "../internal/util";
 import lint from "../parser/lint";
 
 const tableConfig = {
@@ -23,7 +23,7 @@ async function lintCmd(input, { quiet, json }) {
       const mapResult = lintMap(result);
 
       if (json) {
-        console.log(JSON.stringify(mapResult, null, "  "));
+        console.log(jsonStringify(mapResult, { optimized: false }));
       } else {
         const data = mapResult.map(({ location, severity, description }) => [
           location.join(" - "),

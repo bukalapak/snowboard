@@ -1,5 +1,5 @@
 import { reject, values, isEmpty } from "lodash";
-import { toValue } from "../internal/util";
+import { toValue } from "./util";
 
 export default function(element) {
   return element.annotations.map(el => {
