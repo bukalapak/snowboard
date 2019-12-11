@@ -1,5 +1,5 @@
-import { httpBundle } from "./helper/bundle";
+import { httpBundle } from "./bundle";
 
 export default async function httpCmd(input, cmd, commander) {
-  await httpBundle(input, cmd, { watch: commander.watch });
+  await httpBundle(input, cmd, { watch: !!commander.watch });
 }
