@@ -1,7 +1,5 @@
 import { readFileSync } from "fs";
 import { resolve } from "path";
-import nodeHttp from "http";
-import nodeHttps from "https";
 import commander from "commander";
 
 import lint from "./commands/lint";
@@ -136,7 +134,6 @@ commander
   .description("render HTML documentation")
   .option("-o, --output <output>", "HTML output directory")
   .option("-t, --template <name>", "template for HTML documentation")
-  .option("-c, --config <config>", "configuration")
   .option("-O, --optimized", "enable optimized mode")
   .option("-q, --quiet", "quiet mode")
   .arguments("<input>")
@@ -146,7 +143,6 @@ commander
   .command("http")
   .description("HTML documentation via HTTP server")
   .option("-t, --template <name>", "template for HTML documentation")
-  .option("-c, --config <config>", "configuration")
   .option("-O, --optimized", "enable optimized mode")
   .option("-S, --ssl", "enable https")
   .option("-C, --cert <cert.pem>", "ssl cert file")
@@ -177,7 +173,6 @@ commander
 commander
   .command("mock")
   .description("run mock server")
-  .option("-c, --config <config>", "configuration")
   .option("-S, --ssl", "enable https")
   .option("-C, --cert <cert.pem>", "ssl cert file")
   .option("-K, --key <key.pem>", "ssl key file")
