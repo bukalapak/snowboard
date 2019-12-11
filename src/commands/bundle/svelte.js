@@ -20,7 +20,7 @@ const defaultHtmlConfig = {
 export default async function(input, cmd, { watch }) {
   const { html: htmlConfig } = await getConfig(cmd.config);
 
-  const config = merge(htmlConfig, defaultHtmlConfig);
+  const config = merge(defaultHtmlConfig, htmlConfig);
 
   const start = process.hrtime();
   const spinner = new ora({ text: `Processing input: ${input}` });
