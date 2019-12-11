@@ -35,6 +35,6 @@
 
     <HeaderTable {headers} />
 
-    <CodePanel {contentType} {example} {schema} />
+    <CodePanel {contentType} {example} {schema} asToggle={false} />
   </div>
 </div>

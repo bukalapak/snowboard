@@ -2,13 +2,13 @@
   import { onMount } from "svelte";
   import qs from "querystringify";
 
-  import MenuPanel from "./winter/panels/MenuPanel.svelte";
-  import RequestPanel from "./winter/panels/RequestPanel.svelte";
-  import ResponsePanel from "./winter/panels/ResponsePanel.svelte";
-  import ParameterPanel from "./winter/panels/ParameterPanel.svelte";
-  import SelectorPanel from "./winter/panels/SelectorPanel.svelte";
-  import PlaygroundPanel from "./winter/panels/PlaygroundPanel.svelte";
-  import ScenarioPanel from "./winter/panels/ScenarioPanel.svelte";
+  import MenuPanel from "./panels/MenuPanel.svelte";
+  import RequestPanel from "./panels/RequestPanel.svelte";
+  import ResponsePanel from "./panels/ResponsePanel.svelte";
+  import ParameterPanel from "./panels/ParameterPanel.svelte";
+  import SelectorPanel from "./panels/SelectorPanel.svelte";
+  import PlaygroundPanel from "./panels/PlaygroundPanel.svelte";
+  import ScenarioPanel from "./panels/ScenarioPanel.svelte";
 
   import {
     toc,
@@ -25,15 +25,17 @@
     basePath,
     getEnv,
     slugify
-  } from "./winter/util.js";
+  } from "./util.js";
 
-  import { env, auth, token } from "./winter/store.js";
+  import { env, auth, token } from "./store.js";
 
   export let title;
   export let description;
   export let actions;
   export let tagActions;
   export let config;
+
+  console.log("xxx", config);
 
   let index = -1;
 
