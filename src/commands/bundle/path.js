@@ -1,5 +1,6 @@
 import { resolve } from "path";
-import { tmpDir as tmpdir, mkdirp } from "../../internal/util";
+import { isEmpty } from "lodash";
+import { tmpDir as tmpdir, mkdirp, copyFiles } from "../../internal/util";
 
 export function templatePath(cmd, defaultTemplate) {
   if (cmd.template) {
@@ -29,4 +30,18 @@ export async function outputPath(cmd) {
   const buildDir = await tmpdir({ dir: tmpDir, prefix: "build-" });
 
   return [outDir, buildDir];
+}
+
+export async function copyOverrides(overrides, buildDir) {
+  if (!isEmpty(overrides)) {
+    for await (let [target, source] of Object.entries(overrides)) {
+      if (source) {
+        copyOverride(target, source, buildDir);
+      }
+    }
+  }
+}
+
+function copyOverride(target, source, buildDir) {
+  return copyFiles(source, resolve(buildDir, target));
 }
