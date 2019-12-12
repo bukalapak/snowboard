@@ -6,12 +6,13 @@ import { dirname, basename } from "path";
 import ora from "ora";
 import prettyHr from "pretty-hrtime";
 import { copyFiles, writeFileAsync } from "../../internal/util";
-import { templatePath, outputPath } from "./path";
+import { templatePath, outputPath, copyOverrides } from "./path";
 import { merge } from "lodash";
 import chokidar from "chokidar";
 
 const defaultTemplate = resolve(__dirname, "../templates/winter/index.html");
-const defaultHtmlConfig = {
+const defaultConfig = {
+  overrides: {},
   playground: { enabled: false },
   optimized: false,
   basePath: "/"
@@ -20,7 +21,7 @@ const defaultHtmlConfig = {
 export default async function(input, cmd, { watch }) {
   const { html: htmlConfig } = await getConfig(cmd.config);
 
-  const config = merge(defaultHtmlConfig, htmlConfig);
+  const config = merge(defaultConfig, htmlConfig);
 
   const start = process.hrtime();
   const spinner = new ora({ text: `Processing input: ${input}` });
@@ -57,6 +58,7 @@ export default app;
   const entrypoint = resolve(buildDir, basename(tplFile));
 
   await copyFiles(tplDir, buildDir);
+  await copyOverrides(config.overrides, buildDir);
   await writeFileAsync(resolve(buildDir, "index.js"), tplJs, "utf8");
 
   if (watch) {
