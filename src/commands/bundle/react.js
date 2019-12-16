@@ -62,7 +62,6 @@ function watchInput(input, config, buildDir, outDir, cmd) {
   });
 
   watcher.on("change", async path => {
-    console.log("path", path);
     await writeJSON(path, outDir, cmd);
   });
 
