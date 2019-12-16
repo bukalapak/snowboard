@@ -3,12 +3,16 @@ import getConfig from "../../internal/config";
 import { resolve } from "path";
 import outboard, { tagMap } from "outboard";
 import { dirname, basename } from "path";
-import ora from "ora";
-import prettyHr from "pretty-hrtime";
-import { copyFiles, writeFileAsync } from "../../internal/util";
-import { templatePath, outputPath, copyOverrides } from "./path";
+import { cp, writeFile } from "../../internal/util";
+import {
+  templatePath,
+  outputPath,
+  copyOverrides,
+  watchTemplate
+} from "./common";
 import { merge } from "lodash";
 import chokidar from "chokidar";
+import { timeSpinner } from "./common";
 
 const defaultTemplate = resolve(__dirname, "../templates/winter/index.html");
 const defaultConfig = {
@@ -23,15 +27,36 @@ export default async function(input, cmd, { watch }) {
 
   const config = merge(defaultConfig, htmlConfig);
 
-  const start = process.hrtime();
-  const spinner = new ora({ text: `Processing input: ${input}` });
-  spinner.start();
+  const tplFile = templatePath(cmd, defaultTemplate);
+  const tplDir = dirname(tplFile);
+  const [outDir, buildDir] = await outputPath(cmd);
+  const entrypoint = resolve(buildDir, basename(tplFile));
 
-  const source = read(input);
-  const result = await outboard.load(source, {}, false);
+  await cp(tplDir, buildDir);
+  await copyOverrides(config.overrides, buildDir);
+  await writeEntrypoint(input, config, buildDir);
 
-  const end = process.hrtime(start);
-  spinner.succeed(`Input processed in ${prettyHr(end)}`);
+  if (watch) {
+    watchInput(input, config, buildDir);
+    watchTemplate(tplDir, buildDir);
+  }
+
+  return [entrypoint, outDir];
+}
+
+async function parseInput(input, config) {
+  const result = await timeSpinner(
+    async () => {
+      const source = read(input);
+      const definitions = await outboard.load(source, {}, false);
+
+      return definitions;
+    },
+    {
+      start: `Processing input: ${input}`,
+      succeed: `Input processed`
+    }
+  );
 
   const props = {
     title: result.title,
@@ -41,7 +66,7 @@ export default async function(input, cmd, { watch }) {
     config: config
   };
 
-  const tplJs = `
+  return `
 import App from './App.svelte';
 
 const app = new App({
@@ -51,30 +76,20 @@ const app = new App({
 
 export default app;
   `;
-
-  const tplFile = templatePath(cmd, defaultTemplate);
-  const tplDir = dirname(tplFile);
-  const [outDir, buildDir] = await outputPath(cmd);
-  const entrypoint = resolve(buildDir, basename(tplFile));
-
-  await copyFiles(tplDir, buildDir);
-  await copyOverrides(config.overrides, buildDir);
-  await writeFileAsync(resolve(buildDir, "index.js"), tplJs, "utf8");
-
-  if (watch) {
-    watchTemplate(tplDir, buildDir);
-  }
-
-  return [entrypoint, outDir];
 }
 
-function watchTemplate(tplDir, buildDir) {
-  const watcher = chokidar.watch(tplDir, {
+async function writeEntrypoint(input, config, buildDir) {
+  const tplJs = await parseInput(input, config);
+  await writeFile(resolve(buildDir, "index.js"), tplJs, "utf8");
+}
+
+function watchInput(input, config, buildDir) {
+  const watcher = chokidar.watch(input, {
     persistent: true
   });
 
   watcher.on("change", async path => {
-    await copyFiles(path, path.replace(tplDir, buildDir));
+    await writeEntrypoint(input, config, buildDir);
   });
 
   return watcher;
