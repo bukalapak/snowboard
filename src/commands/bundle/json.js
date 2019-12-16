@@ -15,7 +15,7 @@ export default async function(element, jsonDir, { optimized }) {
   spinner.text = `Parsing element: writing files`;
 
   await Promise.all([
-    jsonWrite(jsonDir, "index.json", index, { optimized }),
+    jsonIndex(jsonDir, index, { optimized }),
     ...groups.map(async group => {
       const fname = jsonHash(group.permalink, "g");
       await jsonWrite(jsonDir, fname, group, { optimized });
@@ -44,4 +44,8 @@ function jsonWrite(jsonDir, filename, data, { optimized }) {
     jsonStringify(data, { optimized }),
     "utf8"
   );
+}
+
+export function jsonIndex(jsonDir, data, options) {
+  return jsonWrite(jsonDir, "index.json", data, options);
 }
