@@ -1,6 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import qs from "querystringify";
+  import fetch from "isomorphic-unfetch";
 
   import MenuPanel from "./panels/MenuPanel.svelte";
   import RequestPanel from "./panels/RequestPanel.svelte";
@@ -34,8 +35,6 @@
   export let actions;
   export let tagActions;
   export let config;
-
-  console.log("xxx", config);
 
   let index = -1;
 
@@ -195,6 +194,10 @@
   }
 
   onMount(async () => {
+    const res = await fetch("/index.json");
+    const data = await res.json();
+    actions = data.actions;
+
     // handle oauth2 callback
     if (isAuth(environment, "oauth2")) {
       const authParam = qs.parse(location.search);
