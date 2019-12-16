@@ -9,12 +9,7 @@ const explorer = cosmiconfig(moduleName, {
   }
 });
 
-async function autoload(file) {
-  if (file) return explorer.load(file);
-  return explorer.search();
-}
-
-export default async function(file) {
-  const { config = {} } = (await autoload(file)) || {};
+export default async function() {
+  const { config } = (await explorer.search()) || { config: {} };
   return config;
 }
