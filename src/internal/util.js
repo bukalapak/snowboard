@@ -1,4 +1,4 @@
-import { writeFileSync, writeFile } from "fs";
+import { writeFileSync, writeFile as fsWriteFile } from "fs";
 import { promisify } from "util";
 import { read } from "./input";
 import { parse, fromRefract } from "../parser";
@@ -6,9 +6,9 @@ import tmp from "tmp";
 import getSlug from "speakingurl";
 import xxhash from "xxhashjs";
 
-export { mkdirp, copy as copyFiles } from "fs-extra";
+export { mkdirp, copy as cp, remove as rm } from "fs-extra";
 
-export const writeFileAsync = promisify(writeFile);
+export const writeFile = promisify(fsWriteFile);
 export const tmpDir = promisify(tmp.dir);
 
 export function writeOutput(output, data) {
@@ -20,9 +20,13 @@ export function writeOutput(output, data) {
 }
 
 export async function readAsElement(input) {
-  const source = await read(input);
-  const result = await parse(source);
+  const result = await readAsRefract(input);
   return fromRefract(result);
+}
+
+export async function readAsRefract(input) {
+  const source = await read(input);
+  return parse(source);
 }
 
 export async function readMultiAsElement(inputs) {
