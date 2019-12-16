@@ -13,6 +13,7 @@ import {
 import { merge } from "lodash";
 import chokidar from "chokidar";
 import { timeSpinner } from "./common";
+import { jsonIndex } from "./json";
 
 const defaultTemplate = resolve(__dirname, "../templates/winter/index.html");
 const defaultConfig = {
@@ -34,10 +35,10 @@ export default async function(input, cmd, { watch }) {
 
   await cp(tplDir, buildDir);
   await copyOverrides(config.overrides, buildDir);
-  await writeEntrypoint(input, config, buildDir);
+  await writeEntrypoint(input, config, buildDir, outDir);
 
   if (watch) {
-    watchInput(input, config, buildDir);
+    watchInput(input, config, buildDir, outDir);
     watchTemplate(tplDir, buildDir);
   }
 
@@ -59,37 +60,47 @@ async function parseInput(input, config) {
   );
 
   const props = {
+    actions: result.actions
+  };
+
+  const embeddedProps = {
     title: result.title,
     description: result.description,
-    actions: result.actions,
+    actions: [],
     tagActions: tagMap(result.tags, result.actions, { sortTags: true }),
     config: config
   };
 
-  return `
+  return [
+    `
 import App from './App.svelte';
 
 const app = new App({
   target: document.getElementById("root"),
-  props: ${JSON.stringify(props)}
+  props: ${JSON.stringify(embeddedProps)}
 });
 
 export default app;
-  `;
+  `,
+    props
+  ];
 }
 
-async function writeEntrypoint(input, config, buildDir) {
-  const tplJs = await parseInput(input, config);
+async function writeEntrypoint(input, config, buildDir, outDir) {
+  const [tplJs, jsonData] = await parseInput(input, config);
+
   await writeFile(resolve(buildDir, "index.js"), tplJs, "utf8");
+  await jsonIndex(buildDir, jsonData, { optimized: true });
+  await cp(resolve(buildDir, "index.json"), resolve(outDir, "html/index.json"));
 }
 
-function watchInput(input, config, buildDir) {
+function watchInput(input, config, buildDir, outDir) {
   const watcher = chokidar.watch(input, {
     persistent: true
   });
 
   watcher.on("change", async path => {
-    await writeEntrypoint(input, config, buildDir);
+    await writeEntrypoint(input, config, buildDir, outDir);
   });
 
   return watcher;
