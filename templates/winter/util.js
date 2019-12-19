@@ -214,7 +214,18 @@ const requestToken = async (client, options) => {
   };
 };
 
-const exchangeToken = async (code, options) => {
+const exchangeToken = async (code, options, isPKCE, pkceChallenge) => {
+  if (isPKCE) {
+    return requestToken(axios.create(), {
+      url: options.tokenUrl,
+      grant_type: "authorization_code",
+      client_id: options.clientId,
+      redirect_uri: options.callbackUrl,
+      code: code,
+      code_verifier: pkceChallenge.code_verifier
+    });
+  }
+
   return requestToken(axios.create(), {
     url: options.tokenUrl,
     grant_type: "authorization_code",
@@ -295,6 +306,9 @@ const sendRequest = (
       case "oauth2":
         options.headers["Authorization"] = `Bearer ${getToken(env)}`;
         break;
+      case "oauth2-pkce":
+        options.headers["Authorization"] = `Bearer ${getToken(env)}`;
+        break;
     }
   }
 
@@ -308,7 +322,7 @@ const sendRequest = (
     options.data = body;
   }
 
-  if (isAuth(environment, "oauth2")) {
+  if (isAuth(environment, "oauth2") || isAuth(environment, "oauth2-pkce")) {
     createAuthRefreshInterceptor(
       client,
       refreshInterceptor(env, environment.auth.options)
