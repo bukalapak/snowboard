@@ -6,6 +6,8 @@ import chokidar from "chokidar";
 import jsonBundle from "./json";
 import { templatePath, outputPath, copyOverrides } from "./common";
 import { timeSpinner, watchTemplate, keyByValue } from "./common";
+import { toValue } from "../../parser/util";
+import { writeFile } from "../../internal/util";
 
 const defaultTemplate = resolve(__dirname, "../templates/osaka/index.html");
 const defaultConfig = { overrides: {} };
@@ -20,9 +22,23 @@ export default async function(input, cmd, { watch }) {
   const [outDir, buildDir] = await outputPath(cmd);
   const entrypoint = resolve(buildDir, basename(tplFile));
 
+  const element = await parseInput(input);
+
+  const props = {
+    title: toValue(element.api.title),
+    ...config
+  };
+
+  const data = `
+const config = ${JSON.stringify(props)};
+
+export default config;
+  `;
+
   await cp(tplDir, buildDir);
   await copyOverrides(config.overrides, buildDir);
-  await writeJSON(input, outDir, cmd);
+  await writeFile(resolve(buildDir, "config.js"), data, "utf8");
+  await writeJSON(element, outDir, cmd);
 
   if (watch) {
     watchInput(input, config, buildDir, outDir, cmd);
@@ -47,9 +63,8 @@ async function parseInput(input) {
   );
 }
 
-async function writeJSON(input, outDir, cmd) {
+async function writeJSON(element, outDir, cmd) {
   const jsonDir = resolve(outDir, "json");
-  const element = await parseInput(input);
 
   await mkdirp(jsonDir);
   await jsonBundle(element, jsonDir, { optimized: cmd.optimized });
@@ -62,7 +77,8 @@ function watchInput(input, config, buildDir, outDir, cmd) {
   });
 
   watcher.on("change", async path => {
-    await writeJSON(path, outDir, cmd);
+    const element = await parseInput(path);
+    await writeJSON(element, outDir, cmd);
   });
 
   return watcher;
