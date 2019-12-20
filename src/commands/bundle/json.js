@@ -17,15 +17,15 @@ export default async function(element, jsonDir, { optimized }) {
   await Promise.all([
     jsonIndex(jsonDir, index, { optimized }),
     ...groups.map(async group => {
-      const fname = jsonHash(group.permalink, "g");
+      const fname = jsonHash(group.permalink);
       await jsonWrite(jsonDir, fname, group, { optimized });
     }),
     ...resources.map(async resource => {
-      const fname = jsonHash(resource.permalink, "r");
+      const fname = jsonHash(resource.permalink);
       await jsonWrite(jsonDir, fname, resource, { optimized });
     }),
     ...transitions.map(async transition => {
-      const fname = jsonHash(transition.permalink, "t");
+      const fname = jsonHash(transition.permalink);
       await jsonWrite(jsonDir, fname, transition, { optimized });
     })
   ]);
@@ -34,8 +34,8 @@ export default async function(element, jsonDir, { optimized }) {
   spinner.succeed(`Element parsed in ${prettyHr(end)}`);
 }
 
-function jsonHash(permalink, prefix) {
-  return `${prefix}~${shortHash(permalink)}.json`;
+function jsonHash(permalink) {
+  return shortHash(permalink) + ".json";
 }
 
 function jsonWrite(jsonDir, filename, data, { optimized }) {
