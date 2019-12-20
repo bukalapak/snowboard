@@ -41,7 +41,7 @@ export function toSlug(str) {
 }
 
 export function shortHash(str) {
-  return xxhash.h32(str, 0xad1fc).toString(16);
+  return xxhash.h64(str, 0xad1fc).toString(16);
 }
 
 export function jsonStringify(data, { optimized = true }) {
