@@ -25,7 +25,6 @@
   export let isDarkmode;
   export let environments;
   export let currentAction;
-  export let currentSample;
 
   export let requestHeaders;
   export let requestParameters;
