@@ -1,7 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import qs from "querystringify";
-  import pkceChallenge from "pkce-challenge";
+  import pkce from "pkce";
 
   import MenuPanel from "./winter/panels/MenuPanel.svelte";
   import RequestPanel from "./winter/panels/RequestPanel.svelte";
@@ -37,7 +37,7 @@
   export let config;
 
   let index = -1;
-  let challengePair = pkceChallenge();
+  let challengePair = pkce.create();
 
   function handleClick(event) {
     let target = event.target;
