@@ -445,6 +445,18 @@
             pkceChallenge={challengePair}
             {authenticating} />
         {/if}
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a
+            href="https://bukalapak.github.io/mson-playground/"
+            title="MSON Playground"
+            target="_blank"
+            rel="noreferrer noopener"
+            class="navbar-link is-arrowless">
+            <span class="icon is-medium has-text-grey-light">
+              <i class="fas fa-lg fa-parking" />
+            </span>
+          </a>
+        </div>
         {#if darkMode.enable}
           <div class="navbar-item has-dropdown is-hoverable">
             <a
