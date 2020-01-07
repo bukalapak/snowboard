@@ -2,7 +2,7 @@ FROM node:12
 
 COPY . /app
 RUN cd /app \
- && yarn install
+ && npm install
 
 WORKDIR /doc
 ENTRYPOINT ["node", "/app/lib/main.js"]
