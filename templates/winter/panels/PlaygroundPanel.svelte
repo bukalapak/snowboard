@@ -1,5 +1,5 @@
 <script>
-  import { afterUpdate } from "svelte";
+  import { beforeUpdate } from "svelte";
 
   import CollapsiblePanel from "./CollapsiblePanel.svelte";
   import FieldDisabled from "../components/FieldDisabled.svelte";
@@ -32,30 +32,18 @@
 
   export let pkceChallenge;
 
-  let response = {};
+  let response;
   let requestTab = 0;
-  let error;
   let copying = false;
 
   $: environment = environments[$env];
   $: currentUrl = urlParse(urlJoin(environment.url, currentAction.path));
-  $: {
-    error = currentUrl && undefined;
-  }
-
-  afterUpdate(() => {
-    response = {};
-  });
 
   function handleClick() {
-    error = undefined;
     response = sendRequest($env, environment, currentAction, {
       headers: requestHeaders,
       parameters: requestParameters,
       body: requestBody
-    }).catch(function(err) {
-      error = err;
-      return Promise.reject(err);
     });
   }
 
@@ -68,7 +56,6 @@
   }
 
   function handleTab(index) {
-    error = undefined;
     requestTab = index;
   }
 
@@ -81,6 +68,11 @@
 
     copyUrl(currentUrl, requestParameters);
   }
+
+  beforeUpdate(() => {
+    const hash = location.hash.replace("#/", "");
+    if (hash !== currentAction.slug) response = undefined;
+  });
 </script>
 
 <style>
@@ -257,7 +249,7 @@
         </span>
       </div>
     {:then value}
-      {#if Object.keys(value).length > 0}
+      {#if Object.keys(value || {}).length > 0}
         <div class="small-section">
           <section class="hero hero-rounded {colorize(value.status)}">
             <section class="hero-body hero-small">
@@ -283,11 +275,7 @@
           {/if}
         </div>
       {/if}
-    {:catch}
-      <div>&nbsp;</div>
-    {/await}
-
-    {#if error}
+    {:catch error}
       <div class="small-section">
         <section class="hero is-danger">
           <section class="hero-body">
@@ -297,6 +285,6 @@
           </section>
         </section>
       </div>
-    {/if}
+    {/await}
   </div>
 </CollapsiblePanel>
