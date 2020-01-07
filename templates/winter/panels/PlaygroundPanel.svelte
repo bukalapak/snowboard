@@ -220,7 +220,8 @@
             name={param.name}
             required={param.required}
             bind:used={param.used}
-            bind:value={param.value} />
+            bind:value={param.value}
+            rounded={false} />
         {/each}
       {/if}
     </div>

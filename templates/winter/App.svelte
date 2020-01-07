@@ -553,7 +553,6 @@
             <PlaygroundPanel
               {currentAction}
               environments={config.playground.environments}
-              currentSample={sample(currentAction)}
               requestHeaders={headersMap(currentAction)}
               requestParameters={parametersMap(currentAction)}
               requestBody={bodyMap(currentAction)}
