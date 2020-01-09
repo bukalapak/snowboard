@@ -597,7 +597,7 @@
             {request}
             {responses}
             {index}
-            count={currentAction.transactions.length} />
+            count={transformedAction.groupedTransactions.length} />
         {/each}
       {/if}
     </div>
