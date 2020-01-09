@@ -1,6 +1,6 @@
 {
   "name": "snowboard",
-  "version": "3.5.6",
+  "version": "3.5.7",
   "description": "API blueprint toolkit",
   "author": "Alif Rachmawadi <subosito@bukalapak.com>",
   "license": "MIT",
@@ -16,6 +16,8 @@
     "test": "tape 'test/**/*.js'"
   },
   "dependencies": {
+    "@rollup/plugin-commonjs": "^11.0.0",
+    "@rollup/plugin-node-resolve": "^6.0.0",
     "axios": "^0.19.0",
     "axios-auth-refresh": "^1.0.7",
     "axios-oauth-client": "^1.1.1",
@@ -35,14 +37,12 @@
     "outboard": "^2.13.0",
     "parse-duration": "^0.1.1",
     "parse-prefer-header": "^1.0.0",
-    "pkce-challenge": "^2.0.0",
+    "pkce": "^1.0.0-beta1",
     "prismjs": "^1.16.0",
     "querystringify": "^2.1.1",
     "remark": "^10.0.1",
     "rollup": "^1.16.7",
-    "rollup-plugin-commonjs": "^10.0.1",
     "rollup-plugin-copy": "^3.1.0",
-    "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-svelte": "^5.1.0",
     "rollup-plugin-terser": "^5.1.1",
     "speakingurl": "^14.0.1",
