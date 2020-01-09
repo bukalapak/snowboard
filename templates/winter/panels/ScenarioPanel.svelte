@@ -11,7 +11,7 @@
   export let count;
   export let index;
   export let request;
-  export let response;
+  export let responses;
   export let isDarkmode;
 
   function title(index) {
@@ -28,14 +28,25 @@
 </script>
 
 {#if request.title === ''}
-  <ResponsePanel
-    title={response.title}
-    description={response.description}
-    statusCode={response.statusCode}
-    headers={response.headers}
-    contentType={response.contentType}
-    example={response.example}
-    schema={response.schema} />
+  {#if show}
+  <RequestPanel
+        description={request.description}
+        headers={request.headers}
+        contentType={request.contentType}
+        example={request.example}
+        schema={request.schema} />
+  {/if}
+    {#each responses as response, index}
+      <ResponsePanel
+        title={response.title}
+        description={response.description}
+        statusCode={response.statusCode}
+        headers={response.headers}
+        contentType={response.contentType}
+        example={response.example}
+        schema={response.schema} />
+    {/each}
+    <div class="panel"></div>
 {:else}
   <CollapsiblePanel {isDarkmode} {show}>
     <span slot="heading">{title(index)}</span>
@@ -47,6 +58,7 @@
         example={request.example}
         schema={request.schema} />
 
+    {#each responses as response, index}
       <ResponsePanel
         title={response.title}
         description={response.description}
@@ -55,6 +67,7 @@
         contentType={response.contentType}
         example={response.example}
         schema={response.schema} />
+    {/each}
     </div>
   </CollapsiblePanel>
 {/if}
