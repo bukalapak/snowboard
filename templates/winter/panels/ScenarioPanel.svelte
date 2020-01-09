@@ -29,24 +29,24 @@
 
 {#if request.title === ''}
   {#if show}
-  <RequestPanel
-        description={request.description}
-        headers={request.headers}
-        contentType={request.contentType}
-        example={request.example}
-        schema={request.schema} />
+    <RequestPanel
+      description={request.description}
+      headers={request.headers}
+      contentType={request.contentType}
+      example={request.example}
+      schema={request.schema} />
   {/if}
-    {#each responses as response, index}
-      <ResponsePanel
-        title={response.title}
-        description={response.description}
-        statusCode={response.statusCode}
-        headers={response.headers}
-        contentType={response.contentType}
-        example={response.example}
-        schema={response.schema} />
-    {/each}
-    <div class="panel"></div>
+  {#each responses as response, index}
+    <ResponsePanel
+      title={response.title}
+      description={response.description}
+      statusCode={response.statusCode}
+      headers={response.headers}
+      contentType={response.contentType}
+      example={response.example}
+      schema={response.schema} />
+  {/each}
+  <div class="panel" />
 {:else}
   <CollapsiblePanel {isDarkmode} {show}>
     <span slot="heading">{title(index)}</span>
@@ -58,16 +58,16 @@
         example={request.example}
         schema={request.schema} />
 
-    {#each responses as response, index}
-      <ResponsePanel
-        title={response.title}
-        description={response.description}
-        statusCode={response.statusCode}
-        headers={response.headers}
-        contentType={response.contentType}
-        example={response.example}
-        schema={response.schema} />
-    {/each}
+      {#each responses as response, index}
+        <ResponsePanel
+          title={response.title}
+          description={response.description}
+          statusCode={response.statusCode}
+          headers={response.headers}
+          contentType={response.contentType}
+          example={response.example}
+          schema={response.schema} />
+      {/each}
     </div>
   </CollapsiblePanel>
 {/if}

@@ -89,8 +89,8 @@
       (currentAction && `${currentAction.title} - ${title}`) || title;
   }
 
-  $: groupTransactionsFunc = (action) => {
-    if (typeof action === 'undefined') {
+  $: groupTransactionsFunc = action => {
+    if (typeof action === "undefined") {
       return undefined;
     }
     let data = Object.assign({}, action);
@@ -106,10 +106,12 @@
       if (foundIndex === null) {
         data.groupedTransactions.push({
           request: transaction.request,
-          responses: [transaction.response],
+          responses: [transaction.response]
         });
       } else {
-        data.groupedTransactions[foundIndex].responses.push(transaction.response);
+        data.groupedTransactions[foundIndex].responses.push(
+          transaction.response
+        );
       }
     });
     return data;
