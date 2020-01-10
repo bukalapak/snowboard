@@ -513,6 +513,7 @@
       class:is-hidden-mobile={showMenu}
       id="mainnav">
       <MenuPanel
+        {title}
         {tagActions}
         tagHeaders={toc(description)}
         currentSlug={currentAction && currentAction.slug}

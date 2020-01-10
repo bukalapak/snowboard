@@ -3,6 +3,7 @@
 
   import { colorize, slugify, filterActions, basePath } from "../util.js";
 
+  export let title;
   export let config = {};
   export let tagActions = [];
   export let tagHeaders = [];
@@ -163,13 +164,13 @@
 
   <div class="menu-wrapper">
     <p class="menu-label">
-      <a href="/">API</a>
+      <a href="/">{title}</a>
     </p>
     {#if query === ''}
       <ul class="menu-list">
         <li>
           <a href={basePath(config)} on:click|preventDefault={tocClick}>
-            Introduction
+            Getting Started
           </a>
         </li>
         {#if tagHeaders}
