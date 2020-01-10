@@ -160,9 +160,9 @@ const filterActions = (tagActions, query) => {
   if (query.startsWith("rg:")) {
     return tagActions
       .map(tag => {
-        const children = tag.children.filter(child => {
-          return slugify(tag.title) === query.substr(3);
-        });
+        const children = tag.children.filter(
+          () => slugify(tag.title) === query.substr(3)
+        );
 
         return filteredItem(tag.title, "children", children.filter(Boolean));
       })
