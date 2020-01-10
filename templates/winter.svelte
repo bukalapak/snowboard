@@ -117,6 +117,35 @@
       (currentAction && `${currentAction.title} - ${title}`) || title;
   }
 
+  $: groupTransactionsFunc = action => {
+    if (typeof action === "undefined") {
+      return undefined;
+    }
+    let data = Object.assign({}, action);
+    data.groupedTransactions = [];
+    data.transactions.forEach(transaction => {
+      let title = transaction.request.title;
+      let foundIndex = null;
+      data.groupedTransactions.forEach((transaction, index) => {
+        if (foundIndex === null && transaction.request.title === title) {
+          foundIndex = index;
+        }
+      });
+      if (foundIndex === null) {
+        data.groupedTransactions.push({
+          request: transaction.request,
+          responses: [transaction.response]
+        });
+      } else {
+        data.groupedTransactions[foundIndex].responses.push(
+          transaction.response
+        );
+      }
+    });
+    return data;
+  };
+  $: transformedAction = groupTransactionsFunc(actions[index]);
+
   $: currentAction = actions[index];
   $: environment =
     config.playground.enabled && config.playground.environments[$env];
@@ -607,14 +636,14 @@
 
         <ParameterPanel parameters={currentAction.parameters} />
 
-        {#each currentAction.transactions as { request, response }, index}
+        {#each transformedAction.groupedTransactions as { request, responses }, index}
           <ScenarioPanel
             show={index === 0}
             isDarkmode={darkMode.active}
             {request}
-            {response}
+            {responses}
             {index}
-            count={currentAction.transactions.length} />
+            count={transformedAction.groupedTransactions.length} />
         {/each}
       {/if}
     </div>
