@@ -13,6 +13,7 @@
 
   export let handleClick;
   export let handleGroupClick;
+  export let handleTagClick;
   export let tocClick;
   export let searchClick;
   export let query;
@@ -161,7 +162,9 @@
   </section>
 
   <div class="menu-wrapper">
-    <p class="menu-label">API</p>
+    <p class="menu-label">
+      <a href="/">API</a>
+    </p>
     {#if query === ''}
       <ul class="menu-list">
         <li>
@@ -189,7 +192,15 @@
 
     {#each filteredActions as tag}
       {#if tag.title}
-        <p class="menu-label">{tag.title}</p>
+        <p class="menu-label">
+          <a
+            data-slug={slugify(tag.title)}
+            href="#/rg~{slugify(tag.title)}"
+            class="is-inline-block"
+            on:click={handleTagClick}>
+            {tag.title}
+          </a>
+        </p>
       {/if}
 
       <ul class="menu-list">

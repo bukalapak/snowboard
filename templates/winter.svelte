@@ -52,6 +52,34 @@
     document.body.scrollTop = document.documentElement.scrollTop = 0;
   }
 
+  function handleTagClick(event) {
+    const tagSlug = event.target.dataset["slug"];
+    const firstGroup = firstTagGroup(tagSlug);
+
+    if (firstGroup) {
+      const firstAction = firstGroupAction(slugify(firstGroup.title));
+      const slug = firstAction.slug;
+
+      index = actions.findIndex(el => el.slug === slug);
+      query = `rg:${tagSlug}`;
+      document.body.scrollTop = document.documentElement.scrollTop = 0;
+    }
+  }
+
+  function firstTagGroup(tagSlug) {
+    let matches = [];
+
+    tagActions.forEach(tag => {
+      if (slugify(tag.title) === tagSlug) {
+        matches.push(tag);
+      }
+    });
+
+    if (matches.length > 0) {
+      return matches[0].children[0];
+    }
+  }
+
   function handleGroupClick(event) {
     const groupSlug = event.target.dataset["slug"];
     const firstAction = firstGroupAction(groupSlug);
@@ -238,6 +266,20 @@
         if (firstAction) {
           slug = firstAction.slug;
           query = `g:${groupSlug}`;
+        }
+      }
+
+      if (slug.startsWith("rg~")) {
+        const tagSlug = slug.substr(3);
+        const firstGroup = firstTagGroup(tagSlug);
+
+        if (firstGroup) {
+          const firstAction = firstGroupAction(slugify(firstGroup.title));
+
+          if (firstAction) {
+            slug = firstAction.slug;
+            query = `rg:${tagSlug}`;
+          }
         }
       }
 
@@ -481,6 +523,7 @@
         {config}
         {handleClick}
         {handleGroupClick}
+        {handleTagClick}
         {tocClick}
         {searchClick} />
       <div
