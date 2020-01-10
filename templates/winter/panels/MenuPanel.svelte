@@ -15,6 +15,7 @@
   export let handleClick;
   export let handleGroupClick;
   export let handleTagClick;
+  export let handlePopstate;
   export let tocClick;
   export let searchClick;
   export let query;
@@ -24,6 +25,8 @@
   function headerLink(text) {
     return text.toLowerCase().replace(/\s/g, "-");
   }
+
+  window.onpopstate = handlePopstate;
 </script>
 
 <style>
