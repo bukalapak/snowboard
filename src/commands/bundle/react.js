@@ -6,8 +6,8 @@ import chokidar from "chokidar";
 import jsonBundle from "./json";
 import { templatePath, outputPath, copyOverrides } from "./common";
 import { timeSpinner, watchTemplate, keyByValue } from "./common";
-import { toValue } from "../../parser/util";
 import { writeFile } from "../../internal/util";
+import { seeds as seedBuilder } from "../../parser/html";
 
 const defaultTemplate = resolve(__dirname, "../templates/osaka/index.html");
 const defaultConfig = { overrides: {} };
@@ -23,25 +23,20 @@ export default async function(input, cmd, { watch }) {
   const entrypoint = resolve(buildDir, basename(tplFile));
 
   const element = await parseInput(input);
-
-  const props = {
-    title: toValue(element.api.title),
-    ...config
-  };
+  const seeds = merge(seedBuilder(element), config);
 
   const data = `
-const config = ${JSON.stringify(props)};
-
-export default config;
+const seeds = ${JSON.stringify(seeds)};
+export default seeds;
   `;
 
   await cp(tplDir, buildDir);
   await copyOverrides(config.overrides, buildDir);
-  await writeFile(resolve(buildDir, "config.js"), data, "utf8");
+  await writeFile(resolve(buildDir, "seeds.js"), data, "utf8");
   await writeJSON(element, outDir, cmd);
 
   if (watch) {
-    watchInput(input, config, buildDir, outDir, cmd);
+    watchInput(input, outDir, cmd);
     watchTemplate(tplDir, buildDir);
     watchOverrides(config.overrides, buildDir);
   }
@@ -71,7 +66,7 @@ async function writeJSON(element, outDir, cmd) {
   await cp(jsonDir, resolve(outDir, "html/__json__"));
 }
 
-function watchInput(input, config, buildDir, outDir, cmd) {
+function watchInput(input, outDir, cmd) {
   const watcher = chokidar.watch(input, {
     persistent: true
   });
