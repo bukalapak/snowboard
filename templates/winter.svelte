@@ -52,7 +52,7 @@
     document.body.scrollTop = document.documentElement.scrollTop = 0;
   }
 
-  function handlePopstate(history) {
+  function handlePopstate() {
     const hash = location.hash;
     if (hash.match("#/")) {
       let slug = hash.replace("#/", "");
@@ -81,7 +81,6 @@
           }
           break;
         default:
-          query = "";
           break;
       }
       index = actions.findIndex(el => el.slug === slug);
