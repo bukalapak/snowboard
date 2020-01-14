@@ -80,11 +80,12 @@
             }
           }
           break;
-      }
-      index = actions.findIndex(el => el.slug === slug);
-      // sync group
-      if (query !== "" && actions[index].tags.length > 1) {
-        query = `g:${slugify(actions[index].tags[1])}`;
+        default:
+          index = actions.findIndex(el => el.slug === slug);
+          // sync group
+          if (query !== "" && actions[index].tags.length > 1) {
+            query = `g:${slugify(actions[index].tags[1])}`;
+          }
       }
     } else {
       query = "";
