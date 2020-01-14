@@ -52,6 +52,34 @@
     document.body.scrollTop = document.documentElement.scrollTop = 0;
   }
 
+  function handleTagClick(event) {
+    const tagSlug = event.target.dataset["slug"];
+    const firstGroup = firstTagGroup(tagSlug);
+
+    if (firstGroup) {
+      const firstAction = firstGroupAction(slugify(firstGroup.title));
+      const slug = firstAction.slug;
+
+      index = actions.findIndex(el => el.slug === slug);
+      query = `rg:${tagSlug}`;
+      document.body.scrollTop = document.documentElement.scrollTop = 0;
+    }
+  }
+
+  function firstTagGroup(tagSlug) {
+    let matches = [];
+
+    tagActions.forEach(tag => {
+      if (slugify(tag.title) === tagSlug) {
+        matches.push(tag);
+      }
+    });
+
+    if (matches.length > 0) {
+      return matches[0].children[0];
+    }
+  }
+
   function handleGroupClick(event) {
     const groupSlug = event.target.dataset["slug"];
     const firstAction = firstGroupAction(groupSlug);
@@ -88,6 +116,35 @@
     document.title =
       (currentAction && `${currentAction.title} - ${title}`) || title;
   }
+
+  $: groupTransactionsFunc = action => {
+    if (typeof action === "undefined") {
+      return undefined;
+    }
+    let data = Object.assign({}, action);
+    data.groupedTransactions = [];
+    data.transactions.forEach(transaction => {
+      let title = transaction.request.title;
+      let foundIndex = null;
+      data.groupedTransactions.forEach((transaction, index) => {
+        if (foundIndex === null && transaction.request.title === title) {
+          foundIndex = index;
+        }
+      });
+      if (foundIndex === null) {
+        data.groupedTransactions.push({
+          request: transaction.request,
+          responses: [transaction.response]
+        });
+      } else {
+        data.groupedTransactions[foundIndex].responses.push(
+          transaction.response
+        );
+      }
+    });
+    return data;
+  };
+  $: transformedAction = groupTransactionsFunc(actions[index]);
 
   $: currentAction = actions[index];
   $: environment =
@@ -238,6 +295,20 @@
         if (firstAction) {
           slug = firstAction.slug;
           query = `g:${groupSlug}`;
+        }
+      }
+
+      if (slug.startsWith("rg~")) {
+        const tagSlug = slug.substr(3);
+        const firstGroup = firstTagGroup(tagSlug);
+
+        if (firstGroup) {
+          const firstAction = firstGroupAction(slugify(firstGroup.title));
+
+          if (firstAction) {
+            slug = firstAction.slug;
+            query = `rg:${tagSlug}`;
+          }
         }
       }
 
@@ -471,6 +542,7 @@
       class:is-hidden-mobile={showMenu}
       id="mainnav">
       <MenuPanel
+        {title}
         {tagActions}
         tagHeaders={toc(description)}
         currentSlug={currentAction && currentAction.slug}
@@ -481,6 +553,7 @@
         {config}
         {handleClick}
         {handleGroupClick}
+        {handleTagClick}
         {tocClick}
         {searchClick} />
       <div
@@ -563,14 +636,14 @@
 
         <ParameterPanel parameters={currentAction.parameters} />
 
-        {#each currentAction.transactions as { request, response }, index}
+        {#each transformedAction.groupedTransactions as { request, responses }, index}
           <ScenarioPanel
             show={index === 0}
             isDarkmode={darkMode.active}
             {request}
-            {response}
+            {responses}
             {index}
-            count={currentAction.transactions.length} />
+            count={transformedAction.groupedTransactions.length} />
         {/each}
       {/if}
     </div>

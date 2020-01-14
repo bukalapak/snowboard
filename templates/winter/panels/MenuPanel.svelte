@@ -3,6 +3,7 @@
 
   import { colorize, slugify, filterActions, basePath } from "../util.js";
 
+  export let title;
   export let config = {};
   export let tagActions = [];
   export let tagHeaders = [];
@@ -13,6 +14,7 @@
 
   export let handleClick;
   export let handleGroupClick;
+  export let handleTagClick;
   export let tocClick;
   export let searchClick;
   export let query;
@@ -161,12 +163,14 @@
   </section>
 
   <div class="menu-wrapper">
-    <p class="menu-label">API</p>
+    <p class="menu-label">
+      <a href="/">{title}</a>
+    </p>
     {#if query === ''}
       <ul class="menu-list">
         <li>
           <a href={basePath(config)} on:click|preventDefault={tocClick}>
-            Introduction
+            Getting Started
           </a>
         </li>
         {#if tagHeaders}
@@ -189,7 +193,15 @@
 
     {#each filteredActions as tag}
       {#if tag.title}
-        <p class="menu-label">{tag.title}</p>
+        <p class="menu-label">
+          <a
+            data-slug={slugify(tag.title)}
+            href="#/rg~{slugify(tag.title)}"
+            class="is-inline-block"
+            on:click={handleTagClick}>
+            {tag.title}
+          </a>
+        </p>
       {/if}
 
       <ul class="menu-list">

@@ -157,6 +157,18 @@ const filterActions = (tagActions, query) => {
       .filter(Boolean);
   }
 
+  if (query.startsWith("rg:")) {
+    return tagActions
+      .map(tag => {
+        const children = tag.children.filter(
+          () => slugify(tag.title) === query.substr(3)
+        );
+
+        return filteredItem(tag.title, "children", children.filter(Boolean));
+      })
+      .filter(Boolean);
+  }
+
   const regex = new RegExp(escape(query), "gi");
 
   return tagActions
