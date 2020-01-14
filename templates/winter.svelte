@@ -48,12 +48,13 @@
 
     const slug = target.dataset["slug"];
     index = actions.findIndex(el => el.slug === slug);
-
     document.body.scrollTop = document.documentElement.scrollTop = 0;
   }
 
   function handlePopstate() {
     const hash = location.hash;
+    const prevIndex = index;
+    let isDetail = false;
     if (hash.match("#/")) {
       let slug = hash.replace("#/", "");
       switch (true) {
@@ -81,14 +82,21 @@
           }
           break;
         default:
-          index = actions.findIndex(el => el.slug === slug);
-          // sync group
-          if (query !== "" && actions[index].tags.length > 1) {
-            query = `g:${slugify(actions[index].tags[1])}`;
-          }
+          isDetail = true;
+          break;
+      }
+      index = actions.findIndex(el => el.slug === slug);
+      // sync group
+      if (
+        isDetail &&
+        (query !== "" || prevIndex === -1) &&
+        actions[index].tags.length > 1
+      ) {
+        query = `g:${slugify(actions[index].tags[1])}`;
       }
     } else {
       query = "";
+      index = -1;
     }
   }
 
