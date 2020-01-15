@@ -48,8 +48,56 @@
 
     const slug = target.dataset["slug"];
     index = actions.findIndex(el => el.slug === slug);
-
     document.body.scrollTop = document.documentElement.scrollTop = 0;
+  }
+
+  function handlePopstate() {
+    const hash = location.hash;
+    const prevIndex = index;
+    let isDetail = false;
+    if (hash.match("#/")) {
+      let slug = hash.replace("#/", "");
+      switch (true) {
+        case slug.startsWith("g~"):
+          const groupSlug = slug.substr(2);
+          const firstAction = firstGroupAction(groupSlug);
+
+          if (firstAction) {
+            slug = firstAction.slug;
+            query = `g:${groupSlug}`;
+          }
+
+          break;
+        case slug.startsWith("rg~"):
+          const tagSlug = slug.substr(3);
+          const firstGroup = firstTagGroup(tagSlug);
+
+          if (firstGroup) {
+            const firstAction = firstGroupAction(slugify(firstGroup.title));
+
+            if (firstAction) {
+              slug = firstAction.slug;
+              query = `rg:${tagSlug}`;
+            }
+          }
+          break;
+        default:
+          isDetail = true;
+          break;
+      }
+      index = actions.findIndex(el => el.slug === slug);
+      // sync group
+      if (
+        isDetail &&
+        (query !== "" || prevIndex === -1) &&
+        actions[index].tags.length > 1
+      ) {
+        query = `g:${slugify(actions[index].tags[1])}`;
+      }
+    } else {
+      query = "";
+      index = -1;
+    }
   }
 
   function handleTagClick(event) {
@@ -284,7 +332,6 @@
 
     // handle permalink
     const hash = location.hash;
-
     if (hash.match("#/")) {
       let slug = hash.replace("#/", "");
 
@@ -311,7 +358,6 @@
           }
         }
       }
-
       index = actions.findIndex(el => el.slug === slug);
     }
   });
@@ -487,7 +533,7 @@
     role="navigation"
     aria-label="main navigation">
     <div class="navbar-brand">
-      <a href="javascript:void(0)" class="navbar-item">
+      <a href="/" class="navbar-item">
         <span class="icon icon-brand is-medium has-text-grey-light">
           <i class="fas fa-lg fa-chalkboard" />
         </span>
@@ -553,6 +599,7 @@
         {config}
         {handleClick}
         {handleGroupClick}
+        {handlePopstate}
         {handleTagClick}
         {tocClick}
         {searchClick} />
