@@ -213,6 +213,7 @@
             title={child.title}
             actions={child.actions}
             hidden={actionsCount > 50}
+            parentSLug={slugify(tag.title)}
             {currentSlug}
             {handleClick}
             {handleGroupClick} />

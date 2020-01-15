@@ -146,10 +146,13 @@ function escape(text) {
 
 const filterActions = (tagActions, query) => {
   if (query.startsWith("g:")) {
+    const slugs = query.substr(2).split("~");
     return tagActions
       .map(tag => {
         const children = tag.children.filter(child => {
-          return slugify(child.title) === query.substr(2);
+          return (
+            slugify(child.title) === slugs[1] && slugify(tag.title) === slugs[0]
+          );
         });
 
         return filteredItem(tag.title, "children", children.filter(Boolean));
