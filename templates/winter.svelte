@@ -103,8 +103,6 @@
   }
 
   function handleTagClick(event) {
-    console.log(JSON.stringify(actions));
-    console.log(JSON.stringify(tagActions));
     const tagSlug = event.target.dataset["slug"];
     const firstGroup = firstTagGroup(tagSlug);
 
