@@ -73,7 +73,7 @@
           const firstGroup = firstTagGroup(tagSlug);
 
           if (firstGroup) {
-            const firstAction = firstGroupAction(slugify(firstGroup.title));
+            const firstAction = firstGroupAction(`${tagSlug}~${slugify(firstGroup.title)}`);
 
             if (firstAction) {
               slug = firstAction.slug;
@@ -107,7 +107,7 @@
     const firstGroup = firstTagGroup(tagSlug);
 
     if (firstGroup) {
-      const firstAction = firstGroupAction(slugify(firstGroup.title));
+      const firstAction = firstGroupAction(`${tagSlug}~${slugify(firstGroup.title)}`);
       const slug = firstAction.slug;
 
       index = actions.findIndex(el => el.slug === slug);
