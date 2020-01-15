@@ -73,7 +73,9 @@
           const firstGroup = firstTagGroup(tagSlug);
 
           if (firstGroup) {
-            const firstAction = firstGroupAction(`${tagSlug}~${slugify(firstGroup.title)}`);
+            const firstAction = firstGroupAction(
+              `${tagSlug}~${slugify(firstGroup.title)}`
+            );
 
             if (firstAction) {
               slug = firstAction.slug;
@@ -89,6 +91,7 @@
       // sync group
       if (
         isDetail &&
+        !slug.startsWith("rg~") &&
         (query !== "" || prevIndex === -1) &&
         actions[index].tags.length > 1
       ) {
@@ -107,7 +110,9 @@
     const firstGroup = firstTagGroup(tagSlug);
 
     if (firstGroup) {
-      const firstAction = firstGroupAction(`${tagSlug}~${slugify(firstGroup.title)}`);
+      const firstAction = firstGroupAction(
+        `${tagSlug}~${slugify(firstGroup.title)}`
+      );
       const slug = firstAction.slug;
 
       index = actions.findIndex(el => el.slug === slug);
