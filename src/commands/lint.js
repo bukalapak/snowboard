@@ -1,44 +1,11 @@
+import { Command, flags } from "@oclif/command";
 import { table, getBorderCharacters } from "table";
-import { readAsElement, jsonStringify } from "../internal/util";
+import { readAsElement, jsonStringify } from "../util";
 import lint from "../parser/lint";
 
 const tableConfig = {
   border: getBorderCharacters("ramac")
 };
-
-async function lintCmd(input, { quiet, json }) {
-  const element = await readAsElement(input);
-  const result = await lint(element);
-
-  if (!result) {
-    throw new Error(`ERROR: unable to parse input: ${input}`);
-  }
-
-  if (result.length === 0) {
-    if (!quiet) {
-      console.log("OK");
-    }
-  } else {
-    if (!quiet) {
-      const mapResult = lintMap(result);
-
-      if (json) {
-        console.log(jsonStringify(mapResult, { optimized: false }));
-      } else {
-        const data = mapResult.map(({ location, severity, description }) => [
-          location.join(" - "),
-          severity,
-          description
-        ]);
-
-        data.unshift(["Location", "Severity", "Description"]);
-        console.log(table(data, tableConfig));
-      }
-    }
-
-    return 1;
-  }
-}
 
 function lintMap(result) {
   return result.map(({ location, severity, description }) => ({
@@ -51,4 +18,55 @@ function lintMap(result) {
   }));
 }
 
-export default lintCmd;
+class LintCommand extends Command {
+  static args = [{ name: "input", required: true }];
+
+  async run() {
+    const { flags, args } = this.parse(LintCommand);
+    const element = await readAsElement(args.input);
+    const result = await lint(element);
+
+    if (!result) {
+      this.error(`${input}: unable to parse input`);
+    }
+
+    if (result.length === 0) {
+      if (!flags.quiet) {
+        this.log("OK");
+      }
+    } else {
+      if (!flags.quiet) {
+        const mapResult = lintMap(result);
+
+        if (flags.json) {
+          this.log(jsonStringify(mapResult, { optimized: flags.optimized }));
+        } else {
+          const data = mapResult.map(({ location, severity, description }) => [
+            location.join(" - "),
+            severity,
+            description
+          ]);
+
+          data.unshift(["Location", "Severity", "Description"]);
+          this.log(table(data, tableConfig));
+        }
+      }
+
+      this.exit(1);
+    }
+  }
+}
+
+LintCommand.description = `validate API blueprint`;
+
+LintCommand.flags = {
+  json: flags.boolean({ char: "j", description: "json mode" }),
+  optimized: flags.boolean({
+    char: "O",
+    description: "optimized mode",
+    dependsOn: ["json"]
+  }),
+  quiet: flags.boolean({ char: "q", description: "quiet mode" })
+};
+
+export default LintCommand;
