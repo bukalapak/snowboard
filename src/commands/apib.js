@@ -1,14 +1,36 @@
+import { Command, flags } from "@oclif/command";
 import { read } from "../internal/input";
-import { writeOutput } from "../internal/util";
+import { writeFile } from "../util";
 
-async function apibCmd(input, { output, quiet }) {
-  const source = read(input);
+class ApibCommand extends Command {
+  static args = [{ name: "input", required: true }];
 
-  writeOutput(output, source);
+  async run() {
+    const { flags, args } = this.parse(ApibCommand);
 
-  if (!quiet && output) {
-    console.log("%s: API blueprint has been generated", output);
+    if (!flags.output && flags.quiet) {
+      this.error("--quiet cannot be used when no --output=");
+    }
+
+    const source = read(args.input);
+
+    if (flags.output) {
+      await writeFile(flags.output, source);
+    } else {
+      this.log(source);
+    }
+
+    if (!flags.quiet && flags.output) {
+      this.log("%s: API blueprint has been saved", flags.output);
+    }
   }
 }
 
-export default apibCmd;
+ApibCommand.description = `render API blueprint`;
+
+ApibCommand.flags = {
+  output: flags.string({ char: "o", description: "output file" }),
+  quiet: flags.boolean({ char: "q", description: "quiet mode" })
+};
+
+export default ApibCommand;
