@@ -73,7 +73,9 @@
           const firstGroup = firstTagGroup(tagSlug);
 
           if (firstGroup) {
-            const firstAction = firstGroupAction(slugify(firstGroup.title));
+            const firstAction = firstGroupAction(
+              `${tagSlug}~${slugify(firstGroup.title)}`
+            );
 
             if (firstAction) {
               slug = firstAction.slug;
@@ -89,10 +91,13 @@
       // sync group
       if (
         isDetail &&
+        !slug.startsWith("rg~") &&
         (query !== "" || prevIndex === -1) &&
         actions[index].tags.length > 1
       ) {
-        query = `g:${slugify(actions[index].tags[1])}`;
+        query = `g:${slugify(actions[index].tags[0])}~${slugify(
+          actions[index].tags[1]
+        )}`;
       }
     } else {
       query = "";
@@ -105,7 +110,9 @@
     const firstGroup = firstTagGroup(tagSlug);
 
     if (firstGroup) {
-      const firstAction = firstGroupAction(slugify(firstGroup.title));
+      const firstAction = firstGroupAction(
+        `${tagSlug}~${slugify(firstGroup.title)}`
+      );
       const slug = firstAction.slug;
 
       index = actions.findIndex(el => el.slug === slug);
@@ -129,23 +136,26 @@
   }
 
   function handleGroupClick(event) {
-    const groupSlug = event.target.dataset["slug"];
-    const firstAction = firstGroupAction(groupSlug);
+    const slug = event.target.dataset["slug"];
+    const firstAction = firstGroupAction(slug);
 
     if (firstAction) {
       const slug = firstAction.slug;
       index = actions.findIndex(el => el.slug === slug);
-      query = `g:${groupSlug}`;
+      query = `g:${slug}`;
       document.body.scrollTop = document.documentElement.scrollTop = 0;
     }
   }
 
   function firstGroupAction(groupSlug) {
     let matches = [];
-
+    const slugs = groupSlug.split("~");
     tagActions.forEach(tag => {
       matches = matches.concat(
-        tag.children.filter(child => slugify(child.title) === groupSlug)
+        tag.children.filter(
+          child =>
+            slugify(child.title) === slugs[1] && slugify(tag.title) === slugs[0]
+        )
       );
     });
 
@@ -336,12 +346,12 @@
       let slug = hash.replace("#/", "");
 
       if (slug.startsWith("g~")) {
-        const groupSlug = slug.substr(2);
+        const groupSlug = slug.substr(3 + currentAction.tags[0].length);
         const firstAction = firstGroupAction(groupSlug);
 
         if (firstAction) {
           slug = firstAction.slug;
-          query = `g:${groupSlug}`;
+          query = `g:${currentAction.tags[0]}~${groupSlug}`;
         }
       }
 
@@ -642,8 +652,8 @@
                       <a href="javascript:void(0)">{tag}</a>
                     {:else}
                       <a
-                        data-slug={slugify(tag)}
-                        href="#/g~{slugify(tag)}"
+                        data-slug="{slugify(currentAction.tags[0])}~{slugify(tag)}"
+                        href="#/g~{slugify(currentAction.tags[0])}~{slugify(tag)}"
                         on:click={handleGroupClick}>
                         {tag}
                       </a>

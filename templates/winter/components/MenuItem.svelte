@@ -4,6 +4,7 @@
   export let title;
   export let actions;
   export let currentSlug;
+  export let parentSLug;
   export let hidden = false;
 
   export let handleClick;
@@ -30,8 +31,8 @@
 {#if title}
   <li>
     <a
-      data-slug={slugify(title)}
-      href="#/g~{slugify(title)}"
+      data-slug="{parentSLug}~{slugify(title)}"
+      href="#/g~{parentSLug}~{slugify(title)}"
       class="is-inline-block"
       on:click={handleGroupClick}>
       {title}
