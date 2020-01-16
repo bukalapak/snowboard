@@ -1,19 +1,40 @@
+import { Command, flags } from "@oclif/command";
 import { flatten } from "lodash";
-import { readMultiAsElement, jsonStringify } from "../internal/util";
+import { readMultiAsElement, jsonStringify } from "../util";
 import list from "../parser/list";
 
-async function listCmd(inputs, { json }) {
-  const items = await readMultiAsElement(inputs);
-  const listed = flatten(items.map(item => list(item)));
+class ListCommand extends Command {
+  static strict = false;
+  static usage = "list INPUT [INPUTS...]";
+  static args = [{ name: "input", required: true }];
 
-  if (json) {
-    console.log(jsonStringify(listed, { optimized: false }));
-    return;
+  async run() {
+    const { flags, args, argv } = this.parse(ListCommand);
+
+    const items = await readMultiAsElement(argv);
+    const listed = flatten(items.map(item => list(item)));
+
+    if (flags.json) {
+      this.log(jsonStringify(listed, { optimized: flags.optimized }));
+      this.exit();
+    }
+
+    listed.forEach(({ method, statusCode, path }) => {
+      this.log([method, statusCode, path].join("\t"));
+    });
   }
-
-  listed.forEach(({ method, statusCode, path }) => {
-    console.log([method, statusCode, path].join("\t"));
-  });
 }
 
-export default listCmd;
+ListCommand.description = `list API routes`;
+
+ListCommand.flags = {
+  json: flags.boolean({ char: "j", description: "json mode" }),
+  optimized: flags.boolean({
+    char: "O",
+    description: "optimized mode",
+    dependsOn: ["json"]
+  }),
+  quiet: flags.boolean({ char: "q", description: "quiet mode" })
+};
+
+export default ListCommand;
