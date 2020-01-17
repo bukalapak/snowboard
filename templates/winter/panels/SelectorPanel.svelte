@@ -9,9 +9,13 @@
   export let authenticating;
   export let pkceChallenge;
 
+  let authenticated = false;
   let show = false;
 
   $: environment = environments[$env];
+  $: {
+    authenticated = $auth.split(";").includes($env);
+  }
 
   function handleClick(event) {
     show = false;
@@ -52,7 +56,7 @@
         <i class="fas fa-2x fa-spinner fa-pulse" />
       </span>
     </div>
-  {:else if $auth.split(';').includes($env)}
+  {:else if authenticated}
     <div class="navbar-item">
       <div class="field is-grouped">
         <p class="control">
