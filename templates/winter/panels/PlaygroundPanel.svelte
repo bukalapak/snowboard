@@ -14,6 +14,7 @@
     colorize,
     getToken,
     isAuth,
+    isPKCE,
     allowBody,
     sendRequest,
     copyUrl
@@ -140,10 +141,10 @@
         {/if}
       </div>
       <div class="column is-one-fifth">
-        {#if (isAuth(environment, 'oauth2') || isAuth(environment, 'oauth2-pkce')) && !$auth.includes($env)}
+        {#if isAuth(environment, 'oauth2') && !$auth.split(';').includes($env)}
           <LoginButton
             authOptions={environment.auth.options}
-            isPKCE={isAuth(environment, 'oauth2-pkce')}
+            isPKCE={isPKCE(environment)}
             {pkceChallenge}
             fullWidth={true} />
         {:else}
@@ -203,8 +204,8 @@
           value={environment.auth.options.key} />
       {/if}
 
-      {#if isAuth(environment, 'oauth2') || isAuth(environment, 'oauth2-pkce')}
-        {#if $auth.includes($env)}
+      {#if isAuth(environment, 'oauth2')}
+        {#if $auth.split(';').includes($env)}
           <FieldDisabled
             name="authorization"
             placeholder="Authorization"

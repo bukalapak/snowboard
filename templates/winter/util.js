@@ -10,6 +10,7 @@ import qs from "querystringify";
 import urlParse from "url-parse";
 import createAuthRefreshInterceptor from "axios-auth-refresh";
 import copy from "clipboard-copy";
+import pkce from "pkce";
 import { token } from "./store";
 
 Prism.languages.json = {
@@ -194,19 +195,27 @@ const basePath = config => {
   }
 };
 
-const tokenName = env => `token:${env}`;
-const setToken = (env, token) => store.session.set(tokenName(env), token);
-const getToken = env => store.session.get(tokenName(env));
-const removeToken = env => store.session.remove(tokenName(env));
+const tokenStore = store.namespace("token");
 
-const refreshTokenName = env => `refresh-token:${env}`;
-const setRefreshToken = (env, token) =>
-  store.session.set(refreshTokenName(env), token);
-const getRefreshToken = env => store.session.get(refreshTokenName(env));
-const removeRefreshToken = env => store.session.remove(refreshTokenName(env));
+const setToken = (env, token) => tokenStore.set(env, token);
+const getToken = env => tokenStore.get(env);
+const removeToken = env => tokenStore.remove(env);
+
+const refreshTokenStore = store.namespace("refresh-token");
+const setRefreshToken = (env, token) => refreshTokenStore.set(env, token);
+const getRefreshToken = env => refreshTokenStore.get(env);
+const removeRefreshToken = env => refreshTokenStore.remove(env);
 
 const isAuth = (environment, name) => {
   return environment.auth && environment.auth.name === name;
+};
+
+const isPKCE = environment => {
+  if (isAuth(environment, "oauth2")) {
+    return environment.auth.options.clientSecret === undefined;
+  }
+
+  return false;
 };
 
 const pushHistory = href => history.pushState(history.state, "", href);
@@ -234,16 +243,18 @@ const exchangeToken = async (code, options, isPKCE, pkceChallenge) => {
     return requestToken(axios.create(), {
       url: options.tokenUrl,
       grant_type: "authorization_code",
+      state: getState(),
       client_id: options.clientId,
       redirect_uri: options.callbackUrl,
       code: code,
-      code_verifier: pkceChallenge.code_verifier
+      code_verifier: pkceChallenge.codeVerifier
     });
   }
 
   return requestToken(axios.create(), {
     url: options.tokenUrl,
     grant_type: "authorization_code",
+    state: getState(),
     client_id: options.clientId,
     client_secret: options.clientSecret,
     redirect_uri: options.callbackUrl,
@@ -274,6 +285,7 @@ const refreshInterceptor = (env, options) => {
     } = await requestToken(axios, {
       url: options.tokenUrl,
       grant_type: "refresh_token",
+      state: getState(),
       client_id: options.clientId,
       client_secret: options.clientSecret,
       refresh_token: refreshToken
@@ -321,8 +333,8 @@ const sendRequest = (
       case "oauth2":
         options.headers["Authorization"] = `Bearer ${getToken(env)}`;
         break;
-      case "oauth2-pkce":
-        options.headers["Authorization"] = `Bearer ${getToken(env)}`;
+      case "withCredentials":
+        options.withCredentials = true;
         break;
     }
   }
@@ -337,7 +349,7 @@ const sendRequest = (
     options.data = body;
   }
 
-  if (isAuth(environment, "oauth2") || isAuth(environment, "oauth2-pkce")) {
+  if (isAuth(environment, "oauth2")) {
     createAuthRefreshInterceptor(
       client,
       refreshInterceptor(env, environment.auth.options)
@@ -355,18 +367,50 @@ const copyUrl = (url, parameters) => {
 
 const getEnv = () => store.get("env");
 
+const pkceStore = store.namespace("pkce");
+
+const getPKCE = () => {
+  const existing = pkceStore.getAll();
+
+  if (Object.keys(existing).length === 0) {
+    const challengePair = pkce.create();
+    pkceStore.setAll(challengePair);
+
+    return challengePair;
+  }
+
+  return existing;
+};
+
+const getState = () => {
+  const existing = store.get("state");
+  if (existing) return existing;
+
+  const state = pkce.random(16);
+  store.set("state", state);
+  return state;
+};
+
+const clearPKCE = () => pkceStore.clear();
+const clearState = () => store.remove("state");
+
 export {
   alias,
   allowBody,
   basePath,
   colorize,
+  clearPKCE,
+  clearState,
   exchangeToken,
   expandUrl,
   filterActions,
   getEnv,
   getToken,
+  getPKCE,
+  getState,
   highlight,
   isAuth,
+  isPKCE,
   markdown,
   pushHistory,
   removeToken,

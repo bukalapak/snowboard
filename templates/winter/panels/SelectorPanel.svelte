@@ -3,7 +3,7 @@
   import LogoutButton from "../components/LogoutButton.svelte";
 
   import { env, auth, token } from "../store.js";
-  import { isAuth, getToken } from "../util.js";
+  import { isAuth, isPKCE, getToken } from "../util.js";
 
   export let environments;
   export let authenticating;
@@ -24,6 +24,9 @@
     if (authToken) {
       auth.add(envName);
       token.set(authToken);
+    } else {
+      auth.remove(envName);
+      token.set(null);
     }
   }
 
@@ -49,7 +52,7 @@
         <i class="fas fa-2x fa-spinner fa-pulse" />
       </span>
     </div>
-  {:else if $auth.includes($env)}
+  {:else if $auth.split(';').includes($env)}
     <div class="navbar-item">
       <div class="field is-grouped">
         <p class="control">
@@ -63,7 +66,7 @@
         <p class="control">
           <LoginButton
             authOptions={environment.auth.options}
-            isPKCE={isAuth(environment, 'oauth2-pkce')}
+            isPKCE={isPKCE(environment)}
             {pkceChallenge} />
         </p>
       </div>

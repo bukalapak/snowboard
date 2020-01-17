@@ -1,7 +1,6 @@
 <script>
   import { onMount } from "svelte";
   import qs from "querystringify";
-  import pkce from "pkce";
 
   import MenuPanel from "./winter/panels/MenuPanel.svelte";
   import RequestPanel from "./winter/panels/RequestPanel.svelte";
@@ -17,11 +16,15 @@
     highlight,
     stringify,
     colorize,
+    clearPKCE,
+    clearState,
     setToken,
     setRefreshToken,
     getToken,
+    getPKCE,
     exchangeToken,
     isAuth,
+    isPKCE,
     pushHistory,
     basePath,
     getEnv,
@@ -37,7 +40,7 @@
   export let config;
 
   let index = -1;
-  let challengePair = pkce.create();
+  let challengePair = getPKCE();
 
   function handleClick(event) {
     let target = event.target;
@@ -311,7 +314,7 @@
 
   onMount(async () => {
     // handle oauth2 callback
-    if (isAuth(environment, "oauth2") || isAuth(environment, "oauth2-pkce")) {
+    if (isAuth(environment, "oauth2")) {
       const authParam = qs.parse(location.search);
 
       if (authParam.code) {
@@ -322,7 +325,7 @@
         const { accessToken, refreshToken } = await exchangeToken(
           authParam.code,
           environment.auth.options,
-          isAuth(environment, "oauth2-pkce"),
+          isPKCE(environment),
           challengePair
         );
 
@@ -337,11 +340,14 @@
         }
 
         authenticating = false;
+        clearPKCE();
+        clearState();
       }
     }
 
     // handle permalink
     const hash = location.hash;
+
     if (hash.match("#/")) {
       let slug = hash.replace("#/", "");
 
@@ -368,6 +374,7 @@
           }
         }
       }
+
       index = actions.findIndex(el => el.slug === slug);
     }
   });
