@@ -1897,10 +1897,10 @@ pify@^3.0.0:
   resolved "https://registry.yarnpkg.com/pify/-/pify-3.0.0.tgz#e5a4acd2c101fdf3d9a4d07f0dbc4db49dd28176"
   integrity sha1-5aSs0sEB/fPZpNB/DbxNtJ3SgXY=
 
-pkce@^1.0.0-beta1:
-  version "1.0.0-beta1"
-  resolved "https://registry.yarnpkg.com/pkce/-/pkce-1.0.0-beta1.tgz#308a53a1a4da0b890a18af1ef05a0a9f6d3e16a5"
-  integrity sha512-SSLymFThdVeQrghEN3u7LfE8YiuqfQ6vBsQykQbw3MQBqeDae1YaAUExI1G8VzhZQXYiiHgdr8LRNkMVydo/fA==
+pkce@^1.0.0-beta2:
+  version "1.0.0-beta2"
+  resolved "https://registry.yarnpkg.com/pkce/-/pkce-1.0.0-beta2.tgz#ecf869b460394a7391c912ba44312383c7cf897f"
+  integrity sha512-wTUwJYyhg1FjUuz9RjdmjorjeOB19Ch2GNIyLfWe5X7Ci4dbHU8ufhI3igZdG9mp43WqrePcIAEGXREuXpzcnA==
   dependencies:
     crypto-js "^3.1.9-1"
     secure-random "^1.1.2"
