@@ -28,6 +28,7 @@
   export let currentAction;
 
   export let requestHeaders;
+  export let requestAuthHeader;
   export let requestParameters;
   export let requestBody;
 
@@ -42,7 +43,7 @@
 
   function handleClick() {
     response = sendRequest($env, environment, currentAction, {
-      headers: requestHeaders,
+      headers: requestHeaders.concat(requestAuthHeader),
       parameters: requestParameters,
       body: requestBody
     });
@@ -188,29 +189,13 @@
             bind:value={header.value}
             rounded={true} />
         {/each}
-      {/if}
 
-      {#if isAuth(environment, 'basic')}
-        <FieldDisabled
-          name="authorization"
-          placeholder="Authorization"
-          value="Basic {basicAuth(environment.auth.options.username, environment.auth.options.password)}" />
-      {/if}
-
-      {#if isAuth(environment, 'apikey')}
-        <FieldDisabled
-          name="authorization"
-          placeholder={environment.auth.options.header}
-          value={environment.auth.options.key} />
-      {/if}
-
-      {#if isAuth(environment, 'oauth2')}
-        {#if $auth.split(';').includes($env)}
-          <FieldDisabled
-            name="authorization"
-            placeholder="Authorization"
-            value="Bearer {$token}" />
-        {/if}
+        <FieldSwitch
+          name={requestAuthHeader.name}
+          required={requestAuthHeader.required}
+          used={requestAuthHeader.used}
+          bind:value={requestAuthHeader.value}
+          rounded={true} />
       {/if}
     </div>
 

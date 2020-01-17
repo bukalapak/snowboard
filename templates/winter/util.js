@@ -321,24 +321,6 @@ const sendRequest = (
     headers: populate(headers)
   };
 
-  if (environment.auth) {
-    switch (environment.auth.name) {
-      case "basic":
-        options.auth = environment.auth.options;
-        break;
-      case "apikey":
-        options.headers[environment.auth.options.header] =
-          environment.auth.options.key;
-        break;
-      case "oauth2":
-        options.headers["Authorization"] = `Bearer ${getToken(env)}`;
-        break;
-      case "withCredentials":
-        options.withCredentials = true;
-        break;
-    }
-  }
-
   const expandedUrl = expandUrl(action.pathTemplate, populate(parameters));
   const destUrl = urlParse(expandedUrl, true);
 

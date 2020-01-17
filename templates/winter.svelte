@@ -270,6 +270,35 @@
       });
   }
 
+  function authHeader(action, environment) {
+    const header = sample(action).headers.find(
+      header => header.name === "Authorization"
+    );
+
+    header.value = header.example;
+    header.used = true;
+
+    if (isAuth(environment, "basic")) {
+      header.value = `Basic ${basicAuth(
+        environment.auth.options.username,
+        environment.auth.options.password
+      )}`;
+    }
+
+    if (isAuth(environment, "apikey")) {
+      header.name = environment.auth.options.header;
+      header.value = environment.auth.options.key;
+    }
+
+    if (isAuth(environment, "oauth2")) {
+      if ($auth.split(";").includes($env)) {
+        header.value = `Bearer ${$token}`;
+      }
+    }
+
+    return header;
+  }
+
   function parametersMap(action) {
     return action.parameters.map(param => {
       return {
@@ -692,6 +721,7 @@
               pkceChallenge={challengePair}
               environments={config.playground.environments}
               requestHeaders={headersMap(currentAction)}
+              requestAuthHeader={authHeader(currentAction, environment)}
               requestParameters={parametersMap(currentAction)}
               requestBody={bodyMap(currentAction)}
               isDarkmode={darkMode.active} />
