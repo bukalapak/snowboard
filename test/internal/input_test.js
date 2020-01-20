@@ -5,7 +5,7 @@ import { fixturePath } from "../helper";
 
 test("readPaths", async t => {
   const prefix = fixturePath("partials/");
-  const paths = readPaths(fixturePath("partials/API.apib"));
+  const paths = await readPaths(fixturePath("partials/API.apib"));
 
   const actualPaths = paths.map(path => path.replace(`${prefix}/`, ""));
   const expectedPaths = [

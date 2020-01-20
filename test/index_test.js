@@ -1,5 +1,4 @@
 import test from "tape";
-import { readFileSync } from "fs";
 import { read } from "../src";
 import { fixturePath, setupFixtures } from "./helper";
 
@@ -8,7 +7,7 @@ import { fixturePath, setupFixtures } from "./helper";
 })();
 
 test("read", async t => {
-  const source = read(fixturePath("blueprint.apib"));
+  const source = await read(fixturePath("blueprint.apib"));
 
   t.ok(source.includes("# <API name>"));
   t.ok(source.includes("# Group <resource group name>"));
@@ -16,8 +15,8 @@ test("read", async t => {
   t.end();
 });
 
-test("read with partials", t => {
-  const source = read(fixturePath("partials/API.apib"));
+test("read with partials", async t => {
+  const source = await read(fixturePath("partials/API.apib"));
 
   t.ok(source.includes("# API"));
   t.ok(source.includes("# Group Messages"));
@@ -26,8 +25,8 @@ test("read with partials", t => {
   t.end();
 });
 
-test("read with seeds", t => {
-  const source = read(fixturePath("seeds/API.apib"));
+test("read with seeds", async t => {
+  const source = await read(fixturePath("seeds/API.apib"));
 
   t.ok(source.includes("# API"));
   t.ok(source.includes("200"));
