@@ -1,7 +1,6 @@
 <script>
   import { onMount } from "svelte";
   import qs from "querystringify";
-  import fetch from "isomorphic-unfetch";
 
   import MenuPanel from "./panels/MenuPanel.svelte";
   import RequestPanel from "./panels/RequestPanel.svelte";
@@ -17,11 +16,15 @@
     highlight,
     stringify,
     colorize,
+    clearPKCE,
+    clearState,
     setToken,
     setRefreshToken,
     getToken,
+    getPKCE,
     exchangeToken,
     isAuth,
+    isPKCE,
     pushHistory,
     basePath,
     getEnv,
@@ -37,6 +40,7 @@
   export let config;
 
   let index = -1;
+  let challengePair = getPKCE();
 
   function handleClick(event) {
     let target = event.target;
@@ -47,28 +51,114 @@
 
     const slug = target.dataset["slug"];
     index = actions.findIndex(el => el.slug === slug);
-
     document.body.scrollTop = document.documentElement.scrollTop = 0;
   }
 
+  function handlePopstate() {
+    const hash = location.hash;
+    const prevIndex = index;
+    let isDetail = false;
+    if (hash.match("#/")) {
+      let slug = hash.replace("#/", "");
+      switch (true) {
+        case slug.startsWith("g~"):
+          const groupSlug = slug.substr(2);
+          const firstAction = firstGroupAction(groupSlug);
+
+          if (firstAction) {
+            slug = firstAction.slug;
+            query = `g:${groupSlug}`;
+          }
+
+          break;
+        case slug.startsWith("rg~"):
+          const tagSlug = slug.substr(3);
+          const firstGroup = firstTagGroup(tagSlug);
+
+          if (firstGroup) {
+            const firstAction = firstGroupAction(
+              `${tagSlug}~${slugify(firstGroup.title)}`
+            );
+
+            if (firstAction) {
+              slug = firstAction.slug;
+              query = `rg:${tagSlug}`;
+            }
+          }
+          break;
+        default:
+          isDetail = true;
+          break;
+      }
+      index = actions.findIndex(el => el.slug === slug);
+      // sync group
+      if (
+        isDetail &&
+        !slug.startsWith("rg~") &&
+        (query !== "" || prevIndex === -1) &&
+        actions[index].tags.length > 1
+      ) {
+        query = `g:${slugify(actions[index].tags[0])}~${slugify(
+          actions[index].tags[1]
+        )}`;
+      }
+    } else {
+      query = "";
+      index = -1;
+    }
+  }
+
+  function handleTagClick(event) {
+    const tagSlug = event.target.dataset["slug"];
+    const firstGroup = firstTagGroup(tagSlug);
+
+    if (firstGroup) {
+      const firstAction = firstGroupAction(
+        `${tagSlug}~${slugify(firstGroup.title)}`
+      );
+      const slug = firstAction.slug;
+
+      index = actions.findIndex(el => el.slug === slug);
+      query = `rg:${tagSlug}`;
+      document.body.scrollTop = document.documentElement.scrollTop = 0;
+    }
+  }
+
+  function firstTagGroup(tagSlug) {
+    let matches = [];
+
+    tagActions.forEach(tag => {
+      if (slugify(tag.title) === tagSlug) {
+        matches.push(tag);
+      }
+    });
+
+    if (matches.length > 0) {
+      return matches[0].children[0];
+    }
+  }
+
   function handleGroupClick(event) {
-    const groupSlug = event.target.dataset["slug"];
-    const firstAction = firstGroupAction(groupSlug);
+    const slug = event.target.dataset["slug"];
+    const firstAction = firstGroupAction(slug);
 
     if (firstAction) {
       const slug = firstAction.slug;
       index = actions.findIndex(el => el.slug === slug);
-      query = `g:${groupSlug}`;
+      query = `g:${slug}`;
       document.body.scrollTop = document.documentElement.scrollTop = 0;
     }
   }
 
   function firstGroupAction(groupSlug) {
     let matches = [];
-
+    const slugs = groupSlug.split("~");
     tagActions.forEach(tag => {
       matches = matches.concat(
-        tag.children.filter(child => slugify(child.title) === groupSlug)
+        tag.children.filter(
+          child =>
+            slugify(child.title) === slugs[1] && slugify(tag.title) === slugs[0]
+        )
       );
     });
 
@@ -87,6 +177,35 @@
     document.title =
       (currentAction && `${currentAction.title} - ${title}`) || title;
   }
+
+  $: groupTransactionsFunc = action => {
+    if (typeof action === "undefined") {
+      return undefined;
+    }
+    let data = Object.assign({}, action);
+    data.groupedTransactions = [];
+    data.transactions.forEach(transaction => {
+      let title = transaction.request.title;
+      let foundIndex = null;
+      data.groupedTransactions.forEach((transaction, index) => {
+        if (foundIndex === null && transaction.request.title === title) {
+          foundIndex = index;
+        }
+      });
+      if (foundIndex === null) {
+        data.groupedTransactions.push({
+          request: transaction.request,
+          responses: [transaction.response]
+        });
+      } else {
+        data.groupedTransactions[foundIndex].responses.push(
+          transaction.response
+        );
+      }
+    });
+    return data;
+  };
+  $: transformedAction = groupTransactionsFunc(actions[index]);
 
   $: currentAction = actions[index];
   $: environment =
@@ -151,6 +270,35 @@
       });
   }
 
+  function authHeader(action, environment) {
+    const header = sample(action).headers.find(
+      header => header.name === "Authorization"
+    );
+
+    header.value = header.example;
+    header.used = true;
+
+    if (isAuth(environment, "basic")) {
+      header.value = `Basic ${basicAuth(
+        environment.auth.options.username,
+        environment.auth.options.password
+      )}`;
+    }
+
+    if (isAuth(environment, "apikey")) {
+      header.name = environment.auth.options.header;
+      header.value = environment.auth.options.key;
+    }
+
+    if (isAuth(environment, "oauth2")) {
+      if ($auth.split(";").includes($env)) {
+        header.value = `Bearer ${$token}`;
+      }
+    }
+
+    return header;
+  }
+
   function parametersMap(action) {
     return action.parameters.map(param => {
       return {
@@ -194,10 +342,6 @@
   }
 
   onMount(async () => {
-    const res = await fetch("/index.json");
-    const data = await res.json();
-    actions = data.actions;
-
     // handle oauth2 callback
     if (isAuth(environment, "oauth2")) {
       const authParam = qs.parse(location.search);
@@ -209,7 +353,9 @@
 
         const { accessToken, refreshToken } = await exchangeToken(
           authParam.code,
-          environment.auth.options
+          environment.auth.options,
+          isPKCE(environment),
+          challengePair
         );
 
         if (accessToken) {
@@ -223,6 +369,8 @@
         }
 
         authenticating = false;
+        clearPKCE();
+        clearState();
       }
     }
 
@@ -233,12 +381,26 @@
       let slug = hash.replace("#/", "");
 
       if (slug.startsWith("g~")) {
-        const groupSlug = slug.substr(2);
+        const groupSlug = slug.substr(3 + currentAction.tags[0].length);
         const firstAction = firstGroupAction(groupSlug);
 
         if (firstAction) {
           slug = firstAction.slug;
-          query = `g:${groupSlug}`;
+          query = `g:${currentAction.tags[0]}~${groupSlug}`;
+        }
+      }
+
+      if (slug.startsWith("rg~")) {
+        const tagSlug = slug.substr(3);
+        const firstGroup = firstTagGroup(tagSlug);
+
+        if (firstGroup) {
+          const firstAction = firstGroupAction(slugify(firstGroup.title));
+
+          if (firstAction) {
+            slug = firstAction.slug;
+            query = `rg:${tagSlug}`;
+          }
         }
       }
 
@@ -417,7 +579,7 @@
     role="navigation"
     aria-label="main navigation">
     <div class="navbar-brand">
-      <a href="javascript:void(0)" class="navbar-item">
+      <a href="/" class="navbar-item">
         <span class="icon icon-brand is-medium has-text-grey-light">
           <i class="fas fa-lg fa-chalkboard" />
         </span>
@@ -443,6 +605,7 @@
         {#if config.playground.enabled}
           <SelectorPanel
             environments={config.playground.environments}
+            pkceChallenge={challengePair}
             {authenticating} />
         {/if}
         {#if darkMode.enable}
@@ -471,6 +634,7 @@
       class:is-hidden-mobile={showMenu}
       id="mainnav">
       <MenuPanel
+        {title}
         {tagActions}
         tagHeaders={toc(description)}
         currentSlug={currentAction && currentAction.slug}
@@ -481,6 +645,8 @@
         {config}
         {handleClick}
         {handleGroupClick}
+        {handlePopstate}
+        {handleTagClick}
         {tocClick}
         {searchClick} />
       <div
@@ -522,8 +688,8 @@
                       <a href="javascript:void(0)">{tag}</a>
                     {:else}
                       <a
-                        data-slug={slugify(tag)}
-                        href="#/g~{slugify(tag)}"
+                        data-slug="{slugify(currentAction.tags[0])}~{slugify(tag)}"
+                        href="#/g~{slugify(currentAction.tags[0])}~{slugify(tag)}"
                         on:click={handleGroupClick}>
                         {tag}
                       </a>
@@ -552,8 +718,10 @@
           {#if environment.playground !== false}
             <PlaygroundPanel
               {currentAction}
+              pkceChallenge={challengePair}
               environments={config.playground.environments}
               requestHeaders={headersMap(currentAction)}
+              requestAuthHeader={authHeader(currentAction, environment)}
               requestParameters={parametersMap(currentAction)}
               requestBody={bodyMap(currentAction)}
               isDarkmode={darkMode.active} />
@@ -562,14 +730,14 @@
 
         <ParameterPanel parameters={currentAction.parameters} />
 
-        {#each currentAction.transactions as { request, response }, index}
+        {#each transformedAction.groupedTransactions as { request, responses }, index}
           <ScenarioPanel
             show={index === 0}
             isDarkmode={darkMode.active}
             {request}
-            {response}
+            {responses}
             {index}
-            count={currentAction.transactions.length} />
+            count={transformedAction.groupedTransactions.length} />
         {/each}
       {/if}
     </div>

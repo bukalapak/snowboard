@@ -3,6 +3,7 @@
 
   import { colorize, slugify, filterActions, basePath } from "../util.js";
 
+  export let title;
   export let config = {};
   export let tagActions = [];
   export let tagHeaders = [];
@@ -13,6 +14,8 @@
 
   export let handleClick;
   export let handleGroupClick;
+  export let handleTagClick;
+  export let handlePopstate;
   export let tocClick;
   export let searchClick;
   export let query;
@@ -22,6 +25,8 @@
   function headerLink(text) {
     return text.toLowerCase().replace(/\s/g, "-");
   }
+
+  window.onpopstate = handlePopstate;
 </script>
 
 <style>
@@ -161,12 +166,14 @@
   </section>
 
   <div class="menu-wrapper">
-    <p class="menu-label">API</p>
+    <p class="menu-label">
+      <a href="/">{title}</a>
+    </p>
     {#if query === ''}
       <ul class="menu-list">
         <li>
           <a href={basePath(config)} on:click|preventDefault={tocClick}>
-            Introduction
+            Getting Started
           </a>
         </li>
         {#if tagHeaders}
@@ -189,7 +196,15 @@
 
     {#each filteredActions as tag}
       {#if tag.title}
-        <p class="menu-label">{tag.title}</p>
+        <p class="menu-label">
+          <a
+            data-slug={slugify(tag.title)}
+            href="#/rg~{slugify(tag.title)}"
+            class="is-inline-block"
+            on:click={handleTagClick}>
+            {tag.title}
+          </a>
+        </p>
       {/if}
 
       <ul class="menu-list">
@@ -198,6 +213,7 @@
             title={child.title}
             actions={child.actions}
             hidden={actionsCount > 50}
+            parentSLug={slugify(tag.title)}
             {currentSlug}
             {handleClick}
             {handleGroupClick} />
