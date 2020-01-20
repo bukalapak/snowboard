@@ -7,5 +7,5 @@ export {
   resourcePermalink,
   transitionPermalink
 } from "./permalink";
-export { digParameters } from "./digger";
+export { digParameters, digHeaders } from "./digger";
 export { expand, normalizeStructures } from "./expand";
