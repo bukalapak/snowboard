@@ -3,7 +3,6 @@ import { uuid4 } from "../helper";
 import {
   toValue,
   toDescription,
-  toHeader,
   groupPermalink,
   resourceTitle,
   resourcePermalink,
@@ -13,7 +12,8 @@ import {
   transformPath,
   expand,
   normalizeStructures,
-  digParameters
+  digParameters,
+  digHeaders
 } from "../helper/parser";
 
 export function seeds(element, additional = {}) {
@@ -137,7 +137,7 @@ function buildTransition(transition, resource, group, dataStructures) {
           request: {
             method: toValue(req.method),
             contentType: toValue(req.contentType),
-            headers: req.headers.map(h => toHeader(h)),
+            headers: digHeaders(req.headers),
             structure: expand(req.dataStructure, dataStructures),
             body: toValue(req.messageBody),
             schema: toValue(req.messageBodySchema)
@@ -145,7 +145,7 @@ function buildTransition(transition, resource, group, dataStructures) {
           response: {
             statusCode: toValue(res.statusCode),
             contentType: toValue(res.contentType),
-            headers: res.headers.map(h => toHeader(h)),
+            headers: digHeaders(res.headers),
             structure: expand(res.dataStructure, dataStructures),
             body: toValue(res.messageBody),
             schema: toValue(res.messageBodySchema)
