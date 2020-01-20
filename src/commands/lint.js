@@ -1,11 +1,6 @@
 import { Command, flags } from "@oclif/command";
-import { table, getBorderCharacters } from "table";
-import { readAsElement, jsonStringify } from "../util";
+import { table, readAsElement, jsonStringify } from "../util";
 import lint from "../parser/lint";
-
-const tableConfig = {
-  border: getBorderCharacters("ramac")
-};
 
 function lintMap(result) {
   return result.map(({ location, severity, description }) => ({
@@ -48,7 +43,7 @@ class LintCommand extends Command {
           ]);
 
           data.unshift(["Location", "Severity", "Description"]);
-          this.log(table(data, tableConfig));
+          this.log(table(data));
         }
       }
 
