@@ -1,10 +1,14 @@
-import { writeFile as fsWriteFile, readFile as fsReadFile } from "fs";
+import {
+  writeFile as fsWriteFile,
+  readFile as fsReadFile,
+  existsSync as exists
+} from "fs";
 import { promisify } from "util";
 import { mkdirp, copy as cp, remove as rm } from "fs-extra";
 import tmp from "tmp";
 import UUID from "pure-uuid";
 
-export { mkdirp, cp, rm };
+export { mkdirp, exists, cp, rm };
 
 export const writeFile = promisify(fsWriteFile);
 export const readFile = promisify(fsReadFile);

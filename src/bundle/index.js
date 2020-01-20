@@ -2,7 +2,7 @@ import Bundler from "parcel-bundler";
 import { resolve, dirname } from "path";
 import svelteBundle, { defaultTemplate as svelteTemplate } from "./svelte";
 import reactBundle, { defaultTemplate as reactTemplate } from "./react";
-import { existsSync } from "fs";
+import { exists } from "../utils";
 
 const defaultTemplateDir = resolve(__dirname, "../../templates");
 const defaultTemplates = {
@@ -60,7 +60,7 @@ function templateName(tplPath) {
 function buildTemplate(input, { template, ...options }) {
   options.template = detectTemplate(template);
 
-  if (existsSync(resolve(dirname(options.template), "App.svelte"))) {
+  if (exists(resolve(dirname(options.template), "App.svelte"))) {
     return svelteBundle(input, options);
   }
 
