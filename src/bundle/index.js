@@ -31,9 +31,9 @@ async function buildBundler(
     watch: !!watch,
     autoInstall: false,
     sourceMaps: false,
-    production: optimized,
-    minify: optimized,
-    contentHash: optimized
+    production: !!optimized,
+    minify: !!optimized,
+    contentHash: !!optimized
   };
 
   return new Bundler(entrypoint, options);
