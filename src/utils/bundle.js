@@ -52,7 +52,7 @@ export function watchTemplate(tplDir, buildDir) {
   return watcher;
 }
 
-export function seedMap(seeds) {
+export function uuidMap(seeds) {
   const data = {};
 
   seeds.transitions.forEach(transition => {
