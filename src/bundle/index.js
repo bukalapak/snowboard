@@ -10,12 +10,16 @@ const defaultTemplates = {
   [templateName(reactTemplate)]: reactTemplate
 };
 
-async function buildBundler(input, { watch, output, template, optimized }) {
+async function buildBundler(
+  input,
+  { watch, output, template, optimized, quiet }
+) {
   const [entrypoint, outDir] = await buildTemplate(input, {
     watch,
     output,
     template,
-    optimized
+    optimized,
+    quiet
   });
 
   const htmlDir = resolve(outDir, "html");
@@ -26,7 +30,7 @@ async function buildBundler(input, { watch, output, template, optimized }) {
     cacheDir: cacheDir,
     watch: !!watch,
     autoInstall: false,
-    sourceMaps: !optimized,
+    sourceMaps: false,
     production: optimized,
     minify: optimized,
     contentHash: optimized
@@ -53,10 +57,10 @@ function templateName(tplPath) {
   return dirname(tplPath.replace(defaultTemplateDir, "")).substr(1);
 }
 
-function buildTemplate(input, options) {
-  const tplFile = detectTemplate(options.template);
+function buildTemplate(input, { template, ...options }) {
+  options.template = detectTemplate(template);
 
-  if (existsSync(resolve(dirname(tplFile), "App.svelte"))) {
+  if (existsSync(resolve(dirname(options.template), "App.svelte"))) {
     return svelteBundle(input, options);
   }
 
