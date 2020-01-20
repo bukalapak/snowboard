@@ -2,7 +2,7 @@ import Bundler from "parcel-bundler";
 import { resolve, dirname } from "path";
 import svelteBundle, { defaultTemplate as svelteTemplate } from "./svelte";
 import reactBundle, { defaultTemplate as reactTemplate } from "./react";
-import { exists } from "../utils";
+import { exists } from "../helper";
 
 const defaultTemplateDir = resolve(__dirname, "../../templates");
 const defaultTemplates = {

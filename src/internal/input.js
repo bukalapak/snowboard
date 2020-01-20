@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import Handlebars from "handlebars";
 import { merge, forEach } from "lodash";
-import { readFile } from "../utils";
+import { readFile } from "../helper";
 
 const partialRegex = /{{> (.+)}}/g;
 const seedRegex = /<!-- seed\((.+)\) -->/g;

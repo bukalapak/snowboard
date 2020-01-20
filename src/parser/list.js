@@ -1,5 +1,5 @@
 import { uniq } from "lodash";
-import { toValue, transitionPath, transformPath } from "../utils/parser";
+import { toValue, transitionPath, transformPath } from "../helper/parser";
 
 export default function list(element) {
   const data = [];
