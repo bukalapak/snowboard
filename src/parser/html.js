@@ -1,3 +1,4 @@
+import { merge } from "lodash";
 import { uuid4 } from "../helper";
 import {
   toValue,
@@ -15,20 +16,26 @@ import {
   digParameters
 } from "../helper/parser";
 
-export function seeds(element) {
+export function seeds(element, additional = {}) {
   const title = toValue(element.api.title);
   const description = toDescription(element.api);
   const groups = simpleGroups(element);
   const resources = simpleResources(element.api.resources);
   const transitions = simpleTransitions(element);
 
-  return {
-    title,
-    description,
-    groups,
-    resources,
-    transitions
-  };
+  return merge(
+    {
+      title,
+      description,
+      groups,
+      resources,
+      transitions,
+      uuids: Object.fromEntries(
+        transitions.map(transition => [transition.permalink, uuid4()])
+      )
+    },
+    additional
+  );
 }
 
 function simpleGroups(element) {
@@ -81,7 +88,6 @@ function buildSimpleTransition(transition, resource, group) {
   return {
     title: transitionTitle(transition),
     permalink: transitionPermalink(transition, resource, group),
-    uuid: uuid4(),
     method,
     path,
     meta: buildSimpleMeta(resource, group)
