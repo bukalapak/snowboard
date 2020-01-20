@@ -1,10 +1,14 @@
 import { resolve } from "path";
 import { isEmpty } from "lodash";
-import { mkdirp, copy as cp, remove as rm } from "fs-extra";
-import chokidar from "chokidar";
-import { tmpdir } from "./index";
+import { cp, tmpdir, mkdirp, writeFile, jsonStringify } from "./index";
 
 const defaultOutputDir = resolve(process.cwd(), "./dist");
+
+export const dirNames = {
+  html: "html",
+  jsonHtml: "html/__json__",
+  json: "json"
+};
 
 function outputDir(output) {
   if (output) {
@@ -16,14 +20,28 @@ function outputDir(output) {
 
 export async function outputPath(output) {
   const outDir = outputDir(output);
-  const tmpDir = resolve(outDir, "tmp");
 
+  await mkdirp(resolve(outDir, dirNames.html));
+  await mkdirp(resolve(outDir, dirNames.jsonHtml));
+  await mkdirp(resolve(outDir, dirNames.json));
+
+  return outDir;
+}
+
+export async function buildPath(outDir) {
+  const tmpDir = resolve(outDir, "tmp");
   await mkdirp(tmpDir);
-  await mkdirp(resolve(outDir, "html"));
 
   const buildDir = await tmpdir({ dir: tmpDir, prefix: "build-" });
+  return buildDir;
+}
 
-  return [outDir, buildDir];
+export async function writeSeed(buildDir, seeds, { optimized }) {
+  const data = `const seeds = ${jsonStringify(seeds, optimized)};
+export default seeds;
+  `;
+
+  return writeFile(resolve(buildDir, "seeds.js"), data, "utf8");
 }
 
 export async function copyOverrides(overrides, buildDir) {
@@ -38,26 +56,4 @@ export async function copyOverrides(overrides, buildDir) {
 
 function copyOverride(target, source, buildDir) {
   return cp(source, resolve(buildDir, target));
-}
-
-export function watchTemplate(tplDir, buildDir) {
-  const watcher = chokidar.watch(tplDir, {
-    persistent: true
-  });
-
-  watcher.on("change", async path => {
-    await cp(path, path.replace(tplDir, buildDir));
-  });
-
-  return watcher;
-}
-
-export function uuidMap(seeds) {
-  const data = {};
-
-  seeds.transitions.forEach(transition => {
-    data[transition.permalink] = transition.uuid;
-  });
-
-  return data;
 }
