@@ -11,7 +11,8 @@ class HtmlCommand extends Command {
       watch: flags.watch,
       output: flags.output,
       template: flags.template,
-      optimized: flags.optimized
+      optimized: flags.optimized,
+      quiet: flags.quiet
     });
   }
 }

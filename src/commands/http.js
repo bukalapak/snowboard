@@ -14,6 +14,7 @@ class HttpCommand extends Command {
       output: flags.output,
       template: flags.template,
       optimized: flags.optimized,
+      quiet: flags.quiet,
       host,
       port,
       ssl: flags.ssl,
