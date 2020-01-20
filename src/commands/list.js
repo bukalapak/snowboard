@@ -21,11 +21,6 @@ class ListCommand extends Command {
       quiet: flags.quiet
     });
 
-    if (!items) {
-      this.error(`unable to parse input: ${argv.join(",")}`);
-      this.exit(1);
-    }
-
     const listed = flatten(items.map(item => list(item)));
 
     if (flags.json) {
