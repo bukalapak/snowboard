@@ -2,6 +2,7 @@ import { resolve } from "path";
 import { isEmpty } from "lodash";
 import { mkdirp, copy as cp, remove as rm } from "fs-extra";
 import chokidar from "chokidar";
+import { tmpdir } from "./index";
 
 const defaultOutputDir = resolve(process.cwd(), "./dist");
 
@@ -49,4 +50,14 @@ export function watchTemplate(tplDir, buildDir) {
   });
 
   return watcher;
+}
+
+export function seedMap(seeds) {
+  const data = {};
+
+  seeds.transitions.forEach(transition => {
+    data[transition.permalink] = transition.uuid;
+  });
+
+  return data;
 }
