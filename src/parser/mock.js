@@ -1,4 +1,4 @@
-import { toValue, transformPath, transitionPath } from "../util";
+import { toValue, transformPath, transitionPath } from "../utils/parser";
 
 export default function mock(element) {
   const transitions = [];
