@@ -6,10 +6,10 @@ import expressBasicAuth from "express-basic-auth";
 import chalk from "chalk";
 import { merge } from "lodash";
 import loadConfig from "../internal/config";
-import { borderlessTable, spinner } from "../utils/render";
-import { readMultiAsElement } from "../utils/parser";
-import { router as mockRouter } from "../internal/mock";
-import { parseBinding, httpServer, httpsServer } from "../internal/http";
+import { borderlessTable, spinner } from "../helper/render";
+import { readMultiAsElement } from "../helper/parser";
+import { router as mockRouter } from "../helper/mock";
+import { parseBinding, httpServer, httpsServer } from "../helper/http";
 
 function basicAuth({ username, password }) {
   return expressBasicAuth({

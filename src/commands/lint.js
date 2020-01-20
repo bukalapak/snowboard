@@ -1,7 +1,7 @@
 import { Command, flags } from "@oclif/command";
-import { jsonStringify } from "../utils";
-import { table } from "../utils/render";
-import { readAsElement } from "../utils/parser";
+import { jsonStringify } from "../helper";
+import { table } from "../helper/render";
+import { readAsElement } from "../helper/parser";
 import lint from "../parser/lint";
 
 function lintMap(result) {
@@ -36,7 +36,7 @@ class LintCommand extends Command {
         const mapResult = lintMap(result);
 
         if (flags.json) {
-          this.log(jsonStringify(mapResult, { optimized: flags.optimized }));
+          this.log(jsonStringify(mapResult, flags.optimized));
         } else {
           const data = mapResult.map(({ location, severity, description }) => [
             location.join(" - "),

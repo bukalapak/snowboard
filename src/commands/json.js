@@ -1,6 +1,6 @@
 import { Command, flags } from "@oclif/command";
-import { jsonStringify } from "../utils";
-import { readAsElement } from "../utils/parser";
+import { jsonStringify } from "../helper";
+import { readAsElement } from "../helper/parser";
 
 class JsonCommand extends Command {
   static args = [{ name: "input", required: true }];
@@ -18,7 +18,7 @@ class JsonCommand extends Command {
       this.error(`unable to parse input: ${args.input}`);
     }
 
-    const data = jsonStringify(result, { optimized: flags.optimized });
+    const data = jsonStringify(result, flags.optimized);
 
     if (flags.output) {
       await writeFile(flags.output, data);

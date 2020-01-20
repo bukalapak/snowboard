@@ -1,6 +1,6 @@
 import { Command, flags } from "@oclif/command";
 import { read } from "../internal/input";
-import { writeFile } from "../utils";
+import { writeFile } from "../helper";
 
 class ApibCommand extends Command {
   static args = [{ name: "input", required: true }];

@@ -1,6 +1,6 @@
 import { Command, flags } from "@oclif/command";
 import { httpBundle } from "../bundle";
-import { parseBinding } from "../internal/http";
+import { parseBinding } from "../helper/http";
 
 class HttpCommand extends Command {
   static args = [{ name: "input", required: true }];

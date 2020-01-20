@@ -1,8 +1,8 @@
 import { Command, flags } from "@oclif/command";
 import { flatten } from "lodash";
-import { jsonStringify } from "../utils";
-import { borderlessTable, spinner } from "../utils/render";
-import { readMultiAsElement } from "../utils/parser";
+import { jsonStringify } from "../helper";
+import { borderlessTable, spinner } from "../helper/render";
+import { readMultiAsElement } from "../helper/parser";
 import list from "../parser/list";
 
 class ListCommand extends Command {
@@ -21,7 +21,7 @@ class ListCommand extends Command {
     const listed = flatten(items.map(item => list(item)));
 
     if (flags.json) {
-      this.log(jsonStringify(listed, { optimized: flags.optimized }));
+      this.log(jsonStringify(listed, flags.optimized));
       this.exit();
     }
 
