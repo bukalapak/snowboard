@@ -6,7 +6,7 @@ import expressBasicAuth from "express-basic-auth";
 import chalk from "chalk";
 import { merge } from "lodash";
 import loadConfig from "../internal/config";
-import { readMultiAsElement } from "../util";
+import { borderlessTable, readMultiAsElement, spinner } from "../util";
 import { router as mockRouter } from "../internal/mock";
 import { parseBinding, httpServer, httpsServer } from "../internal/http";
 
@@ -42,7 +42,11 @@ class MockCommand extends Command {
     const { mock: mockConfig } = await loadConfig();
 
     const config = merge(defaultConfig, mockConfig);
-    const items = await readMultiAsElement(argv);
+    const items = await spinner(readMultiAsElement(argv), "Parsing input(s)", {
+      sucess: "Input(s) parsed",
+      quiet: flags.quiet
+    });
+
     const app = express();
 
     app.use(morgan("dev"));
@@ -64,7 +68,9 @@ class MockCommand extends Command {
       }
     }
 
-    app.use(mockRouter(items));
+    const router = mockRouter(items);
+
+    app.use(router);
     app.use((req, res) => res.sendStatus(404));
 
     let server;
@@ -83,13 +89,31 @@ class MockCommand extends Command {
       this.error(err);
     });
 
-    server.once("listening", () => {
-      const scheme = flags.ssl ? "https" : "http";
-      const hostport = chalk.green(
-        `${scheme}://${host || "localhost"}:${port}`
-      );
-      this.log(`Mock server running at ${hostport}`);
-    });
+    if (!flags.quiet) {
+      const routes = router.stack
+        .filter(r => r.route)
+        .map(r => {
+          return [
+            Object.keys(r.route.methods)
+              .join(",")
+              .toUpperCase(),
+            r.route.path
+          ];
+        })
+        .sort((a, b) => a[1].localeCompare(b[1]));
+
+      routes.unshift([, ,]);
+      this.log(borderlessTable(routes));
+
+      server.once("listening", () => {
+        const scheme = flags.ssl ? "https" : "http";
+        const hostport = chalk.green(
+          `${scheme}://${host || "localhost"}:${port}`
+        );
+
+        this.log(`Mock server running at ${hostport}`);
+      });
+    }
   }
 }
 
