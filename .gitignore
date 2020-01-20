@@ -7,3 +7,4 @@ dist/
 yarn-error.log
 snowboard
 snowboard-*
+snowboard.config.js
