@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import Handlebars from "handlebars";
 import { merge, forEach } from "lodash";
+import { readFile } from "../util";
 
 const partialRegex = /{{> (.+)}}/g;
 const seedRegex = /<!-- seed\((.+)\) -->/g;
@@ -24,14 +25,6 @@ function matchAll(str, regex) {
   }
 
   return matches;
-}
-
-function detectDir(input) {
-  if (input === "-") {
-    return process.cwd();
-  }
-
-  return path.dirname(input);
 }
 
 function rewriteSource(source) {
@@ -151,32 +144,22 @@ function extractChildren(source, inputDir, children = []) {
   seeds.forEach(item => children.push(path.resolve(inputDir, item[1])));
 }
 
-function readInput(input) {
-  let source;
+async function readInput(input) {
+  const source = await readFile(input, "utf8");
+  const inputDir = path.dirname(input);
 
-  if (input === "-") {
-    source = fs.readFileSync("/dev/stdin").toString();
-  } else {
-    source = fs.readFileSync(input, "utf8");
-  }
-
-  const inputDir = detectDir(input);
   return [source, inputDir];
 }
 
-export function read(input) {
-  const [source, inputDir] = readInput(input);
+export async function read(input) {
+  const [source, inputDir] = await readInput(input);
   return rewriteInput(source, inputDir);
 }
 
-export function readPaths(input) {
-  const children = [];
+export async function readPaths(input) {
+  const children = [path.resolve(input)];
 
-  if (input !== "-") {
-    children.push(path.resolve(input));
-  }
-
-  const [source, inputDir] = readInput(input);
+  const [source, inputDir] = await readInput(input);
 
   extractChildren(source, inputDir, children);
   return children;
