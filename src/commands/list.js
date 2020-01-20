@@ -1,6 +1,11 @@
 import { Command, flags } from "@oclif/command";
 import { flatten } from "lodash";
-import { readMultiAsElement, jsonStringify } from "../util";
+import {
+  borderlessTable,
+  readMultiAsElement,
+  jsonStringify,
+  spinner
+} from "../util";
 import list from "../parser/list";
 
 class ListCommand extends Command {
@@ -9,9 +14,18 @@ class ListCommand extends Command {
   static args = [{ name: "input", required: true }];
 
   async run() {
-    const { flags, args, argv } = this.parse(ListCommand);
+    const { flags, argv } = this.parse(ListCommand);
 
-    const items = await readMultiAsElement(argv);
+    const items = await spinner(readMultiAsElement(argv), "Parsing input(s)", {
+      success: "Input(s) parsed",
+      quiet: flags.quiet
+    });
+
+    if (!items) {
+      this.error(`unable to parse input: ${argv.join(",")}`);
+      this.exit(1);
+    }
+
     const listed = flatten(items.map(item => list(item)));
 
     if (flags.json) {
@@ -19,9 +33,14 @@ class ListCommand extends Command {
       this.exit();
     }
 
-    listed.forEach(({ method, statusCode, path }) => {
-      this.log([method, statusCode, path].join("\t"));
-    });
+    const data = listed
+      .map(({ method, path, statusCode }) => {
+        return [method, path, statusCode];
+      })
+      .sort((a, b) => a[1].localeCompare(b[1]));
+
+    data.unshift([, , ,]);
+    this.log(borderlessTable(data));
   }
 }
 
