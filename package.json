@@ -10,6 +10,7 @@
     "snowboard": "./bin/run"
   },
   "scripts": {
+    "build-dev": "parcel build -t node --no-autoinstall --no-minify -d lib 'src/**/*.js'",
     "build": "parcel build -t node --no-source-maps --no-autoinstall -d lib 'src/**/*.js'",
     "fmt": "prettier --write README.md 'src/**/*.js' 'test/**/*.js' 'templates/**/*.{js,html,svelte}'",
     "test": "tape -r @babel/register 'test/**/*.js'"
