@@ -1,6 +1,6 @@
 import { Command, flags } from "@oclif/command";
 import { read } from "../internal/input";
-import { writeFile } from "../util";
+import { writeFile } from "../utils";
 
 class ApibCommand extends Command {
   static args = [{ name: "input", required: true }];
@@ -12,7 +12,7 @@ class ApibCommand extends Command {
       this.error("--quiet cannot be used when no --output=");
     }
 
-    const source = read(args.input);
+    const source = await read(args.input);
 
     if (flags.output) {
       await writeFile(flags.output, source);

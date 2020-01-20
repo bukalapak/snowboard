@@ -1,11 +1,8 @@
 import { Command, flags } from "@oclif/command";
 import { flatten } from "lodash";
-import {
-  borderlessTable,
-  readMultiAsElement,
-  jsonStringify,
-  spinner
-} from "../util";
+import { jsonStringify } from "../utils";
+import { borderlessTable, spinner } from "../utils/render";
+import { readMultiAsElement } from "../utils/parser";
 import list from "../parser/list";
 
 class ListCommand extends Command {

@@ -6,7 +6,8 @@ import expressBasicAuth from "express-basic-auth";
 import chalk from "chalk";
 import { merge } from "lodash";
 import loadConfig from "../internal/config";
-import { borderlessTable, readMultiAsElement, spinner } from "../util";
+import { borderlessTable, spinner } from "../utils/render";
+import { readMultiAsElement } from "../utils/parser";
 import { router as mockRouter } from "../internal/mock";
 import { parseBinding, httpServer, httpsServer } from "../internal/http";
 

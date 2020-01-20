@@ -1,5 +1,7 @@
 import { Command, flags } from "@oclif/command";
-import { table, readAsElement, jsonStringify } from "../util";
+import { jsonStringify } from "../utils";
+import { table } from "../utils/render";
+import { readAsElement } from "../utils/parser";
 import lint from "../parser/lint";
 
 function lintMap(result) {

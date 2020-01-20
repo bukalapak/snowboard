@@ -1,5 +1,6 @@
 import { Command, flags } from "@oclif/command";
-import { readAsElement, jsonStringify } from "../util";
+import { jsonStringify } from "../utils";
+import { readAsElement } from "../utils/parser";
 
 class JsonCommand extends Command {
   static args = [{ name: "input", required: true }];
