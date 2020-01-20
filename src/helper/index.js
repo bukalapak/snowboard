@@ -7,6 +7,7 @@ import { promisify } from "util";
 import { mkdirp, copy as cp, remove as rm } from "fs-extra";
 import tmp from "tmp";
 import UUID from "pure-uuid";
+import speakingUrl from "speakingurl";
 
 export { mkdirp, exists, cp, rm };
 
@@ -24,4 +25,11 @@ export function jsonStringify(data, compact = false) {
   }
 
   return JSON.stringify(data, null, "  ");
+}
+
+export function toSlug(str) {
+  return speakingUrl(str, {
+    separator: "~",
+    custom: { _: "~" }
+  });
 }
