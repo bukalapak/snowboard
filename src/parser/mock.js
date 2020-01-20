@@ -1,19 +1,19 @@
 import { toValue, transformPath, transitionPath } from "../util";
 
 export default function mock(element) {
-  const actions = [];
+  const transitions = [];
 
   element.api.resourceGroups.forEach(group => {
     group.resources.forEach(resource => {
-      actions.push(...mockExtract(resource));
+      transitions.push(...mockExtract(resource));
     });
   });
 
   element.api.resources.forEach(resource => {
-    actions.push(...mockExtract(resource));
+    transitions.push(...mockExtract(resource));
   });
 
-  return actions;
+  return transitions;
 }
 
 function mockExtract(resource) {
