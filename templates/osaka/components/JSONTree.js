@@ -1,14 +1,18 @@
 import React from "react";
 import ReactJson from "react-json-view";
 import JSONParse from "json-parse-safe";
-import { Code } from "@chakra-ui/core";
+import { styled } from "baseui";
+
+const Pre = styled("pre", ({ $theme }) => ({
+  backgroundColor: $theme.colors.backgroundInv
+}));
 
 export default function JSONTree({ src, contentType = "" }) {
   if (contentType.match(/json/)) {
     const { value } = JSONParse(src);
 
     if (!value) {
-      return <PlainCode src={src} />;
+      return <Pre>{src}</Pre>;
     }
 
     return (
@@ -30,13 +34,5 @@ export default function JSONTree({ src, contentType = "" }) {
     );
   }
 
-  return <PlainCode src={src} />;
-}
-
-function PlainCode({ src }) {
-  return (
-    <Code whiteSpace="pre-wrap" px="6" py="4" w="full">
-      {src}
-    </Code>
-  );
+  return <Pre>{src}</Pre>;
 }
