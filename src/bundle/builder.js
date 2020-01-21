@@ -61,8 +61,8 @@ async function parseInput(input, config, { quiet }) {
 async function writeJSON(element, uuids, outDir, { optimized }) {
   const jsonDir = resolve(outDir, dirNames.json);
 
-  await cp(jsonDir, resolve(outDir, dirNames.jsonHtml));
   await jsonBundle(element, uuids, jsonDir, { optimized });
+  await cp(jsonDir, resolve(outDir, dirNames.jsonHtml));
 }
 
 function watchInput(input, config, outDir, buildDir, { optimized, quiet }) {
