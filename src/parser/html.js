@@ -177,7 +177,7 @@ function buildSimpleMeta(resource, group) {
 }
 
 function buildMeta(resource, group) {
-  const meta = buildSimpleMeta(group, resource);
+  const meta = buildSimpleMeta(resource, group);
 
   if (meta.resource) {
     meta.resource.description = toDescription(resource);
