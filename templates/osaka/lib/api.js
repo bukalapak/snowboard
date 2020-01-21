@@ -1,30 +1,14 @@
-import fetch from "isomorphic-unfetch";
-import xxhash from "xxhashjs";
-
-function shortHash(str) {
-  return xxhash.h64(str, 0xad1fc).toString(16);
-}
+import axios from "axios";
 
 const basePath = "/__json__/";
 
-async function fetchJSON(path) {
-  const fullPath = `${basePath}${path}.json`;
-  const res = await fetch(fullPath);
-  const data = await res.json();
+export async function fetchJSON(uuid) {
+  const fullPath = `${basePath}${uuid}.json`;
+  const { data } = await axios.get(fullPath);
 
   return data;
 }
 
-async function index() {
-  return fetchJSON("index");
+export async function page(uuid) {
+  return fetchJSON(uuid);
 }
-
-async function page(id) {
-  const hash = shortHash(id);
-  return fetchJSON(hash);
-}
-
-export default {
-  index,
-  page
-};
