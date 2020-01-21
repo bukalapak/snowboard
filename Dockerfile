@@ -1,9 +1,11 @@
 FROM node:12
 
 COPY . /app
+
 RUN cd /app \
- && npm install
+ && npm install \
+ && npm run build
 
 WORKDIR /doc
-ENTRYPOINT ["node", "/app/lib/main.js"]
-CMD ["--help"]
+ENTRYPOINT ["/app/bin/run"]
+CMD ["help"]
