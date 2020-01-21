@@ -1,91 +1,51 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
-import { Heading as BaseHeading } from "@chakra-ui/core";
-import { Box } from "@chakra-ui/core";
-import { Text } from "@chakra-ui/core";
-import { Callout } from "@chakra-ui/core";
-import { Code } from "@chakra-ui/core";
-import getSlug from "speakingurl";
-import { List as BaseList, ListItem as BaseListItem } from "@chakra-ui/core";
+import speakingUrl from "speakingurl";
+import { Block } from "baseui/block";
+import { H1, H2, H3, H4, H5, H6 } from "baseui/typography";
+import { Paragraph2 } from "baseui/typography";
+import { StyledLink } from "baseui/link";
+import { Notification, KIND } from "baseui/notification";
 
 function Heading(props) {
-  const sizes = ["xl", "lg", "md", "sm", "xs", "2xs"];
-  const size = sizes[props.level - 1];
-  const slug = getSlug(props.children[0].props.value);
+  const attrs = {
+    id: speakingUrl(props.children[0].props.value),
+    ...props
+  };
 
+  switch (props.level) {
+    case 1:
+      return <H1 {...attrs} />;
+    case 2:
+      return <H2 {...attrs} />;
+    case 3:
+      return <H3 {...attrs} />;
+    case 4:
+      return <H4 {...attrs} />;
+    case 5:
+      return <H5 {...attrs} />;
+    case 6:
+      return <H6 {...attrs} />;
+  }
+}
+
+function Blockquote({ children }) {
   return (
-    <BaseHeading
-      as={`h${props.level}`}
-      size={size}
-      id={`#${slug}`}
-      mt="4"
-      mb="2"
-      {...props}
-    />
-  );
-}
-
-function Paragraph(props) {
-  return <Text as="p" lineHeight="tall" display="contents" {...props} />;
-}
-
-function Table(props) {
-  return <Box as="table" my="4" {...props} />;
-}
-
-function TableCell(props) {
-  return (
-    <Box as={props.isHeader ? "th" : "td"} borderWidth="1px" px="2">
-      {props.children}
-    </Box>
-  );
-}
-
-function Pre(props) {
-  return (
-    <Box my="4" rounded="sm" bg="gray.800" p="2">
-      <Code bg="gray.800" color="white" whiteSpace="pre-wrap">
-        {props.value}
-      </Code>
-    </Box>
-  );
-}
-
-function List(props) {
-  return (
-    <BaseList
-      styleType={props.ordered ? "decimal" : "disc"}
-      as={props.ordered ? "ol" : "ul"}
-      {...props}
-    />
-  );
-}
-
-function ListItem(props) {
-  return <BaseListItem {...props} />;
-}
-
-function Blockquote(props) {
-  return (
-    <Callout
-      mt={4}
-      variant="left-accent"
-      status="warning"
-      css={{ "> *:first-of-type": { marginTop: 0 } }}
-      {...props}
-    />
+    <Notification
+      overrides={{
+        Body: { style: { width: "auto" } }
+      }}
+      kind={KIND.warning}
+    >
+      {children}
+    </Notification>
   );
 }
 
 const renderers = {
   heading: Heading,
-  paragraph: Paragraph,
-  table: Table,
-  tableCell: TableCell,
-  code: Pre,
-  inlineCode: Code,
-  list: List,
-  listItem: ListItem,
+  paragraph: Paragraph2,
+  link: StyledLink,
   blockquote: Blockquote
 };
 
@@ -93,11 +53,13 @@ export default function(props) {
   const { source, ...rest } = props;
 
   return (
-    <ReactMarkdown
-      source={source}
-      escapeHtml={false}
-      renderers={renderers}
-      {...rest}
-    />
+    <Block font="font300">
+      <ReactMarkdown
+        source={source}
+        escapeHtml={false}
+        renderers={renderers}
+        {...rest}
+      />
+    </Block>
   );
 }
