@@ -7,45 +7,80 @@ import Resource from "./pages/Resource";
 import Transition from "./pages/Transition";
 import Layout from "./components/Layout";
 
-import api from "./lib/api";
+import { fetchJSON } from "./lib/api";
 
-function buildId(req, char) {
+const permalinkPrefix = {
+  group: "g",
+  resource: "r",
+  transition: "t"
+};
+
+function getPermalink(req, char) {
   return req.originalUrl.replace(`/${char}/`, `${char}~`);
 }
 
+function getGroup(ctx, req) {
+  const permalink = getPermalink(req, permalinkPrefix.group);
+
+  return ctx.groups.find(group => {
+    return group.permalink == permalink;
+  });
+}
+
+function getResource(ctx, req) {
+  let selected;
+  const permalink = getPermalink(req, permalinkPrefix.resource);
+
+  ctx.groups.forEach(group => {
+    group.resources.forEach(resource => {
+      if (resource.permalink === permalink) {
+        selected = resource;
+      }
+    });
+  });
+
+  return selected;
+}
+
+async function fetch(ctx, req, char) {
+  const permalink = getPermalink(req, char);
+  const uuid = ctx.uuids[permalink];
+  return fetchJSON(uuid);
+}
+
 export default compose(
-  withView(async req => {
+  withView(() => {
     return (
-      <Layout title={"API"}>
+      <Layout>
         <View />
       </Layout>
     );
   }),
   mount({
     "/": route({
-      getData: () => {
-        return api.index();
-      },
       view: <Home />
     }),
-    "/g/:id": route(async req => {
-      const group = await api.page(buildId(req, "g"));
+    "/g/:id": route(async (req, ctx) => {
+      const group = getGroup(ctx, req);
 
       return {
+        title: group.title,
         view: <Group group={group} />
       };
     }),
-    "/r/:id": route(async req => {
-      const resource = await api.page(buildId(req, "r"));
+    "/r/:id": route(async (req, ctx) => {
+      const resource = getResource(ctx, req);
 
       return {
+        title: resource.title,
         view: <Resource resource={resource} />
       };
     }),
-    "/t/:id": route(async req => {
-      const transition = await api.page(buildId(req, "t"));
+    "/t/:id": route(async (req, ctx) => {
+      const transition = await fetch(ctx, req, permalinkPrefix.transition);
 
       return {
+        title: transition.title,
         view: <Transition transition={transition} />
       };
     })
