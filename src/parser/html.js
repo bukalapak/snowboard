@@ -1,6 +1,7 @@
 import { merge } from "lodash";
 import { uuid4 } from "../helper";
 import {
+  toc,
   toValue,
   toDescription,
   groupPermalink,
@@ -16,7 +17,7 @@ import {
   digHeaders
 } from "../helper/parser";
 
-export function seeds(element, additional = {}) {
+export async function seeds(element, additional = {}) {
   const title = toValue(element.api.title);
   const description = toDescription(element.api);
   const groups = simpleGroups(element);
@@ -27,6 +28,7 @@ export function seeds(element, additional = {}) {
     {
       title,
       description,
+      descriptionToc: await toc(description),
       groups,
       resources,
       transitions,
@@ -43,6 +45,7 @@ function simpleGroups(element) {
     return {
       title: toValue(group.title),
       permalink: groupPermalink(group),
+      description: toDescription(group),
       resources: simpleResources(group.resources, group)
     };
   });
@@ -53,6 +56,7 @@ function simpleResources(resources, group) {
     return {
       title: resourceTitle(resource),
       permalink: resourcePermalink(resource, group),
+      description: toDescription(resource),
       transitions: resource.transitions.map(transition => {
         return buildSimpleTransition(transition, resource, group);
       })
@@ -135,6 +139,8 @@ function buildTransition(transition, resource, group, dataStructures) {
       ({ request: req, response: res }) => {
         return {
           request: {
+            title: toValue(req.title),
+            description: toDescription(req),
             method: toValue(req.method),
             contentType: toValue(req.contentType),
             headers: digHeaders(req.headers),
@@ -143,6 +149,8 @@ function buildTransition(transition, resource, group, dataStructures) {
             schema: toValue(req.messageBodySchema)
           },
           response: {
+            title: toValue(res.title),
+            description: toDescription(res),
             statusCode: toValue(res.statusCode),
             contentType: toValue(res.contentType),
             headers: digHeaders(res.headers),
