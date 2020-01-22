@@ -1,88 +1,96 @@
 import React from "react";
 import { compose, mount, route, withView } from "navi";
 import { View } from "react-navi";
+import axios from "axios";
 import Home from "./pages/Home";
 import Group from "./pages/Group";
 import Resource from "./pages/Resource";
 import Transition from "./pages/Transition";
 import Layout from "./components/Layout";
+import {
+  permalinkPrefix as prefix,
+  toGroupPermalink,
+  toResourcePermalink,
+  toTransitionPermalink
+} from "./lib/util";
 
-import { fetchJSON } from "./lib/api";
+const basePath = "/__json__/";
 
-const permalinkPrefix = {
-  group: "g",
-  resource: "r",
-  transition: "t"
-};
+export async function fetchJSON(uuid) {
+  const fullPath = `${basePath}${uuid}.json`;
+  const { data } = await axios.get(fullPath);
 
-function getPermalink(req, char) {
-  return req.originalUrl.replace(`/${char}/`, `${char}~`);
-}
-
-function getGroup(ctx, req) {
-  const permalink = getPermalink(req, permalinkPrefix.group);
-
-  return ctx.groups.find(group => {
-    return group.permalink == permalink;
-  });
+  return data;
 }
 
 function getResource(ctx, req) {
   let selected;
-  const permalink = getPermalink(req, permalinkPrefix.resource);
+  let selectedGroup;
+  const permalink = toResourcePermalink(req);
 
   ctx.groups.forEach(group => {
     group.resources.forEach(resource => {
       if (resource.permalink === permalink) {
         selected = resource;
+        selectedGroup = group;
       }
     });
   });
 
-  return selected;
+  return [selected, selectedGroup];
 }
 
-async function fetch(ctx, req, char) {
-  const permalink = getPermalink(req, char);
+function routeHome(req, ctx) {
+  return {
+    title: ctx.title,
+    view: <Home title={ctx.title} description={ctx.description} />
+  };
+}
+
+async function routeGroup(req, ctx) {
+  const permalink = toGroupPermalink(req);
+  const group = ctx.groups.find(group => {
+    return group.permalink == permalink;
+  });
+
+  return {
+    title: `${group.title} - ${ctx.title}`,
+    view: <Group group={group} />
+  };
+}
+
+async function routeResource(req, ctx) {
+  const [resource, group] = getResource(ctx, req);
+
+  return {
+    title: `${resource.title} - ${ctx.title}`,
+    view: <Resource resource={resource} group={group} />
+  };
+}
+
+async function routeTransition(req, ctx) {
+  const permalink = toTransitionPermalink(req);
   const uuid = ctx.uuids[permalink];
-  return fetchJSON(uuid);
+  const transition = await fetchJSON(uuid);
+
+  return {
+    title: `${transition.title} - ${ctx.title}`,
+    view: <Transition transition={transition} />
+  };
 }
 
 export default compose(
-  withView(() => {
+  withView((req, ctx) => {
     return (
-      <Layout>
+      <Layout title={ctx.title} groups={ctx.groups}>
         <View />
       </Layout>
     );
   }),
   mount({
-    "/": route({
-      view: <Home />
-    }),
-    "/g/:id": route(async (req, ctx) => {
-      const group = getGroup(ctx, req);
-
-      return {
-        title: group.title,
-        view: <Group group={group} />
-      };
-    }),
-    "/r/:id": route(async (req, ctx) => {
-      const resource = getResource(ctx, req);
-
-      return {
-        title: resource.title,
-        view: <Resource resource={resource} />
-      };
-    }),
-    "/t/:id": route(async (req, ctx) => {
-      const transition = await fetch(ctx, req, permalinkPrefix.transition);
-
-      return {
-        title: transition.title,
-        view: <Transition transition={transition} />
-      };
-    })
+    [`/`]: route(routeHome),
+    [`/${prefix.group}/:id`]: route(routeGroup),
+    [`/${prefix.resource}/:id`]: route(routeResource),
+    [`/${prefix.transition}/:id`]: route(routeTransition)
   })
 );
