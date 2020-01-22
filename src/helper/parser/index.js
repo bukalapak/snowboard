@@ -1,5 +1,11 @@
 export { readAsRefract, readAsElement, readMultiAsElement } from "./reader";
-export { toValue, toDescription, toHeader, toParameters } from "./transform";
+export {
+  toc,
+  toValue,
+  toDescription,
+  toHeader,
+  toParameters
+} from "./transform";
 export { resourceTitle, transitionTitle } from "./transform";
 export { transitionPath, transformPath } from "./transform";
 export {

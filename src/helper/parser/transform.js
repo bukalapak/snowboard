@@ -1,4 +1,6 @@
 import uriTpl from "uritemplate";
+import remark from "remark";
+import markdown from "remark-parse";
 
 export function toValue(data) {
   try {
@@ -127,4 +129,28 @@ export function transformPath(href) {
   }
 
   return decodeURIComponent(uriTemplate.expand(params));
+}
+
+export async function toc(source) {
+  const data = [];
+
+  const tocProcessor = remark()
+    .use(markdown)
+    .use(() => {
+      return node => {
+        const headings = node.children.filter(
+          child => child.type === "heading"
+        );
+
+        headings.forEach(head => {
+          data.push({
+            text: head.children[0].value,
+            depth: head.depth
+          });
+        });
+      };
+    });
+
+  await tocProcessor.process(source);
+  return data;
 }
