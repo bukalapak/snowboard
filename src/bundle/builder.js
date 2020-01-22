@@ -53,7 +53,7 @@ async function parseInput(input, config, { quiet }) {
     quiet
   });
 
-  const seeds = seedBuilder(element, { config });
+  const seeds = await seedBuilder(element, { config });
 
   return [element, seeds];
 }
