@@ -1,5 +1,6 @@
 import React from "react";
 import { compose, mount, route, withView } from "navi";
+import { NotFoundError } from "navi";
 import { View } from "react-navi";
 import axios from "axios";
 import Home from "./pages/Home";
@@ -26,6 +27,7 @@ export async function fetchJSON(uuid) {
 function getResource(ctx, req) {
   let selected;
   let selectedGroup;
+
   const permalink = toResourcePermalink(req);
 
   ctx.groups.forEach(group => {
@@ -53,6 +55,10 @@ async function routeGroup(req, ctx) {
     return group.permalink == permalink;
   });
 
+  if (!group) {
+    throw new NotFoundError();
+  }
+
   return {
     title: `${group.title} - ${ctx.title}`,
     view: <Group group={group} />
@@ -61,6 +67,10 @@ async function routeGroup(req, ctx) {
 
 async function routeResource(req, ctx) {
   const [resource, group] = getResource(ctx, req);
+
+  if (!resource) {
+    throw new NotFoundError();
+  }
 
   return {
     title: `${resource.title} - ${ctx.title}`,
@@ -71,6 +81,11 @@ async function routeResource(req, ctx) {
 async function routeTransition(req, ctx) {
   const permalink = toTransitionPermalink(req);
   const uuid = ctx.uuids[permalink];
+
+  if (!uuid) {
+    throw new NotFoundError();
+  }
+
   const transition = await fetchJSON(uuid);
 
   return {
