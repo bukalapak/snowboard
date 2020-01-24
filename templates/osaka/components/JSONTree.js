@@ -2,12 +2,15 @@ import React from "react";
 import ReactJson from "react-json-view";
 import JSONParse from "json-parse-safe";
 import { styled } from "baseui";
+import { useTheme } from "../lib/theme";
 
 const Pre = styled("pre", ({ $theme }) => ({
   backgroundColor: $theme.colors.backgroundInv
 }));
 
 export default function JSONTree({ src, contentType = "" }) {
+  const { darkMode } = useTheme();
+
   if (contentType.match(/json/)) {
     const { value } = JSONParse(src);
 
@@ -19,14 +22,18 @@ export default function JSONTree({ src, contentType = "" }) {
       <ReactJson
         src={value}
         enableClipboard={false}
-        theme="hopscotch"
+        theme={darkMode ? "summerfruit" : "summerfruit:inverted"}
         name={false}
+        iconStyle="square"
+        displayObjectSize={true}
         displayDataTypes={false}
         style={{
-          padding: "12px",
+          paddingBottom: "12px",
+          paddingTop: "12px",
+          paddingRight: "12px",
           paddingLeft: "16px",
-          fontFamily: "monospace",
-          fontSize: "1.3rem",
+          fontFamily: 'Consolas, "Liberation Mono", Menlo, Courier, monospace',
+          fontSize: "1rem",
           lineHeight: "1.25",
           borderRadius: "8px"
         }}
