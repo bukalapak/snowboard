@@ -1,50 +1,37 @@
 import React from "react";
-import { Link as NavLink } from "react-navi";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from "@chakra-ui/core";
-
+import { Breadcrumbs } from "baseui/breadcrumbs";
 import { toGroupHref, toResourceHref, toTransitionHref } from "../lib/util";
+import Link from "../components/Link";
 
 export default ({ group, resource, transition }) => {
-  const items = [
-    <BreadcrumbItem key="/">
-      <BreadcrumbLink as={NavLink} href="/">
-        API
-      </BreadcrumbLink>
-    </BreadcrumbItem>
-  ];
+  const items = [];
 
   if (group) {
     items.push(
-      <BreadcrumbItem isCurrentPage={!resource} key={group.permalink}>
-        <BreadcrumbLink as={NavLink} href={toGroupHref(group.permalink)}>
-          {group.title}
-        </BreadcrumbLink>
-      </BreadcrumbItem>
+      <Link key={group.permalink} href={toGroupHref(group.permalink)}>
+        {group.title}
+      </Link>
     );
   }
 
   if (resource) {
     items.push(
-      <BreadcrumbItem isCurrentPage={!transition} key={resource.permalink}>
-        <BreadcrumbLink as={NavLink} href={toResourceHref(resource.permalink)}>
-          {resource.title}
-        </BreadcrumbLink>
-      </BreadcrumbItem>
+      <Link key={resource.permalink} href={toResourceHref(resource.permalink)}>
+        {resource.title}
+      </Link>
     );
   }
 
   if (transition) {
     items.push(
-      <BreadcrumbItem isCurrentPage key={transition.permalink}>
-        <BreadcrumbLink
-          as={NavLink}
-          href={toTransitionHref(transition.permalink)}
-        >
-          {transition.title}
-        </BreadcrumbLink>
-      </BreadcrumbItem>
+      <Link
+        key={transition.permalink}
+        href={toTransitionHref(transition.permalink)}
+      >
+        {transition.title}
+      </Link>
     );
   }
 
-  return <Breadcrumb>{items}</Breadcrumb>;
+  return <Breadcrumbs>{items}</Breadcrumbs>;
 };
