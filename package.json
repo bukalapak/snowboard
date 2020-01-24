@@ -96,7 +96,9 @@
     "tmp": "^0.1.0",
     "uritemplate": "^0.3.4",
     "url-join": "^4.0.1",
-    "url-parse": "^1.4.7"
+    "url-parse": "^1.4.7",
+    "use-dark-mode": "^2.3.1",
+    "use-debounce": "^3.3.0"
   },
   "devDependencies": {
     "@babel/register": "^7.8.3",
