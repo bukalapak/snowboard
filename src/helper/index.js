@@ -6,7 +6,7 @@ import {
 import { promisify } from "util";
 import { mkdirp, copy as cp, remove as rm } from "fs-extra";
 import tmp from "tmp";
-import UUID from "pure-uuid";
+import uuidv4 from "uuid/v4";
 import speakingUrl from "speakingurl";
 
 export { mkdirp, exists, cp, rm };
@@ -15,8 +15,8 @@ export const writeFile = promisify(fsWriteFile);
 export const readFile = promisify(fsReadFile);
 export const tmpdir = promisify(tmp.dir);
 
-export function uuid4() {
-  return new UUID(4).format();
+export function uuid() {
+  return uuidv4();
 }
 
 export function jsonStringify(data, compact = false) {

@@ -1,5 +1,5 @@
 import { merge } from "lodash";
-import { uuid4 } from "../helper";
+import { uuid } from "../helper";
 import {
   toc,
   toValue,
@@ -33,7 +33,7 @@ export async function seeds(element, additional = {}) {
       resources,
       transitions,
       uuids: Object.fromEntries(
-        transitions.map(transition => [transition.permalink, uuid4()])
+        transitions.map(transition => [transition.permalink, uuid()])
       )
     },
     additional
