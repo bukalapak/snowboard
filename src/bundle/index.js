@@ -1,23 +1,29 @@
 import Bundler from "parcel-bundler";
-import { resolve, dirname } from "path";
-import svelteBundle, { defaultTemplate as svelteTemplate } from "./svelte";
-import reactBundle, { defaultTemplate as reactTemplate } from "./react";
-import { exists } from "../helper";
+import globby from 'globby';
+import builder from "./builder";
+import { resolve } from "path";
 
-const defaultTemplateDir = resolve(__dirname, "../../templates");
-const defaultTemplates = {
-  [templateName(svelteTemplate)]: svelteTemplate,
-  [templateName(reactTemplate)]: reactTemplate
+const defaultConfig = {
+  overrides: {},
+  playground: { enabled: false }
 };
+
+const nodeModules = resolve(__dirname, '../../node_modules');
+
+async function availableTemplates() {
+  const glob = await globby(`${nodeModules}/snowboard-theme-**/index.js`);
+  return glob.map(g => require(g))
+}
 
 async function buildBundler(
   input,
   { watch, output, template, optimized, quiet }
 ) {
-  const [entrypoint, outDir] = await buildTemplate(input, {
+
+  const [entrypoint, outDir] = await builder(input, defaultConfig, {
     watch,
     output,
-    template,
+    template: await detectTemplate(template),
     optimized,
     quiet
   });
@@ -39,32 +45,20 @@ async function buildBundler(
   return new Bundler(entrypoint, options);
 }
 
-function detectTemplate(template) {
+async function detectTemplate(template) {
+  const templates = await availableTemplates();
+
   if (!template) {
-    return svelteTemplate;
+    return templates[0].entrypoint;
   }
 
-  let tplFile = defaultTemplates[template];
+  const selected = templates.find(tpl => tpl.name === template);
 
-  if (!tplFile) {
-    tplFile = resolve(process.cwd(), template);
+  if (selected) {
+    return selected.entrypoint;
   }
 
-  return tplFile;
-}
-
-function templateName(tplPath) {
-  return dirname(tplPath.replace(defaultTemplateDir, "")).substr(1);
-}
-
-function buildTemplate(input, { template, ...options }) {
-  options.template = detectTemplate(template);
-
-  if (exists(resolve(dirname(options.template), "App.svelte"))) {
-    return svelteBundle(input, options);
-  }
-
-  return reactBundle(input, options);
+  return resolve(process.cwd(), template);
 }
 
 export async function htmlBundle(input, options) {
