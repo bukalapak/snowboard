@@ -1,5 +1,5 @@
 import Bundler from "parcel-bundler";
-import globby from 'globby';
+import globby from "globby";
 import builder from "./builder";
 import { resolve } from "path";
 
@@ -8,18 +8,17 @@ const defaultConfig = {
   playground: { enabled: false }
 };
 
-const nodeModules = resolve(__dirname, '../../node_modules');
+const nodeModules = resolve(__dirname, "../../node_modules");
 
 async function availableTemplates() {
   const glob = await globby(`${nodeModules}/snowboard-theme-**/index.js`);
-  return glob.map(g => require(g))
+  return glob.map(g => require(g));
 }
 
 async function buildBundler(
   input,
   { watch, output, template, optimized, quiet }
 ) {
-
   const [entrypoint, outDir] = await builder(input, defaultConfig, {
     watch,
     output,
