@@ -57,6 +57,7 @@
     "protagonist": "^2.0.2",
     "remark": "^11.0.2",
     "remark-parse": "^7.0.2",
+    "snowboard-theme-osaka": "^1.0.0-alpha.2",
     "speakingurl": "^14.0.1",
     "svelte": "^3.18.1",
     "table": "^5.4.6",
