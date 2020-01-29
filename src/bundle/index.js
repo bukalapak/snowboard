@@ -1,19 +1,12 @@
 import Bundler from "parcel-bundler";
-import globby from "globby";
 import builder from "./builder";
 import { resolve } from "path";
 
+const templatePrefix = "snowboard-theme-";
 const defaultConfig = {
   overrides: {},
   playground: { enabled: false }
 };
-
-const nodeModules = resolve(__dirname, "../../node_modules");
-
-async function availableTemplates() {
-  const glob = await globby(`${nodeModules}/snowboard-theme-**/index.js`);
-  return glob.map(g => require(g));
-}
 
 async function buildBundler(
   input,
@@ -44,14 +37,21 @@ async function buildBundler(
   return new Bundler(entrypoint, options);
 }
 
-async function detectTemplate(template) {
-  const templates = await availableTemplates();
+function defaultTemplate() {
+  const prefix = new RegExp(templatePrefix);
+  const { dependencies } = require("../../package.json");
 
+  return Object.keys(dependencies)
+    .find(k => k.match(prefix))
+    .replace(prefix, "");
+}
+
+async function detectTemplate(template) {
   if (!template) {
-    return templates[0].entrypoint;
+    template = defaultTemplate();
   }
 
-  const selected = templates.find(tpl => tpl.name === template);
+  const selected = require(`${templatePrefix}${template}`);
 
   if (selected) {
     return selected.entrypoint;
