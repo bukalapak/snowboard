@@ -45,7 +45,6 @@
     "express": "^4.17.1",
     "express-basic-auth": "^1.2.0",
     "fs-extra": "^8.1.0",
-    "globby": "^11.0.0",
     "handlebars": "^4.7.2",
     "lodash": "^4.17.15",
     "morgan": "^1.9.1",
@@ -69,6 +68,7 @@
     "@babel/preset-react": "^7.8.3",
     "@babel/register": "^7.8.3",
     "@oclif/dev-cli": "^1.22.2",
+    "globby": "^11.0.0",
     "prettier": "^1.18.2",
     "tape": "^4.13.0"
   },
