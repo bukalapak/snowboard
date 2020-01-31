@@ -1,0 +1,23 @@
+{
+  "name": "snowboard-reader",
+  "version": "1.0.0-alpha.1",
+  "description": "The snowboard reader",
+  "main": "lib/index.js",
+  "author": "Alif Rachmawadi <subosito@bukalapak.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "babel src --out-dir lib --root-mode upward",
+    "test": "tape -r ./test/babel-register.js 'test/**/*.js'"
+  },
+  "dependencies": {
+    "handlebars": "^4.7.2",
+    "lodash": "^4.17.15"
+  },
+  "keywords": [
+    "api-blueprint",
+    "snowboard"
+  ],
+  "devDependencies": {
+    "tape": "^4.13.0"
+  }
+}
