@@ -1,3 +1,10 @@
 node_modules/
+test/fixtures/api-blueprint/
+lib/
+!templates/osaka/lib/
+dist/
+.cache/
+yarn-error.log
 snowboard
 snowboard-*
+snowboard.config.js

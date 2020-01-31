@@ -1,3 +1,0 @@
-[submodule "test/fixtures/api-blueprint"]
-	path = test/fixtures/api-blueprint
-	url = https://github.com/apiaryio/api-blueprint.git
