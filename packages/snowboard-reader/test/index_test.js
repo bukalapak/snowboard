@@ -16,39 +16,35 @@ test("read", async t => {
   t.end();
 });
 
-test("read with partials", async t => {
-  const source = await read(fixturePath("partials/API.apib"));
+test("read with partials and seeds", async t => {
+  const source = await read(fixturePath("api/api.apib"));
 
   t.ok(source.includes("# API"));
   t.ok(source.includes("# Group Messages"));
   t.ok(source.includes("# Group Users"));
   t.ok(source.includes("# Group Tasks"));
-  t.end();
-});
 
-test("read with seeds", async t => {
-  const source = await read(fixturePath("seeds/API.apib"));
-
-  t.ok(source.includes("# API"));
   t.ok(source.includes("200"));
   t.ok(source.includes("seeds usage"));
   t.ok(source.includes("user-related"));
+
   t.end();
 });
 
 test("extractPaths", async t => {
-  const prefix = fixturePath("partials/");
-  const paths = await extractPaths(fixturePath("partials/API.apib"));
+  const prefix = fixturePath("api/");
+  const paths = await extractPaths(fixturePath("api/api.apib"));
 
   const actualPaths = paths.map(path => path.replace(`${prefix}/`, ""));
   const expectedPaths = [
-    "API.apib",
-    "messages/response/seed.json",
+    "api.apib",
     "messages/response/success.apib",
     "messages/actions.apib",
     "messages.apib",
     "users.apib",
-    "tasks.apib"
+    "tasks.apib",
+    "seed-user.json",
+    "seed.json"
   ];
 
   t.ok(isEqual(actualPaths, expectedPaths));
