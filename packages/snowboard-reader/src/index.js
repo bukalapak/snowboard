@@ -37,6 +37,9 @@ function rewriteSource(source) {
   data = data.replace(/<!-- partial\((.+)\) -->/g, replacement);
   data = data.replace(/<!-- include\((.+)\) -->/g, replacement);
   data = data.replace(/{{\s?partial "(.+)"\s?}}/g, replacement);
+  data = data.replace(/{{\s?include "(.+)"\s?}}/g, replacement);
+  data = data.replace(/{{\s?seed "(.+)"\s?}}/g, "<!-- seed($1) -->");
+
   data = data.replace(
     /{{with index \.(.+) "([0-9]+)"}}{{with index \.(.+) "([0-9]+)"}}\s?{{\.(.+)}}\s?{{end}}{{end}}/g,
     "{{$1.$2.$3.$4.$5}}"
@@ -118,7 +121,7 @@ function loadSeeds(source, inputDir) {
 function rewriteInput(source, inputDir) {
   const handlebars = createHandlebars();
   const data = rewriteSource(source);
-  const seeds = loadSeeds(source, inputDir);
+  const seeds = loadSeeds(data, inputDir);
   const partials = loadPartials(data, seeds, inputDir);
 
   forEach(partials, (val, key) => {
