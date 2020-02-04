@@ -1,15 +1,18 @@
 {
   "name": "snowboard-parser",
   "version": "1.0.0-alpha.1",
-  "description": "",
+  "description": "The snowboard parser",
   "author": "Alif Rachmawadi <subosito@bukalapak.com>",
   "license": "MIT",
   "main": "lib/index.js",
+  "repository": "bukalapak/snowboard",
   "scripts": {
     "build": "babel src --out-dir lib --root-mode upward",
-    "test": "tape -r ./test/babel-register.js 'test/**/*.js'"
+    "test": "tape -r ../../babel.register.js 'test/**/*.js'"
   },
-  "keywords": [],
+  "files": [
+    "/lib"
+  ],
   "dependencies": {
     "api-elements": "^0.2.3",
     "protagonist": "^2.0.2"
@@ -17,5 +20,9 @@
   "devDependencies": {
     "degit": "^2.2.2",
     "tape": "^4.13.0"
-  }
+  },
+  "keywords": [
+    "api-blueprint",
+    "snowboard"
+  ]
 }
