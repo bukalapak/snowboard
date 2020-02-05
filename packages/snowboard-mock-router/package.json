@@ -16,8 +16,7 @@
   "dependencies": {
     "express": "^4.17.1",
     "parse-prefer-header": "^1.0.0",
-    "snowboard-helper": "^1.0.0-alpha.1",
-    "uritemplate": "^0.3.4"
+    "snowboard-helper": "^1.0.0-alpha.1"
   },
   "keywords": [
     "api-blueprint",
