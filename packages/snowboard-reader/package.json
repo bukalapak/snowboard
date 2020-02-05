@@ -1,6 +1,6 @@
 {
   "name": "snowboard-reader",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-rc.1",
   "description": "The snowboard reader",
   "author": "Alif Rachmawadi <subosito@bukalapak.com>",
   "license": "MIT",
@@ -16,9 +16,6 @@
   "dependencies": {
     "handlebars": "^4.7.2",
     "lodash": "^4.17.15"
-  },
-  "devDependencies": {
-    "tape": "^4.13.0"
   },
   "keywords": [
     "api-blueprint",
