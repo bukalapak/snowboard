@@ -1,0 +1,24 @@
+{
+  "name": "snowboard-linter",
+  "version": "1.0.0-rc.1",
+  "description": "The snowboard linter",
+  "author": "Alif Rachmawadi <subosito@bukalapak.com>",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "repository": "bukalapak/snowboard",
+  "scripts": {
+    "build": "babel src --out-dir lib --root-mode upward",
+    "test": "tape -r ../../babel.register.js 'test/**/*.js'"
+  },
+  "files": [
+    "/lib"
+  ],
+  "dependencies": {
+    "lodash": "^4.17.15",
+    "snowboard-parser": "^1.0.0-rc.1"
+  },
+  "keywords": [
+    "api-blueprint",
+    "snowboard"
+  ]
+}
