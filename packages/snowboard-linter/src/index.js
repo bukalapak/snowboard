@@ -1,8 +1,13 @@
 import { reject, values, isEmpty } from "lodash";
-import { parse, fromRefract } from "snowboard-parser";
+import { validate, fromRefract } from "snowboard-parser";
 
 export default async function(source) {
-  const refract = await parse(source);
+  const refract = await validate(source);
+
+  if (refract === null) {
+    return [];
+  }
+
   const element = fromRefract(refract);
 
   return element.annotations.map(el => {
