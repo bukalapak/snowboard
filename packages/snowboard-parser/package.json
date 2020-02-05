@@ -1,6 +1,6 @@
 {
   "name": "snowboard-parser",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-rc.1",
   "description": "The snowboard parser",
   "author": "Alif Rachmawadi <subosito@bukalapak.com>",
   "license": "MIT",
@@ -18,8 +18,7 @@
     "protagonist": "^2.0.2"
   },
   "devDependencies": {
-    "degit": "^2.2.2",
-    "tape": "^4.13.0"
+    "degit": "^2.2.2"
   },
   "keywords": [
     "api-blueprint",
