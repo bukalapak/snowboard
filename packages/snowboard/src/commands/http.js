@@ -1,6 +1,7 @@
 import { Command, flags } from "@oclif/command";
 import { httpBundle } from "snowboard-bundler";
 import { parseBinding } from "../helper";
+import searchConfig from "../config";
 
 class HttpCommand extends Command {
   static args = [{ name: "input", required: true }];
@@ -8,8 +9,10 @@ class HttpCommand extends Command {
   async run() {
     const { flags, args } = this.parse(HttpCommand);
     const [host, port] = parseBinding(flags.bind);
+    const { html: htmlConfig } = await searchConfig();
 
     await httpBundle(args.input, {
+      config: htmlConfig,
       watch: flags.watch,
       output: flags.output,
       template: flags.template,
