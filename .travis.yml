@@ -7,8 +7,7 @@ node_js:
 - "12"
 cache: npm
 script:
-- npm run lint
-- npm test
+- lerna run test
 deploy:
   - provider: npm
     email: subosito@gmail.com
