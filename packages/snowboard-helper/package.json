@@ -19,7 +19,7 @@
     "ora": "^4.0.3",
     "pretty-hrtime": "^1.0.3",
     "safe-json-stringify": "^1.2.0",
-    "snowboard-theme-helper": "^1.0.0-alpha.1",
+    "speakingurl": "^14.0.1",
     "table": "^5.4.6",
     "tmp": "^0.1.0",
     "uritemplate": "^0.3.4",
