@@ -4,27 +4,23 @@ import { resolve } from "path";
 import degit from "degit";
 import { parse, validate, fromRefract } from "../src";
 
-const fixturePath = input => {
-  return resolve(__dirname, `./fixtures/${input}`);
-};
+async function loadFixture(filename) {
+  const fixtureDir = resolve(__dirname, `./fixtures`);
+  return readFileSync(resolve(fixtureDir, filename), "utf8");
+}
 
-const examplePath = input => {
-  return fixturePath(`api-blueprint/examples/${input}`);
-};
-
-async function setupFixtures() {
+async function loadExample(filename) {
+  const exampleDir = resolve(__dirname, `./fixtures/api-blueprint`);
   const emitter = degit("github:apiaryio/api-blueprint", {
     force: true
   });
 
-  await emitter.clone(resolve(__dirname, "./fixtures/api-blueprint"));
-  console.log("ok fixture: api-blueprint");
+  await emitter.clone(exampleDir);
+  return readFileSync(resolve(exampleDir, `examples/${filename}`), "utf8");
 }
 
 test("parse & fromRefract", async t => {
-  await setupFixtures();
-
-  const source = readFileSync(examplePath("01. Simplest API.md"), "utf8");
+  const source = await loadExample("01. Simplest API.md");
   const result = await parse(source);
   const element = fromRefract(result);
 
@@ -40,9 +36,7 @@ test("parse & fromRefract", async t => {
 });
 
 test("validate", async t => {
-  await setupFixtures();
-
-  const source = readFileSync(examplePath("Gist Fox API.md"), "utf8");
+  const source = await loadExample("Gist Fox API.md");
   const result = await validate(source);
 
   t.equal(result, null);
@@ -50,9 +44,7 @@ test("validate", async t => {
 });
 
 test("validate: invalid apib", async t => {
-  await setupFixtures();
-
-  const source = readFileSync(fixturePath("blueprint-invalid.apib"), "utf8");
+  const source = await loadFixture("blueprint-invalid.apib");
   const result = await validate(source);
   const element = fromRefract(result);
   const annotation = element.annotations.first;
