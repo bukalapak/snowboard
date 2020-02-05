@@ -1,0 +1,27 @@
+{
+  "name": "snowboard-bundler",
+  "version": "1.0.0-alpha.1",
+  "description": "The snowboard bundler",
+  "author": "Alif Rachmawadi <subosito@bukalapak.com>",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "repository": "bukalapak/snowboard",
+  "scripts": {
+    "build": "babel src --out-dir lib --root-mode upward",
+    "test": "tape -r ../../babel.register.js 'test/**/*.js'"
+  },
+  "files": [
+    "/lib"
+  ],
+  "dependencies": {
+    "chokidar": "^3.3.1",
+    "lodash": "^4.17.15",
+    "parcel-bundler": "^1.12.4",
+    "parcel-plugin-svelte": "^4.0.5",
+    "svelte": "^3.18.1"
+  },
+  "keywords": [
+    "api-blueprint",
+    "snowboard"
+  ]
+}
