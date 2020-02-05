@@ -1,0 +1,32 @@
+{
+  "name": "snowboard-helper",
+  "version": "1.0.0-alpha.1",
+  "description": "The snowboard helper",
+  "author": "Alif Rachmawadi <subosito@bukalapak.com>",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "repository": "bukalapak/snowboard",
+  "scripts": {
+    "build": "babel src --out-dir lib --root-mode upward",
+    "test": "tape -r ../../babel.register.js 'test/**/*.js'"
+  },
+  "files": [
+    "/lib"
+  ],
+  "dependencies": {
+    "chalk": "^3.0.0",
+    "fs-extra": "^8.1.0",
+    "ora": "^4.0.3",
+    "pretty-hrtime": "^1.0.3",
+    "safe-json-stringify": "^1.2.0",
+    "snowboard-theme-helper": "^1.0.0-alpha.1",
+    "table": "^5.4.6",
+    "tmp": "^0.1.0",
+    "uritemplate": "^0.3.4",
+    "uuid": "^3.4.0"
+  },
+  "keywords": [
+    "api-blueprint",
+    "snowboard"
+  ]
+}
