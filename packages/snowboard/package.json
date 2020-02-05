@@ -1,0 +1,57 @@
+{
+  "name": "snowboard",
+  "version": "4.0.0-alpha1",
+  "description": "API blueprint toolkit",
+  "author": "Alif Rachmawadi <subosito@bukalapak.com>",
+  "license": "MIT",
+  "repository": "bukalapak/snowboard",
+  "bin": {
+    "snowboard": "./bin/run"
+  },
+  "scripts": {
+    "build": "babel src --out-dir lib --root-mode upward",
+    "test": "tape -r ../../babel.register.js 'test/**/*.js'"
+  },
+  "oclif": {
+    "commands": "./lib/commands",
+    "bin": "snowboard",
+    "plugins": [
+      "@oclif/plugin-help",
+      "@oclif/plugin-not-found"
+    ]
+  },
+  "files": [
+    "/bin",
+    "/lib"
+  ],
+  "dependencies": {
+    "@oclif/command": "^1.5.19",
+    "@oclif/config": "^1.13.3",
+    "@oclif/plugin-help": "^2.2.3",
+    "@oclif/plugin-not-found": "^1.2.3",
+    "chalk": "^3.0.0",
+    "cors": "^2.8.5",
+    "cosmiconfig": "^6.0.0",
+    "express": "^4.17.1",
+    "express-basic-auth": "^1.2.0",
+    "lodash": "^4.17.15",
+    "morgan": "^1.9.1",
+    "snowboard-bundler": "^1.0.0-alpha.1",
+    "snowboard-helper": "^1.0.0-alpha.1",
+    "snowboard-linter": "^1.0.0-rc.1",
+    "snowboard-mock-router": "^1.0.0-alpha.1",
+    "snowboard-parser": "^1.0.0-alpha.1",
+    "snowboard-reader": "^1.0.0-alpha.1"
+  },
+  "devDependencies": {
+    "@oclif/dev-cli": "^1.22.2",
+    "globby": "^11.0.0"
+  },
+  "browserslist": [
+    "last 1 chrome versions"
+  ],
+  "keywords": [
+    "api-blueprint",
+    "snowboard"
+  ]
+}
