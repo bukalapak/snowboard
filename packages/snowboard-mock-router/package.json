@@ -21,5 +21,9 @@
   "keywords": [
     "api-blueprint",
     "snowboard"
-  ]
+  ],
+  "devDependencies": {
+    "degit": "^2.8.0",
+    "snowboard-parser": "^1.0.0-rc.1"
+  }
 }
