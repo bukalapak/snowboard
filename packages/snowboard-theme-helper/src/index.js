@@ -1,7 +1,7 @@
-import speakingUrl from "speakingurl";
-import jsonParseSafe from "json-parse-safe";
-import clipboardCopyOriginal from "clipboard-copy";
+export { default as jsonParse } from "json-parse-safe";
+export { default as clipboardCopy } from "clipboard-copy";
 
+export { toSlug } from "./slug";
 export { toNavigation, filterNavigation } from "./navigation";
 export { toTransactions } from "./transactions";
 export { exchangeToken, exchangeTokenWithPKCE, sendRequest } from "./oauth2";
@@ -20,13 +20,3 @@ export {
   getRefreshToken,
   removeRefreshToken
 } from "./store";
-
-export const jsonParse = jsonParseSafe;
-export const clipboardCopy = clipboardCopyOriginal;
-
-export function toSlug(str, separator = "~") {
-  return speakingUrl(str, {
-    separator,
-    custom: { _: separator }
-  });
-}
