@@ -1,6 +1,7 @@
 import { Command, flags } from "@oclif/command";
 import { htmlBundle } from "snowboard-bundler";
 import searchConfig from "../config";
+import { detectTemplate } from "../helper";
 
 class HtmlCommand extends Command {
   static args = [{ name: "input", required: true }];
@@ -13,7 +14,7 @@ class HtmlCommand extends Command {
       config: htmlConfig,
       watch: flags.watch,
       output: flags.output,
-      template: flags.template,
+      template: detectTemplate(flags.template),
       optimized: flags.optimized,
       quiet: flags.quiet
     });

@@ -1,6 +1,6 @@
 import { Command, flags } from "@oclif/command";
 import { httpBundle } from "snowboard-bundler";
-import { parseBinding } from "../helper";
+import { parseBinding, detectTemplate } from "../helper";
 import searchConfig from "../config";
 
 class HttpCommand extends Command {
@@ -15,7 +15,7 @@ class HttpCommand extends Command {
       config: htmlConfig,
       watch: flags.watch,
       output: flags.output,
-      template: flags.template,
+      template: detectTemplate(flags.template),
       optimized: flags.optimized,
       quiet: flags.quiet,
       host,
