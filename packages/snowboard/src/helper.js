@@ -1,8 +1,20 @@
 import { readFileSync } from "fs";
+import { resolve } from "path";
 import nodeHttp from "http";
 import nodeHttps from "https";
 import { read } from "snowboard-reader";
 import { parse, fromRefract } from "snowboard-parser";
+
+const templatePrefix = "snowboard-theme-";
+
+export function detectTemplate(template) {
+  try {
+    const selected = require(`${templatePrefix}${template}`);
+    return selected.entrypoint;
+  } catch {
+    return resolve(process.cwd(), template);
+  }
+}
 
 export function parseBinding(str) {
   const [hostStr, portStr] = str.split(":");
