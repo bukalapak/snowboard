@@ -1,3 +1,9 @@
+dist/
 node_modules/
-yarn-error.log
+package-lock.json
 snowboard.config.js
+**/lib/
+**/test/fixtures/api-blueprint/
+**/snowboard-mock-router/test/fixtures/
+!packages/snowboard-theme-*/**/lib/
+packages/snowboard-theme-helper/**/lib/
