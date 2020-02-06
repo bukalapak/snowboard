@@ -1,6 +1,6 @@
 {
   "name": "snowboard-parser",
-  "version": "1.0.0-rc.1",
+  "version": "1.0.0-rc.2",
   "description": "The snowboard parser",
   "author": "Alif Rachmawadi <subosito@bukalapak.com>",
   "license": "MIT",
