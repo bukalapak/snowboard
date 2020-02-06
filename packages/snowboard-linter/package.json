@@ -16,7 +16,7 @@
   "dependencies": {
     "@babel/runtime": "^7.8.4",
     "lodash": "^4.17.15",
-    "snowboard-parser": "^1.0.0-rc.1"
+    "snowboard-parser": "^1.0.0-rc.2"
   },
   "keywords": [
     "api-blueprint",

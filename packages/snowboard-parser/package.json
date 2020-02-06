@@ -18,7 +18,7 @@
     "protagonist": "^2.0.2"
   },
   "devDependencies": {
-    "degit": "^2.2.2"
+    "degit": "^2.8.0"
   },
   "keywords": [
     "api-blueprint",
