@@ -1,25 +1,25 @@
 {
   "name": "snowboard-reader",
-  "version": "1.0.0-rc.2",
   "description": "The snowboard reader",
+  "version": "1.0.0-rc.2",
   "author": "Alif Rachmawadi <subosito@bukalapak.com>",
+  "dependencies": {
+    "@babel/runtime": "^7.8.4",
+    "handlebars": "^4.7.2",
+    "lodash": "^4.17.15"
+  },
+  "files": [
+    "/lib"
+  ],
+  "keywords": [
+    "api-blueprint",
+    "snowboard"
+  ],
   "license": "MIT",
   "main": "lib/index.js",
   "repository": "bukalapak/snowboard",
   "scripts": {
     "build": "babel src --out-dir lib --root-mode upward",
     "test": "tape -r ../../babel.register.js 'test/**/*.js'"
-  },
-  "files": [
-    "/lib"
-  ],
-  "dependencies": {
-    "@babel/runtime": "^7.8.4",
-    "handlebars": "^4.7.2",
-    "lodash": "^4.17.15"
-  },
-  "keywords": [
-    "api-blueprint",
-    "snowboard"
-  ]
+  }
 }

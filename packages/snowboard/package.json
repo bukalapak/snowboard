@@ -1,28 +1,13 @@
 {
   "name": "snowboard",
-  "version": "4.0.0-alpha1",
   "description": "API blueprint toolkit",
+  "version": "4.0.0-alpha1",
   "author": "Alif Rachmawadi <subosito@bukalapak.com>",
-  "license": "MIT",
-  "repository": "bukalapak/snowboard",
   "bin": {
     "snowboard": "./bin/run"
   },
-  "scripts": {
-    "build": "babel src --out-dir lib --root-mode upward",
-    "test": "tape -r ../../babel.register.js 'test/**/*.js'"
-  },
-  "oclif": {
-    "commands": "./lib/commands",
-    "bin": "snowboard",
-    "plugins": [
-      "@oclif/plugin-help",
-      "@oclif/plugin-not-found"
-    ]
-  },
-  "files": [
-    "/bin",
-    "/lib"
+  "browserslist": [
+    "last 1 chrome versions"
   ],
   "dependencies": {
     "@babel/runtime": "^7.8.4",
@@ -49,11 +34,26 @@
     "@oclif/dev-cli": "^1.22.2",
     "globby": "^11.0.0"
   },
-  "browserslist": [
-    "last 1 chrome versions"
+  "files": [
+    "/bin",
+    "/lib"
   ],
   "keywords": [
     "api-blueprint",
     "snowboard"
-  ]
+  ],
+  "license": "MIT",
+  "oclif": {
+    "commands": "./lib/commands",
+    "bin": "snowboard",
+    "plugins": [
+      "@oclif/plugin-help",
+      "@oclif/plugin-not-found"
+    ]
+  },
+  "repository": "bukalapak/snowboard",
+  "scripts": {
+    "build": "babel src --out-dir lib --root-mode upward",
+    "test": "tape -r ../../babel.register.js 'test/**/*.js'"
+  }
 }

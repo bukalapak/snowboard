@@ -1,18 +1,8 @@
 {
   "name": "snowboard-theme-helper",
-  "version": "1.0.0-rc.1",
   "description": "Shared helper for snowboard theme",
+  "version": "1.0.0-rc.1",
   "author": "Alif Rachmawadi <subosito@bukalapak.com>",
-  "license": "MIT",
-  "main": "lib/index.js",
-  "repository": "bukalapak/snowboard",
-  "scripts": {
-    "build": "babel src --out-dir lib --root-mode upward",
-    "test": "tape -r ../../babel.register.js 'test/**/*.js'"
-  },
-  "files": [
-    "/lib"
-  ],
   "dependencies": {
     "@babel/runtime": "^7.8.4",
     "axios": "^0.19.2",
@@ -30,8 +20,18 @@
     "url-parse": "^1.4.7",
     "xxhashjs": "^0.2.2"
   },
+  "files": [
+    "/lib"
+  ],
   "keywords": [
     "api-blueprint",
     "snowboard"
-  ]
+  ],
+  "license": "MIT",
+  "main": "lib/index.js",
+  "repository": "bukalapak/snowboard",
+  "scripts": {
+    "build": "babel src --out-dir lib --root-mode upward",
+    "test": "tape -r ../../babel.register.js 'test/**/*.js'"
+  }
 }

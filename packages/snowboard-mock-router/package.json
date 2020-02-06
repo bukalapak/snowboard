@@ -1,30 +1,30 @@
 {
   "name": "snowboard-mock-router",
-  "version": "1.0.0-rc.2",
   "description": "Snowboard router for mock server",
+  "version": "1.0.0-rc.2",
   "author": "Alif Rachmawadi <subosito@bukalapak.com>",
-  "license": "MIT",
-  "main": "lib/index.js",
-  "repository": "bukalapak/snowboard",
-  "scripts": {
-    "build": "babel src --out-dir lib --root-mode upward",
-    "test": "tape -r ../../babel.register.js 'test/**/*.js'"
-  },
-  "files": [
-    "/lib"
-  ],
   "dependencies": {
     "@babel/runtime": "^7.8.4",
     "express": "^4.17.1",
     "parse-prefer-header": "^1.0.0",
     "snowboard-helper": "^1.0.0-alpha.1"
   },
+  "devDependencies": {
+    "degit": "^2.8.0",
+    "snowboard-parser": "^1.0.0-rc.2"
+  },
+  "files": [
+    "/lib"
+  ],
   "keywords": [
     "api-blueprint",
     "snowboard"
   ],
-  "devDependencies": {
-    "degit": "^2.8.0",
-    "snowboard-parser": "^1.0.0-rc.2"
+  "license": "MIT",
+  "main": "lib/index.js",
+  "repository": "bukalapak/snowboard",
+  "scripts": {
+    "build": "babel src --out-dir lib --root-mode upward",
+    "test": "tape -r ../../babel.register.js 'test/**/*.js'"
   }
 }
