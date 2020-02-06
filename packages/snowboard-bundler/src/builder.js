@@ -1,4 +1,4 @@
-import { resolve, replace, dirname, basename, path as pathJoin } from "path";
+import { resolve, replace, dirname, basename, join as pathJoin } from "path";
 import { isEmpty } from "lodash";
 import chokidar from "chokidar";
 import { spinner } from "snowboard-helper";
