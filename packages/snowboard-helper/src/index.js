@@ -11,7 +11,7 @@ import safeStringify from "safe-json-stringify";
 import speakingUrl from "speakingurl";
 
 export { table, borderlessTable, spinner } from "./render";
-export { toValue, toPath, transitionHref } from "./parser";
+export { toValue, toDescription, toPath, transitionHref } from "./parser";
 
 export { mkdirp, exists, cp, rm };
 

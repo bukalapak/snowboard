@@ -8,6 +8,11 @@ export function toValue(data) {
   }
 }
 
+export function toDescription(element) {
+  if (!element.copy) return "";
+  return toValue(element.copy).join("\n");
+}
+
 export function transitionHref(transition, resource) {
   return toValue(transition.computedHref || resource.href);
 }
