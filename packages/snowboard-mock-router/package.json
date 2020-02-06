@@ -1,6 +1,6 @@
 {
   "name": "snowboard-mock-router",
-  "version": "1.0.0-rc.1",
+  "version": "1.0.0-rc.2",
   "description": "Snowboard router for mock server",
   "author": "Alif Rachmawadi <subosito@bukalapak.com>",
   "license": "MIT",
@@ -14,6 +14,7 @@
     "/lib"
   ],
   "dependencies": {
+    "@babel/runtime": "^7.8.4",
     "express": "^4.17.1",
     "parse-prefer-header": "^1.0.0",
     "snowboard-helper": "^1.0.0-alpha.1"

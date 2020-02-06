@@ -1,6 +1,6 @@
 {
   "name": "snowboard-helper",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-alpha.2",
   "description": "The snowboard helper",
   "author": "Alif Rachmawadi <subosito@bukalapak.com>",
   "license": "MIT",
@@ -14,6 +14,7 @@
     "/lib"
   ],
   "dependencies": {
+    "@babel/runtime": "^7.8.4",
     "chalk": "^3.0.0",
     "fs-extra": "^8.1.0",
     "ora": "^4.0.3",
