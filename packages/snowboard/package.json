@@ -41,7 +41,8 @@
     "snowboard-linter": "^1.0.0-rc.1",
     "snowboard-mock-router": "^1.0.0-alpha.1",
     "snowboard-parser": "^1.0.0-alpha.1",
-    "snowboard-reader": "^1.0.0-alpha.1"
+    "snowboard-reader": "^1.0.0-alpha.1",
+    "snowboard-theme-osaka": "^1.0.0-alpha.1"
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1.22.2",
