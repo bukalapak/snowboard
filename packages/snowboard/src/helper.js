@@ -6,6 +6,7 @@ import { read } from "snowboard-reader";
 import { parse, fromRefract } from "snowboard-parser";
 
 const templatePrefix = "snowboard-theme-";
+const defaultOutput = resolve(process.cwd(), "./dist");
 
 export function detectTemplate(template) {
   try {
@@ -14,6 +15,14 @@ export function detectTemplate(template) {
   } catch {
     return resolve(process.cwd(), template);
   }
+}
+
+export function detectOutput(output) {
+  if (output) {
+    return resolve(process.cwd(), output);
+  }
+
+  return defaultOutput;
 }
 
 export function parseBinding(str) {
