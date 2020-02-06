@@ -4,6 +4,7 @@ import clipboardCopyOriginal from "clipboard-copy";
 
 export { toNavigation, filterNavigation } from "./navigation";
 export { toTransactions } from "./transactions";
+export { exchangeToken, exchangeTokenWithPKCE, sendRequest } from "./oauth2";
 
 export const jsonParse = jsonParseSafe;
 export const clipboardCopy = clipboardCopyOriginal;
