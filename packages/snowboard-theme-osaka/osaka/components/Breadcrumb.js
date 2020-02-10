@@ -1,6 +1,6 @@
 import React from "react";
 import { Breadcrumbs } from "baseui/breadcrumbs";
-import { toHref } from "../lib/util";
+import { toHref } from "../lib/helper";
 import Link from "./Link";
 
 export default ({ group, resource, transition }) => {
