@@ -5,6 +5,7 @@ export { toSlug } from "./slug";
 export { toNavigation, filterNavigation } from "./navigation";
 export { toTransactions } from "./transactions";
 export { exchangeToken, exchangeTokenWithPKCE, sendRequest } from "./oauth2";
+export { filter } from "./filter";
 
 export {
   getPKCE,
