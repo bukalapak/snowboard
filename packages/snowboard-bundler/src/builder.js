@@ -1,4 +1,4 @@
-import { resolve, replace, dirname, basename, join as pathJoin } from "path";
+import { resolve, dirname, basename, join as pathJoin } from "path";
 import { isEmpty } from "lodash";
 import chokidar from "chokidar";
 import { spinner } from "snowboard-helper";
@@ -125,7 +125,7 @@ function watchTemplate(tplDir, buildDir) {
   });
 
   watcher.on("change", async path => {
-    await cp(path, replace(tplDir, buildDir));
+    await cp(path, path.replace(tplDir, buildDir));
   });
 
   return watcher;
