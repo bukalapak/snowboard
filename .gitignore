@@ -2,6 +2,7 @@ dist/
 node_modules/
 package-lock.json
 snowboard.config.js
+oclif.manifest.json
 **/tmp/
 **/lib/
 **/test/fixtures/api-blueprint/
