@@ -2,8 +2,8 @@
   "name": "snowboard-monorepo",
   "private": true,
   "scripts": {
-    "lint": "prettier --check '{packages/*,.}/{README.md,{babel.config,lerna,package}.json}' '**/*.{js,html,svelte}'",
-    "fmt": "prettier --write '{packages/*,.}/{README.md,{babel.config,lerna,package}.json}' '**/*.{js,html,svelte}'"
+    "lint": "prettier --check '{packages/*,.}/{README.md,{babel.config,lerna,package}.json}' '**/*.{js,html,svelte,scss}'",
+    "fmt": "prettier --write '{packages/*,.}/{README.md,{babel.config,lerna,package}.json}' '**/*.{js,html,svelte,scss}'"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
@@ -16,6 +16,7 @@
     "lerna": "^3.20.2",
     "prettier": "^1.19.1",
     "prettier-plugin-svelte": "^0.7.0",
+    "sass": "^1.25.0",
     "svelte": "^3.18.2",
     "tape": "^4.13.0"
   }
