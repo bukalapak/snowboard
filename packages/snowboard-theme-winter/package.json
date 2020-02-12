@@ -11,14 +11,14 @@
     "prismjs": "^1.19.0",
     "querystringify": "^2.1.1",
     "safe-json-stringify": "^1.2.0",
-    "sass": "^1.25.0",
     "snowboard-theme-helper": "^1.0.0-rc.3",
     "svelte": "^3.18.2",
     "yrv": "^0.0.18"
   },
   "devDependencies": {
     "parcel-bundler": "^1.12.4",
-    "parcel-plugin-svelte": "^4.0.5"
+    "parcel-plugin-svelte": "^4.0.5",
+    "sass": "^1.25.0"
   },
   "license": "MIT",
   "main": "index.js",
