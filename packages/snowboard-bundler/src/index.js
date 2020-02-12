@@ -11,7 +11,7 @@ const defaultConfig = {
 
 async function buildBundler(
   input,
-  { config, watch, output, template, optimized, quiet }
+  { config, watch, output, template, optimized, quiet, autoInstall = false }
 ) {
   const [entrypoint, outDir] = await builder(input, {
     config: merge(defaultConfig, config),
@@ -29,7 +29,7 @@ async function buildBundler(
     outDir: htmlDir,
     cacheDir: cacheDir,
     watch: !!watch,
-    autoInstall: false,
+    autoInstall: autoInstall,
     sourceMaps: false,
     production: !!optimized,
     minify: !!optimized,
