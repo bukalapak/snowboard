@@ -1,0 +1,27 @@
+{
+  "name": "snowboard-theme-winter",
+  "description": "Snowboard theme using Svelte",
+  "version": "1.0.0-alpha.2",
+  "author": "Alif Rachmawadi <subosito@bukalapak.com>",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "marked": "^0.8.0",
+    "navi": "^0.14.0",
+    "pkce": "^1.0.0-beta2",
+    "prismjs": "^1.19.0",
+    "querystringify": "^2.1.1",
+    "safe-json-stringify": "^1.2.0",
+    "sass": "^1.25.0",
+    "snowboard-theme-helper": "^1.0.0-rc.3",
+    "svelte": "^3.18.2",
+    "yrv": "^0.0.18"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4",
+    "parcel-plugin-svelte": "^4.0.5"
+  },
+  "license": "MIT",
+  "main": "index.js",
+  "repository": "bukalapak/snowboard",
+  "scripts": {}
+}
