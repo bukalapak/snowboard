@@ -2,6 +2,7 @@ dist/
 node_modules/
 package-lock.json
 snowboard.config.js
+**/tmp/
 **/lib/
 **/test/fixtures/api-blueprint/
 **/snowboard-mock-router/test/fixtures/
