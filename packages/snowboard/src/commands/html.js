@@ -16,7 +16,8 @@ class HtmlCommand extends Command {
       output: detectOutput(flags.output),
       template: detectTemplate(flags.template),
       optimized: flags.optimized,
-      quiet: flags.quiet
+      quiet: flags.quiet,
+      autoInstall: true,
     });
   }
 }

@@ -18,6 +18,7 @@ class HttpCommand extends Command {
       template: detectTemplate(flags.template),
       optimized: flags.optimized,
       quiet: flags.quiet,
+      autoInstall: true,
       host,
       port,
       ssl: flags.ssl,
