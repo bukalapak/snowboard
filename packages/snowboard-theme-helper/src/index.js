@@ -19,5 +19,8 @@ export {
   removeToken,
   setRefreshToken,
   getRefreshToken,
-  removeRefreshToken
+  removeRefreshToken,
+  enableDarkMode,
+  disableDarkMode,
+  getDarkMode
 } from "./store";

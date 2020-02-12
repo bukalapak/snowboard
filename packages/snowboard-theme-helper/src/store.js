@@ -36,3 +36,7 @@ export const setRefreshToken = (env, token) =>
   refreshTokenStore.set(env, token);
 export const getRefreshToken = env => refreshTokenStore.get(env);
 export const removeRefreshToken = env => refreshTokenStore.remove(env);
+
+export const enableDarkMode = () => store.set("darkMode", true);
+export const disableDarkMode = () => store.set("darkMode", false);
+export const getDarkMode = () => store.get("darkMode");
