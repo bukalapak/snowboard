@@ -1,6 +1,7 @@
 import { resolve } from "path";
 import { merge } from "lodash";
 import Bundler from "parcel-bundler";
+import bundlerSvelte from "parcel-plugin-svelte";
 import builder from "./builder";
 
 const defaultConfig = {
@@ -35,7 +36,10 @@ async function buildBundler(
     contentHash: !!optimized
   };
 
-  return new Bundler(entrypoint, options);
+  const bundler = new Bundler(entrypoint, options);
+  bundlerSvelte(bundler);
+
+  return bundler;
 }
 
 export async function htmlBundle(input, options) {
