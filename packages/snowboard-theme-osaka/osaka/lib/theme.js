@@ -23,7 +23,10 @@ export const useTheme = () => {
 };
 
 export const ThemeProvider = ({ children }) => {
-  const { value: isDarkMode, toggle } = useDarkMode(false);
+  const { value: isDarkMode, toggle } = useDarkMode(false, {
+    storageKey: "snowboard.darkMode"
+  });
+
   const colorMode = isDarkMode ? "dark" : "light";
 
   const value = {
