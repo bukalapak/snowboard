@@ -1,12 +1,11 @@
 {
   "name": "snowboard-theme-helper",
   "description": "Shared helper for snowboard theme",
-  "version": "1.0.0-rc.2",
+  "version": "1.0.0-rc.3",
   "author": "Alif Rachmawadi <subosito@bukalapak.com>",
   "dependencies": {
     "@babel/runtime": "^7.8.4",
     "axios": "^0.19.2",
-    "axios-auth-refresh": "^2.2.1",
     "axios-oauth-client": "^1.2.1",
     "clipboard-copy": "^3.1.0",
     "fast-json-stable-stringify": "^2.1.0",
