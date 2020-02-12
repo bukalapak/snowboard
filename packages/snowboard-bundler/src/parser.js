@@ -93,7 +93,7 @@ function buildSimpleTransition(transition, resource, group) {
   const path = toPath(pathTemplate);
 
   return {
-    title: transitionTitle(transition),
+    title: transitionTitle({ transition, method, path }),
     permalink: transitionPermalink(transition, resource, group),
     method,
     path,
@@ -130,7 +130,7 @@ function buildTransition(transition, resource, group, dataStructures) {
   const path = toPath(pathTemplate);
 
   return {
-    title: transitionTitle(transition),
+    title: transitionTitle({ transition, method, path }),
     description: toDescription(transition),
     permalink: transitionPermalink(transition, resource, group),
     method,

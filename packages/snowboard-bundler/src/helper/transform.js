@@ -83,7 +83,7 @@ export function resourceTitle(resource) {
   return toValue(resource.href);
 }
 
-export function transitionTitle(transition) {
+export function transitionTitle({ transition, method, path }) {
   let title = toValue(transition.title);
 
   if (title === "") {
