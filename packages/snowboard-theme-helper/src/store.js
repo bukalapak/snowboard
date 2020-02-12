@@ -2,16 +2,16 @@ import store2 from "store2";
 import { random, create as generatePair } from "pkce";
 
 const store = store2.namespace("snowboard");
-const pkceStore = store.namespace("pkce");
+const challengePairStore = store.namespace("challenge-pair");
 const tokenStore = store.namespace("token");
 const refreshTokenStore = store.namespace("refresh-token");
 
-export const getPKCE = () => {
-  if (pkceStore.keys().length === 0) {
-    pkceStore.setAll(generatePair());
+export const getChallengePair = () => {
+  if (challengePairStore.keys().length === 0) {
+    challengePairStore.setAll(generatePair());
   }
 
-  return pkceStore.getAll();
+  return challengePairStore.getAll();
 };
 
 export const getState = () => {
@@ -22,7 +22,7 @@ export const getState = () => {
   return store.get("state");
 };
 
-export const clearPKCE = () => pkceStore.clear();
+export const clearChallengePair = () => challengePairStore.clear();
 export const clearState = () => store.remove("state");
 
 export const setEnv = env => store.set("env", env);
