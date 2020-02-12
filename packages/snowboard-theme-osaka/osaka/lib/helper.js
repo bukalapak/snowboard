@@ -1,4 +1,4 @@
-import { filter as filterHelper } from 'snowboard-theme-helper';
+import { filter as filterHelper } from "snowboard-theme-helper";
 
 export function toHref(permalink) {
   const char = permalink.substr(0, 1);
@@ -12,11 +12,11 @@ export function toPermalink(pathname) {
 
 export function filter(query, groups) {
   return filterHelper(query, groups).map(item => {
-    const { permalink, ...rest} = item;
+    const { permalink, ...rest } = item;
 
     return {
       ...rest,
       href: toHref(permalink)
-    }
+    };
   });
 }
