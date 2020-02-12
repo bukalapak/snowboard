@@ -6,9 +6,14 @@ import { read } from "snowboard-reader";
 import { parse, fromRefract } from "snowboard-parser";
 
 const templatePrefix = "snowboard-theme-";
+const defaultTemplate = "osaka";
 const defaultOutput = resolve(process.cwd(), "./dist");
 
 export function detectTemplate(template) {
+  if (!template) {
+    template = defaultTemplate;
+  }
+
   try {
     const selected = require(`${templatePrefix}${template}`);
     return selected.entrypoint;
