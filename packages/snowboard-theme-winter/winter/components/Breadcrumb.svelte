@@ -3,8 +3,8 @@
   import { toHref } from "../lib/helper";
 
   export let group;
-  export let resource;
-  export let transition;
+  export let resource = undefined;
+  export let transition = undefined;
 </script>
 
 {#if resource || transition}
