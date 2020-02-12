@@ -3,8 +3,6 @@ import oauth from "axios-oauth-client";
 import qs from "querystringify";
 import uriTemplate from "uritemplate";
 import urlParse from "url-parse";
-import createAuthRefreshInterceptor from "axios-auth-refresh";
-import { setToken, setRefreshToken, getRefreshToken } from "./store";
 
 const requestToken = async (client, options) => {
   const authRequest = oauth.client(client, options);
@@ -29,25 +27,6 @@ export const exchangeToken = async ({
   code,
   state,
   clientId,
-  clientSecret,
-  tokenUrl,
-  callbackUrl
-}) => {
-  return requestToken(axios.create(), {
-    url: tokenUrl,
-    grant_type: "authorization_code",
-    state: state,
-    client_id: clientId,
-    client_secret: clientSecret,
-    redirect_uri: callbackUrl,
-    code: code
-  });
-};
-
-export const exchangeTokenWithPKCE = async ({
-  code,
-  state,
-  clientId,
   tokenUrl,
   callbackUrl,
   codeVerifier
@@ -63,52 +42,6 @@ export const exchangeTokenWithPKCE = async ({
   });
 };
 
-const requestRefreshToken = async (
-  client,
-  { state, tokenUrl, clientId, clientSecret, refreshToken }
-) => {
-  return requestToken(client, {
-    url: tokenUrl,
-    grant_type: "refresh_token",
-    state: state,
-    client_id: clientId,
-    client_secret: clientSecret,
-    refresh_token: refreshToken
-  });
-};
-
-const refreshInterceptor = (
-  env,
-  { state, tokenUrl, clientId, clientSecret }
-) => {
-  const refreshToken = getRefreshToken(env);
-
-  return async failedRequest => {
-    const {
-      accessToken: newAccessToken,
-      refreshToken: newRefreshToken
-    } = await requestRefreshToken(axios, {
-      state,
-      tokenUrl,
-      clientId,
-      clientSecret,
-      refreshToken
-    });
-
-    if (newAccessToken) {
-      setToken(env, newAccessToken);
-    }
-
-    if (newRefreshToken) {
-      setRefreshToken(env, newRefreshToken);
-    }
-
-    failedRequest.response.config.headers[
-      "Authorization"
-    ] = `Bearer ${newAccessToken}`;
-  };
-};
-
 const expandUrl = (uri, obj) => {
   const tpl = uriTemplate.parse(uri);
   return tpl.expand(obj);
@@ -118,11 +51,13 @@ const allowBody = method => {
   return ["PUT", "POST", "PATCH"].includes(method);
 };
 
-export const sendRequest = (
-  env,
-  { method, pathTemplate, headers, parameters, body },
-  { useInterceptor = false, state, tokenUrl, clientId, clientSecret }
-) => {
+export const sendRequest = ({
+  method,
+  pathTemplate,
+  headers,
+  parameters,
+  body
+}) => {
   const client = axios.create({
     baseURL: environment.url
   });
@@ -140,18 +75,6 @@ export const sendRequest = (
 
   if (allowBody(action)) {
     options.data = body;
-  }
-
-  if (useInterceptor) {
-    createAuthRefreshInterceptor(
-      client,
-      refreshInterceptor(env, {
-        state,
-        tokenUrl,
-        clientId,
-        clientSecret
-      })
-    );
   }
 
   return client.request(options);
