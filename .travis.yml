@@ -7,6 +7,7 @@ node_js:
 - "12"
 cache: npm
 script:
+- lerna bootstrap
 - lerna run test
 deploy:
   - provider: npm
