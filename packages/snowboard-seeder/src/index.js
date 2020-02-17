@@ -1,6 +1,7 @@
 import { merge } from "lodash";
 import {
   uuid,
+  toc,
   toValue,
   toDescription,
   toPath,
@@ -8,19 +9,16 @@ import {
 } from "snowboard-helper";
 
 import {
-  toc,
   groupPermalink,
   resourceTitle,
   resourcePermalink,
   transitionTitle,
   transitionPermalink,
-  expand,
-  normalizeStructures,
   digParameters,
   digHeaders
 } from "./helper";
 
-export async function seeds(element, additional = {}) {
+export default async function(element, additional = {}) {
   const title = toValue(element.api.title);
   const description = toDescription(element.api);
   const groups = simpleGroups(element);
@@ -103,28 +101,25 @@ function buildSimpleTransition(transition, resource, group) {
 
 export function transitions(element) {
   const data = [];
-  const dataStructures = normalizeStructures(element.api.dataStructures);
 
   element.api.resourceGroups.forEach(group => {
     group.resources.forEach(resource => {
       resource.transitions.forEach(transition => {
-        data.push(buildTransition(transition, resource, group, dataStructures));
+        data.push(buildTransition(transition, resource, group));
       });
     });
   });
 
   element.api.resources.forEach(resource => {
     resource.transitions.forEach(transition => {
-      data.push(
-        buildTransition(transition, resource, undefined, dataStructures)
-      );
+      data.push(buildTransition(transition, resource, undefined));
     });
   });
 
   return data;
 }
 
-function buildTransition(transition, resource, group, dataStructures) {
+function buildTransition(transition, resource, group) {
   const method = toValue(transition.method);
   const pathTemplate = transitionHref(transition, resource);
   const path = toPath(pathTemplate);
@@ -147,7 +142,6 @@ function buildTransition(transition, resource, group, dataStructures) {
             method: toValue(req.method),
             contentType: toValue(req.contentType),
             headers: digHeaders(req.headers),
-            structure: expand(req.dataStructure, dataStructures),
             body: toValue(req.messageBody),
             schema: toValue(req.messageBodySchema)
           },
@@ -157,7 +151,6 @@ function buildTransition(transition, resource, group, dataStructures) {
             statusCode: toValue(res.statusCode),
             contentType: toValue(res.contentType),
             headers: digHeaders(res.headers),
-            structure: expand(res.dataStructure, dataStructures),
             body: toValue(res.messageBody),
             schema: toValue(res.messageBodySchema)
           }

@@ -1,11 +1,13 @@
 import { resolve, dirname, basename, join as pathJoin } from "path";
 import { isEmpty } from "lodash";
 import chokidar from "chokidar";
+import { read } from "snowboard-reader";
+import { parse, fromRefract } from "snowboard-parser";
 import { spinner } from "snowboard-helper";
 import { cp, tmpdir, mkdirp, writeFile, jsonStringify } from "snowboard-helper";
-import { seeds as seedBuilder } from "./parser";
-import { transitions as transitionsParser } from "./parser";
-import { readAsElement } from "./helper";
+import seedBuilder, {
+  transitions as transitionsBuilder
+} from "snowboard-seeder";
 
 const dirNames = {
   html: "html",
@@ -40,13 +42,13 @@ export default async function(
 }
 
 async function buildSeed(input, config, { quiet }) {
-  const element = await spinner(readAsElement(input), "Parsing input", {
+  const element = await spinner(load(input), "Parsing input", {
     success: "Input parsed",
     quiet
   });
 
   const seeds = await seedBuilder(element, { config });
-  const transitions = transitionsParser(element);
+  const transitions = transitionsBuilder(element);
 
   return [seeds, transitions];
 }
@@ -145,4 +147,9 @@ function watchOverrides(overrides, buildDir) {
 
 function keyByValue(object, value) {
   return Object.keys(object).find(key => object[key] === value);
+}
+
+export async function load(input) {
+  const result = parse(await read(input));
+  return fromRefract(result);
 }

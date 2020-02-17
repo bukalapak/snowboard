@@ -1,0 +1,24 @@
+{
+  "name": "snowboard-seeder",
+  "description": "The snowboard seeder",
+  "version": "1.0.0-rc.1",
+  "author": "Alif Rachmawadi <subosito@bukalapak.com>",
+  "dependencies": {
+    "lodash": "^4.17.15",
+    "snowboard-helper": "^1.0.0-rc.1"
+  },
+  "files": [
+    "/lib"
+  ],
+  "keywords": [
+    "api-blueprint",
+    "snowboard"
+  ],
+  "license": "MIT",
+  "main": "lib/index.js",
+  "repository": "bukalapak/snowboard",
+  "scripts": {
+    "build": "babel src --out-dir lib --root-mode upward",
+    "test": "tape -r ../../babel.register.js 'test/**/*.js'"
+  }
+}

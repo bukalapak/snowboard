@@ -13,9 +13,10 @@
     "parcel-plugin-svelte": "^4.0.5",
     "remark": "^11.0.2",
     "remark-parse": "^7.0.2",
-    "snowboard-helper": "^1.0.0-alpha.2",
+    "snowboard-helper": "^1.0.0-rc.1",
     "snowboard-parser": "^1.0.0-rc.2",
-    "snowboard-reader": "^1.0.0-rc.1",
+    "snowboard-reader": "^1.0.0-rc.2",
+    "snowboard-seeder": "^1.0.0-rc.1",
     "svelte": "^3.18.2"
   },
   "files": [
