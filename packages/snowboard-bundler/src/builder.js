@@ -58,6 +58,13 @@ async function prepareOutput(output) {
   await mkdirp(resolve(output, dirNames.jsonHtml));
   await mkdirp(resolve(output, dirNames.json));
 
+  // required hack for svelte
+  await writeFile(
+    resolve(process.cwd(), ".browserslistrc"),
+    "last 2 chrome versions",
+    "utf8"
+  );
+
   return output;
 }
 
@@ -149,7 +156,9 @@ function keyByValue(object, value) {
   return Object.keys(object).find(key => object[key] === value);
 }
 
-export async function load(input) {
-  const result = parse(await read(input));
+async function load(input) {
+  const source = await read(input);
+  const result = await parse(source);
+
   return fromRefract(result);
 }
