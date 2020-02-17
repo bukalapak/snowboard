@@ -1,7 +1,7 @@
 import { Command, flags } from "@oclif/command";
 import { flatten } from "lodash";
 import { jsonStringify, borderlessTable, spinner } from "snowboard-helper";
-import { readMultiAsElement } from "../helper";
+import { loadMulti } from "../helper";
 import { list } from "../parser";
 
 class ListCommand extends Command {
@@ -12,7 +12,7 @@ class ListCommand extends Command {
   async run() {
     const { flags, argv } = this.parse(ListCommand);
 
-    const items = await spinner(readMultiAsElement(argv), "Parsing input(s)", {
+    const items = await spinner(loadMulti(argv), "Parsing input(s)", {
       success: "Input(s) parsed",
       quiet: flags.quiet
     });

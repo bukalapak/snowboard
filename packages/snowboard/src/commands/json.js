@@ -1,6 +1,6 @@
 import { Command, flags } from "@oclif/command";
 import { jsonStringify } from "snowboard-helper";
-import { readAsElement } from "../helper";
+import { load } from "../helper";
 
 class JsonCommand extends Command {
   static args = [{ name: "input", required: true }];
@@ -12,7 +12,7 @@ class JsonCommand extends Command {
       this.error("--quiet cannot be used when no --output=");
     }
 
-    const result = await readAsElement(args.input);
+    const result = await load(args.input);
 
     if (!result) {
       this.error(`unable to parse input: ${args.input}`);

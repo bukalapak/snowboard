@@ -9,7 +9,7 @@ import { borderlessTable, spinner } from "snowboard-helper";
 import mockRouter from "snowboard-mock-router";
 import loadConfig from "../config";
 import { parseBinding, httpServer, httpsServer } from "../helper";
-import { readMultiAsElement } from "../helper";
+import { loadMulti } from "../helper";
 
 function basicAuth({ username, password }) {
   return expressBasicAuth({
@@ -44,7 +44,7 @@ class MockCommand extends Command {
 
     const config = merge(defaultConfig, mockConfig);
 
-    const items = await spinner(readMultiAsElement(argv), "Parsing input(s)", {
+    const items = await spinner(loadMulti(argv), "Parsing input(s)", {
       sucess: "Input(s) parsed",
       quiet: flags.quiet
     });

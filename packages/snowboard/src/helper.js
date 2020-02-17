@@ -52,14 +52,13 @@ export function httpsServer(app, cert, key) {
   );
 }
 
-async function readAsRefract(input) {
-  return parse(await read(input));
+export async function load(input) {
+  const source = await read(input);
+  const result = await parse(source);
+
+  return fromRefract(result);
 }
 
-export async function readAsElement(input) {
-  return fromRefract(await readAsRefract(input));
-}
-
-export async function readMultiAsElement(inputs) {
-  return Promise.all(inputs.map(v => readAsElement(v)));
+export async function loadMulti(inputs) {
+  return Promise.all(inputs.map(v => load(v)));
 }
