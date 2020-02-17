@@ -1,7 +1,7 @@
 {
   "name": "snowboard",
   "description": "API blueprint toolkit",
-  "version": "4.0.0-rc.8",
+  "version": "4.0.0-rc.9",
   "author": "Alif Rachmawadi <subosito@bukalapak.com>",
   "bin": {
     "snowboard": "./bin/run"
@@ -24,7 +24,6 @@
     "snowboard-helper": "^1.0.0-rc.1",
     "snowboard-linter": "^1.0.0-rc.1",
     "snowboard-mock-router": "^1.0.0-rc.3",
-    "snowboard-packer": "^1.0.0-alpha.1",
     "snowboard-parser": "^1.0.0-rc.2",
     "snowboard-reader": "^1.0.0-rc.2",
     "snowboard-theme-osaka": "^1.0.0-rc.4",
