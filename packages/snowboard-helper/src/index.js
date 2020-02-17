@@ -12,6 +12,7 @@ import speakingUrl from "speakingurl";
 
 export { table, borderlessTable, spinner } from "./render";
 export { toValue, toDescription, toPath, transitionHref } from "./parser";
+export { default as toc } from "./toc";
 
 export { mkdirp, exists, cp, rm };
 
