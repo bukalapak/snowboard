@@ -1,7 +1,7 @@
 {
   "name": "snowboard-helper",
   "description": "The snowboard helper",
-  "version": "1.0.0-alpha.2",
+  "version": "1.0.0-rc.1",
   "author": "Alif Rachmawadi <subosito@bukalapak.com>",
   "dependencies": {
     "@babel/runtime": "^7.8.4",
@@ -9,6 +9,8 @@
     "fs-extra": "^8.1.0",
     "ora": "^4.0.3",
     "pretty-hrtime": "^1.0.3",
+    "remark": "^11.0.2",
+    "remark-parse": "^7.0.2",
     "safe-json-stringify": "^1.2.0",
     "speakingurl": "^14.0.1",
     "table": "^5.4.6",
