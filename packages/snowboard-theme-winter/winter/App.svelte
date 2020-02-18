@@ -67,6 +67,52 @@
   .icon-brand {
     margin-right: 0.5rem;
   }
+
+  :global(html) {
+    height: 100%;
+  }
+
+  :global(body) {
+    min-height: 100%;
+  }
+
+  :global(code[class*="language-"], pre[class*="language-"]) {
+    background-color: #fff;
+    font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+  }
+
+  :global(.is-darkmode code[class*="language-"], .is-darkmode
+      pre[class*="language-"]) {
+    background-color: #2b2b2b;
+  }
+
+  :global(.token.number, .token.tag) {
+    display: inline;
+    padding: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    text-align: inherit;
+    vertical-align: inherit;
+    border-radius: inherit;
+    font-weight: inherit;
+    white-space: inherit;
+    background: inherit;
+    margin: inherit;
+  }
+
+  :global(.menu li.is-active) {
+    background-color: #3273dc;
+    border-radius: 2px;
+  }
+
+  :global(.menu li.is-active a) {
+    color: #fff;
+  }
+
+  :global(.menu li.is-active a:hover) {
+    background-color: inherit;
+    color: #fff;
+  }
 </style>
 
 <div class="body-inner" class:is-darkmode={$darkMode}>
