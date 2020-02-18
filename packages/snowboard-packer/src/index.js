@@ -2,6 +2,7 @@ import webpack from "webpack";
 import WebpackDevServer from "webpack-dev-server";
 import CopyPlugin from "copy-webpack-plugin";
 import { resolve, dirname, basename } from "path";
+import { merge } from "lodash";
 import { cp } from "snowboard-helper";
 
 import {
@@ -14,10 +15,17 @@ import {
   watchInput
 } from "./builder";
 
+const defaultConfig = {
+  overrides: {},
+  playground: { enabled: false }
+};
+
 async function packer(
   input,
-  { config, watch, output, template, optimized, quiet }
+  { config: loadedConfig, watch, output, template, optimized, quiet }
 ) {
+  const config = merge(defaultConfig, loadedConfig);
+
   const { outDir, buildDir, htmlDir } = await setupDir(output);
   const [seeds, transitionSeeds] = await buildSeed(input, config, { quiet });
 
@@ -41,6 +49,7 @@ async function packer(
     entry: {
       index: entrypoint
     },
+    context: buildDir,
     output: {
       path: htmlDir,
       filename: "[name].js",
@@ -51,12 +60,7 @@ async function packer(
     watch,
     resolve: {
       extensions: [".mjs", ".js", ".svelte"],
-      mainFields: ["svelte", "browser", "module", "main"],
-      modules: [
-        resolve(__dirname, "../node_modules"),
-        resolve(templateDir, "../node_modules"),
-        resolve(templateDir, "../../snowboard-theme-helper/node_modules")
-      ]
+      mainFields: ["svelte", "browser", "module", "main"]
     },
     module: {
       rules: [
