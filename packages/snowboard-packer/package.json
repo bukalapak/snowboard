@@ -1,0 +1,35 @@
+{
+  "name": "snowboard-packer",
+  "description": "The snowboard packer",
+  "version": "1.0.0-rc.1",
+  "author": "Alif Rachmawadi <subosito@bukalapak.com>",
+  "dependencies": {
+    "@babel/preset-env": "^7.8.4",
+    "@babel/preset-react": "^7.8.3",
+    "babel-loader": "^8.0.6",
+    "copy-webpack-plugin": "^5.1.1",
+    "lodash": "^4.17.15",
+    "snowboard-helper": "^1.0.0-rc.1",
+    "snowboard-parser": "^1.0.0-rc.2",
+    "snowboard-reader": "^1.0.0-rc.2",
+    "snowboard-seeder": "^1.0.0-rc.1",
+    "svelte": "^3.18.2",
+    "svelte-loader": "^2.13.6",
+    "webpack": "^4.41.6",
+    "webpack-dev-server": "^3.10.3"
+  },
+  "files": [
+    "/lib"
+  ],
+  "keywords": [
+    "api-blueprint",
+    "snowboard"
+  ],
+  "license": "MIT",
+  "main": "lib/index.js",
+  "repository": "bukalapak/snowboard",
+  "scripts": {
+    "build": "babel src --out-dir lib --root-mode upward",
+    "test": "tape -r ../../babel.register.js 'test/**/*.js'"
+  }
+}
