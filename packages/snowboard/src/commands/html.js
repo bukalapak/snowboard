@@ -13,25 +13,25 @@ class HtmlCommand extends Command {
 
     const bundler = process.env.SNOWBOARD_BUNDLER;
 
-    if (bundler === "parcel") {
-      return await htmlBundle(args.input, {
+    if (bundler === "webpack") {
+      return await htmlPack(args.input, {
         config: htmlConfig,
         watch: flags.watch,
         output: detectOutput(flags.output),
         template: detectTemplate(flags.template),
         optimized: flags.optimized,
-        quiet: flags.quiet,
-        autoInstall: true
+        quiet: flags.quiet
       });
     }
 
-    return await htmlPack(args.input, {
+    return await htmlBundle(args.input, {
       config: htmlConfig,
       watch: flags.watch,
       output: detectOutput(flags.output),
       template: detectTemplate(flags.template),
       optimized: flags.optimized,
-      quiet: flags.quiet
+      quiet: flags.quiet,
+      autoInstall: true
     });
   }
 }

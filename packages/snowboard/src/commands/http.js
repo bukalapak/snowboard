@@ -14,15 +14,14 @@ class HttpCommand extends Command {
 
     const bundler = process.env.SNOWBOARD_BUNDLER;
 
-    if (bundler === "parcel") {
-      return await httpBundle(args.input, {
+    if (bundler === "webpack") {
+      return await httpPack(args.input, {
         config: htmlConfig,
         watch: flags.watch,
         output: detectOutput(flags.output),
         template: detectTemplate(flags.template),
         optimized: flags.optimized,
         quiet: flags.quiet,
-        autoInstall: true,
         host,
         port,
         ssl: flags.ssl,
@@ -31,13 +30,14 @@ class HttpCommand extends Command {
       });
     }
 
-    return await httpPack(args.input, {
+    return await httpBundle(args.input, {
       config: htmlConfig,
       watch: flags.watch,
       output: detectOutput(flags.output),
       template: detectTemplate(flags.template),
       optimized: flags.optimized,
       quiet: flags.quiet,
+      autoInstall: true,
       host,
       port,
       ssl: flags.ssl,
