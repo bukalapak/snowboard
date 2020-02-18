@@ -1,5 +1,6 @@
 import { Command, flags } from "@oclif/command";
 import { httpBundle } from "snowboard-bundler";
+import { httpPack } from "snowboard-packer";
 import { parseBinding, detectTemplate, detectOutput } from "../helper";
 import searchConfig from "../config";
 
@@ -11,14 +12,32 @@ class HttpCommand extends Command {
     const [host, port] = parseBinding(flags.bind);
     const { html: htmlConfig } = await searchConfig();
 
-    await httpBundle(args.input, {
+    const bundler = process.env.SNOWBOARD_BUNDLER;
+
+    if (bundler === "parcel") {
+      return await httpBundle(args.input, {
+        config: htmlConfig,
+        watch: flags.watch,
+        output: detectOutput(flags.output),
+        template: detectTemplate(flags.template),
+        optimized: flags.optimized,
+        quiet: flags.quiet,
+        autoInstall: true,
+        host,
+        port,
+        ssl: flags.ssl,
+        cert: flags.cert,
+        key: flags.key
+      });
+    }
+
+    return await httpPack(args.input, {
       config: htmlConfig,
       watch: flags.watch,
       output: detectOutput(flags.output),
       template: detectTemplate(flags.template),
       optimized: flags.optimized,
       quiet: flags.quiet,
-      autoInstall: true,
       host,
       port,
       ssl: flags.ssl,
