@@ -21,7 +21,7 @@ jobs:
         with:
           path: ~/.npm
           key: ${{ runner.os }}-npm-v1582109828
-          restore_keys: |
+          restore-keys: |
             ${{ runner.os }}-npm-v1582109828
             ${{ runner.os }}-npm-
       - run: npm ci
