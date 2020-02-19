@@ -2,7 +2,7 @@ import { resolve, join as pathJoin } from "path";
 import { isEmpty } from "lodash";
 import chokidar from "chokidar";
 import seedBuilder from "snowboard-seeder";
-import { spinner } from "snowboard-helper";
+import { spinner, toc } from "snowboard-helper";
 import { read } from "snowboard-reader";
 import { parse, fromRefract } from "snowboard-parser";
 import { cp, tmpdir, mkdirp, writeFile, jsonStringify } from "snowboard-helper";
@@ -42,6 +42,8 @@ export async function buildSeed(input, config, { quiet }) {
   seeds.uuids = Object.fromEntries(
     transitions.map(({ permalink, uuid }) => [permalink, uuid])
   );
+
+  seeds.descriptionToc = await toc(seeds.description);
 
   return [seeds, transitions];
 }

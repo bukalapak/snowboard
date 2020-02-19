@@ -14,7 +14,7 @@
     "snowboard-helper": "^1.0.0-rc.1",
     "snowboard-parser": "^1.0.0-rc.2",
     "snowboard-reader": "^1.0.0-rc.2",
-    "snowboard-seeder": "^1.0.0-rc.2",
+    "snowboard-seeder": "^1.0.0-rc.3",
     "svelte": "^3.18.2",
     "svelte-loader-hot": "^0.1.2",
     "webpack": "^4.41.6",
