@@ -1,7 +1,5 @@
 {
-  "presets": [
-    ["@babel/preset-env", { "targets": "last 2 chrome versions, node 12" }]
-  ],
+  "presets": [["@babel/preset-env", { "targets": "maintained node versions" }]],
   "plugins": [
     "@babel/plugin-transform-runtime",
     "@babel/plugin-proposal-class-properties"
