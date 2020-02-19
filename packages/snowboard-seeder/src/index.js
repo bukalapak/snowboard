@@ -1,7 +1,6 @@
 import { merge } from "lodash";
 import {
   uuid,
-  toc,
   toValue,
   toDescription,
   toPath,
@@ -29,7 +28,6 @@ export default async function(element, additional = {}) {
     {
       title,
       description,
-      descriptionToc: await toc(description),
       groups,
       resources,
       transitions
