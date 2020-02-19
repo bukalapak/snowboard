@@ -1,7 +1,7 @@
 {
   "name": "snowboard-seeder",
   "description": "The snowboard seeder",
-  "version": "1.0.0-rc.1",
+  "version": "1.0.0-rc.2",
   "author": "Alif Rachmawadi <subosito@bukalapak.com>",
   "dependencies": {
     "lodash": "^4.17.15",
