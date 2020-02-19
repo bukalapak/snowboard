@@ -1,9 +1,7 @@
 import { resolve, join as pathJoin } from "path";
 import { isEmpty } from "lodash";
 import chokidar from "chokidar";
-import seedBuilder, {
-  transitions as transitionsBuilder
-} from "snowboard-seeder";
+import seedBuilder from "snowboard-seeder";
 import { spinner } from "snowboard-helper";
 import { read } from "snowboard-reader";
 import { parse, fromRefract } from "snowboard-parser";
@@ -39,8 +37,11 @@ export async function buildSeed(input, config, { quiet }) {
     quiet
   });
 
-  const seeds = await seedBuilder(element, { config });
-  const transitions = transitionsBuilder(element);
+  const { transitions, ...seeds } = await seedBuilder(element, { config });
+
+  seeds.uuids = Object.fromEntries(
+    transitions.map(({ permalink, uuid }) => [permalink, uuid])
+  );
 
   return [seeds, transitions];
 }
