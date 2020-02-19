@@ -3,7 +3,9 @@
   "private": true,
   "scripts": {
     "lint": "prettier --check '{packages/*,.}/{README.md,{babel.config,lerna,package}.json}' '**/*.{js,html,svelte}'",
-    "fmt": "prettier --write '{packages/*,.}/{README.md,{babel.config,lerna,package}.json}' '**/*.{js,html,svelte}'"
+    "fmt": "prettier --write '{packages/*,.}/{README.md,{babel.config,lerna,package}.json}' '**/*.{js,html,svelte}'",
+    "bootstrap": "lerna bootstrap",
+    "test": "lerna run test"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
