@@ -1,7 +1,7 @@
 {
   "name": "snowboard",
   "description": "API blueprint toolkit",
-  "version": "4.0.0-rc.13",
+  "version": "4.0.0-rc.14",
   "author": "Alif Rachmawadi <subosito@bukalapak.com>",
   "bin": {
     "snowboard": "./bin/run"
@@ -20,11 +20,10 @@
     "globby": "^11.0.0",
     "lodash": "^4.17.15",
     "morgan": "^1.9.1",
-    "snowboard-bundler": "^1.0.0-rc.6",
     "snowboard-helper": "^1.0.0-rc.1",
     "snowboard-linter": "^1.0.0-rc.1",
     "snowboard-mock-router": "^1.0.0-rc.3",
-    "snowboard-packer": "^1.0.0-rc.1",
+    "snowboard-packer": "^1.0.0-rc.5",
     "snowboard-parser": "^1.0.0-rc.2",
     "snowboard-reader": "^1.0.0-rc.2",
     "snowboard-theme-osaka": "^1.0.0-rc.4",
@@ -46,6 +45,7 @@
   "oclif": {
     "commands": "./lib/commands",
     "bin": "snowboard",
+    "repositoryPrefix": "<%- repo %>/blob/master/packages/<%- c.pluginName %>/src/commands/<%- c.id %>.js",
     "plugins": [
       "@oclif/plugin-help",
       "@oclif/plugin-not-found"
@@ -54,6 +54,10 @@
   "repository": "bukalapak/snowboard",
   "scripts": {
     "build": "babel src --out-dir lib --root-mode upward",
+    "manifest": "oclif-dev manifest",
+    "pack-darwin": "oclif-dev pack --targets darwin-x64",
+    "pack-linux": "oclif-dev pack --targets linux-x64",
+    "readme": "oclif-dev readme",
     "test": "tape -r ../../babel.register.js 'test/**/*.js'"
   }
 }
