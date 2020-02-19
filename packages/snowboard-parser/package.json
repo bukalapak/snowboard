@@ -7,9 +7,6 @@
     "api-elements": "^0.2.3",
     "protagonist": "^2.0.2"
   },
-  "devDependencies": {
-    "degit": "^2.8.0"
-  },
   "files": [
     "/lib"
   ],
