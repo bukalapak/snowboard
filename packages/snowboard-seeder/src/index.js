@@ -23,7 +23,7 @@ export default async function(element, additional = {}) {
   const description = toDescription(element.api);
   const groups = simpleGroups(element);
   const resources = simpleResources(element.api.resources);
-  const transitions = simpleTransitions(element);
+  const transitions = buildTransitions(element);
 
   return merge(
     {
@@ -32,10 +32,7 @@ export default async function(element, additional = {}) {
       descriptionToc: await toc(description),
       groups,
       resources,
-      transitions,
-      uuids: Object.fromEntries(
-        transitions.map(transition => [transition.permalink, uuid()])
-      )
+      transitions
     },
     additional
   );
@@ -59,33 +56,13 @@ function simpleResources(resources, group) {
       permalink: resourcePermalink(resource, group),
       description: toDescription(resource),
       transitions: resource.transitions.map(transition => {
-        return buildSimpleTransition(transition, resource, group);
+        return simpleTransition(transition, resource, group);
       })
     };
   });
 }
 
-function simpleTransitions(element) {
-  const data = [];
-
-  element.api.resourceGroups.forEach(group => {
-    group.resources.forEach(resource => {
-      resource.transitions.forEach(transition => {
-        data.push(buildSimpleTransition(transition, resource, group));
-      });
-    });
-  });
-
-  element.api.resources.forEach(resource => {
-    resource.transitions.forEach(transition => {
-      data.push(buildSimpleTransition(transition, resource));
-    });
-  });
-
-  return data;
-}
-
-function buildSimpleTransition(transition, resource, group) {
+function simpleTransition(transition, resource, group) {
   const method = toValue(transition.method);
   const pathTemplate = transitionHref(transition, resource);
   const path = toPath(pathTemplate);
@@ -95,11 +72,11 @@ function buildSimpleTransition(transition, resource, group) {
     permalink: transitionPermalink(transition, resource, group),
     method,
     path,
-    meta: buildSimpleMeta(resource, group)
+    meta: buildMeta(resource, group)
   };
 }
 
-export function transitions(element) {
+function buildTransitions(element) {
   const data = [];
 
   element.api.resourceGroups.forEach(group => {
@@ -128,6 +105,7 @@ function buildTransition(transition, resource, group) {
     title: transitionTitle({ transition, method, path }),
     description: toDescription(transition),
     permalink: transitionPermalink(transition, resource, group),
+    uuid: uuid(),
     method,
     path,
     pathTemplate,
@@ -160,7 +138,7 @@ function buildTransition(transition, resource, group) {
   };
 }
 
-function buildSimpleMeta(resource, group) {
+function buildMeta(resource, group) {
   const meta = {};
 
   if (resource) {
@@ -175,20 +153,6 @@ function buildSimpleMeta(resource, group) {
       title: toValue(group.title),
       permalink: groupPermalink(group)
     };
-  }
-
-  return meta;
-}
-
-function buildMeta(resource, group) {
-  const meta = buildSimpleMeta(resource, group);
-
-  if (meta.resource) {
-    meta.resource.description = toDescription(resource);
-  }
-
-  if (meta.group) {
-    meta.group.description = toDescription(group);
   }
 
   return meta;
