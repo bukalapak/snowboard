@@ -7,27 +7,12 @@ import { read } from "snowboard-reader";
 import { parse, fromRefract } from "snowboard-parser";
 import { cp, tmpdir, mkdirp, writeFile, jsonStringify } from "snowboard-helper";
 
-const dirNames = {
-  html: "html",
-  jsonHtml: "html/__json__",
-  json: "json",
-  tmp: "tmp"
-};
-
 export async function setupDir(output) {
-  await Promise.all(
-    Object.values(dirNames).map(dirName => {
-      return mkdirp(resolve(output, dirName));
-    })
-  );
-
-  const tmpDir = resolve(output, dirNames.tmp);
-  const buildDir = await tmpdir({ dir: tmpDir, prefix: "build-" });
+  const buildDir = await tmpdir({ prefix: "snowboard-build-" });
 
   return {
     buildDir,
-    outDir: resolve(output),
-    htmlDir: resolve(output, dirNames.html)
+    outDir: resolve(output)
   };
 }
 
@@ -62,9 +47,9 @@ export async function writeJSON(
   uuidMap,
   { optimized }
 ) {
-  const jsonDir = resolve(outDir, dirNames.json);
-  const jsonHtmlDir = resolve(outDir, dirNames.jsonHtml);
+  const jsonDir = resolve(outDir, "__json__");
 
+  await mkdirp(jsonDir);
   await Promise.all(
     transitionSeeds.map(async transition => {
       const filename = `${uuidMap[transition.permalink]}.json`;
@@ -76,8 +61,6 @@ export async function writeJSON(
       );
     })
   );
-
-  await cp(jsonDir, jsonHtmlDir);
 }
 
 async function load(input) {
