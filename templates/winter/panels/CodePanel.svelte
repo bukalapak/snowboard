@@ -38,20 +38,25 @@
             Body
           </a>
         </li>
-        <li class:is-active={tabIndex === 1}>
-          <a data-index="1" href="javascript:void(0)" on:click={tabSelect}>
-            Schema
-          </a>
-        </li>
+
+        {#if schema}
+          <li class:is-active={tabIndex === 1}>
+            <a data-index="1" href="javascript:void(0)" on:click={tabSelect}>
+              Schema
+            </a>
+          </li>
+        {/if}
       </ul>
     </div>
     <div>
       <section class="tab-content {activeBody}">
         <CodeBlock type={contentType} body={example} />
       </section>
-      <section class="tab-content {activeSchema}">
-        <CodeBlock type="application/json" body={schema} />
-      </section>
+      {#if schema}
+        <section class="tab-content {activeSchema}">
+          <CodeBlock type="application/json" body={schema} />
+        </section>
+      {/if}
     </div>
   </div>
 {/if}
