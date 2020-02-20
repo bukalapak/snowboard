@@ -1,14 +1,11 @@
 <script>
-  import { colorize, slugify } from "../util.js";
+  import { router } from "yrv";
+  import { colorize, slugify, handleLink } from "../util";
 
   export let title;
   export let actions;
-  export let currentSlug;
-  export let parentSLug;
+  export let parentSlug;
   export let hidden = false;
-
-  export let handleClick;
-  export let handleGroupClick;
 </script>
 
 <style>
@@ -31,10 +28,10 @@
 {#if title}
   <li>
     <a
-      data-slug="{parentSLug}~{slugify(title)}"
-      href="#/g~{parentSLug}~{slugify(title)}"
+      data-slug="{parentSlug}~{slugify(title)}"
+      href="/#/g~{parentSlug}~{slugify(title)}"
       class="is-inline-block"
-      on:click={handleGroupClick}>
+      on:click={handleLink}>
       {title}
     </a>
     <a
@@ -58,10 +55,10 @@
         <li>
           <a
             data-slug={action.slug}
-            href="#/{action.slug}"
+            href="/#/{action.slug}"
             class="menu-ellipsis"
-            on:click={handleClick}
-            class:is-active={action.slug === currentSlug}>
+            class:is-active={action.slug === $router.params.slug}
+            on:click={handleLink}>
             <code class="tag {colorize(action.method)} is-uppercase">
               {action.method}
             </code>

@@ -1,14 +1,15 @@
 <script>
   import { onMount } from "svelte";
+  import { Router, Route, Link, router } from "yrv";
+
+  Router.hashchange = true;
+
   import qs from "querystringify";
 
+  import Home from "./winter/pages/Home.svelte";
+  import Action from "./winter/pages/Action.svelte";
   import MenuPanel from "./winter/panels/MenuPanel.svelte";
-  import RequestPanel from "./winter/panels/RequestPanel.svelte";
-  import ResponsePanel from "./winter/panels/ResponsePanel.svelte";
-  import ParameterPanel from "./winter/panels/ParameterPanel.svelte";
   import SelectorPanel from "./winter/panels/SelectorPanel.svelte";
-  import PlaygroundPanel from "./winter/panels/PlaygroundPanel.svelte";
-  import ScenarioPanel from "./winter/panels/ScenarioPanel.svelte";
 
   import {
     toc,
@@ -28,7 +29,8 @@
     pushHistory,
     basePath,
     getEnv,
-    slugify
+    slugify,
+    filterActions
   } from "./winter/util.js";
 
   import { env, auth, token } from "./winter/store.js";
@@ -39,89 +41,59 @@
   export let tagActions;
   export let config;
 
-  let index = -1;
-  let challengePair = getPKCE();
+  $: action = getAction($router.params.slug);
+  $: query = getQuery($router.params.slug);
+  $: filteredActions = filterActions(tagActions, query);
 
-  function handleClick(event) {
-    let target = event.target;
-
-    if (target.nodeName == "SPAN") {
-      target = target.parentElement;
-    }
-
-    const slug = target.dataset["slug"];
-    index = actions.findIndex(el => el.slug === slug);
-    document.body.scrollTop = document.documentElement.scrollTop = 0;
+  function findAction(slug) {
+    return actions.find(el => el.slug === slug);
   }
 
-  function handlePopstate() {
-    const hash = location.hash;
-    const prevIndex = index;
-    let isDetail = false;
-    if (hash.match("#/")) {
-      let slug = hash.replace("#/", "");
-      switch (true) {
-        case slug.startsWith("g~"):
-          const groupSlug = slug.substr(2);
-          const firstAction = firstGroupAction(groupSlug);
+  function getAction(slug) {
+    if (!slug) return;
 
-          if (firstAction) {
-            slug = firstAction.slug;
-            query = `g:${groupSlug}`;
-          }
+    if (slug.startsWith("rg~")) {
+      const tagSlug = slug.substr(3);
+      const firstGroup = firstTagGroup(tagSlug);
 
-          break;
-        case slug.startsWith("rg~"):
-          const tagSlug = slug.substr(3);
-          const firstGroup = firstTagGroup(tagSlug);
+      if (firstGroup) {
+        const groupSlug = `${tagSlug}~${slugify(firstGroup.title)}`;
+        const selected = firstGroupAction(groupSlug);
 
-          if (firstGroup) {
-            const firstAction = firstGroupAction(
-              `${tagSlug}~${slugify(firstGroup.title)}`
-            );
-
-            if (firstAction) {
-              slug = firstAction.slug;
-              query = `rg:${tagSlug}`;
-            }
-          }
-          break;
-        default:
-          isDetail = true;
-          break;
+        return findAction(selected.slug);
       }
-      index = actions.findIndex(el => el.slug === slug);
-      // sync group
-      if (
-        isDetail &&
-        !slug.startsWith("rg~") &&
-        (query !== "" || prevIndex === -1) &&
-        actions[index].tags.length > 1
-      ) {
-        query = `g:${slugify(actions[index].tags[0])}~${slugify(
-          actions[index].tags[1]
-        )}`;
-      }
-    } else {
-      query = "";
-      index = -1;
+
+      return;
     }
+
+    if (slug.startsWith("g~")) {
+      const groupSlug = slug.substr(2);
+      const selected = firstGroupAction(groupSlug);
+
+      return findAction(selected.slug);
+    }
+
+    return findAction(slug);
   }
 
-  function handleTagClick(event) {
-    const tagSlug = event.target.dataset["slug"];
-    const firstGroup = firstTagGroup(tagSlug);
+  function getQuery(slug) {
+    if (!slug) return "";
 
-    if (firstGroup) {
-      const firstAction = firstGroupAction(
-        `${tagSlug}~${slugify(firstGroup.title)}`
-      );
-      const slug = firstAction.slug;
+    if (slug.startsWith("rg~")) {
+      const tagPrefix = slug.substr(0, 2);
+      const tagSlug = slug.substr(3);
 
-      index = actions.findIndex(el => el.slug === slug);
-      query = `rg:${tagSlug}`;
-      document.body.scrollTop = document.documentElement.scrollTop = 0;
+      return `${tagPrefix}:${tagSlug}`;
     }
+
+    if (slug.startsWith("g~")) {
+      const groupPrefix = slug.substr(0, 1);
+      const groupSlug = slug.substr(2);
+
+      return `${groupPrefix}:${groupSlug}`;
+    }
+
+    return "";
   }
 
   function firstTagGroup(tagSlug) {
@@ -135,18 +107,6 @@
 
     if (matches.length > 0) {
       return matches[0].children[0];
-    }
-  }
-
-  function handleGroupClick(event) {
-    const slug = event.target.dataset["slug"];
-    const firstAction = firstGroupAction(slug);
-
-    if (firstAction) {
-      const slug = firstAction.slug;
-      index = actions.findIndex(el => el.slug === slug);
-      query = `g:${slug}`;
-      document.body.scrollTop = document.documentElement.scrollTop = 0;
     }
   }
 
@@ -168,46 +128,14 @@
   }
 
   function tocClick(event) {
-    index = -1;
     let href = event.target.getAttribute("href");
     pushHistory(href);
   }
 
   $: {
-    document.title =
-      (currentAction && `${currentAction.title} - ${title}`) || title;
+    document.title = (action && `${action.title} - ${title}`) || title;
   }
 
-  $: groupTransactionsFunc = action => {
-    if (typeof action === "undefined") {
-      return undefined;
-    }
-    let data = Object.assign({}, action);
-    data.groupedTransactions = [];
-    data.transactions.forEach(transaction => {
-      let title = transaction.request.title;
-      let foundIndex = null;
-      data.groupedTransactions.forEach((transaction, index) => {
-        if (foundIndex === null && transaction.request.title === title) {
-          foundIndex = index;
-        }
-      });
-      if (foundIndex === null) {
-        data.groupedTransactions.push({
-          request: transaction.request,
-          responses: [transaction.response]
-        });
-      } else {
-        data.groupedTransactions[foundIndex].responses.push(
-          transaction.response
-        );
-      }
-    });
-    return data;
-  };
-  $: transformedAction = groupTransactionsFunc(actions[index]);
-
-  $: currentAction = actions[index];
   $: environment =
     config.playground.enabled && config.playground.environments[$env];
 
@@ -234,7 +162,7 @@
   let showMenu = true;
   let collapsed = false;
   let authenticating = false;
-  let query = "";
+  let challengePair = getPKCE();
 
   function burgerClick() {
     showMenu = !showMenu;
@@ -251,68 +179,6 @@
     if (searchInput) {
       searchInput.focus();
     }
-  }
-
-  function sample(action) {
-    return action.transactions[0].request;
-  }
-
-  function headersMap(action) {
-    return sample(action)
-      .headers.filter(header => header.name != "Authorization")
-      .map(header => {
-        return {
-          used: true,
-          required: false,
-          name: header.name,
-          value: header.example || ""
-        };
-      });
-  }
-
-  function authHeader(action, environment) {
-    const header = sample(action).headers.find(
-      header => header.name === "Authorization"
-    );
-
-    header.value = header.example;
-    header.used = true;
-
-    if (isAuth(environment, "basic")) {
-      header.value = `Basic ${basicAuth(
-        environment.auth.options.username,
-        environment.auth.options.password
-      )}`;
-    }
-
-    if (isAuth(environment, "apikey")) {
-      header.name = environment.auth.options.header;
-      header.value = environment.auth.options.key;
-    }
-
-    if (isAuth(environment, "oauth2")) {
-      if ($auth.split(";").includes($env)) {
-        header.value = `Bearer ${$token}`;
-      }
-    }
-
-    return header;
-  }
-
-  function parametersMap(action) {
-    return action.parameters.map(param => {
-      return {
-        used: param.required,
-        required: param.required,
-        name: param.name,
-        value: param.example || ""
-      };
-    });
-  }
-
-  function bodyMap(action) {
-    const example = sample(action).example;
-    return stringify(example);
   }
 
   const darkMode = {
@@ -342,7 +208,6 @@
   }
 
   onMount(async () => {
-    // handle oauth2 callback
     if (isAuth(environment, "oauth2")) {
       const authParam = qs.parse(location.search);
 
@@ -372,39 +237,6 @@
         clearPKCE();
         clearState();
       }
-    }
-
-    // handle permalink
-    const hash = location.hash;
-
-    if (hash.match("#/")) {
-      let slug = hash.replace("#/", "");
-
-      if (slug.startsWith("g~")) {
-        const groupSlug = slug.substr(3 + currentAction.tags[0].length);
-        const firstAction = firstGroupAction(groupSlug);
-
-        if (firstAction) {
-          slug = firstAction.slug;
-          query = `g:${currentAction.tags[0]}~${groupSlug}`;
-        }
-      }
-
-      if (slug.startsWith("rg~")) {
-        const tagSlug = slug.substr(3);
-        const firstGroup = firstTagGroup(tagSlug);
-
-        if (firstGroup) {
-          const firstAction = firstGroupAction(slugify(firstGroup.title));
-
-          if (firstAction) {
-            slug = firstAction.slug;
-            query = `rg:${tagSlug}`;
-          }
-        }
-      }
-
-      index = actions.findIndex(el => el.slug === slug);
     }
   });
 
@@ -437,14 +269,6 @@
   .main.is-darkmode {
     background-color: #000;
     box-shadow: 0 2px 0 2px #363636;
-  }
-
-  .breadcrumb-right {
-    margin-top: 0.3em;
-  }
-
-  .box-wrapper {
-    border-radius: 0;
   }
 
   .body-inner {
@@ -635,18 +459,14 @@
       id="mainnav">
       <MenuPanel
         {title}
-        {tagActions}
+        tagActions={filteredActions}
         tagHeaders={toc(description)}
-        currentSlug={currentAction && currentAction.slug}
+        currentSlug={action && action.slug}
         actionsCount={actions.length}
         isCollapsed={collapsed}
         isDarkmode={darkMode.active}
         {query}
         {config}
-        {handleClick}
-        {handleGroupClick}
-        {handlePopstate}
-        {handleTagClick}
         {tocClick}
         {searchClick} />
       <div
@@ -666,80 +486,14 @@
     <div
       class="column is-three-quarters main"
       class:is-darkmode={darkMode.active}>
-      {#if index === -1}
-        <div class="content">
-          {@html markdown(description)}
-        </div>
-      {/if}
-
-      {#if currentAction}
-        <div class="columns">
-          <div class="column">
-            <h1 class="title is-4">{currentAction.title}</h1>
-          </div>
-          <div class="column">
-            <nav
-              class="breadcrumb breadcrumb-right is-pulled-right"
-              aria-label="breadcrumbs">
-              <ul>
-                {#each currentAction.tags as tag, index}
-                  <li>
-                    {#if index === 0}
-                      <a href="javascript:void(0)">{tag}</a>
-                    {:else}
-                      <a
-                        data-slug="{slugify(currentAction.tags[0])}~{slugify(tag)}"
-                        href="#/g~{slugify(currentAction.tags[0])}~{slugify(tag)}"
-                        on:click={handleGroupClick}>
-                        {tag}
-                      </a>
-                    {/if}
-                  </li>
-                {/each}
-              </ul>
-            </nav>
-          </div>
-        </div>
-
-        <hr />
-
-        <div class="tags has-addons are-large">
-          <code class="tag is-uppercase {colorize(currentAction.method)}">
-            {currentAction.method}
-          </code>
-          <code class="tag ">{currentAction.pathTemplate}</code>
-        </div>
-
-        <div class="content">
-          {@html markdown(currentAction.description)}
-        </div>
-
-        {#if config.playground.enabled}
-          {#if environment.playground !== false}
-            <PlaygroundPanel
-              {currentAction}
-              pkceChallenge={challengePair}
-              environments={config.playground.environments}
-              requestHeaders={headersMap(currentAction)}
-              requestAuthHeader={authHeader(currentAction, environment)}
-              requestParameters={parametersMap(currentAction)}
-              requestBody={bodyMap(currentAction)}
-              isDarkmode={darkMode.active} />
-          {/if}
-        {/if}
-
-        <ParameterPanel parameters={currentAction.parameters} />
-
-        {#each transformedAction.groupedTransactions as { request, responses }, index}
-          <ScenarioPanel
-            show={index === 0}
-            isDarkmode={darkMode.active}
-            {request}
-            {responses}
-            {index}
-            count={transformedAction.groupedTransactions.length} />
-        {/each}
-      {/if}
+      <Router>
+        <Route exact>
+          <Home {title} {description} />
+        </Route>
+        <Route path="/:slug">
+          <Action {action} {config} {environment} {challengePair} {darkMode} />
+        </Route>
+      </Router>
     </div>
   </div>
   <footer class="footer" class:is-darkmode={darkMode.active}>

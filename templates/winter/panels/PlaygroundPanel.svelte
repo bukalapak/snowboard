@@ -1,5 +1,6 @@
 <script>
   import { beforeUpdate } from "svelte";
+  import { router } from "yrv";
 
   import CollapsiblePanel from "./CollapsiblePanel.svelte";
   import FieldDisabled from "../components/FieldDisabled.svelte";
@@ -71,10 +72,7 @@
     copyUrl(currentUrl, requestParameters);
   }
 
-  beforeUpdate(() => {
-    const hash = location.hash.replace("#/", "");
-    if (hash !== currentAction.slug) response = undefined;
-  });
+  $: response = $router && undefined;
 </script>
 
 <style>
@@ -190,12 +188,14 @@
             rounded={true} />
         {/each}
 
-        <FieldSwitch
-          name={requestAuthHeader.name}
-          required={requestAuthHeader.required}
-          used={requestAuthHeader.used}
-          bind:value={requestAuthHeader.value}
-          rounded={true} />
+        {#if requestAuthHeader}
+          <FieldSwitch
+            name={requestAuthHeader.name}
+            required={requestAuthHeader.required}
+            used={requestAuthHeader.used}
+            bind:value={requestAuthHeader.value}
+            rounded={true} />
+        {/if}
       {/if}
     </div>
 

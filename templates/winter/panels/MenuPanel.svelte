@@ -1,32 +1,30 @@
 <script>
+  import { navigateTo } from "yrv";
   import MenuItem from "../components/MenuItem.svelte";
 
-  import { colorize, slugify, filterActions, basePath } from "../util.js";
+  import {
+    colorize,
+    slugify,
+    filterActions,
+    basePath,
+    handleLink
+  } from "../util.js";
 
   export let title;
   export let config = {};
   export let tagActions = [];
   export let tagHeaders = [];
-  export let currentSlug;
   export let actionsCount;
   export let isCollapsed;
   export let isDarkmode;
 
-  export let handleClick;
-  export let handleGroupClick;
-  export let handleTagClick;
-  export let handlePopstate;
   export let tocClick;
   export let searchClick;
   export let query;
 
-  $: filteredActions = filterActions(tagActions, query);
-
   function headerLink(text) {
     return text.toLowerCase().replace(/\s/g, "-");
   }
-
-  window.onpopstate = handlePopstate;
 </script>
 
 <style>
@@ -194,14 +192,14 @@
       </ul>
     {/if}
 
-    {#each filteredActions as tag}
+    {#each tagActions as tag}
       {#if tag.title}
         <p class="menu-label">
           <a
             data-slug={slugify(tag.title)}
-            href="#/rg~{slugify(tag.title)}"
+            href="/#/rg~{slugify(tag.title)}"
             class="is-inline-block"
-            on:click={handleTagClick}>
+            on:click={handleLink}>
             {tag.title}
           </a>
         </p>
@@ -213,10 +211,7 @@
             title={child.title}
             actions={child.actions}
             hidden={actionsCount > 50}
-            parentSLug={slugify(tag.title)}
-            {currentSlug}
-            {handleClick}
-            {handleGroupClick} />
+            parentSlug={slugify(tag.title)} />
         {/each}
       </ul>
     {/each}
