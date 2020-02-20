@@ -6,7 +6,9 @@
     "fmt": "prettier --write '{packages/*,.}/{README.md,{babel.config,lerna,package}.json}' '**/*.{js,html,svelte}'",
     "bootstrap": "lerna bootstrap",
     "build": "lerna run build",
-    "test": "lerna run test"
+    "test": "lerna run test",
+    "pack-darwin": "lerna run pack-darwin --scope snowboard",
+    "pack-linux": "lerna run pack-linux --scope snowboard"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
