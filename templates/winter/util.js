@@ -11,6 +11,7 @@ import urlParse from "url-parse";
 import createAuthRefreshInterceptor from "axios-auth-refresh";
 import copy from "clipboard-copy";
 import pkce from "pkce";
+import { navigateTo } from "yrv";
 import { token } from "./store";
 
 Prism.languages.json = {
@@ -376,6 +377,18 @@ const getState = () => {
 const clearPKCE = () => pkceStore.clear();
 const clearState = () => store.remove("state");
 
+const handleLink = event => {
+  event.preventDefault();
+
+  let href = event.target.getAttribute("href");
+
+  if (!href) {
+    href = event.target.parentElement.getAttribute("href");
+  }
+
+  navigateTo(href.substr(2));
+};
+
 export {
   alias,
   allowBody,
@@ -406,5 +419,6 @@ export {
   setRefreshToken,
   getRefreshToken,
   removeRefreshToken,
-  copyUrl
+  copyUrl,
+  handleLink
 };
