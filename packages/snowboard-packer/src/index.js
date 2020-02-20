@@ -1,9 +1,10 @@
 import webpack from "webpack";
 import WebpackDevServer from "webpack-dev-server";
 import CopyPlugin from "copy-webpack-plugin";
+import bufferReplace from "buffer-replace";
 import { resolve, dirname, basename } from "path";
 import { merge } from "lodash";
-import { cp } from "snowboard-helper";
+import { cp, readFile } from "snowboard-helper";
 
 import {
   setupDir,
@@ -26,7 +27,7 @@ async function packer(
 ) {
   const config = merge(defaultConfig, loadedConfig);
 
-  const { outDir, buildDir, htmlDir } = await setupDir(output);
+  const { outDir, buildDir } = await setupDir(output);
   const [seeds, transitionSeeds] = await buildSeed(input, config, { quiet });
 
   const templateDir = dirname(template);
@@ -46,28 +47,26 @@ async function packer(
   }
 
   return {
-    entry: {
-      index: entrypoint
-    },
+    entry: entrypoint,
     context: buildDir,
     output: {
-      path: htmlDir,
-      filename: "[name].js",
-      chunkFilename: "[name].[id].js"
+      path: outDir,
+      filename: "index.js"
     },
     mode: optimized ? "production" : "development",
-    devtool: optimized ? false : "source-map",
+    devtool: optimized || "source-map",
     watch,
     resolve: {
-      extensions: [".mjs", ".js", ".svelte"],
-      mainFields: ["svelte", "browser", "module", "main"]
+      extensions: [".wasm", ".mjs", ".js", ".json", ".svelte"],
+      mainFields: ["svelte", "browser", "module", "main"],
+      modules: moduleDirs(templateDir)
     },
     module: {
       rules: [
         {
           test: /\.svelte$/,
           use: {
-            loader: "svelte-loader",
+            loader: require.resolve("svelte-loader-hot"),
             options: {
               hotReload: watch
             }
@@ -77,11 +76,14 @@ async function packer(
           test: /\.(js|jsx)$/,
           exclude: /node_modules/,
           use: {
-            loader: "babel-loader",
+            loader: require.resolve("babel-loader"),
             options: {
               presets: [
-                ["@babel/preset-env", { targets: "last 2 chrome versions" }],
-                "@babel/preset-react"
+                [
+                  require.resolve("@babel/preset-env"),
+                  { targets: "last 2 chrome versions" }
+                ],
+                require.resolve("@babel/preset-react")
               ]
             }
           }
@@ -92,7 +94,10 @@ async function packer(
       new CopyPlugin([
         {
           from: template,
-          to: htmlDir
+          to: outDir,
+          transform(content, path) {
+            return normalize(content);
+          }
         }
       ])
     ]
@@ -112,7 +117,7 @@ export async function htmlPack(input, options) {
 }
 
 export async function httpPack(input, options) {
-  const { port, host, watch } = options;
+  const { port, host = "localhost", watch, quiet } = options;
 
   const config = await packer(input, options);
 
@@ -120,10 +125,47 @@ export async function httpPack(input, options) {
     config.plugins.push(new webpack.HotModuleReplacementPlugin());
   }
 
-  const server = new WebpackDevServer(webpack(config), {
+  const compiler = webpack(config);
+  const publicPath = "/";
+  const serverOptions = {
     contentBase: config.output.path,
-    hot: watch
-  });
+    liveReload: false,
+    quiet,
+    hot: watch,
+    publicPath,
+    before: async (app, server, compiler) => {
+      const templateContent = await readFile(options.template);
+      const content = normalize(templateContent);
+
+      app.get("*", async (req, res, next) => {
+        if (req.path.match("hot-update")) {
+          if (dirname(req.path) !== publicPath) {
+            return res.redirect(publicPath + basename(req.path));
+          }
+        }
+
+        if (
+          req.path.endsWith(".js") ||
+          req.path.endsWith(".json") ||
+          req.path.match("sockjs")
+        ) {
+          return next();
+        }
+
+        res.set("Content-Type", "text/html");
+        res.send(content);
+      });
+    }
+  };
+
+  if (options.ssl) {
+    serverOptions.https = {
+      cert: options.cert,
+      key: options.key
+    };
+  }
+
+  const server = new WebpackDevServer(compiler, serverOptions);
 
   return new Promise((resolve, reject) => {
     server.listen(port, host, err => {
@@ -131,4 +173,22 @@ export async function httpPack(input, options) {
       resolve(server);
     });
   });
+}
+
+function normalize(content) {
+  return bufferReplace(content, "./", "/");
+}
+
+function moduleDirs(templateDir) {
+  const { _where: installDir } = require("../package.json");
+
+  if (installDir) {
+    return [resolve(installDir, "node_modules")];
+  }
+
+  return [
+    resolve(__dirname, "../node_modules"),
+    resolve(templateDir, "../node_modules"),
+    resolve(templateDir, "../../snowboard-theme-helper/node_modules")
+  ];
 }
