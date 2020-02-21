@@ -6,9 +6,9 @@
   "dependencies": {
     "attributes-kit": "^1.0.4",
     "axios": "^0.19.2",
-    "axios-auth-refresh": "^2.2.1",
+    "axios-auth-refresh": "^2.2.2",
     "axios-oauth-client": "^1.2.1",
-    "baseui": "^9.52.0",
+    "baseui": "^9.56.0",
     "lodash": "^4.17.15",
     "memoize-one": "^5.1.1",
     "navi": "^0.14.0",

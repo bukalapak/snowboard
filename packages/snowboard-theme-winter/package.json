@@ -13,7 +13,7 @@
     "safe-json-stringify": "^1.2.0",
     "snowboard-theme-helper": "^1.0.0-rc.3",
     "svelte": "^3.18.2",
-    "yrv": "^0.0.18"
+    "yrv": "^0.0.19"
   },
   "license": "MIT",
   "main": "index.js",
