@@ -1,6 +1,6 @@
 <script>
   import { onMount } from "svelte";
-  import { Router, Route, Link, router } from "yrv";
+  import { Router, Route, Link, router, navigateTo } from "yrv";
 
   Router.hashchange = true;
 
@@ -26,7 +26,6 @@
     exchangeToken,
     isAuth,
     isPKCE,
-    pushHistory,
     basePath,
     getEnv,
     slugify,
@@ -128,8 +127,10 @@
   }
 
   function tocClick(event) {
+    navigateTo("/");
+
     let href = event.target.getAttribute("href");
-    pushHistory(href);
+    window.scrollTo(0, document.getElementById(href.substr(1)).offsetTop - 80);
   }
 
   $: {
@@ -214,7 +215,7 @@
       if (authParam.code) {
         authenticating = true;
 
-        pushHistory(basePath(config));
+        navigateTo(basePath(config));
 
         const { accessToken, refreshToken } = await exchangeToken(
           authParam.code,
@@ -394,6 +395,10 @@
     .main {
       transition: width 0.3s;
     }
+
+    .content {
+      scroll-margin: 200px;
+    }
   }
 </style>
 
@@ -403,12 +408,12 @@
     role="navigation"
     aria-label="main navigation">
     <div class="navbar-brand">
-      <a href="/" class="navbar-item">
+      <Link href="/" class="navbar-item">
         <span class="icon icon-brand is-medium has-text-grey-light">
           <i class="fas fa-lg fa-chalkboard" />
         </span>
         <span class="title is-4">{title}</span>
-      </a>
+      </Link>
 
       <a
         href="javascript:void(0)"
@@ -490,7 +495,7 @@
         <Route exact>
           <Home {title} {description} />
         </Route>
-        <Route path="/:slug">
+        <Route exact path="/:slug">
           <Action {action} {config} {environment} {challengePair} {darkMode} />
         </Route>
       </Router>

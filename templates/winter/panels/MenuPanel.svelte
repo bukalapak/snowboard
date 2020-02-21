@@ -1,5 +1,5 @@
 <script>
-  import { navigateTo } from "yrv";
+  import { navigateTo, Link } from "yrv";
   import MenuItem from "../components/MenuItem.svelte";
 
   import {
@@ -165,22 +165,19 @@
 
   <div class="menu-wrapper">
     <p class="menu-label">
-      <a href="/">{title}</a>
+      <Link href={basePath(config)}>{title}</Link>
     </p>
     {#if query === ''}
-      <ul class="menu-list">
-        <li>
-          <a href={basePath(config)} on:click|preventDefault={tocClick}>
-            Getting Started
-          </a>
-        </li>
-        {#if tagHeaders}
+      {#if tagHeaders}
+        <ul class="menu-list">
           <li>
             <ul>
               {#each tagHeaders as header}
                 {#if header.level === 0}
                   <li>
-                    <a href="#{headerLink(header.text)}" on:click={tocClick}>
+                    <a
+                      href="#{headerLink(header.text)}"
+                      on:click|preventDefault={tocClick}>
                       {header.text}
                     </a>
                   </li>
@@ -188,8 +185,8 @@
               {/each}
             </ul>
           </li>
-        {/if}
-      </ul>
+        </ul>
+      {/if}
     {/if}
 
     {#each tagActions as tag}
