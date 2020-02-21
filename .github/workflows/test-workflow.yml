@@ -1,4 +1,4 @@
-name: Main workflow
+name: Test workflow
 
 on:
   pull_request:
@@ -17,19 +17,8 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-      - uses: actions/cache@v1
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-npm-v1582184255
-          restore-keys: |
-            ${{ runner.os }}-npm-v1582184255
-            ${{ runner.os }}-npm-
       - run: npm ci
       - run: npm run lint
       - run: npm run bootstrap
       - run: npm run build
       - run: npm test
-      - run: npm run pack-linux
-        if: runner.os == 'Linux'
-      - run: npm run pack-darwin
-        if: runner.os == 'macOS'
