@@ -219,8 +219,6 @@ const isPKCE = environment => {
   return false;
 };
 
-const pushHistory = href => history.pushState(history.state, "", href);
-
 const requestToken = async (client, options) => {
   const authRequest = oauth.client(client, options);
   const authCode = await authRequest();
@@ -407,7 +405,6 @@ export {
   isAuth,
   isPKCE,
   markdown,
-  pushHistory,
   removeToken,
   sendRequest,
   setToken,
