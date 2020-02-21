@@ -1,0 +1,45 @@
+name: Release workflow
+
+on:
+  push:
+    tags:
+    - 'v*'
+
+jobs:
+  build:
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      matrix:
+        operating-system: [ubuntu-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      - run: npm ci
+      - run: npm run bootstrap
+      - run: npm run build
+
+      - run: npm run pack-linux
+        if: runner.os == 'Linux'
+      - run: npm run pack-darwin
+        if: runner.os == 'macOS'
+
+      - id: get_version
+        run: echo ::set-output name=version::${GITHUB_REF/refs\/tags\//}
+      - id: get_asset
+        run: echo ::set-output name=asset_path::$(find ./packages/snowboard/dist -type f -name "*-x64.tar.gz")
+      - uses: actions/create-release@v1
+        id: create_release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.get_version.outputs.version }}
+          release_name: ${{ steps.get_version.outputs.version }}
+      - uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ steps.get_asset.outputs.asset_path }}
