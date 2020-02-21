@@ -1,7 +1,7 @@
 {
   "name": "snowboard-reader",
   "description": "The snowboard reader",
-  "version": "1.0.0-rc.2",
+  "version": "1.0.0",
   "author": "Alif Rachmawadi <subosito@bukalapak.com>",
   "dependencies": {
     "@babel/runtime": "^7.8.4",
