@@ -263,6 +263,7 @@ const exchangeToken = async (code, options, isPKCE, pkceChallenge) => {
 
 const populate = arr => {
   return arr
+    .filter(Boolean)
     .filter(obj => obj.used)
     .reduce((prev, cur) => {
       prev[cur.name] = cur.value;
