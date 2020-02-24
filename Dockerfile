@@ -4,8 +4,9 @@ COPY . /app
 
 RUN cd /app \
  && npm install \
+ && npm run bootstrap \
  && npm run build
 
 WORKDIR /doc
-ENTRYPOINT ["/app/bin/run"]
+ENTRYPOINT ["/app/packages/snowboard/bin/run"]
 CMD ["help"]
