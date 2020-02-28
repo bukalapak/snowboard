@@ -10,7 +10,7 @@ import { toNavigation, filterNavigation } from "snowboard-theme-helper";
 const toNavigationMemo = memoizeOne(toNavigation);
 
 export default function({ title, groups, resources, descriptionToc }) {
-  const items = toNavigationMemo({ title, groups, resources, descriptionToc });
+  const items = toNavigationMemo({ title, groups, resources, toc: descriptionToc });
   return <FilteredNavigation items={items} />;
 }
 
@@ -24,31 +24,22 @@ function mapItem(item) {
 
 function FilteredNavigation({ items }) {
   const route = useCurrentRoute();
+  const navigation = useNavigation();
   const filteredItems = filterNavigation(
     toPermalink(route.url.pathname),
     items
   );
-  const [location, setLocation] = useState(route.url.pathname);
-  const navigation = useNavigation();
-
-  useEffect(() => {
-    setLocation(route.url.pathname);
-  }, [route]);
 
   return (
     <Block width="100%">
       <Navigation
         items={filteredItems}
-        activeItemId={location}
+        activeItemId={route.url.pathname}
         onChange={({ event, item }) => {
           event.preventDefault();
           navigation.navigate(item.itemId);
-          setLocation(toHref(item.itemId));
         }}
-        mapItem={item => {
-          const m = mapItem(item);
-          return m;
-        }}
+        mapItem={item => mapItem(item)}
         overrides={{
           NavItem: {
             style: ({ $active, $theme }) => {
