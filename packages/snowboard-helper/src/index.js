@@ -5,8 +5,8 @@ import {
 } from "fs";
 import { promisify } from "util";
 import { mkdirp, copy as cp, remove as rm } from "fs-extra";
+import { v4 as uuidv4 } from "uuid";
 import tmp from "tmp";
-import uuidv4 from "uuid/v4";
 import safeStringify from "safe-json-stringify";
 import speakingUrl from "speakingurl";
 
