@@ -10,7 +10,12 @@ import { toNavigation, filterNavigation } from "snowboard-theme-helper";
 const toNavigationMemo = memoizeOne(toNavigation);
 
 export default function({ title, groups, resources, descriptionToc }) {
-  const items = toNavigationMemo({ title, groups, resources, toc: descriptionToc });
+  const items = toNavigationMemo({
+    title,
+    groups,
+    resources,
+    toc: descriptionToc
+  });
   return <FilteredNavigation items={items} />;
 }
 
