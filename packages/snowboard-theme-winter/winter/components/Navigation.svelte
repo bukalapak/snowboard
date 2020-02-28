@@ -1,5 +1,5 @@
 <script>
-  import { Link, router } from "yrv";
+  import { router, navigateTo } from "yrv";
   import { filterNavigation } from "snowboard-theme-helper";
   import { toHref, toPermalink } from "../lib/helper";
 
@@ -12,24 +12,44 @@
     permalink = toPermalink(val.path);
     filteredNavigation = filterNavigation(permalink, navigation);
   });
+
+  function handleClick(event) {
+    let href = event.target.getAttribute("href");
+
+    if (href.startsWith("/#")) {
+      navigateTo("/");
+      window.scrollTo(
+        0,
+        document.getElementById(href.substr(2)).offsetTop - 80
+      );
+    } else {
+      navigateTo(href);
+    }
+  }
 </script>
 
 {#each filteredNavigation as item}
   <ul class="menu-label">
     <li>
-      <Link href={toHref(item.permalink)}>{item.title}</Link>
+      <a href={toHref(item.permalink)} on:click|preventDefault={handleClick}>
+        {item.title}
+      </a>
     </li>
   </ul>
   {#each item.children as child}
     <ul class="menu-list">
       <li>
-        <Link href={toHref(child.permalink)}>{child.title}</Link>
+        <a href={toHref(child.permalink)} on:click|preventDefault={handleClick}>
+          {child.title}
+        </a>
         <ul>
           {#each child.children as grandchild}
             <li class:is-active={grandchild.permalink == permalink}>
-              <Link href={toHref(grandchild.permalink)}>
+              <a
+                href={toHref(grandchild.permalink)}
+                on:click|preventDefault={handleClick}>
                 {grandchild.title}
-              </Link>
+              </a>
             </li>
           {/each}
         </ul>
