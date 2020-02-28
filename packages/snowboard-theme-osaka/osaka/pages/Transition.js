@@ -120,10 +120,11 @@ function Transaction({ transaction, index }) {
           </Block>
         )}
 
-        {responses.map((response, index) => (
-          <Accordion key={index}>
+        <Accordion>
+          {responses.map((response, index) => (
             <Panel
               title={`Response ${response.statusCode}`}
+              key={index}
               expanded={index === 0}
             >
               {response.description !== "" && (
@@ -149,8 +150,8 @@ function Transaction({ transaction, index }) {
                 </Tab>
               </StatefulTabs>
             </Panel>
-          </Accordion>
-        ))}
+          ))}
+        </Accordion>
       </StyledBody>
     </Card>
   );
