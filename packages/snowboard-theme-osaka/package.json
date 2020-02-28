@@ -1,7 +1,7 @@
 {
   "name": "snowboard-theme-osaka",
   "description": "snowboard theme using React",
-  "version": "1.0.0-rc.5",
+  "version": "1.0.0-rc.6",
   "author": "Alif Rachmawadi <subosito@bukalapak.com>",
   "dependencies": {
     "attributes-kit": "^1.0.4",
