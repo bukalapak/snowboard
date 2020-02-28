@@ -4,7 +4,8 @@ export { default as clipboardCopy } from "clipboard-copy";
 export { toSlug } from "./slug";
 export { toNavigation, filterNavigation } from "./navigation";
 export { toTransactions } from "./transactions";
-export { exchangeToken, sendRequest } from "./oauth2";
+export { exchangeToken } from "./oauth2";
+export { urlParse, expandUrl, sendRequest } from "./request";
 export { filter } from "./filter";
 export { findGroup, findResource } from "./finder";
 
