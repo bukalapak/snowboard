@@ -1,7 +1,7 @@
 {
   "name": "snowboard-helper",
   "description": "The snowboard helper",
-  "version": "1.0.0-rc.2",
+  "version": "1.0.0",
   "author": "Alif Rachmawadi <subosito@bukalapak.com>",
   "dependencies": {
     "@babel/runtime": "^7.8.4",
@@ -16,7 +16,7 @@
     "table": "^5.4.6",
     "tmp": "^0.1.0",
     "uritemplate": "^0.3.4",
-    "uuid": "^7.0.0"
+    "uuid": "^7.0.1"
   },
   "files": [
     "/lib"

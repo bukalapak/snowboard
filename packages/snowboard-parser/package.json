@@ -1,7 +1,7 @@
 {
   "name": "snowboard-parser",
   "description": "The snowboard parser",
-  "version": "1.0.0-rc.2",
+  "version": "1.0.0",
   "author": "Alif Rachmawadi <subosito@bukalapak.com>",
   "dependencies": {
     "api-elements": "^0.2.3",
