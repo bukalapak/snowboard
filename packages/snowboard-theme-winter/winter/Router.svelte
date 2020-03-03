@@ -4,6 +4,7 @@
   import { toNavigation } from "snowboard-theme-helper";
   import { findGroup, findResource } from "snowboard-theme-helper";
   import { toHref, toPermalink } from "./lib/helper";
+
   import Home from "./pages/Home.svelte";
   import Group from "./pages/Group.svelte";
   import Resource from "./pages/Resource.svelte";
@@ -14,6 +15,7 @@
   export let groups;
   export let resources;
   export let uuids;
+  export let config;
 
   const basePath = "/__json__/";
 
@@ -64,7 +66,7 @@
   </Route>
   <Route exact path={`/${prefix.transition}/:slug`} let:router>
     {#await getTransition(router.path) then transition}
-      <Transition {transition} />
+      <Transition {transition} {config} />
     {/await}
   </Route>
   <Route fallback>404 - Not found</Route>
