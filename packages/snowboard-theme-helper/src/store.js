@@ -1,7 +1,7 @@
 import store2 from "store2";
 import { random, create as generatePair } from "pkce";
 
-const store = store2.namespace("snowboard");
+export const store = store2.namespace("snowboard");
 const challengePairStore = store.namespace("challenge-pair");
 const tokenStore = store.namespace("token");
 const refreshTokenStore = store.namespace("refresh-token");
@@ -15,7 +15,7 @@ export const getChallengePair = () => {
 };
 
 export const getState = () => {
-  if (store.has("state")) {
+  if (!store.has("state")) {
     store.set("state", random(16));
   }
 
