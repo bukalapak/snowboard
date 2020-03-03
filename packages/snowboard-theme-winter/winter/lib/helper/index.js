@@ -1,4 +1,5 @@
 import safeStringify from "safe-json-stringify";
+import { filter as filterHelper } from "snowboard-theme-helper";
 import highlight from "./highlight";
 import markdown from "./markdown";
 import colorize from "./colorize";
@@ -23,6 +24,21 @@ export function stringify(obj) {
   }
 
   return "";
+}
+
+export function isAuth(environment, name) {
+  return environment.auth && environment.auth.name === name;
+}
+
+export function filter(query, groups) {
+  return filterHelper(query, groups).map(item => {
+    const { permalink, ...rest } = item;
+
+    return {
+      ...rest,
+      href: toHref(permalink)
+    };
+  });
 }
 
 export { highlight, markdown, colorize };
