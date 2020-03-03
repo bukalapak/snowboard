@@ -37,9 +37,14 @@ const sendRequest = ({
   return client.request(options);
 };
 
-const toCurl = (
-  { environment, method, body, headers, parameters, pathTemplate }
-) => {
+const toCurl = ({
+  environment,
+  method,
+  body,
+  headers,
+  parameters,
+  pathTemplate
+}) => {
   const expandedUrl = expandUrl(pathTemplate, parameters);
   const destUrl = urlParse(expandedUrl, true);
 
