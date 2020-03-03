@@ -13,9 +13,11 @@
     "lodash": "^4.17.15",
     "pkce": "^1.0.0-beta2",
     "querystringify": "^2.1.1",
+    "r2curl": "^0.2.1",
     "speakingurl": "^14.0.1",
     "store2": "^2.10.0",
     "uritemplate": "^0.3.4",
+    "url-join": "^4.0.1",
     "url-parse": "^1.4.7",
     "xxhashjs": "^0.2.2"
   },
