@@ -1,20 +1,25 @@
 # snowboard
 
-[![Build Status](https://travis-ci.org/bukalapak/snowboard.svg?branch=master)](https://travis-ci.org/bukalapak/snowboard)
 [![Docker Repository on Quay](https://quay.io/repository/bukalapak/snowboard/status)](https://quay.io/repository/bukalapak/snowboard)
-[![npm version](https://badgen.net/npm/v/snowboard)](https://www.npmjs.com/package/snowboard)
 
 API blueprint toolkit.
 
 ![Screenshot with playground enabled](examples/screenshot.png)
 
-## Installation
+## Packages
 
-```
-$ npm install -g snowboard
-```
-
-Alternatively, you can also use options below:
+|--------------------------------------------------------------------------|-------------------------------------|
+| [snowboard](./packages/snowboard/README.md) | [![npm version](https://badge.fury.io/js/snowboard.svg)](https://www.npmjs.com/package/snowboard) |
+| [snowboard-reader](./packages/snowboard-reader/README.md) | [![npm version](https://badge.fury.io/js/snowboard-reader.svg)](https://www.npmjs.com/package/snowboard-reader) |
+| [snowboard-parser](./packages/snowboard-parser/README.md) | [![npm version](https://badge.fury.io/js/snowboard-parser.svg)](https://www.npmjs.com/package/snowboard-parser) |
+| [snowboard-helper](./packages/snowboard-helper/README.md) | [![npm version](https://badge.fury.io/js/snowboard-helper.svg)](https://www.npmjs.com/package/snowboard-helper) |
+| [snowboard-linter](./packages/snowboard-linter/README.md) | [![npm version](https://badge.fury.io/js/snowboard-linter.svg)](https://www.npmjs.com/package/snowboard-linter) |
+| [snowboard-mock-router](./packages/snowboard-mock-router/README.md) | [![npm version](https://badge.fury.io/js/snowboard-mock-router.svg)](https://www.npmjs.com/package/snowboard-mock-router) |
+| [snowboard-seeder](./packages/snowboard-seeder/README.md) | [![npm version](https://badge.fury.io/js/snowboard-seeder.svg)](https://www.npmjs.com/package/snowboard-seeder) |
+| [snowboard-packer](./packages/snowboard-packer/README.md) | [![npm version](https://badge.fury.io/js/snowboard-packer.svg)](https://www.npmjs.com/package/snowboard-packer) |
+| [snowboard-theme-helper](./packages/snowboard-theme-helper/README.md) | [![npm version](https://badge.fury.io/js/snowboard-theme-helper.svg)](https://www.npmjs.com/package/snowboard-theme-helper) |
+| [snowboard-theme-osaka](./packages/snowboard-theme-osaka/README.md) | [![npm version](https://badge.fury.io/js/snowboard-theme-osaka.svg)](https://www.npmjs.com/package/snowboard-theme-osaka) |
+| [snowboard-theme-winter](./packages/snowboard-theme-winter/README.md) | [![npm version](https://badge.fury.io/js/snowboard-theme-winter.svg)](https://www.npmjs.com/package/snowboard-theme-winter) |
 
 ### Docker
 

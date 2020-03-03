@@ -1,5 +1,7 @@
 # snowboard-reader
 
+[![npm version](https://badge.fury.io/js/snowboard-reader.svg)](https://www.npmjs.com/package/snowboard-reader)
+
 The snowboard reader reads an input document with partials and seeds as a single document.
 
 ## Installation
