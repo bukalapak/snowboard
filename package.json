@@ -12,8 +12,7 @@
     "prettier": "^1.19.1",
     "prettier-plugin-svelte": "^0.7.0",
     "svelte": "^3.19.1",
-    "syncpack": "^5.0.1",
-    "tape": "^4.13.0"
+    "tape": "^4.13.2"
   },
   "private": true,
   "scripts": {
