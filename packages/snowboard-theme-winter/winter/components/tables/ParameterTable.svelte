@@ -1,5 +1,5 @@
 <script>
-  import { markdown } from "../lib/helper";
+  import { markdown } from "../../lib/helper";
 
   export let parameters = [];
 </script>
