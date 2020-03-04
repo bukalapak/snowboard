@@ -1,13 +1,16 @@
 <script>
   import { toTransactions } from "snowboard-theme-helper";
   import { markdown, colorize } from "../lib/helper";
-  import ParameterTable from "../components/ParameterTable.svelte";
-  import HeaderTable from "../components/HeaderTable.svelte";
-  import CodePanel from "../components/CodePanel.svelte";
-  import ResponsePanel from "../components/ResponsePanel.svelte";
+
+  import ParameterTable from "../components/tables/ParameterTable.svelte";
+  import HeaderTable from "../components/tables/HeaderTable.svelte";
+  import CodePanel from "../components/panels/CodePanel.svelte";
+  import ResponsePanel from "../components/panels/ResponsePanel.svelte";
+  import PlaygroundPanel from "../components/panels/PlaygroundPanel.svelte";
   import Breadcrumb from "../components/Breadcrumb.svelte";
 
   export let transition;
+  export let config;
 
   let transactions = toTransactions(transition.transactions);
 </script>
@@ -20,6 +23,11 @@
   .card-header-title {
     display: block;
     text-align: center;
+  }
+
+  .tag-fullwidth {
+    flex-grow: 1;
+    justify-content: start;
   }
 </style>
 
@@ -40,10 +48,14 @@
   <code class="tag is-uppercase {colorize(transition.method)}">
     {transition.method}
   </code>
-  <code class="tag" data-tooltip={transition.pathTemplate}>
+  <code class="tag tag-fullwidth" data-tooltip={transition.pathTemplate}>
     {transition.path}
   </code>
 </div>
+
+{#if config.playground.enabled}
+  <PlaygroundPanel {transition} {config} />
+{/if}
 
 {#if transition.parameters.length > 0}
   <ParameterTable parameters={transition.parameters} />
