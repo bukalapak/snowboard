@@ -17,10 +17,8 @@
     const authToken = getToken($env);
 
     if (authToken) {
-      auth.add(envName);
       token.set(authToken);
     } else {
-      auth.remove(envName);
       token.set(null);
     }
   }
