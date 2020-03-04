@@ -1,15 +1,30 @@
 <script>
-  import { Link } from "yrv";
-  import { toNavigation } from "snowboard-theme-helper";
-  import { getEnv, getDarkMode } from "snowboard-theme-helper";
+  import { onMount } from "svelte";
+  import { Link, navigateTo } from "yrv";
+  import qs from "querystringify";
 
-  import { toHref, toPermalink } from "./lib/helper";
+  import {
+    store,
+    getEnv,
+    getDarkMode,
+    exchangeToken,
+    getState,
+    clearState,
+    getChallengePair,
+    clearChallengePair,
+    getToken,
+    setToken,
+    setRefreshToken,
+    toNavigation
+  } from "snowboard-theme-helper";
+
+  import { toHref, toPermalink, isAuth } from "./lib/helper";
   import { env, auth, token, darkMode } from "./lib/store";
 
   import Router from "./Router.svelte";
-  import ThemeButton from "./components/ThemeButton.svelte";
-  import EnvButton from "./components/EnvButton.svelte";
-  import SearchButton from "./components/SearchButton.svelte";
+  import ThemeButton from "./components/buttons/ThemeButton.svelte";
+  import EnvButton from "./components/buttons/EnvButton.svelte";
+  import SearchButton from "./components/buttons/SearchButton.svelte";
   import Navigation from "./components/Navigation.svelte";
 
   export let title;
@@ -38,9 +53,16 @@
     } else {
       env.set(config.playground.env);
     }
+
+    token.set(getToken($env));
   }
 
+  $: environment = config.playground.environments[$env];
+
   let isDarkMode = getDarkMode() || false;
+  let isSearchMode = false;
+  let authenticating = false;
+  let challengePair = getChallengePair();
 
   if ($darkMode != isDarkMode) {
     darkMode.set(isDarkMode);
@@ -52,20 +74,81 @@
       document.getElementById(`prism-theme-dark`).media = "";
     }
   }
+
+  function toggleSearch() {
+    isSearchMode = !isSearchMode;
+  }
+
+  onMount(async () => {
+    if (isAuth(environment, "oauth2")) {
+      const authParam = qs.parse(location.search);
+
+      if (authParam.code) {
+        authenticating = true;
+
+        const { accessToken, refreshToken } = await exchangeToken({
+          code: authParam.code,
+          state: getState(),
+          clientId: environment.auth.options.clientId,
+          tokenUrl: environment.auth.options.tokenUrl,
+          callbackUrl: environment.auth.options.callbackUrl,
+          codeVerifier: challengePair.codeVerifier
+        });
+
+        if (accessToken) {
+          setToken($env, accessToken);
+
+          token.set(accessToken);
+
+          if (refreshToken) {
+            setRefreshToken($env, refreshToken);
+          }
+        }
+
+        authenticating = false;
+        clearChallengePair();
+        clearState();
+
+        const redirectTo = store.get("redirectTo");
+
+        if (redirectTo) {
+          navigateTo(redirectTo);
+        }
+      }
+    }
+  });
+
+  document.onkeyup = function(e) {
+    if ((e.which || e.keyCode) == 27) {
+      isSearchMode = false;
+    }
+  };
 </script>
 
 <style>
   .main {
     padding: 2rem 3rem;
+  }
+
+  .main,
+  .footer {
     background-color: #fff;
   }
 
-  .is-darkmode .main {
+  .is-darkmode .main,
+  .is-darkmode .footer {
     background-color: #141414;
   }
 
   .icon-brand {
     margin-right: 0.5rem;
+  }
+
+  .menu-navigation {
+    position: fixed;
+    height: 87vh;
+    overflow-x: auto;
+    max-width: 23%;
   }
 
   :global(html) {
@@ -134,8 +217,8 @@
         {#if config.playground.enabled}
           <EnvButton playground={config.playground} />
         {/if}
-        <div class="navbar-item has-dropdown is-hoverable">
-          <SearchButton />
+        <div class="navbar-item has-dropdown" class:is-active={isSearchMode}>
+          <SearchButton {groups} {toggleSearch} />
         </div>
         <div class="navbar-item has-dropdown is-hoverable">
           <ThemeButton />
@@ -147,13 +230,13 @@
   <div class="main">
     <div class="columns">
       <div class="column is-one-quarter">
-        <aside class="menu">
+        <aside class="menu menu-navigation">
           <Navigation {navigation} />
         </aside>
       </div>
 
       <div class="column is-three-quarters">
-        <Router {title} {description} {groups} {resources} {uuids} />
+        <Router {title} {description} {groups} {resources} {uuids} {config} />
       </div>
     </div>
   </div>
