@@ -11,9 +11,9 @@
     "prismjs": "^1.19.0",
     "querystringify": "^2.1.1",
     "safe-json-stringify": "^1.2.0",
-    "snowboard-theme-helper": "^1.0.0-rc.3",
-    "svelte": "^3.18.2",
-    "yrv": "^0.0.19"
+    "snowboard-theme-helper": "^1.0.0",
+    "svelte": "^3.19.1",
+    "yrv": "^0.0.24"
   },
   "license": "MIT",
   "main": "index.js",
