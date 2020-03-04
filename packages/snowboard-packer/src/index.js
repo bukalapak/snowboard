@@ -133,6 +133,7 @@ export async function httpPack(input, options) {
     quiet,
     hot: watch,
     publicPath,
+    disableHostCheck: true,
     before: async (app, server, compiler) => {
       const templateContent = await readFile(options.template);
       const content = normalize(templateContent);
