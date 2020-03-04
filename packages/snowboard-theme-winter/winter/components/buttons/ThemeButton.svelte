@@ -4,7 +4,7 @@
     enableDarkMode,
     disableDarkMode
   } from "snowboard-theme-helper";
-  import { darkMode as darkStore } from "../lib/store";
+  import { darkMode as darkStore } from "../../lib/store";
 
   const darkMode = {
     mode: ["light", "dark"],

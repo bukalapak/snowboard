@@ -1,7 +1,7 @@
 <script>
-  import { markdown } from "../lib/helper";
-  import HeaderTable from "../components/HeaderTable.svelte";
-  import CodePanel from "../components/CodePanel.svelte";
+  import { markdown } from "../../lib/helper";
+  import HeaderTable from "../tables/HeaderTable.svelte";
+  import CodePanel from "./CodePanel.svelte";
 
   export let response;
   export let show;
