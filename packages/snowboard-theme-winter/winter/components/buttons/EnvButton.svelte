@@ -1,6 +1,8 @@
 <script>
-  import { getToken } from "snowboard-theme-helper";
-  import { env, auth, token } from "../lib/store";
+  import { isEmpty } from "lodash";
+  import { getToken, removeToken } from "snowboard-theme-helper";
+  import { isAuth } from "../../lib/helper";
+  import { env, auth, token } from "../../lib/store";
 
   export let playground;
 
@@ -26,7 +28,25 @@
   function toggleClick() {
     show = !show;
   }
+
+  function handleLogout() {
+    removeToken($env);
+    token.set(null);
+  }
 </script>
+
+{#if !isEmpty($token)}
+  <div class="navbar-item has-dropdown is-capitalized">
+    <div class="buttons">
+      <a
+        href="javascript:void(0)"
+        class="button is-dark is-rounded"
+        on:click={handleLogout}>
+        Logout
+      </a>
+    </div>
+  </div>
+{/if}
 
 <div class="navbar-item has-dropdown is-capitalized" class:is-active={show}>
   <a href="javascript:void(0)" class="navbar-link" on:click={toggleClick}>
