@@ -15,6 +15,13 @@
     "svelte": "^3.19.1",
     "yrv": "^0.0.24"
   },
+  "files": [
+    "/winter"
+  ],
+  "keywords": [
+    "api-blueprint",
+    "snowboard"
+  ],
   "license": "MIT",
   "main": "index.js",
   "repository": "bukalapak/snowboard",
