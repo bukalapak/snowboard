@@ -6,8 +6,8 @@
     colorize,
     slugify,
     filterActions,
-    basePath,
-    handleLink
+    handleLink,
+    buildHref
   } from "../util.js";
 
   export let title;
@@ -165,7 +165,7 @@
 
   <div class="menu-wrapper">
     <p class="menu-label">
-      <Link href={basePath(config)}>{title}</Link>
+      <a href={buildHref('')} on:click|preventDefault={tocClick}>{title}</a>
     </p>
     {#if query === ''}
       {#if tagHeaders}
@@ -193,10 +193,9 @@
       {#if tag.title}
         <p class="menu-label">
           <a
-            data-slug={slugify(tag.title)}
-            href="/#/rg~{slugify(tag.title)}"
+            href={buildHref(`#/rg~${slugify(tag.title)}`)}
             class="is-inline-block"
-            on:click={handleLink}>
+            on:click={event => handleLink(config, event)}>
             {tag.title}
           </a>
         </p>

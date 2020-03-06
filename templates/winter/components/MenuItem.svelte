@@ -1,6 +1,6 @@
 <script>
   import { router } from "yrv";
-  import { colorize, slugify, handleLink } from "../util";
+  import { colorize, slugify, handleLink, buildHref } from "../util";
 
   export let title;
   export let actions;
@@ -28,8 +28,7 @@
 {#if title}
   <li>
     <a
-      data-slug="{parentSlug}~{slugify(title)}"
-      href="/#/g~{parentSlug}~{slugify(title)}"
+      href={buildHref(`#/g~${parentSlug}~${slugify(title)}`)}
       class="is-inline-block"
       on:click={handleLink}>
       {title}
@@ -54,8 +53,7 @@
       {#each actions as action}
         <li>
           <a
-            data-slug={action.slug}
-            href="/#/{action.slug}"
+            href={buildHref(`#/${action.slug}`)}
             class="menu-ellipsis"
             class:is-active={action.slug === $router.params.slug}
             on:click={handleLink}>
