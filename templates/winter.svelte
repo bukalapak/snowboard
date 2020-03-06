@@ -26,7 +26,6 @@
     exchangeToken,
     isAuth,
     isPKCE,
-    basePath,
     getEnv,
     slugify,
     filterActions
@@ -130,7 +129,15 @@
     navigateTo("/");
 
     let href = event.target.getAttribute("href");
-    window.scrollTo(0, document.getElementById(href.substr(1)).offsetTop - 80);
+
+    if (href.startsWith("#")) {
+      window.scrollTo(
+        0,
+        document.getElementById(href.substr(1)).offsetTop - 80
+      );
+    } else {
+      window.scrollTo(0, 20);
+    }
   }
 
   $: {
@@ -215,7 +222,7 @@
       if (authParam.code) {
         authenticating = true;
 
-        navigateTo(basePath(config));
+        navigateTo(config.basePath);
 
         const { accessToken, refreshToken } = await exchangeToken(
           authParam.code,
