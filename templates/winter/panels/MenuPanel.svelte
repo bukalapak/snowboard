@@ -11,7 +11,6 @@
   } from "../util.js";
 
   export let title;
-  export let config = {};
   export let tagActions = [];
   export let tagHeaders = [];
   export let actionsCount;
@@ -195,7 +194,7 @@
           <a
             href={buildHref(`#/rg~${slugify(tag.title)}`)}
             class="is-inline-block"
-            on:click={event => handleLink(config, event)}>
+            on:click={handleLink}>
             {tag.title}
           </a>
         </p>

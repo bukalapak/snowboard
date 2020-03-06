@@ -129,15 +129,9 @@
     navigateTo("/");
 
     let href = event.target.getAttribute("href");
+    const target = document.getElementById(href.substr(1));
 
-    if (href.startsWith("#")) {
-      window.scrollTo(
-        0,
-        document.getElementById(href.substr(1)).offsetTop - 80
-      );
-    } else {
-      window.scrollTo(0, 20);
-    }
+    window.scrollTo(0, target ? target.offsetTop - 80 : 20);
   }
 
   $: {
@@ -478,7 +472,6 @@
         isCollapsed={collapsed}
         isDarkmode={darkMode.active}
         {query}
-        {config}
         {tocClick}
         {searchClick} />
       <div
