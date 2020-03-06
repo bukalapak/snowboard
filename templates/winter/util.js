@@ -188,14 +188,6 @@ const filterActions = (tagActions, query) => {
     .filter(Boolean);
 };
 
-const basePath = config => {
-  if (config.basePath.endsWith("/")) {
-    return config.basePath;
-  } else {
-    return config.basePath + "/";
-  }
-};
-
 const tokenStore = store.namespace("token");
 
 const setToken = (env, token) => tokenStore.set(env, token);
@@ -376,8 +368,18 @@ const getState = () => {
 const clearPKCE = () => pkceStore.clear();
 const clearState = () => store.remove("state");
 
+const buildHref = path => {
+  const pathname = window.location.pathname;
+
+  if (!path) {
+    return pathname;
+  }
+
+  return `${pathname}${path}`.replace("//", "/");
+};
+
 const handleLink = event => {
-  event.preventDefault();
+  const pathname = window.location.pathname;
 
   let href = event.target.getAttribute("href");
 
@@ -385,13 +387,14 @@ const handleLink = event => {
     href = event.target.parentElement.getAttribute("href");
   }
 
-  navigateTo(href.substr(2));
+  const cleanHref = href.replace(pathname, "");
+
+  navigateTo(cleanHref);
 };
 
 export {
   alias,
   allowBody,
-  basePath,
   colorize,
   clearPKCE,
   clearState,
@@ -418,5 +421,6 @@ export {
   getRefreshToken,
   removeRefreshToken,
   copyUrl,
-  handleLink
+  handleLink,
+  buildHref
 };
