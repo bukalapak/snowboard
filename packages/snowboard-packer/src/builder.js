@@ -17,8 +17,8 @@ export async function setupDir(output) {
 }
 
 export async function buildSeed(input, config, { quiet }) {
-  const element = await spinner(load(input), "Parsing input", {
-    success: "Input parsed",
+  const element = await spinner(load(input), `Parsing input: ${input}`, {
+    success: `Input parsed: ${input}`,
     quiet
   });
 
