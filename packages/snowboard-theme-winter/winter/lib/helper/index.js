@@ -4,14 +4,20 @@ import highlight from "./highlight";
 import markdown from "./markdown";
 import colorize from "./colorize";
 
-export function toHref(permalink) {
+export function toHref(permalink, basePath = "/") {
   const char = permalink.substr(0, 1);
-  return permalink.replace(`${char}~`, `/${char}/`);
+
+  if (char == "/") {
+    return permalink;
+  }
+
+  return permalink.replace(`${char}~`, `${basePath}${char}/`);
 }
 
-export function toPermalink(pathname) {
-  const char = pathname.substr(1, 1);
-  return pathname.replace(`/${char}/`, `${char}~`);
+export function toPermalink(pathname, basePath = "/") {
+  const segment = pathname.replace(basePath, "");
+  const char = segment.substr(0, 1);
+  return pathname.replace(`${basePath}${char}/`, `${char}~`);
 }
 
 export function stringify(obj) {

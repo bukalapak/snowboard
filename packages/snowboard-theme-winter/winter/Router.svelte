@@ -1,8 +1,8 @@
 <script>
-  import { Router, Route } from "yrv";
+  import { Router, Route, router } from "yrv";
   import axios from "axios";
   import { toNavigation } from "snowboard-theme-helper";
-  import { findGroup, findResource } from "snowboard-theme-helper";
+  import { findGroup, findResource, urlJoin } from "snowboard-theme-helper";
   import { toHref, toPermalink } from "./lib/helper";
 
   import Home from "./pages/Home.svelte";
@@ -17,7 +17,7 @@
   export let uuids;
   export let config;
 
-  const basePath = "/__json__/";
+  const jsonPath = "/__json__/";
 
   const prefix = {
     group: "g",
@@ -26,24 +26,24 @@
   };
 
   const fetchJSON = async uuid => {
-    const fullPath = `${basePath}${uuid}.json`;
+    const fullPath = urlJoin(config.basePath, jsonPath, `${uuid}.json`);
     const { data } = await axios.get(fullPath);
 
     return data;
   };
 
   const getGroup = pathname => {
-    const permalink = toPermalink(pathname);
+    const permalink = toPermalink(pathname, config.basePath);
     return findGroup(permalink, groups);
   };
 
   const getResource = pathname => {
-    const permalink = toPermalink(pathname);
+    const permalink = toPermalink(pathname, config.basePath);
     return findResource(permalink, resources, groups);
   };
 
   const getTransition = async pathname => {
-    const permalink = toPermalink(pathname);
+    const permalink = toPermalink(pathname, config.basePath);
     const uuid = uuids[permalink];
 
     if (!uuid) {
@@ -54,7 +54,7 @@
   };
 </script>
 
-<Router>
+<Router path={config.basePath.slice(0, -1)}>
   <Route exact>
     <Home {title} {description} />
   </Route>

@@ -39,7 +39,8 @@
     groups,
     resources,
     title,
-    toc: descriptionToc
+    toc: descriptionToc,
+    basePath: config.basePath
   });
 
   if (config.playground.enabled) {
@@ -204,7 +205,7 @@
     role="navigation"
     aria-label="main navigation">
     <div class="navbar-brand">
-      <a href="/" class="navbar-item">
+      <a href={config.basePath} class="navbar-item">
         <span class="icon icon-brand is-medium has-text-grey-light">
           <i class="fas fa-lg fa-chalkboard" />
         </span>
@@ -231,7 +232,7 @@
     <div class="columns">
       <div class="column is-one-quarter">
         <aside class="menu menu-navigation">
-          <Navigation {navigation} />
+          <Navigation {navigation} {config} />
         </aside>
       </div>
 
