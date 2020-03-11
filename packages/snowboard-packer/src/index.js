@@ -5,6 +5,7 @@ import bufferReplace from "buffer-replace";
 import { resolve, dirname, basename } from "path";
 import { merge } from "lodash";
 import { cp, readFile } from "snowboard-helper";
+import urlJoin from "url-join";
 
 import {
   setupDir,
@@ -25,9 +26,15 @@ async function packer(
   input,
   { config: loadedConfig, watch, output, template, optimized, quiet }
 ) {
-  const config = merge(defaultConfig, loadedConfig);
-
   const { outDir, buildDir } = await setupDir(output);
+
+  const publicPath = detectPublicPath(outDir);
+
+  const config = Object.assign(
+    {},
+    merge(defaultConfig, { basePath: urlJoin(publicPath, "/") }, loadedConfig)
+  );
+
   const [seeds, transitionSeeds] = await buildSeed(input, config, { quiet });
 
   const templateDir = dirname(template);
@@ -51,6 +58,7 @@ async function packer(
     context: buildDir,
     output: {
       path: outDir,
+      publicPath,
       filename: "index.js"
     },
     mode: optimized ? "production" : "development",
@@ -96,7 +104,7 @@ async function packer(
           from: template,
           to: outDir,
           transform(content, path) {
-            return normalize(content);
+            return normalize(content, publicPath);
           }
         }
       ])
@@ -136,7 +144,7 @@ export async function httpPack(input, options) {
     disableHostCheck: true,
     before: async (app, server, compiler) => {
       const templateContent = await readFile(options.template);
-      const content = normalize(templateContent);
+      const content = normalize(templateContent, config.output.publicPath);
 
       app.get("*", async (req, res, next) => {
         if (req.path.match("hot-update")) {
@@ -176,8 +184,19 @@ export async function httpPack(input, options) {
   });
 }
 
-function normalize(content) {
-  return bufferReplace(content, "./", "/");
+function normalize(content, publicPath) {
+  return bufferReplace(content, "./", urlJoin(publicPath, "/"));
+}
+
+function detectPublicPath(outDir) {
+  const publicPath = outDir.replace(process.cwd(), "");
+  const slashIndex = publicPath.indexOf("/", 1);
+
+  if (slashIndex == -1) {
+    return "/";
+  }
+
+  return publicPath.substr(slashIndex);
 }
 
 function moduleDirs(templateDir) {
