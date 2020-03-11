@@ -1,7 +1,13 @@
 import { pick } from "lodash";
 import { toSlug } from "./slug";
 
-export function toNavigation({ groups, resources, title = "API", toc = [] }) {
+export function toNavigation({
+  groups,
+  resources,
+  title = "API",
+  toc = [],
+  basePath = "/"
+}) {
   let items = groups.map(group => {
     return {
       title: group.title,
@@ -14,8 +20,8 @@ export function toNavigation({ groups, resources, title = "API", toc = [] }) {
 
   items.unshift({
     title: title,
-    permalink: "/",
-    children: tocMap(toc)
+    permalink: basePath,
+    children: tocMap(toc, basePath)
   });
 
   return items;
@@ -37,14 +43,14 @@ function resourcesMap(resources) {
   });
 }
 
-function tocMap(toc) {
+function tocMap(toc, basePath = "/") {
   const data = [];
 
   toc.forEach(item => {
     if (item.depth === 2) {
       data.push({
         title: item.text,
-        permalink: "/#" + toSlug(item.text, "-"),
+        permalink: `${basePath}#` + toSlug(item.text, "-"),
         children: []
       });
     }
@@ -52,7 +58,7 @@ function tocMap(toc) {
     if (item.depth === 3) {
       data[data.length - 1].children.push({
         title: item.text,
-        permalink: "/#" + toSlug(item.text, "-"),
+        permalink: `${basePath}#` + toSlug(item.text, "-"),
         children: []
       });
     }
