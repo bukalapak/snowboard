@@ -54,10 +54,17 @@
   };
 </script>
 
+<!-- Home hack -->
+{#if config.basePath == $router.path}
+  <Home {title} {description} />
+{/if}
+
 <Router path={config.basePath.slice(0, -1)}>
+  <!--
   <Route exact>
     <Home {title} {description} />
   </Route>
+  -->
   <Route exact path={`/${prefix.group}/:slug`} let:router>
     <Group group={getGroup(router.path)} />
   </Route>

@@ -1,6 +1,6 @@
 <script>
   import { onMount } from "svelte";
-  import { Link, navigateTo } from "yrv";
+  import { navigateTo, router } from "yrv";
   import qs from "querystringify";
 
   import {
@@ -58,7 +58,9 @@
     token.set(getToken($env));
   }
 
-  $: environment = config.playground.environments[$env];
+  $: permalink = toPermalink($router.path, config.basePath);
+  $: environment =
+    config.playground.enabled && config.playground.environments[$env];
 
   let isDarkMode = getDarkMode() || false;
   let isSearchMode = false;
@@ -205,7 +207,10 @@
     role="navigation"
     aria-label="main navigation">
     <div class="navbar-brand">
-      <a href={config.basePath} class="navbar-item">
+      <a
+        href={config.basePath}
+        class="navbar-item"
+        on:click|preventDefault={() => navigateTo(config.basePath)}>
         <span class="icon icon-brand is-medium has-text-grey-light">
           <i class="fas fa-lg fa-chalkboard" />
         </span>
@@ -232,7 +237,7 @@
     <div class="columns">
       <div class="column is-one-quarter">
         <aside class="menu menu-navigation">
-          <Navigation {navigation} {config} />
+          <Navigation {navigation} {config} {permalink} />
         </aside>
       </div>
 

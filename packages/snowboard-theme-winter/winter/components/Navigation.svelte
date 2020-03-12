@@ -5,24 +5,23 @@
 
   export let navigation;
   export let config;
+  export let permalink = "/";
 
-  let filteredNavigation = navigation;
-  let permalink = "/";
-
-  router.subscribe(val => {
-    permalink = toPermalink(val.path, config.basePath);
-    filteredNavigation = filterNavigation(permalink, navigation);
-  });
+  $: filteredNavigation = filterNavigation(permalink, navigation);
 
   function handleClick(event) {
     let href = event.target.getAttribute("href");
 
     if (href.startsWith(`${config.basePath}#`)) {
       navigateTo(config.basePath);
-      window.scrollTo(
-        0,
-        document.getElementById(href.substr(2)).offsetTop - 80
+
+      const target = document.getElementById(
+        href.substr(config.basePath.length + 1)
       );
+
+      if (target) {
+        window.scrollTo(0, target.offsetTop - 80);
+      }
     } else {
       navigateTo(href);
     }
