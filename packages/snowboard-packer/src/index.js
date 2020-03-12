@@ -108,7 +108,10 @@ async function packer(
           }
         }
       ])
-    ]
+    ],
+    performance: {
+      maxEntrypointSize: 2000000
+    }
   };
 }
 
