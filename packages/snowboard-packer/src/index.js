@@ -62,7 +62,7 @@ async function packer(
       filename: "index.js"
     },
     mode: optimized ? "production" : "development",
-    devtool: optimized || "source-map",
+    devtool: optimized ? false : "source-map",
     watch,
     resolve: {
       extensions: [".wasm", ".mjs", ".js", ".json", ".svelte"],
