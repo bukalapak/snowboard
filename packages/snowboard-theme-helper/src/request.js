@@ -39,28 +39,6 @@ const httpClient = ({
   return [client, options];
 };
 
-const sendRequest = ({
-  environment,
-  method,
-  pathTemplate,
-  headers,
-  parameters,
-  body,
-  httpConfig
-}) => {
-  const [client, options] = httpClient({
-    environment,
-    method,
-    pathTemplate,
-    headers,
-    parameters,
-    body,
-    httpConfig
-  });
-
-  return client.request(options);
-};
-
 const toCurl = ({
   environment,
   method,
@@ -90,4 +68,4 @@ function safeParse(str) {
   }
 }
 
-export { urlParse, expandUrl, sendRequest, toCurl, httpClient };
+export { urlParse, expandUrl, toCurl, httpClient };
