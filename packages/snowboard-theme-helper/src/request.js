@@ -10,21 +10,21 @@ const expandUrl = (uri, obj) => {
   return tpl.expand(obj);
 };
 
-const sendRequest = ({
+const httpClient = ({
   environment,
   method,
   pathTemplate,
   headers,
   parameters,
   body,
-  axiosConfig
+  httpConfig
 }) => {
   const client = axios.create({
     baseURL: environment.url
   });
 
   const options = {
-    ...(axiosConfig || {}),
+    ...(httpConfig || {}),
     method: method,
     headers: headers
   };
@@ -35,6 +35,28 @@ const sendRequest = ({
   options.params = destUrl.query;
   options.url = destUrl.pathname;
   options.data = body;
+
+  return [client, options];
+};
+
+const sendRequest = ({
+  environment,
+  method,
+  pathTemplate,
+  headers,
+  parameters,
+  body,
+  httpConfig
+}) => {
+  const [client, options] = httpClient({
+    environment,
+    method,
+    pathTemplate,
+    headers,
+    parameters,
+    body,
+    httpConfig
+  });
 
   return client.request(options);
 };
@@ -68,4 +90,4 @@ function safeParse(str) {
   }
 }
 
-export { urlParse, expandUrl, sendRequest, toCurl };
+export { urlParse, expandUrl, sendRequest, toCurl, httpClient };
