@@ -7,7 +7,6 @@
     getChallengePair,
     getState,
     getToken,
-    sendRequest,
     expandUrl,
     urlParse,
     urlJoin,
@@ -15,7 +14,7 @@
   } from "snowboard-theme-helper";
 
   import { env, auth, darkMode, token } from "../../lib/store";
-  import { isAuth, colorize } from "../../lib/helper";
+  import { isAuth, colorize, sendRequest } from "../../lib/helper";
 
   import CollapsiblePanel from "./CollapsiblePanel.svelte";
   import LoginButton from "../buttons/LoginButton.svelte";

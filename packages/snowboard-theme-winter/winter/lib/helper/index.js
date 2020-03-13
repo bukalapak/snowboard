@@ -1,5 +1,6 @@
 import safeStringify from "safe-json-stringify";
 import { filter as filterHelper } from "snowboard-theme-helper";
+import { sendRequest } from "./request";
 import highlight from "./highlight";
 import markdown from "./markdown";
 import colorize from "./colorize";
@@ -47,4 +48,4 @@ export function filter(query, groups) {
   });
 }
 
-export { highlight, markdown, colorize };
+export { highlight, markdown, colorize, sendRequest };
