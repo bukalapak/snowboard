@@ -8,18 +8,17 @@ API blueprint toolkit.
 
 ## Packages
 
-|NPM|Version|
-|--------------------------------------------------------------------------|-------------------------------------|
-| [snowboard](./packages/snowboard/README.md) | [![npm version](https://badge.fury.io/js/snowboard.svg)](https://www.npmjs.com/package/snowboard) |
-| [snowboard-reader](./packages/snowboard-reader/README.md) | [![npm version](https://badge.fury.io/js/snowboard-reader.svg)](https://www.npmjs.com/package/snowboard-reader) |
-| [snowboard-parser](./packages/snowboard-parser/README.md) | [![npm version](https://badge.fury.io/js/snowboard-parser.svg)](https://www.npmjs.com/package/snowboard-parser) |
-| [snowboard-helper](./packages/snowboard-helper/README.md) | [![npm version](https://badge.fury.io/js/snowboard-helper.svg)](https://www.npmjs.com/package/snowboard-helper) |
-| [snowboard-linter](./packages/snowboard-linter/README.md) | [![npm version](https://badge.fury.io/js/snowboard-linter.svg)](https://www.npmjs.com/package/snowboard-linter) |
-| [snowboard-mock-router](./packages/snowboard-mock-router/README.md) | [![npm version](https://badge.fury.io/js/snowboard-mock-router.svg)](https://www.npmjs.com/package/snowboard-mock-router) |
-| [snowboard-seeder](./packages/snowboard-seeder/README.md) | [![npm version](https://badge.fury.io/js/snowboard-seeder.svg)](https://www.npmjs.com/package/snowboard-seeder) |
-| [snowboard-packer](./packages/snowboard-packer/README.md) | [![npm version](https://badge.fury.io/js/snowboard-packer.svg)](https://www.npmjs.com/package/snowboard-packer) |
+| NPM                                                                   | Version                                                                                                                     |
+| --------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| [snowboard](./packages/snowboard/README.md)                           | [![npm version](https://badge.fury.io/js/snowboard.svg)](https://www.npmjs.com/package/snowboard)                           |
+| [snowboard-reader](./packages/snowboard-reader/README.md)             | [![npm version](https://badge.fury.io/js/snowboard-reader.svg)](https://www.npmjs.com/package/snowboard-reader)             |
+| [snowboard-parser](./packages/snowboard-parser/README.md)             | [![npm version](https://badge.fury.io/js/snowboard-parser.svg)](https://www.npmjs.com/package/snowboard-parser)             |
+| [snowboard-helper](./packages/snowboard-helper/README.md)             | [![npm version](https://badge.fury.io/js/snowboard-helper.svg)](https://www.npmjs.com/package/snowboard-helper)             |
+| [snowboard-linter](./packages/snowboard-linter/README.md)             | [![npm version](https://badge.fury.io/js/snowboard-linter.svg)](https://www.npmjs.com/package/snowboard-linter)             |
+| [snowboard-mock-router](./packages/snowboard-mock-router/README.md)   | [![npm version](https://badge.fury.io/js/snowboard-mock-router.svg)](https://www.npmjs.com/package/snowboard-mock-router)   |
+| [snowboard-seeder](./packages/snowboard-seeder/README.md)             | [![npm version](https://badge.fury.io/js/snowboard-seeder.svg)](https://www.npmjs.com/package/snowboard-seeder)             |
+| [snowboard-packer](./packages/snowboard-packer/README.md)             | [![npm version](https://badge.fury.io/js/snowboard-packer.svg)](https://www.npmjs.com/package/snowboard-packer)             |
 | [snowboard-theme-helper](./packages/snowboard-theme-helper/README.md) | [![npm version](https://badge.fury.io/js/snowboard-theme-helper.svg)](https://www.npmjs.com/package/snowboard-theme-helper) |
-| [snowboard-theme-osaka](./packages/snowboard-theme-osaka/README.md) | [![npm version](https://badge.fury.io/js/snowboard-theme-osaka.svg)](https://www.npmjs.com/package/snowboard-theme-osaka) |
 | [snowboard-theme-winter](./packages/snowboard-theme-winter/README.md) | [![npm version](https://badge.fury.io/js/snowboard-theme-winter.svg)](https://www.npmjs.com/package/snowboard-theme-winter) |
 
 ### Docker
@@ -96,45 +95,45 @@ module.exports = {
   html: {
     playground: {
       enabled: true,
-      env: 'development',
+      env: "development",
       environments: {
         development: {
-          url: 'http://localhost:8087/',
+          url: "http://localhost:8087/",
           auth: {
-            name: 'apikey',
+            name: "apikey",
             options: {
-              key: 'api-dev-key',
-              header: 'X-Api-Key'
+              key: "api-dev-key",
+              header: "X-Api-Key"
             }
           }
         },
         staging: {
-          url: 'https://staging.example.com/',
+          url: "https://staging.example.com/",
           auth: {
-            name: 'basic',
+            name: "basic",
             options: {
-              username: 'admin',
-              password: 'secret'
+              username: "admin",
+              password: "secret"
             }
           }
         },
         production: {
-          url: 'https://api.example.com',
+          url: "https://api.example.com",
           auth: {
-            name: 'oauth2',
+            name: "oauth2",
             options: {
-              authorizeUrl: 'https://accounts.example.com/oauth/authorize',
-              tokenUrl: 'https://accounts.example.com/oauth/access_token',
-              callbackUrl: 'https://www.example.com',
-              clientId: '<client-id>',
-              scopes: '<scope-names>'
+              authorizeUrl: "https://accounts.example.com/oauth/authorize",
+              tokenUrl: "https://accounts.example.com/oauth/access_token",
+              callbackUrl: "https://www.example.com",
+              clientId: "<client-id>",
+              scopes: "<scope-names>"
             }
           }
         }
       }
     }
   }
-}
+};
 ```
 
 Once you have a configuration file, named `snowboard.config.js`, you can do:
@@ -153,19 +152,19 @@ module.exports = {
   html: {
     playground: {
       enabled: true,
-      env: 'development',
+      env: "development",
       environments: {
         development: {
-          url: 'http://localhost:8087/',
+          url: "http://localhost:8087/",
           playground: false
         },
         staging: {
-          url: 'https://staging.example.com/'
+          url: "https://staging.example.com/"
         }
       }
     }
   }
-}
+};
 ```
 
 ## Mock Server
@@ -206,14 +205,14 @@ Here's the example of the configuration file for mock server:
 module.exports = {
   mock: {
     auth: {
-      name: 'apikey',
+      name: "apikey",
       options: {
-        key: '<api-key>',
-        header: '<Header-Name>'
+        key: "<api-key>",
+        header: "<Header-Name>"
       }
     }
   }
-}
+};
 ```
 
 **Basic authentication**
@@ -222,14 +221,14 @@ module.exports = {
 module.exports = {
   mock: {
     auth: {
-      name: 'basic',
+      name: "basic",
       options: {
-        username: '<username>',
-        password: '<password>'
+        username: "<username>",
+        password: "<password>"
       }
     }
   }
-}
+};
 ```
 
 ## Other Features
