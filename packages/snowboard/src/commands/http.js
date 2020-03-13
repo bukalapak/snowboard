@@ -14,7 +14,7 @@ class HttpCommand extends Command {
     return await httpPack(args.input, {
       config: htmlConfig,
       watch: flags.watch,
-      output: detectOutput(flags.output),
+      output: detectOutput(),
       template: detectTemplate(flags.template),
       optimized: flags.optimized,
       quiet: flags.quiet,
