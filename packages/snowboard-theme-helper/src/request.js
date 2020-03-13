@@ -16,13 +16,15 @@ const sendRequest = ({
   pathTemplate,
   headers,
   parameters,
-  body
+  body,
+  axiosConfig
 }) => {
   const client = axios.create({
     baseURL: environment.url
   });
 
   const options = {
+    ...(axiosConfig || {}),
     method: method,
     headers: headers
   };
