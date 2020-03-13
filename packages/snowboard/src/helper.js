@@ -6,7 +6,7 @@ import { read } from "snowboard-reader";
 import { parse, fromRefract } from "snowboard-parser";
 
 const templatePrefix = "snowboard-theme-";
-const defaultTemplate = "osaka";
+const defaultTemplate = "winter";
 const defaultOutput = resolve(process.cwd(), "./dist");
 
 export function detectTemplate(template) {
