@@ -43,4 +43,4 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ${{ steps.get_asset.outputs.asset_path }}
-          asset_name: $(basename ${{ steps.name_asset.outputs.asset_name }})
+          asset_name: $(basename ${{ steps.name_asset.outputs.asset_path }})
