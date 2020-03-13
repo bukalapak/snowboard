@@ -1,7 +1,7 @@
 {
   "name": "snowboard-theme-helper",
   "description": "Shared helper for snowboard theme",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "author": "Alif Rachmawadi <subosito@bukalapak.com>",
   "dependencies": {
     "@babel/runtime": "^7.8.4",
