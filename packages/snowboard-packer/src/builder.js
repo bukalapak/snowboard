@@ -63,6 +63,16 @@ export async function writeJSON(
   );
 }
 
+export async function copyOverrides(overrides, buildDir) {
+  if (!isEmpty(overrides)) {
+    for await (let [target, source] of Object.entries(overrides)) {
+      if (source) {
+        cp(source, resolve(buildDir, target));
+      }
+    }
+  }
+}
+
 async function load(input) {
   const source = await read(input);
   const result = await parse(source);

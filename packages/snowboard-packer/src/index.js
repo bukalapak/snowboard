@@ -14,7 +14,8 @@ import {
   writeJSON,
   watchTemplate,
   watchOverrides,
-  watchInput
+  watchInput,
+  copyOverrides
 } from "./builder";
 
 const defaultConfig = {
@@ -44,6 +45,7 @@ async function packer(
   );
 
   await cp(templateDir, buildDir);
+  await copyOverrides(config.overrides, buildDir);
   await writeSeed(buildDir, seeds, { optimized });
   await writeJSON(outDir, transitionSeeds, seeds.uuids, { optimized });
 
