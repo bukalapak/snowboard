@@ -191,10 +191,10 @@ $ snowboard mock API.apib OTHER.apib
 
 ### Mock Server Authentication
 
-The mock server supports various authentication, you can enable that by passing a configuration file using flag `-c`, like:
+The mock server supports various authentication, you can enable that by passing a configuration file using configuration file `snowboard.config.js`, like:
 
 ```
-$ snowboard mock -c config.yaml API.apib
+$ snowboard mock API.apib
 ```
 
 Here's the example of the configuration file for mock server:
@@ -293,16 +293,11 @@ $ snowboard http -S -C localhost.pem -K localhost-key.pem API.apib
 To enable auto-regeneration on input files updates, you can add global flag `--watch`
 
 ```
-$ snowboard html --watch -o output.html -t awesome-template.html -s API.apib
-```
+$ snowboard html --watch -o outputDir API.apib
 
-Optionally, you can also use `--watch-interval` to enable polling interval.
-
+# http server
+$ snowboard http --watch API.apib
 ```
-$ snowboard html --watch --watch-interval 100ms -o output.html -t awesome-template.html -s API.apib
-```
-
-This watcher works on all sub-commands.
 
 ## Help
 
