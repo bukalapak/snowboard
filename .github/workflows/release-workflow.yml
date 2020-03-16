@@ -38,6 +38,7 @@ jobs:
       - uses: actions/download-artifact@v1
         with:
           name: release_url
+          path: .
       - run: npm ci
       - run: npm run bootstrap
       - run: npm run build
