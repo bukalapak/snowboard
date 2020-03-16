@@ -20,6 +20,7 @@ jobs:
       - run: npm ci
       - run: npm run bootstrap
       - run: npm run build
+      - run: npm run manifest
 
       - run: npm run pack-linux
         if: runner.os == 'Linux'
