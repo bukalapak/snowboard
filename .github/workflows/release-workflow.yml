@@ -29,8 +29,10 @@ jobs:
 
       - id: get_version
         run: echo ::set-output name=version::${GITHUB_REF/refs\/tags\//}
-      - id: get_asset
+      - id: get_asset_path
         run: echo ::set-output name=asset_path::$(find ./packages/snowboard/dist -type f -name "*-x64.tar.gz")
+      - id: get_asset_name
+        run: echo ::set-output name=asset_name::$(basename ${{ steps.get_asset_path.outputs.asset_path }})
       - uses: actions/create-release@v1
         id: create_release
         env:
@@ -43,6 +45,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ steps.get_asset.outputs.asset_path }}
-          asset_name: $(basename ${{ steps.name_asset.outputs.asset_path }})
+          asset_path: ${{ steps.get_asset_path.outputs.asset_path }}
+          asset_name: ${{ steps.get_asset_name.outputs.asset_name }}
           asset_content_type: application/gzip
