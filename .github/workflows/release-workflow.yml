@@ -17,7 +17,7 @@ jobs:
       - run: npm run bootstrap
       - run: npm run build
       - run: npm run manifest
-      - run: lerna exec --scope snowboard -- npm publish
+      - run: npm run publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
