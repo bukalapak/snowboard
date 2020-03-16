@@ -6,33 +6,11 @@ on:
     - 'v*'
 
 jobs:
-  build:
-    runs-on: ${{ matrix.operating-system }}
-    strategy:
-      matrix:
-        operating-system: [ubuntu-latest, macos-latest]
+  release:
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 12
-
-      - run: npm ci
-      - run: npm run bootstrap
-      - run: npm run build
-      - run: npm run manifest
-
-      - run: npm run pack-linux
-        if: runner.os == 'Linux'
-      - run: npm run pack-darwin
-        if: runner.os == 'macOS'
-
       - id: get_version
         run: echo ::set-output name=version::${GITHUB_REF/refs\/tags\//}
-      - id: get_asset_path
-        run: echo ::set-output name=asset_path::$(find ./packages/snowboard/dist -type f -name "*-x64.tar.gz")
-      - id: get_asset_name
-        run: echo ::set-output name=asset_name::$(basename ${{ steps.get_asset_path.outputs.asset_path }})
       - uses: actions/create-release@v1
         id: create_release
         env:
@@ -40,11 +18,45 @@ jobs:
         with:
           tag_name: ${{ steps.get_version.outputs.version }}
           release_name: ${{ steps.get_version.outputs.version }}
+      - run: echo "${{ steps.create_release.outputs.upload_url }}" > release_url.txt
+      - uses: actions/upload-artifact@v1
+        with:
+          name: release_url
+          path: release_url.txt
+
+  publish:
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      matrix:
+        operating-system: [ubuntu-latest, macos-latest]
+    needs: [release]
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - uses: actions/download-artifact@v1
+        with:
+          name: release_url
+      - run: npm ci
+      - run: npm run bootstrap
+      - run: npm run build
+      - run: npm run manifest
+      - run: npm run pack-linux
+        if: runner.os == 'Linux'
+      - run: npm run pack-darwin
+        if: runner.os == 'macOS'
+      - id: get_upload_url
+        run: echo ::set-output name=upload_url::$(cat release_url.txt)
+      - id: get_asset_path
+        run: echo ::set-output name=asset_path::$(find ./packages/snowboard/dist -type f -name "*-x64.tar.gz")
+      - id: get_asset_name
+        run: echo ::set-output name=asset_name::$(basename ${{ steps.get_asset_path.outputs.asset_path }})
       - uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          upload_url: ${{ steps.get_upload_url.outputs.upload_url }}
           asset_path: ${{ steps.get_asset_path.outputs.asset_path }}
           asset_name: ${{ steps.get_asset_name.outputs.asset_name }}
           asset_content_type: application/gzip
