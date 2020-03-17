@@ -33,7 +33,7 @@ $ docker run -it --rm quay.io/bukalapak/snowboard help
 To run snowboard with the current directory mounted to `/doc`:
 
 ```
-$ docker run -it --rm -v $PWD:/doc quay.io/bukalapak/snowboard html -o output.html API.apib
+$ docker run -it --rm -v $PWD:/doc quay.io/bukalapak/snowboard html -o outDir API.apib
 ```
 
 ## Usage
@@ -52,7 +52,7 @@ There are some scenarios we can perform, like:
 
 ```
 # generate HTML documentation
-$ snowboard html -o index.html API.apib
+$ snowboard html -o outDir API.apib
 
 # run mock server
 $ snowboard mock API.apib
@@ -65,7 +65,7 @@ $ snowboard mock API.apib
 To generate HTML documentation, we can do:
 
 ```
-$ snowboard html -o output/ API.apib
+$ snowboard html -o outDir API.apib
 ```
 
 Above command will generate HTML documentation in `output` directory using `snowboard` default template (called `winter`).
@@ -139,7 +139,7 @@ module.exports = {
 Once you have a configuration file, named `snowboard.config.js`, you can do:
 
 ```
-$ snowboard html -o outputDir API.apib
+$ snowboard html -o outDir API.apib
 
 # http sub-command works too
 $ snowboard http API.apib
@@ -293,7 +293,7 @@ $ snowboard http -S -C localhost.pem -K localhost-key.pem API.apib
 To enable auto-regeneration on input files updates, you can add global flag `--watch`
 
 ```
-$ snowboard html --watch -o outputDir API.apib
+$ snowboard html --watch -o outDir API.apib
 
 # http server
 $ snowboard http --watch API.apib
