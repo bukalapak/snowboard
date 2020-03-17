@@ -25,5 +25,8 @@
     "pack-linux": "lerna run pack-linux --scope snowboard",
     "publish": "lerna exec --scope snowboard -- npm publish",
     "test": "lerna run test"
+  },
+  "resolutions": {
+    "minimist": "^1.2.2"
   }
 }
