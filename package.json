@@ -18,8 +18,8 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "build": "lerna run build",
-    "fmt": "prettier --write '{packages/*,.}/{README.md,{babel.config,lerna,package}.json}' '**/*.{js,html,svelte}'",
-    "lint": "prettier --check '{packages/*,.}/{README.md,{babel.config,lerna,package}.json}' '**/*.{js,html,svelte}'",
+    "fmt": "prettier --write '{packages/*,.}/{README.md,{babel.config,lerna,package}.json}' '**/*.{js,html}'",
+    "lint": "prettier --check '{packages/*,.}/{README.md,{babel.config,lerna,package}.json}' '**/*.{js,html}'",
     "manifest": "lerna run manifest --scope snowboard",
     "pack-darwin": "lerna run pack-darwin --scope snowboard",
     "pack-linux": "lerna run pack-linux --scope snowboard",
