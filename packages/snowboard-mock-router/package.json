@@ -4,7 +4,7 @@
   "version": "1.0.1",
   "author": "Alif Rachmawadi <subosito@bukalapak.com>",
   "dependencies": {
-    "@babel/runtime": "^7.8.4",
+    "@babel/runtime": "^7.8.7",
     "express": "^4.17.1",
     "parse-prefer-header": "^1.0.0",
     "snowboard-helper": "^1.0.0"
