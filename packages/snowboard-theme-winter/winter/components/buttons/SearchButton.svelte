@@ -1,9 +1,10 @@
 <script>
   import { navigateTo } from "yrv";
-  import { filter } from "../../lib/helper";
+  import { filter, joinHref } from "../../lib/helper";
   import { darkMode } from "../../lib/store";
 
   export let groups;
+  export let config;
   export let toggleSearch;
 
   let query = "";
@@ -73,7 +74,7 @@
     {#each items as item}
       <a
         class="navbar-item"
-        href={item.href}
+        href={joinHref(item.href, config.basePath)}
         on:click|preventDefault={handleClick}>
         <span>{item.title}</span>
         <span
