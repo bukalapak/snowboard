@@ -70,6 +70,24 @@ $ snowboard html -o outDir API.apib
 
 Above command will generate HTML documentation in `output` directory using `snowboard` default template (called `winter`).
 
+### Template Overrides
+
+Snowboard let you override part of the template, you can override template, javascript and stylesheet. You can define it under `html` config:
+
+```js
+const { resolve } = require("path");
+
+module.exports = {
+  html: {
+    overrides: {
+      "pages/Home.svelte": resolve(process.cwd(), "custom/Home.svelte"),
+      "lib/helper/colorize.js": resolve(process.cwd(), "custom/colors.js"),
+      "index.css": resolve(process.cwd(), "path-to-style.css")
+    }
+  }
+};
+```
+
 ### HTTP Server
 
 If you want to access HTML documentation via HTTP, you can use `http` sub-command:
