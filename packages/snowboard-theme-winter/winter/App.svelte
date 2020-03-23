@@ -154,14 +154,6 @@
     max-width: 23%;
   }
 
-  :global(html) {
-    height: 100%;
-  }
-
-  :global(body) {
-    min-height: 100%;
-  }
-
   :global(code[class*="language-"], pre[class*="language-"]) {
     background-color: #fff;
     font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
