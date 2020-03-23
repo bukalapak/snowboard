@@ -6,6 +6,7 @@ import { resolve, dirname, basename } from "path";
 import { merge } from "lodash";
 import { cp, readFile } from "snowboard-helper";
 import urlJoin from "url-join";
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
 
 import {
   setupDir,
@@ -78,6 +79,7 @@ async function packer(
           use: {
             loader: require.resolve("svelte-loader-hot"),
             options: {
+              emitCss: !watch,
               hotReload: watch
             }
           }
@@ -97,6 +99,15 @@ async function packer(
               ]
             }
           }
+        },
+        {
+          test: /\.css$/i,
+          use: [
+            !watch
+              ? MiniCssExtractPlugin.loader
+              : require.resolve("style-loader"),
+            require.resolve("css-loader")
+          ]
         }
       ]
     },
@@ -109,7 +120,10 @@ async function packer(
             return normalize(content, publicPath);
           }
         }
-      ])
+      ]),
+      new MiniCssExtractPlugin({
+        filename: "index.css"
+      })
     ],
     performance: {
       maxEntrypointSize: 2000000
