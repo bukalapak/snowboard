@@ -66,10 +66,10 @@
   </Route>
   -->
   <Route exact path={`/${prefix.group}/:slug`} let:router>
-    <Group group={getGroup(router.path)} />
+    <Group {config} group={getGroup(router.path)} />
   </Route>
   <Route exact path={`/${prefix.resource}/:slug`} let:router>
-    <Resource {...getResource(router.path)} />
+    <Resource {config} {...getResource(router.path)} />
   </Route>
   <Route exact path={`/${prefix.transition}/:slug`} let:router>
     {#await getTransition(router.path) then transition}
