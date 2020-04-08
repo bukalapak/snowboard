@@ -1,4 +1,5 @@
 <script>
+  import { Link } from "yrv";
   import { markdown, toHref } from "../lib/helper";
   import Breadcrumb from "../components/Breadcrumb.svelte";
 
@@ -7,7 +8,7 @@
   export let config;
 </script>
 
-<Breadcrumb {group} {resource} />
+<Breadcrumb {group} {resource} {config} />
 
 <h1 class="title">{resource.title}</h1>
 
@@ -24,7 +25,7 @@
   <div class="column is-3">
       <div class="box">
         <div class="box-content">
-          <a href={toHref(transition.permalink, config.basePath)}>{transition.title}</a>
+          <Link href={toHref(transition.permalink, config.basePath)}>{transition.title}</Link>
         </div>
       </div>
   </div>

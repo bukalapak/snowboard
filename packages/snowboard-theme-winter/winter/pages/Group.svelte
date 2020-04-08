@@ -1,4 +1,5 @@
 <script>
+  import { Link } from "yrv";
   import { markdown, toHref } from "../lib/helper";
   import Breadcrumb from "../components/Breadcrumb.svelte";
 
@@ -22,7 +23,7 @@
   }
 </style>
 
-<Breadcrumb {group} />
+<Breadcrumb {group} {config} />
 
 <h1 class="title">{group.title}</h1>
 
@@ -38,11 +39,11 @@
         <div class="box">
           <div class="box-content">
             <p class="subtitle">
-              <a href={toHref(resource.permalink, config.basePath)}>{resource.title}</a>
+              <Link href={toHref(resource.permalink, config.basePath)}>{resource.title}</Link>
             </p>
             <ul>
               {#each resource.transitions as transition}
-                <li><a href={toHref(transition.permalink, config.basePath)}>{transition.title}</a></li>
+                <li><Link href={toHref(transition.permalink, config.basePath)}>{transition.title}</Link></li>
               {/each}
             </ul>
           </div>
