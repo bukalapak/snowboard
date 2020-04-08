@@ -12,7 +12,9 @@ export function toHref(permalink, basePath = "/") {
     return permalink;
   }
 
-  return permalink.replace(`${char}~`, `${basePath}${char}/`);
+  return permalink
+    .replace(`${char}~`, `${basePath}${char}/`)
+    .replace(/\/\//g, "/");
 }
 
 export function toPermalink(pathname, basePath = "/") {
