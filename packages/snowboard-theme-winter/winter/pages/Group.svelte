@@ -14,12 +14,8 @@
   }
 
   .subtitle {
-    box-shadow: 0px 6px 4px -4px #eee;
+    box-shadow: 0px 2px 0px 0px #eee;
     padding-bottom: 8px;
-  }
-
-  .subtitle a {
-    color: #777;
   }
 </style>
 

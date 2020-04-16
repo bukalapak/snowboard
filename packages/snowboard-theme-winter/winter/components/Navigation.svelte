@@ -28,6 +28,12 @@
   }
 </script>
 
+<style>
+.menu-label a {
+  color: #7a7a7a;
+}
+</style>
+
 {#each filteredNavigation as item}
   <ul class="menu-label">
     <li>
@@ -46,17 +52,19 @@
           on:click|preventDefault={handleClick}>
           {child.title}
         </a>
-        <ul>
-          {#each child.children as grandchild}
-            <li class:is-active={grandchild.permalink == permalink}>
-              <a
-                href={toHref(grandchild.permalink, config.basePath)}
-                on:click|preventDefault={handleClick}>
-                {grandchild.title}
-              </a>
-            </li>
-          {/each}
-        </ul>
+        {#if child.children.length > 0}
+          <ul>
+            {#each child.children as grandchild}
+              <li class:is-active={grandchild.permalink == permalink}>
+                <a
+                  href={toHref(grandchild.permalink, config.basePath)}
+                  on:click|preventDefault={handleClick}>
+                  {grandchild.title}
+                </a>
+              </li>
+            {/each}
+          </ul>
+        {/if}
       </li>
     </ul>
   {/each}

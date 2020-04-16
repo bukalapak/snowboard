@@ -130,17 +130,34 @@
 
 <style>
   .main {
-    padding: 2rem 3rem;
+    background-color: #fafafa;
+    min-height: 100vh;
   }
 
-  .main,
-  .footer {
+  .side-navigation {
+    padding: 2rem 1rem 2rem 3rem;
+  }
+
+  .main-content {
+    padding: 2rem 3rem 2rem 2rem;
+    box-shadow: rgb(245, 245, 245) -2px 2px 0px 0px;
+  }
+
+  .main-content, .footer {
     background-color: #fff;
   }
 
-  .is-darkmode .main,
+  .is-darkmode .main-content,
   .is-darkmode .footer {
     background-color: #141414;
+  }
+
+  .is-darkmode .main-content {
+    box-shadow: -2px 2px 0 0 #363636;
+  }
+
+  .is-darkmode .main {
+    background-color: #000;
   }
 
   .icon-brand {
@@ -149,9 +166,9 @@
 
   .menu-navigation {
     position: fixed;
-    height: 87vh;
+    max-height: 100vh;
     overflow-x: auto;
-    max-width: 23%;
+    max-width: 22%;
   }
 
   :global(code[class*="language-"], pre[class*="language-"]) {
@@ -227,27 +244,26 @@
 
   <div class="main">
     <div class="columns">
-      <div class="column is-one-quarter">
+      <div class="column is-one-quarter side-navigation">
         <aside class="menu menu-navigation">
           <Navigation {navigation} {config} {permalink} />
         </aside>
       </div>
 
-      <div class="column is-three-quarters">
+      <div class="column is-three-quarters main-content">
         <Router {title} {description} {groups} {resources} {uuids} {config} />
+        <footer class="footer">
+          <div class="content column is-paddingless has-text-centered">
+            <p>
+              <strong>{title}</strong>
+              powered by
+              <a href="https://github.com/bukalapak/snowboard" target="_blank">
+                <strong>Snowboard.</strong>
+              </a>
+            </p>
+          </div>
+        </footer>
       </div>
     </div>
   </div>
-
-  <footer class="footer">
-    <div class="content column is-paddingless has-text-centered">
-      <p>
-        <strong>{title}</strong>
-        powered by
-        <a href="https://github.com/bukalapak/snowboard" target="_blank">
-          <strong>Snowboard.</strong>
-        </a>
-      </p>
-    </div>
-  </footer>
 </div>
