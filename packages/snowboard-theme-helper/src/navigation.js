@@ -21,6 +21,7 @@ export function toNavigation({
   items.unshift({
     title: title,
     permalink: basePath,
+    isToc: true,
     children: tocMap(toc, basePath)
   });
 
@@ -50,6 +51,7 @@ function tocMap(toc, basePath = "/") {
     if (item.depth === 2) {
       data.push({
         title: item.text,
+        isToc: true,
         permalink: `${basePath}#` + toSlug(item.text, "-"),
         children: []
       });
@@ -58,6 +60,7 @@ function tocMap(toc, basePath = "/") {
     if (item.depth === 3) {
       data[data.length - 1].children.push({
         title: item.text,
+        isToc: true,
         permalink: `${basePath}#` + toSlug(item.text, "-"),
         children: []
       });
