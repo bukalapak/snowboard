@@ -1,5 +1,6 @@
 <script>
   import { isEmpty } from "lodash";
+  import { afterUpdate } from 'svelte';
   import qs from "querystringify";
 
   import {
@@ -44,10 +45,22 @@
     return param;
   });
 
-  $: requestHeaders = prepareHeaders(
+  let requestHeaders = prepareHeaders(
     config.playground.environments[$env],
     transition.transactions[0].request.headers
   );
+
+  let prev = $env;
+
+  afterUpdate(() => {
+    if (prev != $env) {
+      prev = $env;
+      requestHeaders = prepareHeaders(
+        config.playground.environments[$env],
+        transition.transactions[0].request.headers
+      );
+    }
+  });
 
   $: curl = toCurl({
     environment: environment,
