@@ -157,7 +157,7 @@
       } else {
         mapHeaders.push({
           name: "Authorization",
-          example: `Bearer ${$token}`,
+          example: ($token ? `Bearer ${token}` : ''),
           used: true
         });
       }
