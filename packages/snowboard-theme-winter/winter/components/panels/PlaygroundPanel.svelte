@@ -151,13 +151,14 @@
 
     if (isAuth(environment, "oauth2")) {
       const index = headerIndex(mapHeaders, "authorization");
+      const example = $token ? `Bearer ${token}` : '';
 
       if (mapHeaders[index]) {
-        mapHeaders[index].example = `Bearer ${$token}`;
+        mapHeaders[index].example = example;
       } else {
         mapHeaders.push({
           name: "Authorization",
-          example: ($token ? `Bearer ${token}` : ''),
+          example,
           used: true
         });
       }
