@@ -29,9 +29,9 @@
 </script>
 
 <style>
-.menu-label a {
-  color: #7a7a7a;
-}
+  .menu-label a {
+    color: #7a7a7a;
+  }
 </style>
 
 {#each filteredNavigation as item}

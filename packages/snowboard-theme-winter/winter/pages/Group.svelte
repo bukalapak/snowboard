@@ -32,18 +32,24 @@
 <div class="columns is-multiline">
   {#each group.resources as resource}
     <div class="column is-4">
-        <div class="box">
-          <div class="box-content">
-            <p class="subtitle">
-              <Link href={toHref(resource.permalink, config.basePath)}>{resource.title}</Link>
-            </p>
-            <ul>
-              {#each resource.transitions as transition}
-                <li><Link href={toHref(transition.permalink, config.basePath)}>{transition.title}</Link></li>
-              {/each}
-            </ul>
-          </div>
+      <div class="box">
+        <div class="box-content">
+          <p class="subtitle">
+            <Link href={toHref(resource.permalink, config.basePath)}>
+              {resource.title}
+            </Link>
+          </p>
+          <ul>
+            {#each resource.transitions as transition}
+              <li>
+                <Link href={toHref(transition.permalink, config.basePath)}>
+                  {transition.title}
+                </Link>
+              </li>
+            {/each}
+          </ul>
         </div>
+      </div>
     </div>
   {/each}
 </div>

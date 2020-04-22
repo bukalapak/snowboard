@@ -35,8 +35,7 @@
   group={transition.meta.group}
   resource={transition.meta.resource}
   {transition}
-  {config}
-  />
+  {config} />
 
 <h1 class="title is-4">{transition.title}</h1>
 

@@ -1,6 +1,6 @@
 <script>
   import { isEmpty } from "lodash";
-  import { afterUpdate } from 'svelte';
+  import { afterUpdate } from "svelte";
   import qs from "querystringify";
 
   import {
@@ -151,7 +151,7 @@
 
     if (isAuth(environment, "oauth2")) {
       const index = headerIndex(mapHeaders, "authorization");
-      const example = $token ? `Bearer ${token}` : '';
+      const example = $token ? `Bearer ${token}` : "";
 
       if (mapHeaders[index]) {
         mapHeaders[index].example = example;

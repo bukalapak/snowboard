@@ -144,7 +144,8 @@
     box-shadow: rgb(245, 245, 245) -2px 2px 0px 0px;
   }
 
-  .main-content, .footer {
+  .main-content,
+  .footer {
     background-color: #fff;
   }
 
