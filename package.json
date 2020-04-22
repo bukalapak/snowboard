@@ -1,5 +1,6 @@
 {
   "name": "snowboard-monorepo",
+  "version": "1.0.0",
   "devDependencies": {
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.9.0",
@@ -16,7 +17,7 @@
   },
   "private": true,
   "scripts": {
-    "bootstrap": "lerna bootstrap",
+    "bootstrap": "lerna bootstrap --ci",
     "build": "lerna run build",
     "fmt": "prettier --write '{packages/*,.}/{README.md,{babel.config,lerna,package}.json}' '**/*.{js,html}'",
     "lint": "prettier --check '{packages/*,.}/{README.md,{babel.config,lerna,package}.json}' '**/*.{js,html}'",
