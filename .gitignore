@@ -8,3 +8,4 @@ oclif.manifest.json
 **/snowboard-mock-router/test/fixtures/
 !packages/snowboard-theme-*/**/lib/
 packages/snowboard-theme-helper/**/lib/
+packages/**/package-lock.json

@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "author": "Alif Rachmawadi <subosito@bukalapak.com>",
   "dependencies": {
-    "@babel/runtime": "^7.8.7",
+    "@babel/runtime": "^7.9.2",
     "handlebars": "^4.7.3",
     "lodash": "^4.17.15"
   },
