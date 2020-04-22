@@ -3,7 +3,7 @@ name: Release workflow
 on:
   push:
     tags:
-    - 'v*'
+    - 'skip-*'
 
 jobs:
   npm:
