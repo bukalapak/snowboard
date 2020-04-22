@@ -136,6 +136,7 @@
 
   .side-navigation {
     padding: 2rem 1rem 2rem 3rem;
+    height: 100vh;
   }
 
   .main-content {
@@ -166,7 +167,7 @@
 
   .menu-navigation {
     position: fixed;
-    max-height: 100vh;
+    height: 90%;
     overflow-x: auto;
     max-width: 22%;
   }
