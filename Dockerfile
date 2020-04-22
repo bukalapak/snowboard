@@ -7,6 +7,7 @@ RUN cd /app \
  && npm run bootstrap \
  && npm run build
 
+EXPOSE 8087 8088
 WORKDIR /doc
 ENTRYPOINT ["/app/packages/snowboard/bin/run"]
 CMD ["help"]
