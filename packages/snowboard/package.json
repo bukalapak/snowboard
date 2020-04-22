@@ -57,6 +57,7 @@
     "pack-darwin": "oclif-dev pack --targets darwin-x64",
     "pack-linux": "oclif-dev pack --targets linux-x64",
     "readme": "oclif-dev readme",
-    "test": "tape -r ../../babel.register.js 'test/**/*.js'"
+    "test": "tape -r ../../babel.register.js 'test/**/*.js'",
+    "prepublish": "oclif-dev manifest"
   }
 }
