@@ -23,7 +23,7 @@
     "manifest": "lerna run manifest --scope snowboard",
     "pack-darwin": "lerna run pack-darwin --scope snowboard",
     "pack-linux": "lerna run pack-linux --scope snowboard",
-    "publish": "lerna exec --scope snowboard -- npm publish",
+    "publish": "lerna publish",
     "test": "lerna run test"
   },
   "resolutions": {
