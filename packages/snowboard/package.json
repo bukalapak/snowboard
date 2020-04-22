@@ -58,6 +58,6 @@
     "pack-linux": "oclif-dev pack --targets linux-x64",
     "readme": "oclif-dev readme",
     "test": "tape -r ../../babel.register.js 'test/**/*.js'",
-    "prepublish": "oclif-dev manifest"
+    "prepack": "oclif-dev manifest"
   }
 }
