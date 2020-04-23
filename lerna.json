@@ -6,9 +6,6 @@
       "conventionalCommits": true,
       "message": "chore: publish",
       "allowBranch": ["master"]
-    },
-    "publish": {
-      "ignoreChanges": ["packages/**/package-lock.json"]
     }
   }
 }
