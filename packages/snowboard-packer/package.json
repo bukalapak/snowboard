@@ -1,7 +1,7 @@
 {
   "name": "snowboard-packer",
   "description": "The snowboard packer",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "author": "Alif Rachmawadi <subosito@bukalapak.com>",
   "dependencies": {
     "@babel/core": "^7.9.0",
