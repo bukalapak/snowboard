@@ -226,7 +226,7 @@ function moduleDirs(templateDir) {
 
   if (installDir) {
     return [
-      resolve(installDir, requiredBy.includes("/") ? "node_modules" : "/")
+      resolve(installDir, requiredBy.includes("/") ? "node_modules" : "../")
     ];
   }
 
