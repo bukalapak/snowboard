@@ -36,7 +36,6 @@
   "repository": "bukalapak/snowboard",
   "scripts": {
     "build": "babel src --out-dir lib --root-mode upward",
-    "test": "tape -r ../../babel.register.js 'test/**/*.js'",
-    "prepack": "run-s build"
+    "test": "tape -r ../../babel.register.js 'test/**/*.js'"
   }
 }
