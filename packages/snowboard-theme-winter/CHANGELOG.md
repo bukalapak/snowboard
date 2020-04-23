@@ -1,0 +1,11 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## [1.3.3](https://github.com/bukalapak/snowboard/compare/snowboard-theme-winter@1.3.2...snowboard-theme-winter@1.3.3) (2020-04-23)
+
+
+### Bug Fixes
+
+* updated marked: 1.0.0 ([62cd786](https://github.com/bukalapak/snowboard/commit/62cd786a3c9ff3ccb839bf6ea36ddb13de89a2db))
