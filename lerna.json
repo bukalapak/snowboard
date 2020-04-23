@@ -8,7 +8,7 @@
       "allowBranch": ["master"]
     },
     "publish": {
-      "ignoreChanges": ["package-lock.json"]
+      "ignoreChanges": ["packages/**/package-lock.json"]
     }
   }
 }
