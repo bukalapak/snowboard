@@ -1,4 +1,14 @@
 {
   "packages": ["packages/*"],
-  "version": "independent"
+  "version": "independent",
+  "command": {
+    "version": {
+      "conventionalCommits": true,
+      "message": "chore: publish",
+      "allowBranch": ["master"]
+    },
+    "publish": {
+      "ignoreChanges": ["package-lock.json"]
+    }
+  }
 }
