@@ -33,7 +33,7 @@
   }
 </script>
 
-{#if !isEmpty($token)}
+{#if (isAuth(playground.environments[$env], 'oauth2') && !isEmpty($token))}
   <div class="navbar-item has-dropdown is-capitalized">
     <div class="buttons">
       <a
