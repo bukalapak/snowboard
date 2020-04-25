@@ -48,7 +48,7 @@ export default function({ ctx, children }) {
   }, []);
 
   return (
-    <Block backgroundColor="backgroundPrimary" color="contentPrimary">
+    <Block backgroundColor="backgroundSecondary" height="100vh">
       <BusyIndicator isBusy={!!loadingRoute} delayMs={200} />
       <HeaderNavigation
         overrides={{
