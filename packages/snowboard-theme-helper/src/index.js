@@ -5,7 +5,7 @@ export { default as urlJoin } from "url-join";
 export { toSlug } from "./slug";
 export { toNavigation, filterNavigation } from "./navigation";
 export { toTransactions } from "./transactions";
-export { exchangeToken } from "./oauth2";
+export { exchangeToken, buildAuthorizeUrl } from "./oauth2";
 export { urlParse, expandUrl, toCurl, httpClient } from "./request";
 export { filter } from "./filter";
 export { findGroup, findResource } from "./finder";

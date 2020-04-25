@@ -39,3 +39,30 @@ export const exchangeToken = async ({
     code_verifier: codeVerifier
   });
 };
+
+export const buildAuthorizeUrl = (
+  authorizeUrl,
+  {
+    clientId,
+    callbackUrl,
+    scope = "",
+    codeChallenge,
+    codeChallengeMethod = "S256",
+    state = ""
+  }
+) => {
+  const authorizeParams = qs.stringify(
+    {
+      client_id: clientId,
+      redirect_uri: callbackUrl,
+      response_type: "code",
+      state: state,
+      scope: scope,
+      code_challenge: codeChallenge,
+      code_challenge_method: codeChallengeMethod
+    },
+    true
+  );
+
+  return `${authorizeUrl}${authorizeParams}`;
+};
