@@ -219,15 +219,10 @@ function detectPublicPath(outDir) {
 }
 
 function moduleDirs(templateDir) {
-  const {
-    _where: installDir,
-    _requiredBy: requiredBy
-  } = require("../package.json");
+  const { _where: installDir } = require("../package.json");
 
   if (installDir) {
-    return [
-      resolve(installDir, requiredBy.includes("/") ? "node_modules" : "../")
-    ];
+    return [resolve(installDir, "node_modules"), resolve(installDir, "../")];
   }
 
   return [
