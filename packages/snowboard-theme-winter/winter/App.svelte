@@ -136,7 +136,6 @@
 
   .side-navigation {
     padding: 2rem 1rem 2rem 3rem;
-    height: 100vh;
   }
 
   .main-content {
@@ -167,10 +166,10 @@
   }
 
   .menu-navigation {
-    position: fixed;
-    height: 90%;
+    position: sticky;
+    top: 64px;
     overflow-x: auto;
-    max-width: 22%;
+    max-height: 90vh;
   }
 
   :global(code[class*="language-"], pre[class*="language-"]) {
