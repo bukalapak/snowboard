@@ -1,5 +1,4 @@
 import React from "react";
-import qs from "querystringify";
 import { Button } from "baseui/button";
 import { buildAuthorizeUrl } from "snowboard-theme-helper";
 import { useCurrentRoute } from "react-navi";
