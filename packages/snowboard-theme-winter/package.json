@@ -11,7 +11,7 @@
     "prismjs": "^1.20.0",
     "querystringify": "^2.1.1",
     "safe-json-stringify": "^1.2.0",
-    "snowboard-theme-helper": "^1.1.6",
+    "snowboard-theme-helper": "^1.1.7",
     "svelte": "^3.20.1",
     "yrv": "^0.0.29"
   },

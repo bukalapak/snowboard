@@ -26,7 +26,7 @@
     "react-navi": "^0.14.3",
     "react-navi-helmet-async": "^0.14.3",
     "react-syntax-highlighter": "^12.2.1",
-    "snowboard-theme-helper": "^1.1.6",
+    "snowboard-theme-helper": "^1.1.7",
     "styletron-engine-atomic": "^1.4.5",
     "styletron-react": "^5.2.7",
     "use-dark-mode": "^2.3.1",
