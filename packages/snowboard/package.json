@@ -7,7 +7,7 @@
     "snowboard": "./bin/run"
   },
   "dependencies": {
-    "@babel/runtime": "^7.9.2",
+    "@babel/runtime-corejs3": "^7.9.2",
     "@oclif/command": "^1.5.19",
     "@oclif/config": "^1.15.1",
     "@oclif/plugin-help": "^2.2.3",

@@ -1,7 +1,12 @@
 {
   "presets": [["@babel/preset-env", { "targets": "maintained node versions" }]],
   "plugins": [
-    "@babel/plugin-transform-runtime",
+    [
+      "@babel/plugin-transform-runtime",
+      {
+        "corejs": 3
+      }
+    ],
     "@babel/plugin-proposal-class-properties"
   ]
 }

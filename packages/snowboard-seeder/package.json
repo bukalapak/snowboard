@@ -4,6 +4,7 @@
   "version": "1.1.1",
   "author": "Alif Rachmawadi <subosito@bukalapak.com>",
   "dependencies": {
+    "@babel/runtime-corejs3": "^7.9.2",
     "lodash": "^4.17.15",
     "snowboard-helper": "^1.1.1"
   },
