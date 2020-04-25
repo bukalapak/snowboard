@@ -1,7 +1,7 @@
 {
   "name": "snowboard",
   "description": "API blueprint toolkit",
-  "version": "4.1.9",
+  "version": "4.1.10",
   "author": "Alif Rachmawadi <subosito@bukalapak.com>",
   "bin": {
     "snowboard": "./bin/run"
@@ -20,13 +20,13 @@
     "globby": "^11.0.0",
     "lodash": "^4.17.15",
     "morgan": "^1.10.0",
-    "snowboard-helper": "^1.1.1",
-    "snowboard-linter": "^1.0.1",
-    "snowboard-mock-router": "^1.0.2",
-    "snowboard-packer": "^1.3.4",
-    "snowboard-parser": "^1.1.1",
-    "snowboard-reader": "^1.0.1",
-    "snowboard-theme-winter": "^1.3.6"
+    "snowboard-helper": "^1.1.2",
+    "snowboard-linter": "^1.0.2",
+    "snowboard-mock-router": "^1.0.3",
+    "snowboard-packer": "^1.3.5",
+    "snowboard-parser": "^1.1.2",
+    "snowboard-reader": "^1.0.2",
+    "snowboard-theme-winter": "^1.3.7"
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1.22.2"

@@ -1,7 +1,7 @@
 {
   "name": "snowboard-theme-winter",
   "description": "Snowboard theme using Svelte",
-  "version": "1.3.6",
+  "version": "1.3.7",
   "author": "Alif Rachmawadi <subosito@bukalapak.com>",
   "dependencies": {
     "axios": "^0.19.2",
@@ -11,7 +11,7 @@
     "prismjs": "^1.20.0",
     "querystringify": "^2.1.1",
     "safe-json-stringify": "^1.2.0",
-    "snowboard-theme-helper": "^1.1.8",
+    "snowboard-theme-helper": "^1.1.9",
     "svelte": "^3.20.1",
     "yrv": "^0.0.29"
   },

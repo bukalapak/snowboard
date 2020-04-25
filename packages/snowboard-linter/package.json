@@ -1,12 +1,12 @@
 {
   "name": "snowboard-linter",
   "description": "The snowboard linter",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "Alif Rachmawadi <subosito@bukalapak.com>",
   "dependencies": {
     "@babel/runtime-corejs3": "^7.9.2",
     "lodash": "^4.17.15",
-    "snowboard-parser": "^1.1.1"
+    "snowboard-parser": "^1.1.2"
   },
   "files": [
     "/lib"
