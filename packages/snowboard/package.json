@@ -1,7 +1,7 @@
 {
   "name": "snowboard",
   "description": "API blueprint toolkit",
-  "version": "4.1.8",
+  "version": "4.1.9",
   "author": "Alif Rachmawadi <subosito@bukalapak.com>",
   "bin": {
     "snowboard": "./bin/run"
@@ -26,7 +26,7 @@
     "snowboard-packer": "^1.3.4",
     "snowboard-parser": "^1.1.1",
     "snowboard-reader": "^1.0.1",
-    "snowboard-theme-winter": "^1.3.4"
+    "snowboard-theme-winter": "^1.3.6"
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1.22.2"

@@ -1,7 +1,7 @@
 {
   "name": "snowboard-theme-osaka",
   "description": "snowboard theme using React",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Alif Rachmawadi <subosito@bukalapak.com>",
   "license": "MIT",
   "main": "index.js",
@@ -26,7 +26,7 @@
     "react-navi": "^0.14.3",
     "react-navi-helmet-async": "^0.14.3",
     "react-syntax-highlighter": "^12.2.1",
-    "snowboard-theme-helper": "^1.1.7",
+    "snowboard-theme-helper": "^1.1.8",
     "styletron-engine-atomic": "^1.4.5",
     "styletron-react": "^5.2.7",
     "use-dark-mode": "^2.3.1",
