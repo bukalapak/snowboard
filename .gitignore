@@ -1,4 +1,5 @@
 dist/
+html/
 node_modules/
 snowboard.config.js
 oclif.manifest.json
