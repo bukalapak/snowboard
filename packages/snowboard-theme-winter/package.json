@@ -13,7 +13,7 @@
     "safe-json-stringify": "^1.2.0",
     "snowboard-theme-helper": "^1.1.9",
     "svelte": "^3.20.1",
-    "yrv": "^0.0.29"
+    "yrv": "0.0.29"
   },
   "files": [
     "/winter"
