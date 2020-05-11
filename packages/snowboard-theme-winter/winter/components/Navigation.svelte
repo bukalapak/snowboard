@@ -38,7 +38,7 @@
   <ul class="menu-label">
     <li>
       <a
-        href={toHref(item.permalink, config.basePath)}
+        href={toHref(item.permalink)}
         on:click|preventDefault={handleClick}>
         {item.title}
       </a>
@@ -48,7 +48,7 @@
     <ul class="menu-list">
       <li>
         <a
-          href={toHref(child.permalink, config.basePath)}
+          href={toHref(child.permalink)}
           on:click|preventDefault={handleClick}>
           {child.title}
         </a>
@@ -57,7 +57,7 @@
             {#each child.children as grandchild}
               <li class:is-active={grandchild.permalink == permalink}>
                 <a
-                  href={toHref(grandchild.permalink, config.basePath)}
+                  href={toHref(grandchild.permalink)}
                   on:click|preventDefault={handleClick}>
                   {grandchild.title}
                 </a>

@@ -33,17 +33,17 @@
   };
 
   const getGroup = pathname => {
-    const permalink = toPermalink(pathname, config.basePath);
+    const permalink = toPermalink(pathname);
     return findGroup(permalink, groups);
   };
 
   const getResource = pathname => {
-    const permalink = toPermalink(pathname, config.basePath);
+    const permalink = toPermalink(pathname);
     return findResource(permalink, resources, groups);
   };
 
   const getTransition = async pathname => {
-    const permalink = toPermalink(pathname, config.basePath);
+    const permalink = toPermalink(pathname);
     const uuid = uuids[permalink];
 
     if (!uuid) {
@@ -54,22 +54,15 @@
   };
 </script>
 
-<!-- Home hack -->
-{#if config.basePath == $router.path}
-  <Home {title} {description} />
-{/if}
-
 <Router path={config.basePath.slice(0, -1)}>
-  <!--
   <Route exact>
     <Home {title} {description} />
   </Route>
-  -->
   <Route exact path={`/${prefix.group}/:slug`} let:router>
-    <Group {config} group={getGroup(router.path)} />
+    <Group group={getGroup(router.path)} />
   </Route>
   <Route exact path={`/${prefix.resource}/:slug`} let:router>
-    <Resource {config} {...getResource(router.path)} />
+    <Resource {...getResource(router.path)} />
   </Route>
   <Route exact path={`/${prefix.transition}/:slug`} let:router>
     {#await getTransition(router.path) then transition}

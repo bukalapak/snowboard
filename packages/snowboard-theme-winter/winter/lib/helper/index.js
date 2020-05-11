@@ -4,8 +4,13 @@ import { sendRequest } from "./request";
 import highlight from "./highlight";
 import markdown from "./markdown";
 import colorize from "./colorize";
+import seeds from "../../seeds";
 
-export function toHref(permalink, basePath = "/") {
+const {
+  config: { basePath }
+} = seeds;
+
+export function toHref(permalink) {
   const char = permalink.substr(0, 1);
 
   if (char == "/") {
@@ -17,7 +22,7 @@ export function toHref(permalink, basePath = "/") {
     .replace(/\/\//g, "/");
 }
 
-export function toPermalink(pathname, basePath = "/") {
+export function toPermalink(pathname) {
   const segment = pathname.replace(basePath, "");
   const char = segment.substr(0, 1);
   return pathname.replace(`${basePath}${char}/`, `${char}~`);
@@ -50,7 +55,7 @@ export function filter(query, groups) {
   });
 }
 
-export function joinHref(href, basePath = "/") {
+export function joinHref(href) {
   return urlJoin(basePath, href);
 }
 

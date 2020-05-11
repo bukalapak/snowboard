@@ -5,10 +5,9 @@
 
   export let group;
   export let resource;
-  export let config;
 </script>
 
-<Breadcrumb {group} {resource} {config} />
+<Breadcrumb {group} {resource} />
 
 <h1 class="title">{resource.title}</h1>
 
@@ -25,7 +24,7 @@
     <div class="column is-3">
       <div class="box">
         <div class="box-content">
-          <Link href={toHref(transition.permalink, config.basePath)}>
+          <Link href={toHref(transition.permalink)}>
             {transition.title}
           </Link>
         </div>

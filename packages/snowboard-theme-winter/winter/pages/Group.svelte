@@ -4,7 +4,6 @@
   import Breadcrumb from "../components/Breadcrumb.svelte";
 
   export let group;
-  export let config;
 </script>
 
 <style>
@@ -19,7 +18,7 @@
   }
 </style>
 
-<Breadcrumb {group} {config} />
+<Breadcrumb {group} />
 
 <h1 class="title">{group.title}</h1>
 
@@ -35,14 +34,14 @@
       <div class="box">
         <div class="box-content">
           <p class="subtitle">
-            <Link href={toHref(resource.permalink, config.basePath)}>
+            <Link href={toHref(resource.permalink)}>
               {resource.title}
             </Link>
           </p>
           <ul>
             {#each resource.transitions as transition}
               <li>
-                <Link href={toHref(transition.permalink, config.basePath)}>
+                <Link href={toHref(transition.permalink)}>
                   {transition.title}
                 </Link>
               </li>

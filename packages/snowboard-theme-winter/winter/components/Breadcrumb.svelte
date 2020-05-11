@@ -3,7 +3,6 @@
   import { toHref } from "../lib/helper";
 
   export let group;
-  export let config;
   export let resource = undefined;
   export let transition = undefined;
 </script>
@@ -13,7 +12,7 @@
     <ul>
       {#if group}
         <li>
-          <Link href={toHref(group.permalink, config.basePath)}>
+          <Link href={toHref(group.permalink)}>
             {group.title}
           </Link>
         </li>
@@ -21,7 +20,7 @@
 
       {#if resource}
         <li>
-          <Link href={toHref(resource.permalink, config.basePath)}>
+          <Link href={toHref(resource.permalink)}>
             {resource.title}
           </Link>
         </li>
@@ -29,7 +28,7 @@
 
       {#if transition}
         <li>
-          <Link href={toHref(transition.permalink, config.basePath)}>
+          <Link href={toHref(transition.permalink)}>
             {transition.title}
           </Link>
         </li>

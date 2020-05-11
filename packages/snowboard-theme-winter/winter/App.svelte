@@ -58,7 +58,7 @@
     token.set(getToken($env));
   }
 
-  $: permalink = toPermalink($router.path, config.basePath);
+  $: permalink = toPermalink($router.path);
   $: environment =
     config.playground.enabled && config.playground.environments[$env];
 
