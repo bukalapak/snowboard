@@ -234,7 +234,7 @@
           <EnvButton playground={config.playground} />
         {/if}
         <div class="navbar-item has-dropdown" class:is-active={isSearchMode}>
-          <SearchButton {config} {groups} {toggleSearch} />
+          <SearchButton {groups} {toggleSearch} />
         </div>
         <div class="navbar-item has-dropdown is-hoverable">
           <ThemeButton />

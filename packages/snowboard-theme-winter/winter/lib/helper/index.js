@@ -1,5 +1,5 @@
 import safeStringify from "safe-json-stringify";
-import { filter as filterHelper, urlJoin } from "snowboard-theme-helper";
+import { filter as filterHelper } from "snowboard-theme-helper";
 import { sendRequest } from "./request";
 import highlight from "./highlight";
 import markdown from "./markdown";
@@ -53,10 +53,6 @@ export function filter(query, groups) {
       href: toHref(permalink)
     };
   });
-}
-
-export function joinHref(href) {
-  return urlJoin(basePath, href);
 }
 
 export { highlight, markdown, colorize, sendRequest };
