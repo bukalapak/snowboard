@@ -29,7 +29,9 @@ func NewAPI(el *Element) (*API, error) {
 	}
 
 	children, err := el.Path("content").Children()
+	fmt.Println("children begin")
 	if err != nil {
+		fmt.Println(err)
 		return nil, err
 	}
 

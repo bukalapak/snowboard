@@ -3,6 +3,7 @@ package parser
 
 import (
 	"bytes"
+	"fmt"
 	"io"
 
 	"github.com/bukalapak/snowboard/api"
@@ -16,8 +17,10 @@ type Parser interface {
 
 // Parse formats API blueprint as blueprint.API struct using selected Parser
 func Parse(r io.Reader, engine Parser) (*api.API, error) {
+	fmt.Println("parse element begin")
 	el, err := parseElement(r, engine)
 	if err != nil {
+		fmt.Println(err)
 		return nil, err
 	}
 
@@ -46,7 +49,9 @@ func Validate(r io.Reader, engine Parser) (*api.API, error) {
 // Load reads API blueprint from file as blueprint.API struct using selected Parser
 func Load(name string, engine Parser) (*api.API, error) {
 	b, err := Read(name)
+	fmt.Println("read begin")
 	if err != nil {
+		fmt.Println(err)
 		return nil, err
 	}
 
