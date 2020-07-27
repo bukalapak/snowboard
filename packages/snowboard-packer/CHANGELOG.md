@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.9](https://github.com/bukalapak/snowboard/compare/snowboard-packer@1.3.8...snowboard-packer@1.3.9) (2020-07-27)
+
+
+### Bug Fixes
+
+* run concurrency in batches ([87c1411](https://github.com/bukalapak/snowboard/commit/87c1411acf643450eac27fcd067bffd76658dd4a))
+
+
+
+
+
 ## [1.3.8](https://github.com/bukalapak/snowboard/compare/snowboard-packer@1.3.7...snowboard-packer@1.3.8) (2020-07-27)
 
 **Note:** Version bump only for package snowboard-packer
