@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.11](https://github.com/bukalapak/snowboard/compare/snowboard-theme-winter@1.3.10...snowboard-theme-winter@1.3.11) (2020-07-27)
+
+
+### Bug Fixes
+
+* add request body example to playground ([69d0681](https://github.com/bukalapak/snowboard/commit/69d068158ba03be076f46d08f757c3ead0a72e77))
+
+
+
+
+
 ## [1.3.10](https://github.com/bukalapak/snowboard/compare/snowboard-theme-winter@1.3.9...snowboard-theme-winter@1.3.10) (2020-07-27)
 
 **Note:** Version bump only for package snowboard-theme-winter
