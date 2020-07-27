@@ -6,6 +6,7 @@ import { spinner, toc } from "snowboard-helper";
 import { read } from "snowboard-reader";
 import { parse, fromRefract } from "snowboard-parser";
 import { cp, tmpdir, mkdirp, writeFile, jsonStringify } from "snowboard-helper";
+import PromisePool from "@supercharge/promise-pool";
 
 export async function setupDir(output) {
   const buildDir = await tmpdir({ prefix: "snowboard-build-" });
@@ -50,17 +51,15 @@ export async function writeJSON(
   const jsonDir = resolve(outDir, "__json__");
 
   await mkdirp(jsonDir);
-  await Promise.all(
-    transitionSeeds.map(async transition => {
-      const filename = `${uuidMap[transition.permalink]}.json`;
+  await PromisePool.withConcurrency(64).for(transitionSeeds).process(async transition => {
+    const filename = `${uuidMap[transition.permalink]}.json`;
 
-      await writeFile(
-        pathJoin(jsonDir, filename),
-        jsonStringify(transition, optimized),
-        "utf8"
-      );
-    })
-  );
+    await writeFile(
+      pathJoin(jsonDir, filename),
+      jsonStringify(transition, optimized),
+      "utf8"
+    );
+  });
 }
 
 export async function copyOverrides(overrides, buildDir) {
