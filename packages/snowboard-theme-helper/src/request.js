@@ -50,7 +50,7 @@ const toCurl = ({
   const expandedUrl = expandUrl(pathTemplate, parameters);
   const destUrl = urlParse(expandedUrl, true);
 
-  return r2curl({
+  const str = r2curl({
     url:
       urlJoin(environment.url, destUrl.pathname) +
       qs.stringify(destUrl.query, true),
@@ -58,6 +58,13 @@ const toCurl = ({
     data: safeParse(body),
     headers: headers
   });
+
+  // r2curl does not support PATCH yet, https://github.com/uyu423/r2curl/blob/master/src/enum/HTTP_METHOD.ts
+  if (method === "PATCH") {
+    return str.replace("-X GET", "-X PATCH");
+  }
+
+  return str;
 };
 
 function safeParse(str) {
