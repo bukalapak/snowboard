@@ -38,7 +38,11 @@
   let codeState = getState();
 
   let response;
-  let requestBody;
+  let requestBody = prepareBody(
+    transition.transactions[0].request.method,
+    transition.transactions[0].request.body
+  );
+
   let requestParameters = transition.parameters.map(val => {
     const param = Object.assign({}, val);
     param.used = true;
@@ -197,6 +201,14 @@
     }
 
     return mapHeaders;
+  }
+
+  function prepareBody(method, body) {
+    if (isAllowBody(method)) {
+      return body;
+    }
+
+    return null;
   }
 </script>
 
