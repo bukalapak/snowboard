@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.4](https://github.com/bukalapak/snowboard/compare/snowboard-helper@1.1.3...snowboard-helper@1.1.4) (2020-07-27)
+
+**Note:** Version bump only for package snowboard-helper
+
+
+
+
+
 ## [1.1.3](https://github.com/bukalapak/snowboard/compare/snowboard-helper@1.1.2...snowboard-helper@1.1.3) (2020-05-11)
 
 **Note:** Version bump only for package snowboard-helper

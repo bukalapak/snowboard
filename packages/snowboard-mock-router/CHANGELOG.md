@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.5](https://github.com/bukalapak/snowboard/compare/snowboard-mock-router@1.0.4...snowboard-mock-router@1.0.5) (2020-07-27)
+
+**Note:** Version bump only for package snowboard-mock-router
+
+
+
+
+
 ## [1.0.4](https://github.com/bukalapak/snowboard/compare/snowboard-mock-router@1.0.3...snowboard-mock-router@1.0.4) (2020-05-11)
 
 **Note:** Version bump only for package snowboard-mock-router

@@ -1,7 +1,7 @@
 {
   "name": "snowboard-linter",
   "description": "The snowboard linter",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "author": "Alif Rachmawadi <subosito@bukalapak.com>",
   "dependencies": {
     "lodash": "^4.17.15",
