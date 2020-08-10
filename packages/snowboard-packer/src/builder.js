@@ -51,15 +51,17 @@ export async function writeJSON(
   const jsonDir = resolve(outDir, "__json__");
 
   await mkdirp(jsonDir);
-  await PromisePool.withConcurrency(64).for(transitionSeeds).process(async transition => {
-    const filename = `${uuidMap[transition.permalink]}.json`;
+  await PromisePool.withConcurrency(64)
+    .for(transitionSeeds)
+    .process(async transition => {
+      const filename = `${uuidMap[transition.permalink]}.json`;
 
-    await writeFile(
-      pathJoin(jsonDir, filename),
-      jsonStringify(transition, optimized),
-      "utf8"
-    );
-  });
+      await writeFile(
+        pathJoin(jsonDir, filename),
+        jsonStringify(transition, optimized),
+        "utf8"
+      );
+    });
 }
 
 export async function copyOverrides(overrides, buildDir) {
