@@ -46,7 +46,7 @@ export function httpsServer(app, cert, key) {
   return nodeHttps.createServer(
     {
       key: readFileSync(key),
-      cert: readFileSync(cert)
+      cert: readFileSync(cert),
     },
     app
   );
@@ -60,5 +60,5 @@ export async function load(input) {
 }
 
 export async function loadMulti(inputs) {
-  return Promise.all(inputs.map(v => load(v)));
+  return Promise.all(inputs.map((v) => load(v)));
 }

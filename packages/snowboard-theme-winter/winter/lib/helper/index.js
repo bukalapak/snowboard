@@ -7,7 +7,7 @@ import colorize from "./colorize";
 import seeds from "../../seeds";
 
 const {
-  config: { basePath }
+  config: { basePath },
 } = seeds;
 
 export function toHref(permalink) {
@@ -45,12 +45,12 @@ export function isAuth(environment, name) {
 }
 
 export function filter(query, groups) {
-  return filterHelper(query, groups).map(item => {
+  return filterHelper(query, groups).map((item) => {
     const { permalink, ...rest } = item;
 
     return {
       ...rest,
-      href: toHref(permalink)
+      href: toHref(permalink),
     };
   });
 }

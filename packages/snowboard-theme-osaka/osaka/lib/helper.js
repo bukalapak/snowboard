@@ -3,7 +3,7 @@ import { httpClient } from "snowboard-theme-helper";
 import seeds from "../seeds";
 
 const {
-  config: { basePath }
+  config: { basePath },
 } = seeds;
 
 export function toHref(permalink) {
@@ -25,12 +25,12 @@ export function toPermalink(pathname) {
 }
 
 export function filter(query, groups) {
-  return filterHelper(query, groups).map(item => {
+  return filterHelper(query, groups).map((item) => {
     const { permalink, ...rest } = item;
 
     return {
       ...rest,
-      href: toHref(permalink)
+      href: toHref(permalink),
     };
   });
 }
@@ -42,7 +42,7 @@ export const sendRequest = ({
   headers,
   parameters,
   body,
-  httpConfig
+  httpConfig,
 }) => {
   const [client, options] = httpClient({
     environment,
@@ -51,7 +51,7 @@ export const sendRequest = ({
     headers,
     parameters,
     body,
-    httpConfig
+    httpConfig,
   });
 
   return client.request(options);

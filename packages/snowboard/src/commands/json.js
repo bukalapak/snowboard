@@ -37,7 +37,7 @@ JsonCommand.description = `render API elements json`;
 JsonCommand.flags = {
   output: flags.string({ char: "o", description: "output file" }),
   optimized: flags.boolean({ char: "O", description: "optimized mode" }),
-  quiet: flags.boolean({ char: "q", description: "quiet mode" })
+  quiet: flags.boolean({ char: "q", description: "quiet mode" }),
 };
 
 export default JsonCommand;

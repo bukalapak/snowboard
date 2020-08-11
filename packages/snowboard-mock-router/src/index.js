@@ -5,10 +5,10 @@ import { parse } from "./parser";
 export default function router(elements) {
   const router = express.Router();
 
-  elements.forEach(element => {
+  elements.forEach((element) => {
     const actions = parse(element);
 
-    actions.forEach(action => {
+    actions.forEach((action) => {
       const method = action.method.toLowerCase();
       const pathName = normalizePath(action.path);
 
@@ -22,7 +22,7 @@ export default function router(elements) {
 function handler(action, req, res) {
   const { status } = preferHeader(req.get("Prefer"));
 
-  let responses = action.responses.filter(response => {
+  let responses = action.responses.filter((response) => {
     return response.statusCode === status;
   });
 
@@ -39,7 +39,7 @@ function handler(action, req, res) {
 
   const formats = {};
 
-  responses.forEach(response => {
+  responses.forEach((response) => {
     formats[response.contentType] = () => res.send(response.body);
   });
 

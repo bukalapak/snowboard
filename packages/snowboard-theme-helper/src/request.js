@@ -17,16 +17,16 @@ const httpClient = ({
   headers,
   parameters,
   body,
-  httpConfig
+  httpConfig,
 }) => {
   const client = axios.create({
-    baseURL: environment.url
+    baseURL: environment.url,
   });
 
   const options = {
     ...(httpConfig || {}),
     method: method,
-    headers: headers
+    headers: headers,
   };
 
   const expandedUrl = expandUrl(pathTemplate, parameters);
@@ -45,7 +45,7 @@ const toCurl = ({
   body,
   headers,
   parameters,
-  pathTemplate
+  pathTemplate,
 }) => {
   const expandedUrl = expandUrl(pathTemplate, parameters);
   const destUrl = urlParse(expandedUrl, true);
@@ -56,7 +56,7 @@ const toCurl = ({
       qs.stringify(destUrl.query, true),
     method: method,
     data: safeParse(body),
-    headers: headers
+    headers: headers,
   });
 
   // r2curl does not support PATCH yet, https://github.com/uyu423/r2curl/blob/master/src/enum/HTTP_METHOD.ts

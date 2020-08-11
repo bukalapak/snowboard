@@ -5,7 +5,7 @@ import { StatefulPopover } from "baseui/popover";
 import { StatefulMenu } from "baseui/menu";
 import { useStore } from "../lib/store";
 
-export default function({ config }) {
+export default function ({ config }) {
   const { playground } = config;
 
   if (!playground.enabled) {
@@ -13,8 +13,8 @@ export default function({ config }) {
   }
 
   const [store, dispatch] = useStore();
-  const items = Object.keys(playground.environments).map(value => ({
-    label: value
+  const items = Object.keys(playground.environments).map((value) => ({
+    label: value,
   }));
 
   return (
@@ -35,10 +35,10 @@ export default function({ config }) {
           BaseButton: {
             style: ({ $theme }) => {
               return {
-                paddingLeft: $theme.sizing.scale800
+                paddingLeft: $theme.sizing.scale800,
               };
-            }
-          }
+            },
+          },
         }}
         endEnhancer={() => <ChevronDown size={24} />}
       >

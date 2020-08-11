@@ -1,4 +1,4 @@
-export default function(str, prefix = "is-") {
+export default function (str, prefix = "is-") {
   switch (str) {
     case "GET":
       return `${prefix}success`;

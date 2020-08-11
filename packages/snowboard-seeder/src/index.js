@@ -4,7 +4,7 @@ import {
   toValue,
   toDescription,
   toPath,
-  transitionHref
+  transitionHref,
 } from "snowboard-helper";
 
 import {
@@ -14,10 +14,10 @@ import {
   transitionTitle,
   transitionPermalink,
   digParameters,
-  digHeaders
+  digHeaders,
 } from "./helper";
 
-export default async function(element, additional = {}) {
+export default async function (element, additional = {}) {
   const title = toValue(element.api.title);
   const description = toDescription(element.api);
   const groups = simpleGroups(element);
@@ -30,32 +30,32 @@ export default async function(element, additional = {}) {
       description,
       groups,
       resources,
-      transitions
+      transitions,
     },
     additional
   );
 }
 
 function simpleGroups(element) {
-  return element.api.resourceGroups.map(group => {
+  return element.api.resourceGroups.map((group) => {
     return {
       title: toValue(group.title),
       permalink: groupPermalink(group),
       description: toDescription(group),
-      resources: simpleResources(group.resources, group)
+      resources: simpleResources(group.resources, group),
     };
   });
 }
 
 function simpleResources(resources, group) {
-  return resources.map(resource => {
+  return resources.map((resource) => {
     return {
       title: resourceTitle(resource),
       permalink: resourcePermalink(resource, group),
       description: toDescription(resource),
-      transitions: resource.transitions.map(transition => {
+      transitions: resource.transitions.map((transition) => {
         return simpleTransition(transition, resource, group);
-      })
+      }),
     };
   });
 }
@@ -70,23 +70,23 @@ function simpleTransition(transition, resource, group) {
     permalink: transitionPermalink(transition, resource, group),
     method,
     path,
-    meta: buildMeta(resource, group)
+    meta: buildMeta(resource, group),
   };
 }
 
 function buildTransitions(element) {
   const data = [];
 
-  element.api.resourceGroups.forEach(group => {
-    group.resources.forEach(resource => {
-      resource.transitions.forEach(transition => {
+  element.api.resourceGroups.forEach((group) => {
+    group.resources.forEach((resource) => {
+      resource.transitions.forEach((transition) => {
         data.push(buildTransition(transition, resource, group));
       });
     });
   });
 
-  element.api.resources.forEach(resource => {
-    resource.transitions.forEach(transition => {
+  element.api.resources.forEach((resource) => {
+    resource.transitions.forEach((transition) => {
       data.push(buildTransition(transition, resource, undefined));
     });
   });
@@ -119,7 +119,7 @@ function buildTransition(transition, resource, group) {
             contentType: toValue(req.contentType),
             headers: digHeaders(req.headers),
             body: toValue(req.messageBody),
-            schema: toValue(req.messageBodySchema)
+            schema: toValue(req.messageBodySchema),
           },
           response: {
             title: toValue(res.title),
@@ -128,11 +128,11 @@ function buildTransition(transition, resource, group) {
             contentType: toValue(res.contentType),
             headers: digHeaders(res.headers),
             body: toValue(res.messageBody),
-            schema: toValue(res.messageBodySchema)
-          }
+            schema: toValue(res.messageBodySchema),
+          },
         };
       }
-    )
+    ),
   };
 }
 
@@ -142,14 +142,14 @@ function buildMeta(resource, group) {
   if (resource) {
     meta.resource = {
       title: resourceTitle(resource),
-      permalink: resourcePermalink(resource, group)
+      permalink: resourcePermalink(resource, group),
     };
   }
 
   if (group) {
     meta.group = {
       title: toValue(group.title),
-      permalink: groupPermalink(group)
+      permalink: groupPermalink(group),
     };
   }
 

@@ -8,7 +8,7 @@ import {
   clearState,
   getChallengePair,
   clearChallengePair,
-  setRefreshToken
+  setRefreshToken,
 } from "snowboard-theme-helper";
 import Markdown from "../components/Markdown";
 import { useStore } from "../lib/store";
@@ -33,14 +33,14 @@ export default function Home({ config, description }) {
               clientId: environment.auth.options.clientId,
               tokenUrl: environment.auth.options.tokenUrl,
               callbackUrl: environment.auth.options.callbackUrl,
-              codeVerifier: challengePair.codeVerifier
+              codeVerifier: challengePair.codeVerifier,
             });
 
             if (accessToken) {
               dispatch({
                 type: "setToken",
                 env: store.env,
-                token: accessToken
+                token: accessToken,
               });
 
               if (refreshToken) {

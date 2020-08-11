@@ -4,7 +4,7 @@ import { buildAuthorizeUrl } from "snowboard-theme-helper";
 import { useCurrentRoute } from "react-navi";
 import { useStore } from "../lib/store";
 
-export default function({ authOptions, codeChallenge, codeState }) {
+export default function ({ authOptions, codeChallenge, codeState }) {
   const route = useCurrentRoute();
   const [store, dispatch] = useStore();
 
@@ -13,7 +13,7 @@ export default function({ authOptions, codeChallenge, codeState }) {
     callbackUrl: authOptions.callbackUrl,
     state: codeState,
     scope: authOptions.scopes,
-    codeChallenge: codeChallenge
+    codeChallenge: codeChallenge,
   });
 
   function handleClick() {
@@ -25,7 +25,7 @@ export default function({ authOptions, codeChallenge, codeState }) {
     <Button
       onClick={handleClick}
       overrides={{
-        BaseButton: { style: { width: "20%" } }
+        BaseButton: { style: { width: "20%" } },
       }}
     >
       LOGIN

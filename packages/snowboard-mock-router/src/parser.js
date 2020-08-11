@@ -3,13 +3,13 @@ import { toValue, toPath, transitionHref } from "snowboard-helper";
 export function parse(element) {
   const transitions = [];
 
-  element.api.resourceGroups.forEach(group => {
-    group.resources.forEach(resource => {
+  element.api.resourceGroups.forEach((group) => {
+    group.resources.forEach((resource) => {
       transitions.push(...extract(resource));
     });
   });
 
-  element.api.resources.forEach(resource => {
+  element.api.resources.forEach((resource) => {
     transitions.push(...extract(resource));
   });
 
@@ -19,7 +19,7 @@ export function parse(element) {
 function extract(resource) {
   const data = [];
 
-  resource.transitions.forEach(transition => {
+  resource.transitions.forEach((transition) => {
     const path = transitionHref(transition, resource);
 
     data.push({
@@ -29,16 +29,16 @@ function extract(resource) {
         return {
           title: toValue(request.title),
           method: toValue(request.method),
-          contentType: toValue(request.contentType)
+          contentType: toValue(request.contentType),
         };
       }),
       responses: transition.transactions.map(({ response }) => {
         return {
           statusCode: toValue(response.statusCode),
           contentType: toValue(response.contentType),
-          body: toValue(response.messageBody)
+          body: toValue(response.messageBody),
         };
-      })
+      }),
     });
   });
 

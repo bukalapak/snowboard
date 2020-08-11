@@ -8,27 +8,25 @@ import mockRouter from "../src";
 async function loadFixture(filename) {
   const fixtureDir = resolve(__dirname, `./fixtures`);
   const emitter = degit("github:apiaryio/api-blueprint", {
-    force: true
+    force: true,
   });
 
   await emitter.clone(fixtureDir);
   return readFileSync(resolve(fixtureDir, `examples/${filename}`), "utf8");
 }
 
-test("router", async t => {
+test("router", async (t) => {
   const source = await loadFixture("Gist Fox API.md");
   const result = await parse(source);
   const element = await fromRefract(result);
   const router = mockRouter([element]);
 
   const routes = router.stack
-    .filter(r => r.route)
-    .map(r => {
+    .filter((r) => r.route)
+    .map((r) => {
       return [
-        Object.keys(r.route.methods)
-          .join(",")
-          .toUpperCase(),
-        r.route.path
+        Object.keys(r.route.methods).join(",").toUpperCase(),
+        r.route.path,
       ].join(" ");
     });
 
@@ -41,7 +39,7 @@ test("router", async t => {
     "PUT /gists/:id/star",
     "DELETE /gists/:id/star",
     "GET /gists/:id/star",
-    "GET /"
+    "GET /",
   ];
 
   t.deepEqual(routes, expected);

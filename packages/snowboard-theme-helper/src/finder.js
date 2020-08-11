@@ -1,5 +1,5 @@
 export function findGroup(permalink, groups) {
-  return groups.find(group => {
+  return groups.find((group) => {
     return group.permalink == permalink;
   });
 }
@@ -8,8 +8,8 @@ export function findResource(permalink, resources, groups) {
   let selected;
   let selectedGroup;
 
-  groups.forEach(group => {
-    group.resources.forEach(resource => {
+  groups.forEach((group) => {
+    group.resources.forEach((resource) => {
       if (resource.permalink === permalink) {
         selected = resource;
         selectedGroup = group;
@@ -21,7 +21,7 @@ export function findResource(permalink, resources, groups) {
     return { resource: selected, group: selectedGroup };
   }
 
-  resources.forEach(resource => {
+  resources.forEach((resource) => {
     if (resource.permalink === permalink) {
       selected = resource;
     }

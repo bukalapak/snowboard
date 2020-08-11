@@ -4,7 +4,7 @@ import { setEnv } from "snowboard-theme-helper";
 const env = writable("");
 const token = writable("");
 
-env.subscribe(val => {
+env.subscribe((val) => {
   if (val != "") {
     setEnv(val);
   }

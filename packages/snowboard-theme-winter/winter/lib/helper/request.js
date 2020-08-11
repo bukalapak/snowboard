@@ -7,7 +7,7 @@ export const sendRequest = ({
   headers,
   parameters,
   body,
-  httpConfig
+  httpConfig,
 }) => {
   const [client, options] = httpClient({
     environment,
@@ -16,7 +16,7 @@ export const sendRequest = ({
     headers,
     parameters,
     body,
-    httpConfig
+    httpConfig,
   });
 
   return client.request(options);

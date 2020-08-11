@@ -16,7 +16,7 @@ import {
   getState,
   urlParse,
   urlJoin,
-  toCurl
+  toCurl,
 } from "snowboard-theme-helper";
 import LoginButton from "../LoginButton";
 import { sendRequest, isAuth } from "../../lib/helper";
@@ -32,7 +32,7 @@ import {
   formatCurl,
   prepareHeaders,
   updateHeader,
-  updateParameter
+  updateParameter,
 } from "../../lib/playground";
 
 const Pre = styled("pre", ({ $theme }) => ({
@@ -43,7 +43,7 @@ const Pre = styled("pre", ({ $theme }) => ({
   paddingLeft: $theme.sizing.scale800,
   paddingRight: $theme.sizing.scale800,
   whiteSpace: "pre",
-  overflowY: "auto"
+  overflowY: "auto",
 }));
 
 const ErrorNotification = ({ error }) => {
@@ -51,7 +51,7 @@ const ErrorNotification = ({ error }) => {
     <Notification
       kind={NOTIF_KIND.negative}
       overrides={{
-        Body: { style: { width: "auto" } }
+        Body: { style: { width: "auto" } },
       }}
     >
       {() => error.message}
@@ -59,15 +59,15 @@ const ErrorNotification = ({ error }) => {
   );
 };
 
-export default function({ transition, config }) {
+export default function ({ transition, config }) {
   const [transaction] = transition.transactions;
   const [store] = useStore();
 
-  const getEnvironment = env => {
+  const getEnvironment = (env) => {
     return config.playground.environments[env];
   };
 
-  const getCurrentUrl = env => {
+  const getCurrentUrl = (env) => {
     const environment = getEnvironment(env);
     return urlParse(urlJoin(environment.url, transition.path));
   };
@@ -80,13 +80,13 @@ export default function({ transition, config }) {
       getEnvironment(store.env),
       transaction.request.headers
     ),
-    parameters: transition.parameters.map(val => {
+    parameters: transition.parameters.map((val) => {
       const param = Object.assign({}, val);
       param.used = true;
       return param;
     }),
     body: undefined,
-    response: undefined
+    response: undefined,
   };
 
   function reducer(state, action) {
@@ -100,7 +100,7 @@ export default function({ transition, config }) {
             store,
             getEnvironment(store.env),
             transaction.request.headers
-          )
+          ),
         };
       case "set-header":
         return updateHeader(state, action.name, { value: action.value });
@@ -140,12 +140,12 @@ export default function({ transition, config }) {
       pathTemplate: pathTemplate,
       headers: headers,
       parameters: parameters,
-      body: body
+      body: body,
     });
   };
 
   const { isLoading, data, error, run, setData } = useAsync({
-    deferFn: doRequest
+    deferFn: doRequest,
   });
 
   useEffect(() => {
@@ -168,7 +168,7 @@ export default function({ transition, config }) {
       method: transition.method,
       body: state.body,
       headers: populate(state.headers),
-      parameters: populate(state.parameters)
+      parameters: populate(state.parameters),
     })
   );
 
@@ -181,7 +181,7 @@ export default function({ transition, config }) {
         method: transition.method,
         body: state.body,
         headers: populate(state.headers),
-        parameters: populate(state.parameters)
+        parameters: populate(state.parameters),
       })
     );
   }, [state]);
@@ -200,7 +200,7 @@ export default function({ transition, config }) {
     dispatch({
       type: "set-parameter",
       name: name,
-      value: event.target.value
+      value: event.target.value,
     });
   }
 
@@ -208,7 +208,7 @@ export default function({ transition, config }) {
     dispatch({
       type: "toggle-parameter",
       name: name,
-      checked: event.target.checked
+      checked: event.target.checked,
     });
   }
 
@@ -216,7 +216,7 @@ export default function({ transition, config }) {
     dispatch({
       type: "set-header",
       name: name,
-      value: event.target.value
+      value: event.target.value,
     });
   }
 
@@ -224,7 +224,7 @@ export default function({ transition, config }) {
     dispatch({
       type: "toggle-header",
       name: name,
-      checked: event.target.checked
+      checked: event.target.checked,
     });
   }
 
@@ -247,9 +247,9 @@ export default function({ transition, config }) {
                 $expanded ? $theme.colors.mono500 : $theme.colors.mono400
               }`,
               backgroundColor: $theme.colors.backgroundTertiary,
-              color: $theme.colors.contentPrimary
+              color: $theme.colors.contentPrimary,
             };
-          }
+          },
         },
         Content: {
           style: ({ $theme }) => {
@@ -257,18 +257,18 @@ export default function({ transition, config }) {
               backgroundColor: $theme.colors.backgroundSecondary,
               color: $theme.colors.contentPrimary,
               paddingLeft: $theme.sizing.scale500,
-              paddingRight: $theme.sizing.scale500
+              paddingRight: $theme.sizing.scale500,
             };
-          }
+          },
         },
-        ToggleIcon: props => {
+        ToggleIcon: (props) => {
           if (props.$expanded) {
             return <ChevronDown />;
           }
           return <ChevronUp />;
-        }
+        },
       }}
-      onChange={props => {
+      onChange={(props) => {
         setExpanded(props.expanded.length != 0);
       }}
     >
@@ -279,7 +279,7 @@ export default function({ transition, config }) {
             handleCopy();
           }}
           overrides={{
-            BaseButton: { style: { width: "80%", justifyContent: "start" } }
+            BaseButton: { style: { width: "80%", justifyContent: "start" } },
           }}
         >
           {copying ? "URL has been copied to clipboard." : currentFullUrl}
@@ -298,7 +298,7 @@ export default function({ transition, config }) {
               );
             }}
             overrides={{
-              BaseButton: { style: { width: "20%" } }
+              BaseButton: { style: { width: "20%" } },
             }}
           >
             SEND
@@ -322,9 +322,9 @@ export default function({ transition, config }) {
             Root: {
               style: ({ $theme }) => {
                 return {
-                  marginTop: $theme.sizing.scale800
+                  marginTop: $theme.sizing.scale800,
                 };
-              }
+              },
             },
             TabContent: {
               style: ({ $theme }) => {
@@ -334,10 +334,10 @@ export default function({ transition, config }) {
                   backgroundColor: $theme.colors.backgroundPrimary,
                   borderWidth: "1px",
                   borderStyle: "solid",
-                  borderColor: $theme.colors.borderTransparent
+                  borderColor: $theme.colors.borderTransparent,
                 };
-              }
-            }
+              },
+            },
           }}
         >
           <Tab title="Parameters">
@@ -359,8 +359,8 @@ export default function({ transition, config }) {
               <Block
                 overrides={{
                   Block: {
-                    style: { textAlign: "center" }
-                  }
+                    style: { textAlign: "center" },
+                  },
                 }}
               >
                 <em>Body is only available for POST, PUT and PATCH.</em>
@@ -369,7 +369,7 @@ export default function({ transition, config }) {
               <Block marginTop="scale400" marginBottom="scale400">
                 <Textarea
                   value={state.body}
-                  onChange={e =>
+                  onChange={(e) =>
                     dispatch({ type: "set-body", body: e.target.value })
                   }
                   autoFocus

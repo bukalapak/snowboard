@@ -7,7 +7,7 @@ import {
   HeaderNavigation,
   ALIGN,
   StyledNavigationList,
-  StyledNavigationItem
+  StyledNavigationItem,
 } from "baseui/header-navigation";
 import { Block } from "baseui/block";
 import { Grid, Cell } from "baseui/layout-grid";
@@ -23,7 +23,7 @@ function renderNotFound() {
   return <Display4>404 - Not Found</Display4>;
 }
 
-export default function({ ctx, children }) {
+export default function ({ ctx, children }) {
   const loadingRoute = useLoadingRoute();
   const [store, dispatch] = useStore();
 
@@ -42,7 +42,7 @@ export default function({ ctx, children }) {
       dispatch({
         type: "setToken",
         env: currentEnv,
-        token: getEnv(currentEnv)
+        token: getEnv(currentEnv),
       });
     }
   }, []);
@@ -60,10 +60,10 @@ export default function({ ctx, children }) {
                 backgroundColor: $theme.colors.backgroundPrimary,
                 position: "sticky",
                 top: 0,
-                zIndex: 100
+                zIndex: 100,
               };
-            }
-          }
+            },
+          },
         }}
       >
         <StyledNavigationList $align={ALIGN.left}>
@@ -101,9 +101,9 @@ export default function({ ctx, children }) {
                   top: $theme.sizing.scale1600,
                   position: "sticky",
                   maxHeight: "90vh",
-                  overflowX: "auto"
-                })
-              }
+                  overflowX: "auto",
+                }),
+              },
             }}
           >
             <Navigation
@@ -119,9 +119,9 @@ export default function({ ctx, children }) {
               Cell: {
                 style: ({ $theme }) => ({
                   backgroundColor: $theme.colors.backgroundPrimary,
-                  boxShadow: `${$theme.colors.backgroundTertiary} -2px 2px 0px 0px`
-                })
-              }
+                  boxShadow: `${$theme.colors.backgroundTertiary} -2px 2px 0px 0px`,
+                }),
+              },
             }}
           >
             <Block paddingLeft="scale400" paddingRight="scale400">

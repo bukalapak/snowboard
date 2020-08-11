@@ -12,10 +12,10 @@ export const TransitionList = ({ resource }) => {
     <ul
       className={css({
         paddingLeft: 0,
-        paddingRight: 0
+        paddingRight: 0,
       })}
     >
-      {resource.transitions.map(transition => (
+      {resource.transitions.map((transition) => (
         <ListItem
           sublist
           key={transition.permalink}

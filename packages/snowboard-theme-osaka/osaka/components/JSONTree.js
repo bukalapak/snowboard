@@ -9,7 +9,7 @@ const fontFamily = 'Consolas, "Liberation Mono", Menlo, Courier, monospace';
 const CodeBlock = styled("pre", ({ $theme }) => ({
   backgroundColor: $theme.colors.backgroundSecondary,
   color: $theme.colors.contentPrimary,
-  fontFamily: fontFamily
+  fontFamily: fontFamily,
 }));
 
 export default function JSONTree({ src, contentType = "" }) {
@@ -37,7 +37,7 @@ export default function JSONTree({ src, contentType = "" }) {
             fontFamily: fontFamily,
             fontSize: "1rem",
             lineHeight: "1.25",
-            borderRadius: "4px"
+            borderRadius: "4px",
           }}
         />
       );

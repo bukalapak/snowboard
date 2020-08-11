@@ -22,7 +22,7 @@ class HttpCommand extends Command {
       port,
       ssl: flags.ssl,
       cert: flags.cert,
-      key: flags.key
+      key: flags.key,
     });
   }
 }
@@ -35,20 +35,20 @@ HttpCommand.flags = {
   ssl: flags.boolean({
     char: "S",
     description: "enable https",
-    dependsOn: ["cert", "key"]
+    dependsOn: ["cert", "key"],
   }),
   cert: flags.string({ char: "C", description: "SSL cert file" }),
   key: flags.string({ char: "K", description: "SSL key file" }),
   bind: flags.string({
     char: "b",
     description: "listen address",
-    default: ":8088"
+    default: ":8088",
   }),
   watch: flags.boolean({
     char: "w",
-    description: "watch for the files changes"
+    description: "watch for the files changes",
   }),
-  quiet: flags.boolean({ char: "q", description: "quiet mode" })
+  quiet: flags.boolean({ char: "q", description: "quiet mode" }),
 };
 
 export default HttpCommand;

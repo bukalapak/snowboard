@@ -25,17 +25,17 @@ export const getState = () => {
 export const clearChallengePair = () => challengePairStore.clear();
 export const clearState = () => store.remove("state");
 
-export const setEnv = env => store.set("env", env);
+export const setEnv = (env) => store.set("env", env);
 export const getEnv = () => store.get("env");
 
 export const setToken = (env, token) => tokenStore.set(env, token);
-export const getToken = env => tokenStore.get(env);
-export const removeToken = env => tokenStore.remove(env);
+export const getToken = (env) => tokenStore.get(env);
+export const removeToken = (env) => tokenStore.remove(env);
 
 export const setRefreshToken = (env, token) =>
   refreshTokenStore.set(env, token);
-export const getRefreshToken = env => refreshTokenStore.get(env);
-export const removeRefreshToken = env => refreshTokenStore.remove(env);
+export const getRefreshToken = (env) => refreshTokenStore.get(env);
+export const removeRefreshToken = (env) => refreshTokenStore.remove(env);
 
 export const enableDarkMode = () => store.set("darkMode", true);
 export const disableDarkMode = () => store.set("darkMode", false);

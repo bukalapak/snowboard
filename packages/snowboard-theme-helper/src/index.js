@@ -26,5 +26,5 @@ export {
   setEnv,
   setRefreshToken,
   setToken,
-  store
+  store,
 } from "./store";

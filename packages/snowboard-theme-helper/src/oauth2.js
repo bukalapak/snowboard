@@ -11,13 +11,13 @@ const requestToken = async (client, options) => {
 
     return {
       accessToken: authParsed.access_token,
-      refreshToken: authParsed.refresh_token
+      refreshToken: authParsed.refresh_token,
     };
   }
 
   return {
     accessToken: authCode.access_token,
-    refreshToken: authCode.refresh_token
+    refreshToken: authCode.refresh_token,
   };
 };
 
@@ -27,7 +27,7 @@ export const exchangeToken = async ({
   clientId,
   tokenUrl,
   callbackUrl,
-  codeVerifier
+  codeVerifier,
 }) => {
   return requestToken(axios.create(), {
     url: tokenUrl,
@@ -36,7 +36,7 @@ export const exchangeToken = async ({
     client_id: clientId,
     redirect_uri: callbackUrl,
     code: code,
-    code_verifier: codeVerifier
+    code_verifier: codeVerifier,
   });
 };
 
@@ -48,7 +48,7 @@ export const buildAuthorizeUrl = (
     scope = "",
     codeChallenge,
     codeChallengeMethod = "S256",
-    state = ""
+    state = "",
   }
 ) => {
   const authorizeParams = qs.stringify(
@@ -59,7 +59,7 @@ export const buildAuthorizeUrl = (
       state: state,
       scope: scope,
       code_challenge: codeChallenge,
-      code_challenge_method: codeChallengeMethod
+      code_challenge_method: codeChallengeMethod,
     },
     true
   );

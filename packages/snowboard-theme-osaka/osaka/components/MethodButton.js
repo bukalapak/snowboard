@@ -12,7 +12,7 @@ const colorMap = (method, theme) => {
     POST: theme.colors.contentAccent,
     PUT: theme.colors.borderAccentLight,
     PATCH: theme.colors.contentWarning,
-    DELETE: theme.colors.contentNegative
+    DELETE: theme.colors.contentNegative,
   };
 
   return data[method];
@@ -28,10 +28,10 @@ export default ({ method, path, pathTemplate }) => {
                 color: $theme.colors.contentOnColor,
                 backgroundColor: colorMap(method, $theme),
                 fontWeight: "700",
-                fontFamily: monospaceFontFamily
+                fontFamily: monospaceFontFamily,
               };
-            }
-          }
+            },
+          },
         }}
       >
         {method}
@@ -43,10 +43,10 @@ export default ({ method, path, pathTemplate }) => {
               return {
                 width: "100%",
                 justifyContent: "left",
-                fontFamily: monospaceFontFamily
+                fontFamily: monospaceFontFamily,
               };
-            }
-          }
+            },
+          },
         }}
       >
         <StatefulTooltip

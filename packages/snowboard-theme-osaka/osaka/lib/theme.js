@@ -9,7 +9,7 @@ const ThemeContext = createContext();
 const engine = new Styletron();
 const themes = {
   light: LightTheme,
-  dark: DarkTheme
+  dark: DarkTheme,
 };
 
 export const useTheme = () => {
@@ -24,14 +24,14 @@ export const useTheme = () => {
 
 export const ThemeProvider = ({ children }) => {
   const { value: isDarkMode, toggle } = useDarkMode(false, {
-    storageKey: "snowboard.darkMode"
+    storageKey: "snowboard.darkMode",
   });
 
   const colorMode = isDarkMode ? "dark" : "light";
 
   const value = {
     darkMode: isDarkMode,
-    toggleTheme: toggle
+    toggleTheme: toggle,
   };
 
   return (

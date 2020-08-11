@@ -16,7 +16,7 @@ const jsonBasePath = `${basePath}__json__/`;
 const prefix = {
   group: "g",
   resource: "r",
-  transition: "t"
+  transition: "t",
 };
 
 export async function fetchJSON(uuid) {
@@ -40,7 +40,7 @@ function routeHome(req, ctx) {
         title={ctx.title}
         description={ctx.description}
       />
-    )
+    ),
   };
 }
 
@@ -54,7 +54,7 @@ async function routeGroup(req, ctx) {
 
   return {
     title: `${group.title} - ${ctx.title}`,
-    view: <Group group={group} />
+    view: <Group group={group} />,
   };
 }
 
@@ -67,7 +67,7 @@ async function routeResource(req, ctx) {
 
   return {
     title: `${resource.title} - ${ctx.title}`,
-    view: <Resource resource={resource} group={group} />
+    view: <Resource resource={resource} group={group} />,
   };
 }
 
@@ -83,7 +83,7 @@ async function routeTransition(req, ctx) {
 
   return {
     title: `${transition.title} - ${ctx.title}`,
-    view: <Transition config={ctx.config} transition={transition} />
+    view: <Transition config={ctx.config} transition={transition} />,
   };
 }
 
@@ -99,6 +99,6 @@ export default compose(
     [`${basePath}`]: route(routeHome),
     [`${basePath}${prefix.group}/:id`]: route(routeGroup),
     [`${basePath}${prefix.resource}/:id`]: route(routeResource),
-    [`${basePath}${prefix.transition}/:id`]: route(routeTransition)
+    [`${basePath}${prefix.transition}/:id`]: route(routeTransition),
   })
 );

@@ -19,7 +19,7 @@ export function isAllowBody(method) {
 export function populate(arr) {
   return arr
     .filter(Boolean)
-    .filter(obj => obj.used)
+    .filter((obj) => obj.used)
     .reduce((prev, cur) => {
       prev[cur.name] = cur.example;
       return prev;
@@ -36,12 +36,12 @@ export function formatCurl(str) {
 
 function headerIndex(headers, name) {
   return headers.findIndex(
-    header => header.name.toLowerCase() === name.toLowerCase()
+    (header) => header.name.toLowerCase() === name.toLowerCase()
   );
 }
 
 export function prepareHeaders(store, environment, headers) {
-  const mapHeaders = headers.map(val => {
+  const mapHeaders = headers.map((val) => {
     const header = Object.assign({}, val);
     header.used = true;
     return header;
@@ -57,7 +57,7 @@ export function prepareHeaders(store, environment, headers) {
       mapHeaders.push({
         name: "Authorization",
         example,
-        used: true
+        used: true,
       });
     }
   }
@@ -71,7 +71,7 @@ export function prepareHeaders(store, environment, headers) {
       mapHeaders.push({
         name: environment.auth.options.header,
         example: environment.auth.options.key,
-        used: true
+        used: true,
       });
     }
   }
@@ -89,7 +89,7 @@ export function prepareHeaders(store, environment, headers) {
       mapHeaders.push({
         name: "Authorization",
         example: `Basic ${authDigest}`,
-        used: true
+        used: true,
       });
     }
   }
@@ -100,27 +100,27 @@ export function prepareHeaders(store, environment, headers) {
 export function updateHeader(obj, name, { value, checked }) {
   const { headers, ...rest } = obj;
 
-  const index = findIndex(headers, item => item.name == name);
+  const index = findIndex(headers, (item) => item.name == name);
 
   if (value != undefined) headers[index].example = value;
   if (checked != undefined) headers[index].used = checked;
 
   return {
     headers: headers,
-    ...rest
+    ...rest,
   };
 }
 
 export function updateParameter(obj, name, { value, checked }) {
   const { parameters, ...rest } = obj;
 
-  const index = findIndex(parameters, param => param.name == name);
+  const index = findIndex(parameters, (param) => param.name == name);
 
   if (value != undefined) parameters[index].example = value;
   if (checked != undefined) parameters[index].used = checked;
 
   return {
     parameters: parameters,
-    ...rest
+    ...rest,
   };
 }

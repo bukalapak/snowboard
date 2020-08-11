@@ -7,7 +7,7 @@ const StoreContext = React.createContext();
 const initialState = {
   env: getEnv(),
   token: getToken(),
-  redirectTo: basePath
+  redirectTo: basePath,
 };
 
 const reducer = (state, action) => {

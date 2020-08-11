@@ -1,7 +1,7 @@
 import {
   writeFile as fsWriteFile,
   readFile as fsReadFile,
-  existsSync as exists
+  existsSync as exists,
 } from "fs";
 import { promisify } from "util";
 import { mkdirp, copy as cp, remove as rm } from "fs-extra";
@@ -29,6 +29,6 @@ export function jsonStringify(data, compact = false) {
 export function toSlug(str, separator = "~") {
   return speakingUrl(str, {
     separator,
-    custom: { _: separator }
+    custom: { _: separator },
   });
 }

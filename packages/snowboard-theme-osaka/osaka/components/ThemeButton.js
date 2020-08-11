@@ -3,7 +3,7 @@ import { FiMoon, FiSun } from "react-icons/fi";
 import { Button, SIZE, KIND } from "baseui/button";
 import { useTheme } from "../lib/theme";
 
-export default function() {
+export default function () {
   const { darkMode, toggleTheme } = useTheme();
 
   return (

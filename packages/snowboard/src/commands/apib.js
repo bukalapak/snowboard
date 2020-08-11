@@ -30,7 +30,7 @@ ApibCommand.description = `render API blueprint`;
 
 ApibCommand.flags = {
   output: flags.string({ char: "o", description: "output file" }),
-  quiet: flags.boolean({ char: "q", description: "quiet mode" })
+  quiet: flags.boolean({ char: "q", description: "quiet mode" }),
 };
 
 export default ApibCommand;

@@ -16,7 +16,7 @@ export default ({ group }) => {
       <H3>{group.title}</H3>
       <Markdown source={group.description} />
       <Accordion>
-        {group.resources.map(resource => (
+        {group.resources.map((resource) => (
           <Panel title={resource.title} key={resource.permalink}>
             <TransitionList resource={resource} />
           </Panel>

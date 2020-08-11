@@ -13,7 +13,7 @@ import { loadMulti } from "../helper";
 
 function basicAuth({ username, password }) {
   return expressBasicAuth({
-    users: { [username]: password }
+    users: { [username]: password },
   });
 }
 
@@ -30,7 +30,7 @@ function apiKeyAuth({ apiKey, headerName }) {
 }
 
 const defaultConfig = {
-  auth: { name: "none", options: {} }
+  auth: { name: "none", options: {} },
 };
 
 class MockCommand extends Command {
@@ -46,7 +46,7 @@ class MockCommand extends Command {
 
     const items = await spinner(loadMulti(argv), "Parsing input(s)", {
       sucess: "Input(s) parsed",
-      quiet: flags.quiet
+      quiet: flags.quiet,
     });
 
     const app = express();
@@ -64,7 +64,7 @@ class MockCommand extends Command {
           app.use(
             apiKeyAuth({
               apiKey: config.auth.options.key,
-              headerName: config.auth.options.header
+              headerName: config.auth.options.header,
             })
           );
       }
@@ -87,19 +87,17 @@ class MockCommand extends Command {
 
     server.listen(port, host);
 
-    server.on("error", err => {
+    server.on("error", (err) => {
       this.error(err);
     });
 
     if (!flags.quiet) {
       const routes = router.stack
-        .filter(r => r.route)
-        .map(r => {
+        .filter((r) => r.route)
+        .map((r) => {
           return [
-            Object.keys(r.route.methods)
-              .join(",")
-              .toUpperCase(),
-            r.route.path
+            Object.keys(r.route.methods).join(",").toUpperCase(),
+            r.route.path,
           ];
         })
         .sort((a, b) => a[1].localeCompare(b[1]));
@@ -125,16 +123,16 @@ MockCommand.flags = {
   ssl: flags.boolean({
     char: "S",
     description: "enable https",
-    dependsOn: ["cert", "key"]
+    dependsOn: ["cert", "key"],
   }),
   cert: flags.string({ char: "C", description: "SSL cert file" }),
   key: flags.string({ char: "K", description: "SSL key file" }),
   bind: flags.string({
     char: "b",
     description: "listen address",
-    default: ":8087"
+    default: ":8087",
   }),
-  quiet: flags.boolean({ char: "q", description: "quiet mode" })
+  quiet: flags.boolean({ char: "q", description: "quiet mode" }),
 };
 
 export default MockCommand;

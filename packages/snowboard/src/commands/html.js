@@ -16,7 +16,7 @@ class HtmlCommand extends Command {
       output: detectOutput(flags.output),
       template: detectTemplate(flags.template),
       optimized: flags.optimized,
-      quiet: flags.quiet
+      quiet: flags.quiet,
     });
   }
 }
@@ -29,9 +29,9 @@ HtmlCommand.flags = {
   optimized: flags.boolean({ char: "O", description: "optimized mode" }),
   watch: flags.boolean({
     char: "w",
-    description: "watch for the files changes"
+    description: "watch for the files changes",
   }),
-  quiet: flags.boolean({ char: "q", description: "quiet mode" })
+  quiet: flags.boolean({ char: "q", description: "quiet mode" }),
 };
 
 export default HtmlCommand;

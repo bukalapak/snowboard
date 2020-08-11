@@ -3,6 +3,6 @@ export { resourceTitle, transitionTitle } from "./transform";
 export {
   groupPermalink,
   resourcePermalink,
-  transitionPermalink
+  transitionPermalink,
 } from "./permalink";
 export { digParameters, digHeaders } from "./digger";

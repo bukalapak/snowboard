@@ -12,14 +12,14 @@ import {
   StyledTableHeadCell,
   StyledTableBodyRow,
   StyledTableBodyCell,
-  StyledTableBody
+  StyledTableBody,
 } from "baseui/table-semantic";
 import SyntaxHighlighter from "react-syntax-highlighter";
 
 function Heading(props) {
   const attrs = {
     id: speakingUrl(props.children[0].props.value),
-    ...props
+    ...props,
   };
 
   switch (props.level) {
@@ -42,7 +42,7 @@ function Blockquote({ children }) {
   return (
     <Notification
       overrides={{
-        Body: { style: { width: "auto" } }
+        Body: { style: { width: "auto" } },
       }}
       kind={KIND.warning}
     >
@@ -88,10 +88,10 @@ const renderers = {
   tableBody: TableBody,
   tableRow: TableRow,
   tableCell: TableCell,
-  code: CodeBlock
+  code: CodeBlock,
 };
 
-export default function(props) {
+export default function (props) {
   const { source, ...rest } = props;
 
   return (
@@ -115,7 +115,7 @@ export function SmallMarkdown(props) {
         source={source}
         escapeHtml={false}
         renderers={{
-          paragraph: Paragraph3
+          paragraph: Paragraph3,
         }}
         {...rest}
       />

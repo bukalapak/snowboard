@@ -6,7 +6,7 @@ import {
   StyledHeadCell,
   StyledBody,
   StyledRow,
-  StyledCell
+  StyledCell,
 } from "baseui/table";
 import { Tag, VARIANT, KIND } from "baseui/tag";
 import { Label1 } from "baseui/typography";
@@ -15,17 +15,17 @@ import { SmallMarkdown as Markdown } from "../components/Markdown";
 
 const SmallerCell = withStyle(StyledCell, ({ $theme }) => {
   return {
-    maxWidth: $theme.sizing.scale3200
+    maxWidth: $theme.sizing.scale3200,
   };
 });
 
 const SmallCell = withStyle(StyledCell, ({ $theme }) => {
   return {
-    maxWidth: $theme.sizing.scale4800
+    maxWidth: $theme.sizing.scale4800,
   };
 });
 
-export default function({ parameters }) {
+export default function ({ parameters }) {
   return (
     <StyledTable>
       <StyledHead>
@@ -36,11 +36,11 @@ export default function({ parameters }) {
         </StyledRow>
       </StyledHead>
       <StyledBody>
-        {parameters.map(parameter => (
+        {parameters.map((parameter) => (
           <StyledRow
             key={parameter.name}
             $style={({ $theme }) => ({
-              borderBottom: `solid 1px ${$theme.colors.borderOpaque}`
+              borderBottom: `solid 1px ${$theme.colors.borderOpaque}`,
             })}
           >
             <SmallerCell>{parameter.name}</SmallerCell>

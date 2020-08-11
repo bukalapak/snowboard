@@ -13,14 +13,14 @@ export async function setupDir(output) {
 
   return {
     buildDir,
-    outDir: resolve(output)
+    outDir: resolve(output),
   };
 }
 
 export async function buildSeed(input, config, { quiet }) {
   const element = await spinner(load(input), `Parsing input: ${input}`, {
     success: `Input parsed: ${input}`,
-    quiet
+    quiet,
   });
 
   const { transitions, ...seeds } = await seedBuilder(element, { config });
@@ -53,7 +53,7 @@ export async function writeJSON(
   await mkdirp(jsonDir);
   await PromisePool.withConcurrency(64)
     .for(transitionSeeds)
-    .process(async transition => {
+    .process(async (transition) => {
       const filename = `${uuidMap[transition.permalink]}.json`;
 
       await writeFile(
@@ -83,10 +83,10 @@ async function load(input) {
 
 export function watchTemplate(tplDir, buildDir) {
   const watcher = chokidar.watch(tplDir, {
-    persistent: true
+    persistent: true,
   });
 
-  watcher.on("change", async path => {
+  watcher.on("change", async (path) => {
     await cp(path, path.replace(tplDir, buildDir));
   });
 
@@ -99,10 +99,10 @@ export function watchOverrides(overrides, buildDir) {
   }
 
   const watcher = chokidar.watch(Object.values(overrides), {
-    persistent: true
+    persistent: true,
   });
 
-  watcher.on("change", async path => {
+  watcher.on("change", async (path) => {
     await cp(path, resolve(buildDir, keyByValue(overrides, path)));
   });
 
@@ -110,7 +110,7 @@ export function watchOverrides(overrides, buildDir) {
 }
 
 function keyByValue(object, value) {
-  return Object.keys(object).find(key => object[key] === value);
+  return Object.keys(object).find((key) => object[key] === value);
 }
 
 export function watchInput(
@@ -121,10 +121,10 @@ export function watchInput(
   { optimized, quiet }
 ) {
   const watcher = chokidar.watch(input, {
-    persistent: true
+    persistent: true,
   });
 
-  watcher.on("change", async path => {
+  watcher.on("change", async (path) => {
     const [seeds, transitionSeeds] = await buildSeed(path, config, { quiet });
 
     await writeSeed(buildDir, seeds, { optimized });

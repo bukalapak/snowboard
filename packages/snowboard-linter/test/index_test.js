@@ -3,11 +3,11 @@ import { readFileSync } from "fs";
 import { resolve } from "path";
 import lint from "../src";
 
-const fixturePath = input => {
+const fixturePath = (input) => {
   return resolve(__dirname, `./fixtures/${input}`);
 };
 
-test("lint", async t => {
+test("lint", async (t) => {
   const source = readFileSync(fixturePath("invalid.apib"), "utf8");
   const result = await lint(source);
 
@@ -24,7 +24,7 @@ test("lint", async t => {
   t.end();
 });
 
-test("lint (valid fixture)", async t => {
+test("lint (valid fixture)", async (t) => {
   const source = readFileSync(fixturePath("valid.apib"), "utf8");
   const result = await lint(source);
 

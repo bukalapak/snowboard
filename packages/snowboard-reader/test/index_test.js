@@ -3,11 +3,11 @@ import { resolve } from "path";
 import { isEqual } from "lodash";
 import { read, extractPaths } from "../src";
 
-const fixturePath = input => {
+const fixturePath = (input) => {
   return resolve(__dirname, `./fixtures/${input}`);
 };
 
-test("read", async t => {
+test("read", async (t) => {
   const source = await read(fixturePath("blueprint.apib"));
 
   t.ok(source.includes("# <API name>"));
@@ -16,7 +16,7 @@ test("read", async t => {
   t.end();
 });
 
-test("read with partials and seeds", async t => {
+test("read with partials and seeds", async (t) => {
   const source = await read(fixturePath("api/api.apib"));
 
   t.ok(source.includes("# API"));
@@ -31,11 +31,11 @@ test("read with partials and seeds", async t => {
   t.end();
 });
 
-test("extractPaths", async t => {
+test("extractPaths", async (t) => {
   const prefix = fixturePath("api/");
   const paths = await extractPaths(fixturePath("api/api.apib"));
 
-  const actualPaths = paths.map(path => path.replace(`${prefix}/`, ""));
+  const actualPaths = paths.map((path) => path.replace(`${prefix}/`, ""));
   const expectedPaths = [
     "api.apib",
     "messages/response/success.apib",
@@ -44,7 +44,7 @@ test("extractPaths", async t => {
     "users.apib",
     "tasks.apib",
     "seed-user.json",
-    "seed.json"
+    "seed.json",
   ];
 
   t.ok(isEqual(actualPaths, expectedPaths));

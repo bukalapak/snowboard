@@ -3,11 +3,11 @@ import Prism from "prismjs";
 Prism.languages.json = {
   property: {
     pattern: /"(?:\\.|[^\\"\r\n])*"(?=\s*:)/,
-    greedy: true
+    greedy: true,
   },
   string: {
     pattern: /"(?:\\.|[^\\"\r\n])*"(?!\s*:)/,
-    greedy: true
+    greedy: true,
   },
   comment: /\/\/.*|\/\*[\s\S]*?(?:\*\/|$)/,
   number: /-?\d+\.?\d*(e[+-]?\d+)?/i,
@@ -16,11 +16,11 @@ Prism.languages.json = {
   boolean: /\b(?:true|false)\b/,
   null: {
     pattern: /\bnull\b/,
-    alias: "keyword"
-  }
+    alias: "keyword",
+  },
 };
 
-export default function(code, lang) {
+export default function (code, lang) {
   const supported = ["xml", "json"];
 
   if (!supported.includes(lang)) {

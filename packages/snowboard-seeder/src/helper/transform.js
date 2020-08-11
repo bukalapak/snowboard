@@ -6,8 +6,8 @@ export function toHeader(header) {
     example: toValue(header.value),
     required: false,
     schema: {
-      type: "string"
-    }
+      type: "string",
+    },
   };
 }
 
@@ -31,9 +31,9 @@ function toRequired(element) {
   }
 
   if (element.constructor.name === "KeyValuePair") {
-    const attrs = element.attributes.content.map(c => toValue(c));
+    const attrs = element.attributes.content.map((c) => toValue(c));
     return !!attrs.find(
-      at => at.key === "typeAttributes" && at.value.includes("required")
+      (at) => at.key === "typeAttributes" && at.value.includes("required")
     );
   }
 
@@ -54,8 +54,8 @@ function toParameter({ key, val, element, location }) {
     example: toValue(val),
     schema: {
       type: toValue(element.title) || "",
-      enum: enumerations
-    }
+      enum: enumerations,
+    },
   };
 }
 
@@ -71,7 +71,7 @@ export function toParameters(element, path) {
       key,
       val,
       element,
-      location: paramLocation(toValue(key), path)
+      location: paramLocation(toValue(key), path),
     })
   );
 }

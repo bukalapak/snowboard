@@ -4,14 +4,14 @@ import prettyTime from "pretty-hrtime";
 import { table as tableRender, getBorderCharacters } from "table";
 
 const tableConfig = {
-  border: getBorderCharacters("ramac")
+  border: getBorderCharacters("ramac"),
 };
 
 const borderlessTableConfig = {
   border: getBorderCharacters("void"),
   drawHorizontalLine: () => {
     return false;
-  }
+  },
 };
 
 export function table(data) {

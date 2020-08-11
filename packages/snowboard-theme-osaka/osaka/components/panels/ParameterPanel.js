@@ -2,14 +2,14 @@ import React from "react";
 import { Block } from "baseui/block";
 import FieldSwitch from "../FieldSwitch";
 
-export default function({ parameters, onChange, setChecked }) {
+export default function ({ parameters, onChange, setChecked }) {
   if (parameters.length == 0) {
     return (
       <Block
         overrides={{
           Block: {
-            style: { textAlign: "center" }
-          }
+            style: { textAlign: "center" },
+          },
         }}
       >
         <em>No configurable parameters.</em>
@@ -19,7 +19,7 @@ export default function({ parameters, onChange, setChecked }) {
 
   return (
     <Block marginTop="scale400">
-      {parameters.map(param => {
+      {parameters.map((param) => {
         return (
           <FieldSwitch
             key={param.name}

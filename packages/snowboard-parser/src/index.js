@@ -3,11 +3,11 @@ import { Namespace } from "api-elements";
 
 const namespace = new Namespace();
 
-const fromRefract = result => {
+const fromRefract = (result) => {
   return namespace.fromRefract(result);
 };
 
-const toRefract = element => {
+const toRefract = (element) => {
   return namespace.toRefract(element);
 };
 

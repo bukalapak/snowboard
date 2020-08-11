@@ -9,7 +9,7 @@ function lintMap(result) {
     description: description,
     location: location.map(
       ({ line, column }) => `line ${line}, column ${column}`
-    )
+    ),
   }));
 }
 
@@ -35,7 +35,7 @@ class LintCommand extends Command {
           const data = mapResult.map(({ location, severity, description }) => [
             location.join(" - "),
             severity,
-            description
+            description,
           ]);
 
           data.unshift(["Location", "Severity", "Description"]);
@@ -55,9 +55,9 @@ LintCommand.flags = {
   optimized: flags.boolean({
     char: "O",
     description: "optimized mode",
-    dependsOn: ["json"]
+    dependsOn: ["json"],
   }),
-  quiet: flags.boolean({ char: "q", description: "quiet mode" })
+  quiet: flags.boolean({ char: "q", description: "quiet mode" }),
 };
 
 export default LintCommand;

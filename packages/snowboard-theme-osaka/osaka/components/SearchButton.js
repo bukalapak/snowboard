@@ -19,7 +19,7 @@ function Before() {
       className={css({
         display: "flex",
         alignItems: "center",
-        paddingLeft: theme.sizing.scale500
+        paddingLeft: theme.sizing.scale500,
       })}
     >
       <Search size={theme.sizing.scale650} />
@@ -27,13 +27,13 @@ function Before() {
   );
 }
 
-export default function({ groups }) {
+export default function ({ groups }) {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [items, setItems] = useState([]);
   const [css] = useStyletron();
 
-  const [queryDebounce] = useDebouncedCallback(value => {
+  const [queryDebounce] = useDebouncedCallback((value) => {
     setItems(filter(value, groups));
   }, 250);
 
@@ -62,10 +62,10 @@ export default function({ groups }) {
                   borderTopWidth: 0,
                   borderBottomWidth: 0,
                   borderRightWidth: 0,
-                  borderLeftWidth: 0
+                  borderLeftWidth: 0,
                 };
-              }
-            }
+              },
+            },
           }}
         >
           <StyledBody>
@@ -74,14 +74,14 @@ export default function({ groups }) {
               value={query}
               placeholder="Filter by method, path, and title..."
               clearable
-              onChange={e => {
+              onChange={(e) => {
                 setQuery(e.target.value);
               }}
             />
             <ul
               className={css({
                 paddingLeft: 0,
-                paddingRight: 0
+                paddingRight: 0,
               })}
             >
               {items.map((item, index) => (
@@ -91,8 +91,8 @@ export default function({ groups }) {
                     Content: {
                       style: ({ $theme }) => {
                         return { height: $theme.sizing.scale1200 };
-                      }
-                    }
+                      },
+                    },
                   }}
                   endEnhancer={() => (
                     <Tag
@@ -111,7 +111,7 @@ export default function({ groups }) {
                   <ListItemLabel>
                     <Link
                       href={item.href}
-                      onClick={event => {
+                      onClick={(event) => {
                         setIsOpen(false);
                       }}
                     >

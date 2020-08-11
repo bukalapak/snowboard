@@ -14,10 +14,10 @@ class ListCommand extends Command {
 
     const items = await spinner(loadMulti(argv), "Parsing input(s)", {
       success: "Input(s) parsed",
-      quiet: flags.quiet
+      quiet: flags.quiet,
     });
 
-    const listed = flatten(items.map(item => list(item)));
+    const listed = flatten(items.map((item) => list(item)));
 
     if (flags.json) {
       this.log(jsonStringify(listed, flags.optimized));
@@ -42,9 +42,9 @@ ListCommand.flags = {
   optimized: flags.boolean({
     char: "O",
     description: "optimized mode",
-    dependsOn: ["json"]
+    dependsOn: ["json"],
   }),
-  quiet: flags.boolean({ char: "q", description: "quiet mode" })
+  quiet: flags.boolean({ char: "q", description: "quiet mode" }),
 };
 
 export default ListCommand;

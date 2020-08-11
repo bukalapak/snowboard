@@ -13,8 +13,8 @@ const seedRegex = /<!-- seed\((.+)\) -->/g;
 function createHandlebars() {
   const handlebars = Handlebars.create();
 
-  handlebars.registerHelper("join", items => items.join(", "));
-  handlebars.registerHelper("upcase", str => str.toUpperCase());
+  handlebars.registerHelper("join", (items) => items.join(", "));
+  handlebars.registerHelper("upcase", (str) => str.toUpperCase());
 
   return handlebars;
 }
@@ -79,7 +79,7 @@ function loadPartials(source, seeds, inputDir) {
   const results = extractPartials(source);
   const partials = {};
 
-  results.forEach(item => {
+  results.forEach((item) => {
     const inputFile = path.resolve(inputDir, item[1]);
     const source = fs.readFileSync(inputFile, "utf8");
     const sourceDir = path.dirname(inputFile);
@@ -93,7 +93,7 @@ function loadPartials(source, seeds, inputDir) {
     });
 
     const template = handlebars.compile(cleanupSource(data), {
-      noEscape: true
+      noEscape: true,
     });
 
     merge(seeds, childrenSeeds);
@@ -107,7 +107,7 @@ function loadSeeds(source, inputDir) {
   const results = extractSeeds(source);
   const seeds = {};
 
-  results.forEach(item => {
+  results.forEach((item) => {
     const data = JSON.parse(
       fs.readFileSync(path.resolve(inputDir, item[1]), "utf8")
     );
@@ -145,13 +145,13 @@ function extractChildren(source, inputDir, children = []) {
   const partials = extractPartials(sourceClean);
   const seeds = extractSeeds(sourceClean);
 
-  partials.forEach(partial => {
+  partials.forEach((partial) => {
     const [partialSource, partialDir] = resolveFile(partial[1], inputDir);
     extractChildren(partialSource, partialDir, children);
   });
 
-  partials.forEach(item => children.push(path.resolve(inputDir, item[1])));
-  seeds.forEach(item => children.push(path.resolve(inputDir, item[1])));
+  partials.forEach((item) => children.push(path.resolve(inputDir, item[1])));
+  seeds.forEach((item) => children.push(path.resolve(inputDir, item[1])));
 }
 
 async function readInput(input) {

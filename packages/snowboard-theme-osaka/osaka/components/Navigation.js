@@ -9,12 +9,12 @@ import { toNavigation, filterNavigation } from "snowboard-theme-helper";
 
 const toNavigationMemo = memoizeOne(toNavigation);
 
-export default function({ title, groups, resources, descriptionToc }) {
+export default function ({ title, groups, resources, descriptionToc }) {
   const items = toNavigationMemo({
     title,
     groups,
     resources,
-    toc: descriptionToc
+    toc: descriptionToc,
   });
 
   return <FilteredNavigation items={items} />;
@@ -24,7 +24,7 @@ function mapItem(item) {
   return {
     title: item.title,
     itemId: toHref(item.permalink),
-    subNav: item.children.map(subitem => mapItem(subitem))
+    subNav: item.children.map((subitem) => mapItem(subitem)),
   };
 }
 
@@ -45,7 +45,7 @@ function FilteredNavigation({ items }) {
           event.preventDefault();
           navigation.navigate(item.itemId);
         }}
-        mapItem={item => mapItem(item)}
+        mapItem={(item) => mapItem(item)}
         overrides={{
           NavItem: {
             style: ({ $active, $theme }) => {
@@ -54,10 +54,10 @@ function FilteredNavigation({ items }) {
                 whiteSpace: "nowrap",
                 textOverflow: "ellipsis",
                 paddingBottom: $theme.sizing.scale200,
-                paddingTop: $theme.sizing.scale200
+                paddingTop: $theme.sizing.scale200,
               };
-            }
-          }
+            },
+          },
         }}
       />
     </Block>

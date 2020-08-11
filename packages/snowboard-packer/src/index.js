@@ -16,12 +16,12 @@ import {
   watchTemplate,
   watchOverrides,
   watchInput,
-  copyOverrides
+  copyOverrides,
 } from "./builder";
 
 const defaultConfig = {
   overrides: {},
-  playground: { enabled: false }
+  playground: { enabled: false },
 };
 
 async function packer(
@@ -62,7 +62,7 @@ async function packer(
     output: {
       path: outDir,
       publicPath,
-      filename: "index.js"
+      filename: "index.js",
     },
     mode: optimized ? "production" : "development",
     devtool: optimized ? false : "source-map",
@@ -70,7 +70,7 @@ async function packer(
     resolve: {
       extensions: [".wasm", ".mjs", ".js", ".json", ".svelte"],
       mainFields: ["svelte", "browser", "module", "main"],
-      modules: moduleDirs(templateDir)
+      modules: moduleDirs(templateDir),
     },
     module: {
       rules: [
@@ -80,9 +80,9 @@ async function packer(
             loader: require.resolve("svelte-loader-hot"),
             options: {
               emitCss: !watch,
-              hotReload: watch
-            }
-          }
+              hotReload: watch,
+            },
+          },
         },
         {
           test: /\.(js|jsx)$/,
@@ -93,12 +93,12 @@ async function packer(
               presets: [
                 [
                   require.resolve("@babel/preset-env"),
-                  { targets: "last 2 chrome versions" }
+                  { targets: "last 2 chrome versions" },
                 ],
-                require.resolve("@babel/preset-react")
-              ]
-            }
-          }
+                require.resolve("@babel/preset-react"),
+              ],
+            },
+          },
         },
         {
           test: /\.css$/i,
@@ -106,10 +106,10 @@ async function packer(
             !watch
               ? MiniCssExtractPlugin.loader
               : require.resolve("style-loader"),
-            require.resolve("css-loader")
-          ]
-        }
-      ]
+            require.resolve("css-loader"),
+          ],
+        },
+      ],
     },
     plugins: [
       new CopyPlugin([
@@ -118,16 +118,16 @@ async function packer(
           to: outDir,
           transform(content, path) {
             return normalize(content, publicPath);
-          }
-        }
+          },
+        },
       ]),
       new MiniCssExtractPlugin({
-        filename: "index.css"
-      })
+        filename: "index.css",
+      }),
     ],
     performance: {
-      maxEntrypointSize: 2000000
-    }
+      maxEntrypointSize: 2000000,
+    },
   };
 }
 
@@ -183,20 +183,20 @@ export async function httpPack(input, options) {
         res.set("Content-Type", "text/html");
         res.send(content);
       });
-    }
+    },
   };
 
   if (options.ssl) {
     serverOptions.https = {
       cert: options.cert,
-      key: options.key
+      key: options.key,
     };
   }
 
   const server = new WebpackDevServer(compiler, serverOptions);
 
   return new Promise((resolve, reject) => {
-    server.listen(port, host, err => {
+    server.listen(port, host, (err) => {
       if (err) return reject(err);
       resolve(server);
     });
@@ -228,6 +228,6 @@ function moduleDirs(templateDir) {
   return [
     resolve(__dirname, "../node_modules"),
     resolve(templateDir, "../node_modules"),
-    resolve(templateDir, "../../snowboard-theme-helper/node_modules")
+    resolve(templateDir, "../../snowboard-theme-helper/node_modules"),
   ];
 }

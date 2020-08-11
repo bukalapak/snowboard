@@ -71,16 +71,16 @@ function Transaction({ transaction, index }) {
               borderTopWidth: "1px",
               borderBottomWidth: "1px",
               borderRightWidth: "1px",
-              borderLeftWidth: "1px"
+              borderLeftWidth: "1px",
             };
-          }
-        }
+          },
+        },
       }}
     >
       <StyledAction>
         <Button
           overrides={{
-            BaseButton: { style: { width: "100%" } }
+            BaseButton: { style: { width: "100%" } },
           }}
           kind={KIND.primary}
         >
@@ -104,10 +104,10 @@ function Transaction({ transaction, index }) {
                     return {
                       justifyContent: "center",
                       backgroundColor: $theme.colors.buttonPrimaryActive,
-                      backgroundColor: $theme.colors.buttonPrimaryText
+                      backgroundColor: $theme.colors.buttonPrimaryText,
                     };
-                  }
-                }
+                  },
+                },
               }}
             >
               <Tab title="Body">

@@ -6,13 +6,13 @@ export function toNavigation({
   resources,
   title = "API",
   toc = [],
-  basePath = "/"
+  basePath = "/",
 }) {
-  let items = groups.map(group => {
+  let items = groups.map((group) => {
     return {
       title: group.title,
       permalink: group.permalink,
-      children: resourcesMap(group.resources)
+      children: resourcesMap(group.resources),
     };
   });
 
@@ -22,24 +22,24 @@ export function toNavigation({
     title: title,
     permalink: basePath,
     isToc: true,
-    children: tocMap(toc, basePath)
+    children: tocMap(toc, basePath),
   });
 
   return items;
 }
 
 function resourcesMap(resources) {
-  return resources.map(resource => {
+  return resources.map((resource) => {
     return {
       title: resource.title,
       permalink: resource.permalink,
-      children: resource.transitions.map(transition => {
+      children: resource.transitions.map((transition) => {
         return {
           title: transition.title,
           permalink: transition.permalink,
-          children: []
+          children: [],
         };
-      })
+      }),
     };
   });
 }
@@ -47,13 +47,13 @@ function resourcesMap(resources) {
 function tocMap(toc, basePath = "/") {
   const data = [];
 
-  toc.forEach(item => {
+  toc.forEach((item) => {
     if (item.depth === 2) {
       data.push({
         title: item.text,
         isToc: true,
         permalink: `${basePath}#` + toSlug(item.text, "-"),
-        children: []
+        children: [],
       });
     }
 
@@ -62,7 +62,7 @@ function tocMap(toc, basePath = "/") {
         title: item.text,
         isToc: true,
         permalink: `${basePath}#` + toSlug(item.text, "-"),
-        children: []
+        children: [],
       });
     }
   });
@@ -72,7 +72,7 @@ function tocMap(toc, basePath = "/") {
 
 export function filterNavigation(current, items) {
   if (current === items[0].permalink) {
-    return items.map(item => {
+    return items.map((item) => {
       if (item.permalink === current) {
         return item;
       } else {
@@ -83,8 +83,8 @@ export function filterNavigation(current, items) {
 
   const data = [];
 
-  items.forEach(item => {
-    const currentResourceTransition = item.children.find(child => {
+  items.forEach((item) => {
+    const currentResourceTransition = item.children.find((child) => {
       return findByChildren(current, child);
     });
 
@@ -93,18 +93,18 @@ export function filterNavigation(current, items) {
     if (currentResourceTransition) {
       data.push({
         ...pickItem(item),
-        children: item.children.map(child => {
+        children: item.children.map((child) => {
           const selected = findByChildren(current, child);
           return pickItem(child, selected);
-        })
+        }),
       });
     } else {
       if (currentResource) {
         data.push({
           ...pickItem(item),
-          children: item.children.map(child => {
+          children: item.children.map((child) => {
             return pickItem(child, child.permalink === current);
-          })
+          }),
         });
       } else {
         data.push(pickItem(item, item.permalink === current));
@@ -120,7 +120,7 @@ function pickItemFields(item) {
 }
 
 function pickItemChildren(item) {
-  return item.children.map(child => pickItem(child));
+  return item.children.map((child) => pickItem(child));
 }
 
 function pickItem(item, withChildren) {
@@ -132,5 +132,5 @@ function pickItem(item, withChildren) {
 }
 
 function findByChildren(current, item) {
-  return item.children.find(child => child.permalink === current);
+  return item.children.find((child) => child.permalink === current);
 }

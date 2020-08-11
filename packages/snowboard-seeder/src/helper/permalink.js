@@ -4,7 +4,7 @@ import { resourceTitle } from "./transform";
 const permalinkPrefix = {
   group: "g",
   resource: "r",
-  transition: "t"
+  transition: "t",
 };
 
 export function groupPermalink(group) {

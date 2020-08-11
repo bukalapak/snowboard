@@ -1,3 +1,3 @@
 require("@babel/register")({
-  rootMode: "upward"
+  rootMode: "upward",
 });

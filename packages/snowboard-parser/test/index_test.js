@@ -12,14 +12,14 @@ async function loadFixture(filename) {
 async function loadExample(filename) {
   const exampleDir = resolve(__dirname, `./fixtures/api-blueprint`);
   const emitter = degit("github:apiaryio/api-blueprint", {
-    force: true
+    force: true,
   });
 
   await emitter.clone(exampleDir);
   return readFileSync(resolve(exampleDir, `examples/${filename}`), "utf8");
 }
 
-test("parse & fromRefract", async t => {
+test("parse & fromRefract", async (t) => {
   const source = await loadExample("01. Simplest API.md");
   const result = await parse(source);
   const element = fromRefract(result);
@@ -35,7 +35,7 @@ test("parse & fromRefract", async t => {
   t.end();
 });
 
-test("validate", async t => {
+test("validate", async (t) => {
   const source = await loadExample("Gist Fox API.md");
   const result = await validate(source);
 
@@ -43,7 +43,7 @@ test("validate", async t => {
   t.end();
 });
 
-test("validate: invalid apib", async t => {
+test("validate: invalid apib", async (t) => {
   const source = await loadFixture("blueprint-invalid.apib");
   const result = await validate(source);
   const element = fromRefract(result);
