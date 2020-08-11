@@ -5,15 +5,15 @@
   "author": "Alif Rachmawadi <subosito@bukalapak.com>",
   "dependencies": {
     "axios": "^0.19.2",
-    "marked": "^1.0.0",
+    "marked": "^1.1.1",
     "navi": "^0.14.0",
     "pkce": "^1.0.0-beta2",
-    "prismjs": "^1.20.0",
+    "prismjs": "^1.21.0",
     "querystringify": "^2.1.1",
     "safe-json-stringify": "^1.2.0",
     "snowboard-theme-helper": "^1.1.11",
-    "svelte": "^3.20.1",
-    "yrv": "0.0.29"
+    "svelte": "^3.24.1",
+    "yrv": "0.0.30"
   },
   "files": [
     "/winter"
