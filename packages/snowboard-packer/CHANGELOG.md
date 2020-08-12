@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.11](https://github.com/bukalapak/snowboard/compare/snowboard-packer@1.3.10...snowboard-packer@1.3.11) (2020-08-12)
+
+
+### Bug Fixes
+
+* copy plugin options ([a4bebb3](https://github.com/bukalapak/snowboard/commit/a4bebb3be6113d56325a68c4d268b1cc8cf24b72))
+
+
+
+
+
 ## [1.3.10](https://github.com/bukalapak/snowboard/compare/snowboard-packer@1.3.9...snowboard-packer@1.3.10) (2020-08-12)
 
 
