@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.5](https://github.com/bukalapak/snowboard/compare/snowboard-seeder@1.1.4...snowboard-seeder@1.1.5) (2020-08-12)
+
+
+### Bug Fixes
+
+* update dependencies ([dd79007](https://github.com/bukalapak/snowboard/commit/dd79007450a6a461849cd6dacfaa9eda00917c90))
+
+
+
+
+
 ## [1.1.4](https://github.com/bukalapak/snowboard/compare/snowboard-seeder@1.1.3...snowboard-seeder@1.1.4) (2020-07-27)
 
 **Note:** Version bump only for package snowboard-seeder

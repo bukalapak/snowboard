@@ -1,7 +1,7 @@
 {
   "name": "snowboard-theme-helper",
   "description": "Shared helper for snowboard theme",
-  "version": "1.1.11",
+  "version": "1.1.12",
   "author": "Alif Rachmawadi <subosito@bukalapak.com>",
   "dependencies": {
     "axios": "^0.19.2",
