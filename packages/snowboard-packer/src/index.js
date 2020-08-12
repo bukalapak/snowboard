@@ -112,15 +112,17 @@ async function packer(
       ],
     },
     plugins: [
-      new CopyPlugin([
-        {
-          from: template,
-          to: outDir,
-          transform(content, path) {
-            return normalize(content, publicPath);
+      new CopyPlugin({
+        patterns: [
+          {
+            from: template,
+            to: outDir,
+            transform(content, path) {
+              return normalize(content, publicPath);
+            },
           },
-        },
-      ]),
+        ],
+      }),
       new MiniCssExtractPlugin({
         filename: "index.css",
       }),
