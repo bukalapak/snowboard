@@ -1,7 +1,7 @@
 {
   "name": "snowboard-theme-winter",
   "description": "Snowboard theme using Svelte",
-  "version": "1.3.12",
+  "version": "1.3.13",
   "author": "Alif Rachmawadi <subosito@bukalapak.com>",
   "dependencies": {
     "axios": "^0.19.2",

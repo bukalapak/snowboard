@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.13](https://github.com/bukalapak/snowboard/compare/snowboard-theme-winter@1.3.12...snowboard-theme-winter@1.3.13) (2020-08-19)
+
+
+### Bug Fixes
+
+* pin yrv to 0.0.29 ([920b93f](https://github.com/bukalapak/snowboard/commit/920b93fd3a1b7e8bd588371dcda877ae4881821c))
+
+
+
+
+
 ## [1.3.12](https://github.com/bukalapak/snowboard/compare/snowboard-theme-winter@1.3.11...snowboard-theme-winter@1.3.12) (2020-08-12)
 
 
