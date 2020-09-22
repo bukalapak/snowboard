@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.13](https://github.com/bukalapak/snowboard/compare/snowboard-theme-helper@1.1.12...snowboard-theme-helper@1.1.13) (2020-09-22)
+
+**Note:** Version bump only for package snowboard-theme-helper
+
+
+
+
+
 ## [1.1.12](https://github.com/bukalapak/snowboard/compare/snowboard-theme-helper@1.1.11...snowboard-theme-helper@1.1.12) (2020-08-12)
 
 

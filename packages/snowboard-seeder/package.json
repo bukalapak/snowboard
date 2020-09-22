@@ -1,12 +1,12 @@
 {
   "name": "snowboard-seeder",
   "description": "The snowboard seeder",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "author": "Alif Rachmawadi <subosito@bukalapak.com>",
   "dependencies": {
     "core-js": "^3.6.5",
     "lodash": "^4.17.19",
-    "snowboard-helper": "^1.1.5"
+    "snowboard-helper": "^1.1.6"
   },
   "files": [
     "/lib"

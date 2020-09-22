@@ -1,7 +1,7 @@
 {
   "name": "snowboard-reader",
   "description": "The snowboard reader",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "author": "Alif Rachmawadi <subosito@bukalapak.com>",
   "dependencies": {
     "handlebars": "^4.7.3",

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.12](https://github.com/bukalapak/snowboard/compare/snowboard-packer@1.3.11...snowboard-packer@1.3.12) (2020-09-22)
+
+**Note:** Version bump only for package snowboard-packer
+
+
+
+
+
 ## [1.3.11](https://github.com/bukalapak/snowboard/compare/snowboard-packer@1.3.10...snowboard-packer@1.3.11) (2020-08-12)
 
 
