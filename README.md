@@ -6,8 +6,6 @@ API blueprint toolkit.
 
 ![Winter theme with playground enabled](packages/snowboard-theme-winter/doc/winter-screenshot.png)
 
-![Osaka theme with playground enabled](packages/snowboard-theme-osaka/doc/osaka-screenshot.png)
-
 ## Packages
 
 | NPM                                                                   | Version                                                                                                                     |
@@ -22,7 +20,6 @@ API blueprint toolkit.
 | [snowboard-packer](./packages/snowboard-packer/README.md)             | [![npm version](https://badge.fury.io/js/snowboard-packer.svg)](https://www.npmjs.com/package/snowboard-packer)             |
 | [snowboard-theme-helper](./packages/snowboard-theme-helper/README.md) | [![npm version](https://badge.fury.io/js/snowboard-theme-helper.svg)](https://www.npmjs.com/package/snowboard-theme-helper) |
 | [snowboard-theme-winter](./packages/snowboard-theme-winter/README.md) | [![npm version](https://badge.fury.io/js/snowboard-theme-winter.svg)](https://www.npmjs.com/package/snowboard-theme-winter) |
-| [snowboard-theme-osaka](./packages/snowboard-theme-osaka/README.md)   | [![npm version](https://badge.fury.io/js/snowboard-theme-osaka.svg)](https://www.npmjs.com/package/snowboard-theme-osaka)   |
 
 ### Docker
 
