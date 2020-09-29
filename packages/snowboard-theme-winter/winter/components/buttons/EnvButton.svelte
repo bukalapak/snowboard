@@ -36,6 +36,7 @@
 {#if (isAuth(playground.environments[$env], 'oauth2') && !isEmpty($token))}
   <div class="navbar-item has-dropdown is-capitalized">
     <div class="buttons">
+      <!-- svelte-ignore a11y-invalid-attribute -->
       <a
         href="javascript:void(0)"
         class="button is-dark is-rounded"
@@ -47,12 +48,14 @@
 {/if}
 
 <div class="navbar-item has-dropdown is-capitalized" class:is-active={show}>
+  <!-- svelte-ignore a11y-invalid-attribute -->
   <a href="javascript:void(0)" class="navbar-link" on:click={toggleClick}>
     {$env}
   </a>
 
   <div class="navbar-dropdown is-right">
     {#each Object.keys(playground.environments) as envName}
+      <!-- svelte-ignore a11y-invalid-attribute -->
       <a
         data-name={envName}
         href="javascript:void(0)"

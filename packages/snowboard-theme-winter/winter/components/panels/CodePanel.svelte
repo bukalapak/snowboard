@@ -34,12 +34,14 @@
     <div class="tabs is-fullwidth" class:is-toggle={asToggle}>
       <ul>
         <li class:is-active={tabIndex === 0}>
+          <!-- svelte-ignore a11y-invalid-attribute -->
           <a data-index="0" href="javascript:void(0)" on:click={tabSelect}>
             Body
           </a>
         </li>
         {#if schema}
           <li class:is-active={tabIndex === 1}>
+            <!-- svelte-ignore a11y-invalid-attribute -->
             <a data-index="1" href="javascript:void(0)" on:click={tabSelect}>
               Schema
             </a>

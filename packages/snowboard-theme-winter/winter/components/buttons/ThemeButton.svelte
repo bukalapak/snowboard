@@ -39,6 +39,7 @@
   }
 </script>
 
+<!-- svelte-ignore a11y-invalid-attribute -->
 <a
   href="javascript:void(0)"
   on:click={darkToggle}

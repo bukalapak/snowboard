@@ -247,6 +247,7 @@
             <span>URL has been copied to clipboard.</span>
           </button>
         {:else}
+          <!-- svelte-ignore a11y-invalid-attribute -->
           <a
             href="javascript:void(0)"
             on:click={handleCopy}
@@ -286,14 +287,17 @@
     <div class="tabs is-boxed">
       <ul>
         <li class:is-active={requestTab === 0}>
+          <!-- svelte-ignore a11y-invalid-attribute -->
           <a href="javascript:void(0)" on:click={() => handleTab(0)}>
             Parameters
           </a>
         </li>
         <li class:is-active={requestTab === 1}>
+          <!-- svelte-ignore a11y-invalid-attribute -->
           <a href="javascript:void(0)" on:click={() => handleTab(1)}>Headers</a>
         </li>
         <li class:is-active={requestTab === 2}>
+          <!-- svelte-ignore a11y-invalid-attribute -->
           <a href="javascript:void(0)" on:click={() => handleTab(2)}>Body</a>
         </li>
       </ul>

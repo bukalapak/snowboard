@@ -27,6 +27,7 @@
       {:else}Response {response.statusCode}{/if}
     </p>
 
+    <!-- svelte-ignore a11y-invalid-attribute -->
     <a
       href="javascript:void(0)"
       class="card-header-icon"
