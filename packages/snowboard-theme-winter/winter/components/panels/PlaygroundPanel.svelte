@@ -108,8 +108,6 @@
       return contentTypeHeader.example.includes(contentType)
     })
 
-    console.log(supportedLang, supportedLang ? supportedLang.lang : 'plain_text')
-
     return supportedLang ? supportedLang.lang : 'plain_text'
   }
 
