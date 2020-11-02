@@ -2,6 +2,17 @@
   import { isEmpty } from "lodash";
   import { afterUpdate } from "svelte";
   import qs from "querystringify";
+  import AceEditor from 'svelte-ace-editor';
+
+  require('brace');
+  require('brace/mode/xml');
+  require('brace/mode/json');
+  require('brace/mode/html');
+  require('brace/mode/plain_text');
+  require('brace/mode/javascript');
+  require('brace/mode/plain_text');
+  require('brace/theme/clouds');
+  require('brace/theme/clouds_midnight');
 
   import {
     clipboardCopy,
@@ -40,7 +51,7 @@
   let response;
   let requestBody = prepareBody(
     transition.transactions[0].request.method,
-    transition.transactions[0].request.body
+    transition.transactions[0].request.body || ''
   );
 
   let requestParameters = transition.parameters.map(val => {
@@ -55,6 +66,16 @@
   );
 
   let prev = $env;
+
+  let editorSupportedLanguages = [
+    { description: 'Text', lang: 'plain_text', contentType: 'text/plain' },
+    { description: 'JavaScript', lang: 'javascript', contentType: 'application/javascript' },
+    { description: 'JSON', lang: 'json', contentType: 'application/json' },
+    { description: 'HTML', lang: 'html', contentType: 'text/html' },
+    { description: 'XML', lang: 'xml', contentType: 'application/xml' }
+  ]
+
+  let bodyLang = initBodyLang();
 
   afterUpdate(() => {
     if (prev != $env) {
@@ -74,6 +95,27 @@
     headers: populate(requestHeaders),
     parameters: populate(requestParameters)
   });
+
+  function initBodyLang() {
+    const contentTypeHeader = requestHeaders
+      .find(({ name }) => name === 'Content-Type')
+
+    if (!contentTypeHeader) {
+      return 'plain_text'
+    }
+
+    const supportedLang = editorSupportedLanguages.find(({ contentType }) => {
+      return contentTypeHeader.example.includes(contentType)
+    })
+
+    console.log(supportedLang, supportedLang ? supportedLang.lang : 'plain_text')
+
+    return supportedLang ? supportedLang.lang : 'plain_text'
+  }
+
+  function onEditorChange (newValue) {
+    requestBody = newValue.detail;
+  }
 
   function handleCopy() {
     copying = true;
@@ -234,6 +276,10 @@
   .button-url {
     justify-content: start;
   }
+
+  .section-body-control-item {
+    margin-bottom: 10px;
+  }
 </style>
 
 <CollapsiblePanel {show}>
@@ -340,11 +386,26 @@
 
       <div class="section-body" class:is-hidden={requestTab != 2}>
         {#if isAllowBody(transition.method)}
-          <textarea
-            class="textarea is-family-code"
-            class:has-dark-background={$darkMode}
-            bind:value={requestBody}
-            rows="8" />
+          <div class="control section-body-control">
+            <select
+              class="section-body-control-item"
+              bind:value={bodyLang}
+              >
+              {#each editorSupportedLanguages as language}
+                <option value="{language.lang}">{language.description}</option>
+              {/each}
+            </select>
+          </div>
+          <div class="section-body">
+            <AceEditor
+              bind:value={requestBody}
+              theme={ $darkMode ? "clouds_midnight" : "clouds" }
+              lang={bodyLang}
+              width="100%"
+              height="512"
+              on:input={onEditorChange}
+            />
+          </div>
         {:else}
           <p class="has-text-centered">
             <em>Body is only available for POST, PUT and PATCH.</em>
