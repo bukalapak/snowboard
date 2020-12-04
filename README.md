@@ -113,6 +113,7 @@ module.exports = {
   html: {
     playground: {
       enabled: true,
+      hidden: false,
       env: "development",
       environments: {
         development: {

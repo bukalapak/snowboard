@@ -42,7 +42,7 @@
   $: isOauth2 = isAuth(environment, "oauth2") || false;
   $: isSendEnabled = isOauth2 ? !isEmpty($token) : true;
 
-  let show = true;
+  let show = !config.playground.hidden;
   let copying = false;
   let requestTab = 0;
   let challengePair = getChallengePair();
