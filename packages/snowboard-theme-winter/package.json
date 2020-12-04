@@ -13,6 +13,7 @@
     "safe-json-stringify": "^1.2.0",
     "snowboard-theme-helper": "^1.1.13",
     "svelte": "^3.28.0",
+    "svelte-ace-editor": "0.0.2",
     "yrv": "0.0.29"
   },
   "files": [
