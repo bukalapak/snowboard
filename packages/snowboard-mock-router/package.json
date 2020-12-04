@@ -1,7 +1,7 @@
 {
   "name": "snowboard-mock-router",
   "description": "Snowboard router for mock server",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "author": "Alif Rachmawadi <subosito@bukalapak.com>",
   "dependencies": {
     "express": "^4.17.1",
@@ -10,7 +10,7 @@
   },
   "devDependencies": {
     "degit": "^2.8.0",
-    "snowboard-parser": "^1.1.5"
+    "snowboard-parser": "^1.1.6"
   },
   "files": [
     "/lib"
