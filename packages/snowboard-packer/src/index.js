@@ -66,7 +66,6 @@ async function packer(
     },
     mode: optimized ? "production" : "development",
     devtool: optimized ? false : "source-map",
-    watch,
     resolve: {
       extensions: [".wasm", ".mjs", ".js", ".json", ".svelte"],
       mainFields: ["svelte", "browser", "module", "main"],
@@ -136,6 +135,17 @@ async function packer(
 export async function htmlPack(input, options) {
   const config = await packer(input, options);
   const compiler = webpack(config);
+
+  if (options.watch) {
+    return new Promise((resolve, reject) => {
+      compiler.watch({
+        poll: process.env.WEBPACK_WATCH_OPTION_POLL,
+      }, (err, stats) => {
+        if (err) return reject(err);
+        resolve(stats);
+      });
+    });
+  }
 
   return new Promise((resolve, reject) => {
     compiler.run((err, stats) => {
