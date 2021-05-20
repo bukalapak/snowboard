@@ -138,12 +138,15 @@ export async function htmlPack(input, options) {
 
   if (options.watch) {
     return new Promise((resolve, reject) => {
-      compiler.watch({
-        poll: process.env.WEBPACK_WATCH_OPTION_POLL,
-      }, (err, stats) => {
-        if (err) return reject(err);
-        resolve(stats);
-      });
+      compiler.watch(
+        {
+          poll: process.env.WEBPACK_WATCH_OPTION_POLL,
+        },
+        (err, stats) => {
+          if (err) return reject(err);
+          resolve(stats);
+        }
+      );
     });
   }
 
