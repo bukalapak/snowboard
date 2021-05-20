@@ -128,7 +128,7 @@ export function watchInput(
     const [seeds, transitionSeeds] = await buildSeed(path, config, { quiet });
 
     await writeSeed(buildDir, seeds, { optimized });
-    await writeJSON(transitionSeeds, seeds.uuids, outDir, { optimized });
+    await writeJSON(outDir, transitionSeeds, seeds.uuids, { optimized });
   });
 
   return watcher;
