@@ -5,7 +5,7 @@
   "author": "Alif Rachmawadi <subosito@bukalapak.com>",
   "dependencies": {
     "axios": "^0.21.1",
-    "marked": "^1.2.9",
+    "marked": "^2.0.0",
     "navi": "^0.14.0",
     "pkce": "^1.0.0-beta2",
     "prismjs": "^1.23.0",
