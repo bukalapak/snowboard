@@ -4,7 +4,7 @@
   "version": "1.0.7",
   "author": "Alif Rachmawadi <subosito@bukalapak.com>",
   "dependencies": {
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "snowboard-parser": "^1.1.6"
   },
   "files": [

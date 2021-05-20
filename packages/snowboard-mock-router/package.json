@@ -9,7 +9,7 @@
     "snowboard-helper": "^1.1.6"
   },
   "devDependencies": {
-    "degit": "^2.8.0",
+    "degit": "^2.8.4",
     "snowboard-parser": "^1.1.6"
   },
   "files": [

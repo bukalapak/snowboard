@@ -5,14 +5,14 @@
   "author": "Alif Rachmawadi <subosito@bukalapak.com>",
   "dependencies": {
     "axios": "^0.21.1",
-    "marked": "^1.2.0",
+    "marked": "^1.2.9",
     "navi": "^0.14.0",
     "pkce": "^1.0.0-beta2",
-    "prismjs": "^1.21.0",
+    "prismjs": "^1.23.0",
     "querystringify": "^2.2.0",
     "safe-json-stringify": "^1.2.0",
     "snowboard-theme-helper": "^1.1.13",
-    "svelte": "^3.28.0",
+    "svelte": "^3.38.2",
     "svelte-ace-editor": "0.0.2",
     "yrv": "0.0.29"
   },

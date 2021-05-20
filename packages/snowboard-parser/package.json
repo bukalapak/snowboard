@@ -8,7 +8,7 @@
     "protagonist": "^2.2.1"
   },
   "devDependencies": {
-    "degit": "^2.8.0"
+    "degit": "^2.8.4"
   },
   "files": [
     "/lib"
