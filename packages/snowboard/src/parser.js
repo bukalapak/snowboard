@@ -6,7 +6,7 @@ export function list(element) {
 
   element.api.resourceGroups.forEach((group) => {
     group.resources.forEach((resource) => {
-      data.push(...listExtract(resource));
+      data.push(...listExtract(resource, group));
     });
   });
 
@@ -17,13 +17,15 @@ export function list(element) {
   return data;
 }
 
-function listExtract(resource) {
+function listExtract(resource, group) {
   return resource.transitions.map((transition) => {
     const href = transitionHref(transition, resource);
 
     return {
       method: toValue(transition.method),
       path: toPath(href),
+      resource: toValue(resource.title),
+      group: toValue(group.title),
       statusCode: uniq(
         transition.transactions.map(({ response }) =>
           toValue(response.statusCode)
